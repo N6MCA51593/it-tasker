@@ -1,6 +1,5 @@
 node_modules/
 .env
-*.txt
 /client/build
 
 **/.vscode/

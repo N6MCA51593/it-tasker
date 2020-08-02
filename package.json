@@ -1,0 +1,21 @@
+{
+  "name": "it-tasker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "client": "npm start --prefix client"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/N6MCA51593/it-tasker.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/N6MCA51593/it-tasker/issues"
+  },
+  "homepage": "https://github.com/N6MCA51593/it-tasker#readme"
+}
