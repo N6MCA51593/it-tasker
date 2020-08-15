@@ -1,10 +1,11 @@
 import React from 'react';
-import './App.css';
+import './App.scss';
+import GeometryDrawing from './GeometryDrawing';
 
 const App = () => {
   return (
     <div className='App'>
-      <p>Test</p>
+      <GeometryDrawing />
     </div>
   );
 };
