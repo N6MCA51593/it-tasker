@@ -23,19 +23,24 @@ const GeometryDrawing = () => {
     setCurrPos(getRelCoord(e));
   };
 
+  const mapWalls = (e, i, arr) => {
+    return (
+      <Wall
+        key={i}
+        pointOne={e}
+        pointTwo={i === arr.length - 1 ? currPos : arr[i + 1]}
+      />
+    );
+  };
+
   return (
-    <div>
-      <div
-        ref={ref}
-        onClick={e => handleClick(e)}
-        onMouseMove={e => handleMouseMove(e)}
-        className='draw-area'
-      ></div>
-      <svg>
-        {points.map((e, i) => (
-          <Wall key={i} coords={e} currPos={currPos} />
-        ))}
-      </svg>
+    <div
+      ref={ref}
+      onClick={e => handleClick(e)}
+      onMouseMove={e => handleMouseMove(e)}
+      className='draw-area'
+    >
+      <svg>{points.map((e, i, points) => mapWalls(e, i, points))}</svg>
     </div>
   );
 };

@@ -1,10 +1,21 @@
-import React from 'react';
-//import PropTypes from 'prop-types';
+import React, { memo } from 'react';
+import PropTypes from 'prop-types';
 
-const Wall = props => {
-  return <div></div>;
+const Wall = ({ pointOne, pointTwo }) => {
+  return (
+    <line
+      x1={pointOne.x}
+      y1={pointOne.y}
+      x2={pointTwo.x}
+      y2={pointTwo.y}
+      stroke='black'
+    />
+  );
 };
 
-//Wall.propTypes = {};
+Wall.propTypes = {
+  pointOne: PropTypes.object.isRequired,
+  pointTwo: PropTypes.object.isRequired
+};
 
-export default Wall;
+export default memo(Wall);
