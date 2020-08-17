@@ -1,10 +1,12 @@
-import React, { useRef, useState } from 'react';
-import Layout from './Layout';
+import React, { useRef, useState, Fragment } from 'react';
+//import Layout from './Layout';
 import Wall from './Wall';
+//import Room from './Room';
 
 const GeometryDrawing = () => {
-  const [points, setPoints] = useState([]);
-  const [currPos, setCurrPos] = useState(null);
+  const [walls, setWalls] = useState([]);
+  const [activeWall, setActiveWall] = useState(null);
+  const [mode, setMode] = useState('draw');
   const ref = useRef();
 
   const getRelCoord = e => {
@@ -16,32 +18,70 @@ const GeometryDrawing = () => {
   };
 
   const handleClick = e => {
-    setPoints([...points, getRelCoord(e)]);
+    if (mode === 'draw') {
+      if (activeWall) {
+        setWalls([...walls, activeWall]);
+      }
+
+      setActiveWall({
+        x1: getRelCoord(e).x,
+        y1: getRelCoord(e).y,
+        x2: getRelCoord(e).x,
+        y2: getRelCoord(e).y
+      });
+    }
   };
 
   const handleMouseMove = e => {
-    setCurrPos(getRelCoord(e));
+    if (mode === 'draw' && activeWall) {
+      setActiveWall({
+        ...activeWall,
+        x2: getRelCoord(e).x,
+        y2: getRelCoord(e).y
+      });
+    }
   };
 
-  const mapWalls = (e, i, arr) => {
-    return (
-      <Wall
-        key={i}
-        pointOne={e}
-        pointTwo={i === arr.length - 1 ? currPos : arr[i + 1]}
-      />
-    );
+  const handleWallClick = (e, coords) => {
+    e.stopPropagation();
+    if (mode === 'draw') {
+      if (!activeWall) {
+        setActiveWall({
+          x1: coords.x,
+          y1: coords.y,
+          x2: coords.x,
+          y2: coords.y
+        });
+      } else {
+        setWalls([...walls, { ...activeWall, x2: coords.x, y2: coords.y }]);
+        setActiveWall(null);
+        setMode(null);
+      }
+    }
   };
 
   return (
-    <div
-      ref={ref}
-      onClick={e => handleClick(e)}
-      onMouseMove={e => handleMouseMove(e)}
-      className='draw-area'
-    >
-      <svg>{points.map((e, i, points) => mapWalls(e, i, points))}</svg>
-    </div>
+    <Fragment>
+      <div
+        ref={ref}
+        onClick={e => handleClick(e)}
+        onMouseMove={e => handleMouseMove(e)}
+        className='draw-area'
+      >
+        <svg>
+          {activeWall && <Wall {...activeWall} />}
+          {walls.map((e, i) => (
+            <Wall
+              key={i}
+              {...e}
+              mode={mode}
+              handleWallClick={handleWallClick}
+            />
+          ))}
+        </svg>
+      </div>
+      <button onClick={() => setMode('draw')}>Draw on</button>
+    </Fragment>
   );
 };
 
