@@ -1,18 +1,18 @@
 import { useState } from 'react';
 
 const useZoom = () => {
-  const [zoom, setZoom] = useState(1);
+  const [zoomLvl, setZoom] = useState(1);
   const step = 1.5;
 
   const zoomIn = () => {
-    setZoom(zoom / step);
+    setZoom(zoomLvl / step);
   };
 
   const zoomOut = () => {
-    setZoom(zoom * step);
+    setZoom(zoomLvl * step);
   };
 
-  return { zoom, zoomIn, zoomOut };
+  return { zoomLvl, zoomIn, zoomOut };
 };
 
 export default useZoom;

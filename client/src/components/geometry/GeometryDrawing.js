@@ -1,23 +1,30 @@
-import React, { useRef, useState, Fragment } from 'react';
+import React, { useRef, useState, Fragment, useEffect } from 'react';
 //import Layout from './Layout';
 import Wall from './Wall';
 import useZoom from './useZoom';
+import usePan from './usePan';
 //import Room from './Room';
 
 const GeometryDrawing = () => {
   const [walls, setWalls] = useState([]);
   const [activeWall, setActiveWall] = useState(null);
   const [mode, setMode] = useState('draw');
-  const [zoomLvl, setZoomLvl] = useState(1);
-  const [panVLvl, setPanVLvl] = useState(0);
-  const [panHLvl, setPanHLvl] = useState(0);
+  const [parentDimensions, setParentDimensions] = useState(null);
+
+  const { zoomLvl, zoomIn, zoomOut } = useZoom();
+  const { panH, panV, panHLvl, panVLvl } = usePan();
+
   const ref = useRef();
+
+  useEffect(() => {
+    setParentDimensions(ref.current.getBoundingClientRect());
+  }, []);
 
   const getRelCoord = e => {
     const boundingRect = ref.current.getBoundingClientRect();
     return {
-      x: Math.round((e.clientX - boundingRect.left + panHLvl) * zoomLvl),
-      y: Math.round((e.clientY - boundingRect.top + panVLvl) * zoomLvl)
+      x: Math.round((e.clientX - boundingRect.left) * zoomLvl + panHLvl),
+      y: Math.round((e.clientY - boundingRect.top) * zoomLvl + panVLvl)
     };
   };
 
@@ -44,16 +51,6 @@ const GeometryDrawing = () => {
         y2: getRelCoord(e).y
       });
     }
-  };
-
-  const zoom = lvl => {
-    setZoomLvl(zoomLvl * lvl);
-  };
-  const panV = lvl => {
-    setPanVLvl(panVLvl + lvl);
-  };
-  const panH = lvl => {
-    setPanHLvl(panHLvl - lvl);
   };
 
   const handleWallClick = (e, coords) => {
@@ -83,7 +80,9 @@ const GeometryDrawing = () => {
         className='draw-area'
       >
         <svg
-          viewBox={`${panHLvl} ${panVLvl} ${400 * zoomLvl} ${400 * zoomLvl}`}
+          viewBox={`${panHLvl} ${panVLvl} ${
+            parentDimensions?.width * zoomLvl
+          } ${parentDimensions?.height * zoomLvl}`}
         >
           {activeWall && <Wall {...activeWall} />}
           {walls.map((e, i) => (
@@ -98,12 +97,12 @@ const GeometryDrawing = () => {
         </svg>
       </div>
       <button onClick={() => setMode('draw')}>Draw on</button>
-      <button onClick={() => zoom(1 / 1.5)}> + </button>
-      <button onClick={() => zoom(1.5)}> - </button>
-      <button onClick={() => panV(-45)}> T </button>
-      <button onClick={() => panV(45)}> B </button>
-      <button onClick={() => panH(45)}> L </button>
-      <button onClick={() => panH(-45)}> R </button>
+      <button onClick={() => zoomIn()}> + </button>
+      <button onClick={() => zoomOut()}> - </button>
+      <button onClick={() => panV(-1)}> T </button>
+      <button onClick={() => panV()}> B </button>
+      <button onClick={() => panH(-1)}> L </button>
+      <button onClick={() => panH()}> R </button>
     </Fragment>
   );
 };
