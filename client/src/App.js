@@ -1,6 +1,6 @@
 import React from 'react';
-import './App.scss';
-import GeometryDrawing from './GeometryDrawing';
+import './styles/App.scss';
+import GeometryDrawing from './components/geometry/GeometryDrawing';
 
 const App = () => {
   return (
