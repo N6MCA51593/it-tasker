@@ -1,24 +1,20 @@
-import React, { useRef, useState, Fragment, useEffect } from 'react';
-//import Layout from './Layout';
+import React, { useRef, useState, Fragment } from 'react';
 import Wall from './Wall';
+import Test from './Test';
 import useZoom from './useZoom';
 import usePan from './usePan';
-//import Room from './Room';
+import useDimensions from './useDimensions';
 
 const GeometryDrawing = () => {
   const [walls, setWalls] = useState([]);
   const [activeWall, setActiveWall] = useState(null);
   const [mode, setMode] = useState('draw');
-  const [parentDimensions, setParentDimensions] = useState(null);
-
-  const { zoomLvl, zoomIn, zoomOut } = useZoom();
-  const { panH, panV, panHLvl, panVLvl } = usePan();
 
   const ref = useRef();
 
-  useEffect(() => {
-    setParentDimensions(ref.current.getBoundingClientRect());
-  }, []);
+  const { zoomLvl, zoomIn, zoomOut } = useZoom();
+  const { panH, panV, panHLvl, panVLvl } = usePan();
+  const { width, height } = useDimensions(ref);
 
   const getRelCoord = e => {
     const boundingRect = ref.current.getBoundingClientRect();
@@ -80,10 +76,11 @@ const GeometryDrawing = () => {
         className='draw-area'
       >
         <svg
-          viewBox={`${panHLvl} ${panVLvl} ${
-            parentDimensions?.width * zoomLvl
-          } ${parentDimensions?.height * zoomLvl}`}
+          viewBox={`${panHLvl} ${panVLvl} ${width * zoomLvl} ${
+            height * zoomLvl
+          }`}
         >
+          <Test />
           {activeWall && <Wall {...activeWall} />}
           {walls.map((e, i) => (
             <Wall

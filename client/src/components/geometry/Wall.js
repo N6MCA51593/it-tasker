@@ -3,19 +3,6 @@ import React, { memo, Fragment } from 'react';
 
 const Wall = ({ x1, y1, x2, y2, handleWallClick, mode, getRelCoord }) => {
   const r = 3;
-  /*
-  const isCornerClicked = (x, y, cx, cy, r) =>
-    (x - cx) * (x - cx) + (y - cy) * (y - cy) <= r * r;
-  const handleClick = e => {
-    const { x, y } = e => getRelCoord(e);
-    if (isCornerClicked(x, y, x1, y1, r)) {
-      return e => handleWallClick(e, { x: x1, y: y1 });
-    } else if (isCornerClicked(x, y, x2, y2, r)) {
-      return e => handleWallClick(e, { x: x2, y: y2 });
-    } else {
-      return e => handleWallClick(e, e => getRelCoord(e));
-    }
-  };*/
   return (
     <Fragment>
       <circle
