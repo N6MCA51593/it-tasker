@@ -1,10 +1,10 @@
-import React, { memo, Fragment } from 'react';
+import React, { memo } from 'react';
 //import PropTypes from 'prop-types';
 
 const Wall = ({ x1, y1, x2, y2, handleWallClick, mode, getRelCoord }) => {
   const r = 3;
   return (
-    <Fragment>
+    <g>
       <circle
         cx={x1}
         cy={y1}
@@ -36,7 +36,7 @@ const Wall = ({ x1, y1, x2, y2, handleWallClick, mode, getRelCoord }) => {
             : undefined
         }
       />
-    </Fragment>
+    </g>
   );
 };
 

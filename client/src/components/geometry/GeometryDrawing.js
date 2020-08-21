@@ -1,6 +1,7 @@
 import React, { useRef, useState, Fragment } from 'react';
 import Wall from './Wall';
-import Test from './Test';
+import Grid from './Grid';
+//import Test from './Test';
 import useZoom from './useZoom';
 import usePan from './usePan';
 import useDimensions from './useDimensions';
@@ -13,7 +14,7 @@ const GeometryDrawing = () => {
   const ref = useRef();
 
   const { zoomLvl, zoomIn, zoomOut } = useZoom();
-  const { panH, panV, panHLvl, panVLvl } = usePan();
+  const { panH, panV, panHLvl, panVLvl } = usePan(zoomLvl);
   const { width, height } = useDimensions(ref);
 
   const getRelCoord = e => {
@@ -30,17 +31,29 @@ const GeometryDrawing = () => {
         setWalls([...walls, activeWall]);
       }
 
+      const inRange = (num, num2, diff) => {
+        const div = Math.trunc(num / num2);
+        const rem = num % num2;
+        if (rem < diff || rem === num) {
+          return div * num2;
+        }
+        return num;
+      };
+
+      let { x, y } = getRelCoord(e);
+
       setActiveWall({
-        x1: getRelCoord(e).x,
-        y1: getRelCoord(e).y,
-        x2: getRelCoord(e).x,
-        y2: getRelCoord(e).y
+        x1: x,
+        y1: y,
+        x2: x,
+        y2: y
       });
     }
   };
 
   const handleMouseMove = e => {
     if (mode === 'draw' && activeWall) {
+      console.log(getRelCoord(e));
       setActiveWall({
         ...activeWall,
         x2: getRelCoord(e).x,
@@ -80,7 +93,7 @@ const GeometryDrawing = () => {
             height * zoomLvl
           }`}
         >
-          <Test />
+          <Grid />
           {activeWall && <Wall {...activeWall} />}
           {walls.map((e, i) => (
             <Wall
