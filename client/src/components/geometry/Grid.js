@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-const Grid = ({ isEnabled, width, height }) => {
+const Grid = ({ isEnabled, panHLvl, panVLvl, width, height }) => {
   return (
     <g>
       <pattern
@@ -15,11 +15,12 @@ const Grid = ({ isEnabled, width, height }) => {
         <circle cx='2' cy='2' r='2'></circle>
       </pattern>
       <rect
-        x='-25%'
-        y='-25%'
-        width='200%'
-        height='200%'
+        x={panHLvl + 'px'}
+        y={panVLvl + 'px'}
+        width={width}
+        height={height}
         fill='url(#pattern-grid)'
+        preserveAspectRatio='none'
       ></rect>
     </g>
   );

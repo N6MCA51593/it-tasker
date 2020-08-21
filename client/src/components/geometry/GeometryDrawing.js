@@ -93,7 +93,12 @@ const GeometryDrawing = () => {
             height * zoomLvl
           }`}
         >
-          <Grid />
+          <Grid
+            panVLvl={panVLvl}
+            panHLvl={panHLvl}
+            width={width * zoomLvl}
+            height={height * zoomLvl}
+          />
           {activeWall && <Wall {...activeWall} />}
           {walls.map((e, i) => (
             <Wall
