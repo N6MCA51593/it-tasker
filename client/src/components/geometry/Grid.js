@@ -1,18 +1,18 @@
-import React, { useRef, useEffect } from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 
-const Grid = ({ isEnabled, panHLvl, panVLvl, width, height }) => {
+const Grid = ({ panHLvl, panVLvl, width, height }) => {
   return (
     <g>
       <pattern
         id='pattern-grid'
-        x='0'
-        y='0'
+        x='-6px'
+        y='-6px'
         width='50'
         height='50'
         patternUnits='userSpaceOnUse'
       >
-        <circle cx='2' cy='2' r='2'></circle>
+        <path d='M5 2 h2 v2 h2 v2 h-2 v2 h-2 v-2 h-2 v-2 h2 z' />
       </pattern>
       <rect
         x={panHLvl + 'px'}
@@ -28,4 +28,4 @@ const Grid = ({ isEnabled, panHLvl, panVLvl, width, height }) => {
 
 Grid.propTypes = {};
 
-export default Grid;
+export default memo(Grid);

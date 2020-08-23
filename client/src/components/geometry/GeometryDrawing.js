@@ -5,8 +5,11 @@ import Grid from './Grid';
 import useZoom from './useZoom';
 import usePan from './usePan';
 import useDimensions from './useDimensions';
+import useCoordinates from './useCoordinates';
 
 const GeometryDrawing = () => {
+  const isGrid = true;
+  const gridStep = 50;
   const [walls, setWalls] = useState([]);
   const [activeWall, setActiveWall] = useState(null);
   const [mode, setMode] = useState('draw');
@@ -16,32 +19,30 @@ const GeometryDrawing = () => {
   const { zoomLvl, zoomIn, zoomOut } = useZoom();
   const { panH, panV, panHLvl, panVLvl } = usePan(zoomLvl);
   const { width, height } = useDimensions(ref);
-
-  const getRelCoord = e => {
-    const boundingRect = ref.current.getBoundingClientRect();
-    return {
-      x: Math.round((e.clientX - boundingRect.left) * zoomLvl + panHLvl),
-      y: Math.round((e.clientY - boundingRect.top) * zoomLvl + panVLvl)
-    };
-  };
+  const { getRelCoord } = useCoordinates({
+    isGrid,
+    gridStep,
+    zoomLvl,
+    panHLvl,
+    panVLvl,
+    ref
+  });
 
   const handleClick = e => {
     if (mode === 'draw') {
       if (activeWall) {
-        setWalls([...walls, activeWall]);
+        setWalls([
+          ...walls,
+          {
+            x1: activeWall.x1,
+            y1: activeWall.y1,
+            x2: isGrid ? getRelCoord(e, true).x : activeWall.x2,
+            y2: isGrid ? getRelCoord(e, true).y : activeWall.y2
+          }
+        ]);
       }
 
-      const inRange = (num, num2, diff) => {
-        const div = Math.trunc(num / num2);
-        const rem = num % num2;
-        if (rem < diff || rem === num) {
-          return div * num2;
-        }
-        return num;
-      };
-
-      let { x, y } = getRelCoord(e);
-
+      const { x, y } = getRelCoord(e, true);
       setActiveWall({
         x1: x,
         y1: y,
@@ -53,7 +54,7 @@ const GeometryDrawing = () => {
 
   const handleMouseMove = e => {
     if (mode === 'draw' && activeWall) {
-      console.log(getRelCoord(e));
+      //console.log(getRelCoord(e));
       setActiveWall({
         ...activeWall,
         x2: getRelCoord(e).x,
