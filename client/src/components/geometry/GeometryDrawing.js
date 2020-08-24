@@ -2,10 +2,9 @@ import React, { useRef, useState, Fragment } from 'react';
 import Wall from './Wall';
 import Grid from './Grid';
 //import Test from './Test';
-import useZoom from './useZoom';
-import usePan from './usePan';
 import useDimensions from './useDimensions';
 import useCoordinates from './useCoordinates';
+import useZoomAndPan from './useZoomAndPan';
 
 const GeometryDrawing = () => {
   const isGrid = true;
@@ -13,12 +12,17 @@ const GeometryDrawing = () => {
   const [walls, setWalls] = useState([]);
   const [activeWall, setActiveWall] = useState(null);
   const [mode, setMode] = useState('draw');
-
   const ref = useRef();
-
-  const { zoomLvl, zoomIn, zoomOut } = useZoom();
-  const { panH, panV, panHLvl, panVLvl } = usePan(zoomLvl);
   const { width, height } = useDimensions(ref);
+  const {
+    zoomLvl,
+    zoomIn,
+    zoomOut,
+    panH,
+    panV,
+    panHLvl,
+    panVLvl
+  } = useZoomAndPan({ width, height });
   const { getRelCoord } = useCoordinates({
     isGrid,
     gridStep,
