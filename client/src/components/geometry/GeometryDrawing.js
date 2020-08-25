@@ -1,19 +1,20 @@
 import React, { useRef, useState, Fragment } from 'react';
 import Wall from './Wall';
 import Grid from './Grid';
-//import Test from './Test';
+import GeometryControls from './GeometryControls';
 import useDimensions from './useDimensions';
 import useCoordinates from './useCoordinates';
 import useZoomAndPan from './useZoomAndPan';
+import useGrid from './useGrid';
 
 const GeometryDrawing = () => {
-  const isGrid = true;
-  const gridStep = 50;
   const [walls, setWalls] = useState([]);
   const [activeWall, setActiveWall] = useState(null);
+  //const [isActive, setIsActive] = useState(false);
   const [mode, setMode] = useState('draw');
   const ref = useRef();
   const { width, height } = useDimensions(ref);
+  const { isGrid, gridStep, toggleGrid } = useGrid();
   const {
     zoomLvl,
     zoomIn,
@@ -57,7 +58,7 @@ const GeometryDrawing = () => {
   };
 
   const handleMouseMove = e => {
-    if (mode === 'draw' && activeWall) {
+    if (activeWall) {
       //console.log(getRelCoord(e));
       setActiveWall({
         ...activeWall,
@@ -80,7 +81,28 @@ const GeometryDrawing = () => {
       } else {
         setWalls([...walls, { ...activeWall, x2: coords.x, y2: coords.y }]);
         setActiveWall(null);
-        setMode(null);
+      }
+    } else if (mode === 'remove') {
+      setWalls([
+        ...walls.filter(
+          el =>
+            el.x1 !== coords.x1 ||
+            el.x2 !== coords.x2 ||
+            el.y1 !== coords.y1 ||
+            el.y2 !== coords.y2
+        )
+      ]);
+    } else if (mode === 'move') {
+      if (activeWall) {
+        setWalls([...walls, { ...activeWall, x2: coords.x, y2: coords.y }]);
+        setActiveWall(null);
+      } else {
+        setActiveWall({
+          x1: coords.x,
+          y1: coords.y,
+          x2: getRelCoord(e).x,
+          y2: getRelCoord(e).y
+        });
       }
     }
   };
@@ -98,12 +120,14 @@ const GeometryDrawing = () => {
             height * zoomLvl
           }`}
         >
-          <Grid
-            panVLvl={panVLvl}
-            panHLvl={panHLvl}
-            width={width * zoomLvl}
-            height={height * zoomLvl}
-          />
+          {isGrid && (
+            <Grid
+              panVLvl={panVLvl}
+              panHLvl={panHLvl}
+              width={width * zoomLvl}
+              height={height * zoomLvl}
+            />
+          )}
           {activeWall && <Wall {...activeWall} />}
           {walls.map((e, i) => (
             <Wall
@@ -116,13 +140,14 @@ const GeometryDrawing = () => {
           ))}
         </svg>
       </div>
-      <button onClick={() => setMode('draw')}>Draw on</button>
-      <button onClick={() => zoomIn()}> + </button>
-      <button onClick={() => zoomOut()}> - </button>
-      <button onClick={() => panV(-1)}> T </button>
-      <button onClick={() => panV()}> B </button>
-      <button onClick={() => panH(-1)}> L </button>
-      <button onClick={() => panH()}> R </button>
+      <GeometryControls
+        zoomIn={zoomIn}
+        zoomOut={zoomOut}
+        panH={panH}
+        panV={panV}
+        setMode={setMode}
+        toggleGrid={toggleGrid}
+      />
     </Fragment>
   );
 };
