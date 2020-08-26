@@ -97,11 +97,20 @@ const GeometryDrawing = () => {
         setWalls([...walls, { ...activeWall, x2: coords.x, y2: coords.y }]);
         setActiveWall(null);
       } else {
+        setWalls([
+          ...walls.filter(
+            el =>
+              el.x1 !== coords.x1 ||
+              el.x2 !== coords.x2 ||
+              el.y1 !== coords.y1 ||
+              el.y2 !== coords.y2
+          )
+        ]);
         setActiveWall({
           x1: coords.x,
           y1: coords.y,
-          x2: getRelCoord(e).x,
-          y2: getRelCoord(e).y
+          x2: getRelCoord(e),
+          y2: getRelCoord(e)
         });
       }
     }
