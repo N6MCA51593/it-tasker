@@ -1,5 +1,4 @@
 import React, { memo } from 'react';
-//import PropTypes from 'prop-types';
 
 const Wall = ({ x1, y1, x2, y2, handleWallClick, mode, getRelCoord }) => {
   const r = 5;
@@ -56,10 +55,5 @@ const Wall = ({ x1, y1, x2, y2, handleWallClick, mode, getRelCoord }) => {
     </g>
   );
 };
-
-// Wall.propTypes = {
-//   pointOne: PropTypes.object.isRequired,
-//   pointTwo: PropTypes.object.isRequired
-// };
 
 export default memo(Wall);

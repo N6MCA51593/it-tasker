@@ -1,5 +1,3 @@
-import PropTypes from 'prop-types';
-
 const useCoordinates = ({
   isGrid,
   gridStep,
@@ -44,11 +42,6 @@ const useCoordinates = ({
     }
   };
   return { getRelCoord };
-};
-
-useCoordinates.propTypes = {
-  isGrid: PropTypes.bool,
-  gridStep: PropTypes.number
 };
 
 export default useCoordinates;

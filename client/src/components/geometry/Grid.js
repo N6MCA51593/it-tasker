@@ -1,5 +1,4 @@
 import React, { memo } from 'react';
-import PropTypes from 'prop-types';
 
 const Grid = ({ panHLvl, panVLvl, width, height }) => {
   return (
@@ -25,7 +24,5 @@ const Grid = ({ panHLvl, panVLvl, width, height }) => {
     </g>
   );
 };
-
-Grid.propTypes = {};
 
 export default memo(Grid);
