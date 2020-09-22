@@ -6,6 +6,9 @@ import useDimensions from './useDimensions';
 import useCoordinates from './useCoordinates';
 import useZoomAndPan from './useZoomAndPan';
 import useGrid from './useGrid';
+import { useSelector, useDispatch } from 'react-redux';
+import { add } from '../../store/wallSlice';
+import { setW } from '../../store/activeWallSlice';
 
 const GeometryDrawing = () => {
   const [walls, setWalls] = useState([]);
@@ -32,10 +35,19 @@ const GeometryDrawing = () => {
     panVLvl,
     ref
   });
+  const dispatch = useDispatch();
 
   const handleClick = e => {
     if (mode === 'draw') {
       if (activeWall) {
+        dispatch(
+          add({
+            x1: activeWall.x1,
+            y1: activeWall.y1,
+            x2: isGrid ? getRelCoord(e, true).x : activeWall.x2,
+            y2: isGrid ? getRelCoord(e, true).y : activeWall.y2
+          })
+        );
         setWalls([
           ...walls,
           {
@@ -48,6 +60,14 @@ const GeometryDrawing = () => {
       }
 
       const { x, y } = getRelCoord(e, true);
+      dispatch(
+        setW({
+          x1: x,
+          y1: y,
+          x2: x,
+          y2: y
+        })
+      );
       setActiveWall({
         x1: x,
         y1: y,

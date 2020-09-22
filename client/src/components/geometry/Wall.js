@@ -1,6 +1,9 @@
 import React, { memo } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { add } from '../../store/wallSlice';
 
 const Wall = ({ x1, y1, x2, y2, handleWallClick, mode, getRelCoord }) => {
+  const dispatch = useDispatch();
   const r = 5;
 
   const isCornerFunc = (x, y) => {
