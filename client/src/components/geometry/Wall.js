@@ -2,7 +2,8 @@ import React, { memo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { add } from '../../store/wallSlice';
 
-const Wall = ({ x1, y1, x2, y2, handleWallClick, mode, getRelCoord }) => {
+const Wall = ({ x1, y1, x2, y2, handleWallClick, mode, getRelCoord, id }) => {
+  const wall = useSelector(state => state.walls.entities[id]);
   const dispatch = useDispatch();
   const r = 5;
 

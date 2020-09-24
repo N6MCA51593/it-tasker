@@ -7,7 +7,7 @@ import useCoordinates from './useCoordinates';
 import useZoomAndPan from './useZoomAndPan';
 import useGrid from './useGrid';
 import { useSelector, useDispatch } from 'react-redux';
-import { add } from '../../store/wallSlice';
+import { add, setModeR } from '../../store/wallSlice';
 import { setW } from '../../store/activeWallSlice';
 
 const GeometryDrawing = () => {
@@ -36,18 +36,14 @@ const GeometryDrawing = () => {
     ref
   });
   const dispatch = useDispatch();
+  const ids = useSelector(state => state.walls.ids);
+  const activeWallR = useSelector(state =>
+    state.walls.activeWall ? state.walls.entities[activeWall] : null
+  );
 
   const handleClick = e => {
     if (mode === 'draw') {
       if (activeWall) {
-        dispatch(
-          add({
-            x1: activeWall.x1,
-            y1: activeWall.y1,
-            x2: isGrid ? getRelCoord(e, true).x : activeWall.x2,
-            y2: isGrid ? getRelCoord(e, true).y : activeWall.y2
-          })
-        );
         setWalls([
           ...walls,
           {
@@ -60,14 +56,27 @@ const GeometryDrawing = () => {
       }
 
       const { x, y } = getRelCoord(e, true);
+
       dispatch(
-        setW({
-          x1: x,
-          y1: y,
-          x2: x,
-          y2: y
+        add({
+          coords: {
+            x1: activeWallR ? activeWallR.x1 : x,
+            y1: activeWallR ? activeWallR.y1 : y,
+            x2: activeWallR
+              ? isGrid
+                ? getRelCoord(e, true).x
+                : activeWallR.x2
+              : x,
+            y2: activeWallR
+              ? isGrid
+                ? getRelCoord(e, true).y
+                : activeWallR.y2
+              : y
+          },
+          isActive: !activeWallR
         })
       );
+
       setActiveWall({
         x1: x,
         y1: y,
