@@ -1,14 +1,23 @@
 import React, { memo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { add } from '../../store/wallSlice';
+import { addWall, removeWall, finalizeWall } from '../../store/wallSlice';
 
-const Wall = ({ x1, y1, x2, y2, handleWallClick, mode, getRelCoord, id }) => {
+const Wall = ({
+  x1,
+  y1,
+  x2,
+  y2,
+  handleWallClick,
+  mode,
+  getRelCoord,
+  id,
+  activeWallR
+}) => {
   const wall = useSelector(state => state.walls.entities[id]);
   const dispatch = useDispatch();
   const r = 5;
 
   const isCornerFunc = (x, y) => {
-    //console.log({ x, y });
     if (Math.sqrt(Math.pow(x1 - x, 2) + Math.pow(y1 - y, 2)) <= r) {
       return { x: x1, y: y1 };
     } else if (Math.sqrt(Math.pow(x2 - x, 2) + Math.pow(y2 - y, 2)) <= r) {
@@ -42,8 +51,17 @@ const Wall = ({ x1, y1, x2, y2, handleWallClick, mode, getRelCoord, id }) => {
         e,
         findNearestPoint({ x: x1, y: y1 }, { x: x2, y: y2 }, getRelCoord(e))
       );
+      const { x, y } = findNearestPoint(
+        { x: x1, y: y1 },
+        { x: x2, y: y2 },
+        getRelCoord(e)
+      );
+      activeWallR
+        ? dispatch(finalizeWall({ x2: x, y2: y }))
+        : dispatch(addWall({ x1: x, x2: x, y1: y, y2: y }));
     } else if (mode === 'remove') {
       handleWallClick(e, { x1, x2, y1, y2 });
+      dispatch(removeWall(id));
     } else if (mode === 'move') {
       return handleWallClick(
         e,

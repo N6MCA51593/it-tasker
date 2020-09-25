@@ -10,26 +10,43 @@ const wallsSlice = createSlice({
   name: 'walls',
   initialState,
   reducers: {
-    add: {
+    addWall: {
       reducer(state, { payload }) {
+        console.log(payload);
         wallsAdapter.addOne(state, payload);
-        if (payload.isActive) {
-          state.activeWall = payload.id;
-        }
+        state.activeWall = payload.id;
       },
-      prepare({ coords, isActive }) {
+      prepare(coords) {
         const id = nanoid();
         return {
-          payload: { id, coords, isActive: isActive ? isActive : false }
+          payload: { id, coords }
         };
       }
     },
+    finalizeWall(state, { payload }) {
+      console.log(state.entities);
+      wallsAdapter.updateOne(state, {
+        id: state.activeWall,
+        changes: {
+          coords: { ...payload, ...state.entities[state.activeWall].coords }
+        }
+      });
+      state.activeWall = null;
+    },
     setModeR(state, action) {
       state.mode = action.payload;
-    }
+    },
+    updateWallR: wallsAdapter.updateOne,
+    removeWall: wallsAdapter.removeOne
   }
 });
 
-export const { add, setModeR } = wallsSlice.actions;
+export const {
+  addWall,
+  setModeR,
+  updateWallR,
+  removeWall,
+  finalizeWall
+} = wallsSlice.actions;
 
 export default wallsSlice.reducer;

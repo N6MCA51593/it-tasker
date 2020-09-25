@@ -7,8 +7,7 @@ import useCoordinates from './useCoordinates';
 import useZoomAndPan from './useZoomAndPan';
 import useGrid from './useGrid';
 import { useSelector, useDispatch } from 'react-redux';
-import { add, setModeR } from '../../store/wallSlice';
-import { setW } from '../../store/activeWallSlice';
+import { addWall, updateWallR } from '../../store/wallSlice';
 
 const GeometryDrawing = () => {
   const [walls, setWalls] = useState([]);
@@ -38,7 +37,7 @@ const GeometryDrawing = () => {
   const dispatch = useDispatch();
   const ids = useSelector(state => state.walls.ids);
   const activeWallR = useSelector(state =>
-    state.walls.activeWall ? state.walls.entities[activeWall] : null
+    state.walls.activeWall ? state.walls.entities[state.walls.activeWall] : null
   );
 
   const handleClick = e => {
@@ -58,22 +57,19 @@ const GeometryDrawing = () => {
       const { x, y } = getRelCoord(e, true);
 
       dispatch(
-        add({
-          coords: {
-            x1: activeWallR ? activeWallR.x1 : x,
-            y1: activeWallR ? activeWallR.y1 : y,
-            x2: activeWallR
-              ? isGrid
-                ? getRelCoord(e, true).x
-                : activeWallR.x2
-              : x,
-            y2: activeWallR
-              ? isGrid
-                ? getRelCoord(e, true).y
-                : activeWallR.y2
-              : y
-          },
-          isActive: !activeWallR
+        addWall({
+          x1: activeWallR ? activeWallR.coords.x1 : x,
+          y1: activeWallR ? activeWallR.coords.y1 : y,
+          x2: activeWallR
+            ? isGrid
+              ? getRelCoord(e, true).x
+              : activeWallR.x2
+            : x,
+          y2: activeWallR
+            ? isGrid
+              ? getRelCoord(e, true).y
+              : activeWallR.y2
+            : y
         })
       );
 
@@ -88,12 +84,26 @@ const GeometryDrawing = () => {
 
   const handleMouseMove = e => {
     if (activeWall) {
-      //console.log(getRelCoord(e));
       setActiveWall({
         ...activeWall,
         x2: getRelCoord(e).x,
         y2: getRelCoord(e).y
       });
+    }
+
+    if (activeWallR) {
+      dispatch(
+        updateWallR({
+          id: activeWallR.id,
+          changes: {
+            coords: {
+              ...activeWallR.coords,
+              x2: getRelCoord(e).x,
+              y2: getRelCoord(e).y
+            }
+          }
+        })
+      );
     }
   };
 
@@ -170,6 +180,8 @@ const GeometryDrawing = () => {
           {walls.map((e, i) => (
             <Wall
               key={i}
+              activeWallR={activeWallR}
+              id={ids[i]}
               {...e}
               mode={mode}
               handleWallClick={handleWallClick}
