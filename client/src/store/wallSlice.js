@@ -12,7 +12,6 @@ const wallsSlice = createSlice({
   reducers: {
     addWall: {
       reducer(state, { payload }) {
-        console.log(payload);
         wallsAdapter.addOne(state, payload);
         state.activeWall = payload.id;
       },
@@ -24,27 +23,22 @@ const wallsSlice = createSlice({
       }
     },
     finalizeWall(state, { payload }) {
-      console.log(state.entities);
       wallsAdapter.updateOne(state, {
         id: state.activeWall,
         changes: {
-          coords: { ...payload, ...state.entities[state.activeWall].coords }
+          coords: { ...state.entities[state.activeWall].coords, ...payload }
         }
       });
       state.activeWall = null;
     },
-    setModeR(state, action) {
-      state.mode = action.payload;
-    },
-    updateWallR: wallsAdapter.updateOne,
+    updateWall: wallsAdapter.updateOne,
     removeWall: wallsAdapter.removeOne
   }
 });
 
 export const {
   addWall,
-  setModeR,
-  updateWallR,
+  updateWall,
   removeWall,
   finalizeWall
 } = wallsSlice.actions;

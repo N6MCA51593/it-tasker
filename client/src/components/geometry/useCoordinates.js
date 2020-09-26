@@ -1,3 +1,5 @@
+import { useCallback } from 'react';
+
 const useCoordinates = ({
   isGrid,
   gridStep,
@@ -29,18 +31,21 @@ const useCoordinates = ({
     return { x, y };
   };
 
-  const getRelCoord = (e, checkGrid = false) => {
-    const boundingRect = ref.current.getBoundingClientRect();
+  const getRelCoord = useCallback(
+    (e, checkGrid = false) => {
+      const boundingRect = ref.current.getBoundingClientRect();
 
-    const x = Math.round((e.clientX - boundingRect.left) * zoomLvl + panHLvl);
-    const y = Math.round((e.clientY - boundingRect.top) * zoomLvl + panVLvl);
+      const x = Math.round((e.clientX - boundingRect.left) * zoomLvl + panHLvl);
+      const y = Math.round((e.clientY - boundingRect.top) * zoomLvl + panVLvl);
 
-    if (isGrid && checkGrid) {
-      return findClosestNode(x, y, gridStep, 15);
-    } else {
-      return { x, y };
-    }
-  };
+      if (isGrid && checkGrid) {
+        return findClosestNode(x, y, gridStep, 15);
+      } else {
+        return { x, y };
+      }
+    },
+    [gridStep, isGrid, panHLvl, panVLvl, ref, zoomLvl]
+  );
   return { getRelCoord };
 };
 

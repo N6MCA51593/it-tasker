@@ -2,20 +2,14 @@ import React, { memo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { addWall, removeWall, finalizeWall } from '../../store/wallSlice';
 
-const Wall = ({
-  x1,
-  y1,
-  x2,
-  y2,
-  handleWallClick,
-  mode,
-  getRelCoord,
-  id,
-  activeWallR
-}) => {
-  const wall = useSelector(state => state.walls.entities[id]);
+const Wall = ({ mode, getRelCoord, id, activeWall }) => {
+  const { x1, y1, x2, y2 } = useSelector(
+    state => state.walls.entities[id].coords
+  );
   const dispatch = useDispatch();
+
   const r = 5;
+  const isActive = activeWall === id;
 
   const isCornerFunc = (x, y) => {
     if (Math.sqrt(Math.pow(x1 - x, 2) + Math.pow(y1 - y, 2)) <= r) {
@@ -46,31 +40,32 @@ const Wall = ({
   };
 
   const handleClick = e => {
+    e.stopPropagation();
     if (mode === 'draw') {
-      handleWallClick(
-        e,
-        findNearestPoint({ x: x1, y: y1 }, { x: x2, y: y2 }, getRelCoord(e))
-      );
+      // handleWallClick(
+      //   e,
+      //   findNearestPoint({ x: x1, y: y1 }, { x: x2, y: y2 }, getRelCoord(e))
+      // );
       const { x, y } = findNearestPoint(
         { x: x1, y: y1 },
         { x: x2, y: y2 },
         getRelCoord(e)
       );
-      activeWallR
+      activeWall
         ? dispatch(finalizeWall({ x2: x, y2: y }))
         : dispatch(addWall({ x1: x, x2: x, y1: y, y2: y }));
     } else if (mode === 'remove') {
-      handleWallClick(e, { x1, x2, y1, y2 });
+      // handleWallClick(e, { x1, x2, y1, y2 });
       dispatch(removeWall(id));
     } else if (mode === 'move') {
-      return handleWallClick(
-        e,
-        isCornerFunc(getRelCoord(e).x, getRelCoord(e).y)
-      );
+      // return handleWallClick(
+      //   e,
+      //   isCornerFunc(getRelCoord(e).x, getRelCoord(e).y)
+      // );
     }
   };
   return (
-    <g onClick={handleWallClick && (e => handleClick(e))}>
+    <g onClick={e => handleClick(e)} className={isActive ? 'active' : ''}>
       <circle cx={x1} cy={y1} r={r} fill='black' />
       <line x1={x1} y1={y1} x2={x2} y2={y2} strokeWidth='4' stroke='black' />
       <circle cx={x2} cy={y2} r={r} fill='black' />

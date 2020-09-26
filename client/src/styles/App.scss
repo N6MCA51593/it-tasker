@@ -21,3 +21,7 @@ svg {
 button {
   padding: 0 1.3rem;
 }
+
+.active {
+  pointer-events: none;
+}
