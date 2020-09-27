@@ -7,12 +7,9 @@ import useCoordinates from './useCoordinates';
 import useZoomAndPan from './useZoomAndPan';
 import useGrid from './useGrid';
 import { useSelector, useDispatch } from 'react-redux';
-import { addWall, finalizeWall, updateWall } from '../../store/wallSlice';
+import { addWall, saveWall, updateActiveWall } from '../../store/wallSlice';
 
 const GeometryDrawing = () => {
-  // const [walls, setWalls] = useState([]);
-  // const [activeWall, setActiveWall] = useState(null);
-  //const [isActive, setIsActive] = useState(false);
   const [mode, setMode] = useState('draw');
   const ref = useRef();
   const { width, height } = useDimensions(ref);
@@ -42,125 +39,22 @@ const GeometryDrawing = () => {
 
   const handleClick = e => {
     if (mode === 'draw') {
-      // if (activeWall) {
-      //   setWalls([
-      //     ...walls,
-      //     {
-      //       x1: activeWall.x1,
-      //       y1: activeWall.y1,
-      //       x2: isGrid ? getRelCoord(e, true).x : activeWall.x2,
-      //       y2: isGrid ? getRelCoord(e, true).y : activeWall.y2
-      //     }
-      //   ]);
-      // }
       const { x, y } = isGrid ? getRelCoord(e, true) : getRelCoord(e);
       if (activeWall) {
-        dispatch(
-          finalizeWall({
-            ...activeWall.coords,
-            x2: x,
-            y2: y
-          })
-        );
-        dispatch(
-          addWall({
-            ...activeWall.coords,
-            x1: x,
-            y1: y
-          })
-        );
-      } else {
-        dispatch(
-          addWall({
-            x1: x,
-            y1: y,
-            x2: x,
-            y2: y
-          })
-        );
+        dispatch(saveWall({ x, y }));
       }
 
-      // setActiveWall({
-      //   x1: x,
-      //   y1: y,
-      //   x2: x,
-      //   y2: y
-      // });
+      dispatch(addWall({ x, y }));
     }
   };
 
   const handleMouseMove = e => {
-    // if (activeWall) {
-    //   setActiveWall({
-    //     ...activeWall,
-    //     x2: getRelCoord(e).x,
-    //     y2: getRelCoord(e).y
-    //   });
-    // }
-
     if (activeWall) {
-      dispatch(
-        updateWall({
-          id: activeWall.id,
-          changes: {
-            coords: {
-              ...activeWall.coords,
-              x2: getRelCoord(e).x,
-              y2: getRelCoord(e).y
-            }
-          }
-        })
-      );
+      const x = getRelCoord(e).x;
+      const y = getRelCoord(e).y;
+      dispatch(updateActiveWall({ x, y }));
     }
   };
-
-  // const handleWallClick = (e, coords) => {
-  //   e.stopPropagation();
-  //   if (mode === 'draw') {
-  //     if (!activeWall) {
-  //       setActiveWall({
-  //         x1: coords.x,
-  //         y1: coords.y,
-  //         x2: coords.x,
-  //         y2: coords.y
-  //       });
-  //     } else {
-  //       setWalls([...walls, { ...activeWall, x2: coords.x, y2: coords.y }]);
-  //       setActiveWall(null);
-  //     }
-  //   } else if (mode === 'remove') {
-  //     setWalls([
-  //       ...walls.filter(
-  //         el =>
-  //           el.x1 !== coords.x1 ||
-  //           el.x2 !== coords.x2 ||
-  //           el.y1 !== coords.y1 ||
-  //           el.y2 !== coords.y2
-  //       )
-  //     ]);
-  //   } else if (mode === 'move') {
-  //     if (activeWall) {
-  //       setWalls([...walls, { ...activeWall, x2: coords.x, y2: coords.y }]);
-  //       setActiveWall(null);
-  //     } else {
-  //       setWalls([
-  //         ...walls.filter(
-  //           el =>
-  //             el.x1 !== coords.x1 ||
-  //             el.x2 !== coords.x2 ||
-  //             el.y1 !== coords.y1 ||
-  //             el.y2 !== coords.y2
-  //         )
-  //       ]);
-  //       setActiveWall({
-  //         x1: coords.x,
-  //         y1: coords.y,
-  //         x2: getRelCoord(e),
-  //         y2: getRelCoord(e)
-  //       });
-  //     }
-  //   }
-  // };
 
   return (
     <Fragment>
