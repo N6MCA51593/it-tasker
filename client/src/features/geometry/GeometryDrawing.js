@@ -1,10 +1,10 @@
 import React, { useRef, useState, Fragment } from 'react';
 import Wall from 'features/geometry/Wall';
 import Grid from 'features/geometry/Grid';
-import GeometryControls from 'features/geometry/GeometryControls';
+import GeometryControls from 'features/controls/GeometryControls';
 import useDimensions from 'features/geometry/useDimensions';
 import useCoordinates from 'features/geometry/useCoordinates';
-import useZoomAndPan from 'features/geometry/useZoomAndPan';
+import useZoomAndPan from 'features/controls/useZoomAndPan';
 import useGrid from 'features/geometry/useGrid';
 import { useSelector, useDispatch } from 'react-redux';
 import {
