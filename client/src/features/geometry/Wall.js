@@ -15,7 +15,7 @@ const Wall = ({ mode, getRelCoord, id, activeWall }) => {
   const dispatch = useDispatch();
   const coords = useSelector(state => state.walls.entities[id].coords);
   const { x1, y1, x2, y2 } = coords;
-  const r = 5;
+  const r = 7;
   const isActive = activeWall === id;
 
   const handleClick = e => {
@@ -40,7 +40,7 @@ const Wall = ({ mode, getRelCoord, id, activeWall }) => {
   return (
     <g onClick={e => handleClick(e)} className={isActive ? 'active' : ''}>
       <circle cx={x1} cy={y1} r={r} fill='black' />
-      <line x1={x1} y1={y1} x2={x2} y2={y2} strokeWidth='4' stroke='black' />
+      <line x1={x1} y1={y1} x2={x2} y2={y2} strokeWidth='5' stroke='black' />
       <circle cx={x2} cy={y2} r={r} fill='black' />
     </g>
   );

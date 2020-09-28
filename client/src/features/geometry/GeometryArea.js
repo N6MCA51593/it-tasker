@@ -1,19 +1,13 @@
 import React, { useRef, useState, Fragment } from 'react';
-import Wall from 'features/geometry/Wall';
 import Grid from 'features/geometry/Grid';
 import GeometryControls from 'features/controls/GeometryControls';
 import useDimensions from 'features/geometry/useDimensions';
 import useCoordinates from 'features/geometry/useCoordinates';
 import useZoomAndPan from 'features/controls/useZoomAndPan';
 import useGrid from 'features/geometry/useGrid';
-import { useSelector, useDispatch } from 'react-redux';
-import {
-  addWall,
-  saveWall,
-  updateActiveWall
-} from 'features/geometry/wallSlice';
+import GeometryDrawing2 from 'features/geometry/GeometryDrawing2';
 
-const GeometryDrawing = () => {
+const GeometryArea = () => {
   const [mode, setMode] = useState('draw');
   const [isPointerDown, setIsPointerDown] = useState(false);
   const ref = useRef();
@@ -38,29 +32,8 @@ const GeometryDrawing = () => {
     panVLvl,
     ref
   });
-  const dispatch = useDispatch();
-  const ids = useSelector(state => state.walls.ids);
-  const activeWall = useSelector(state =>
-    state.walls.activeWall ? state.walls.entities[state.walls.activeWall] : null
-  );
-
-  const handleClick = e => {
-    if (mode === 'draw') {
-      const { x, y } = isGrid ? getRelCoord(e, true) : getRelCoord(e);
-      if (activeWall) {
-        dispatch(saveWall({ x, y }));
-      }
-
-      dispatch(addWall({ x, y }));
-    }
-  };
 
   const handleMouseMove = e => {
-    if (activeWall) {
-      const x = getRelCoord(e).x;
-      const y = getRelCoord(e).y;
-      dispatch(updateActiveWall({ x, y }));
-    }
     if (mode === 'nav' && isPointerDown) {
       navVB(getRelCoord(e));
     }
@@ -70,7 +43,6 @@ const GeometryDrawing = () => {
     <Fragment>
       <div
         ref={ref}
-        onClick={e => handleClick(e)}
         onMouseMove={e => handleMouseMove(e)}
         onPointerDown={e => {
           setInitCoords(getRelCoord(e));
@@ -95,15 +67,15 @@ const GeometryDrawing = () => {
               height={height * zoomLvl}
             />
           )}
-          {ids.map((e, i) => (
-            <Wall
-              key={i}
-              activeWall={activeWall ? activeWall.id : null}
-              id={e}
-              mode={mode}
-              getRelCoord={getRelCoord}
-            />
-          ))}
+          <GeometryDrawing2
+            mode={mode}
+            getRelCoord={getRelCoord}
+            isGrid={isGrid}
+            panVLvl={panVLvl}
+            panHLvl={panHLvl}
+            width={width * zoomLvl}
+            height={height * zoomLvl}
+          />
         </svg>
       </div>
       <GeometryControls
@@ -118,4 +90,4 @@ const GeometryDrawing = () => {
   );
 };
 
-export default GeometryDrawing;
+export default GeometryArea;

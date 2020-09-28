@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 const useZoomAndPan = ({ width, height }) => {
   const [panVLvl, setPanVLvl] = useState(0);
+  const [initCoords, setInitCoords] = useState(null);
   const [panHLvl, setPanHLvl] = useState(0);
   const [zoomLvl, setZoom] = useState(1.1);
 
@@ -28,7 +29,22 @@ const useZoomAndPan = ({ width, height }) => {
     setPanVLvl(panVLvl - (height * zoomLvl) / 2);
   };
 
-  return { panVLvl, panHLvl, panV, panH, zoomLvl, zoomIn, zoomOut };
+  const navVB = ({ x, y }) => {
+    panH((initCoords.x - x) / 1000);
+    panV((initCoords.y - y) / 1000);
+  };
+
+  return {
+    panVLvl,
+    panHLvl,
+    panV,
+    panH,
+    zoomLvl,
+    zoomIn,
+    zoomOut,
+    navVB,
+    setInitCoords
+  };
 };
 
 export default useZoomAndPan;
