@@ -1,5 +1,5 @@
 import React from 'react';
-import Wall from './Wall';
+import Wall from 'features/geometry/Wall';
 //import PropTypes from 'prop-types';
 
 const Layout = points => {

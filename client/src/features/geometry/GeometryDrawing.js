@@ -1,13 +1,17 @@
 import React, { useRef, useState, Fragment } from 'react';
-import Wall from './Wall';
-import Grid from './Grid';
-import GeometryControls from './GeometryControls';
-import useDimensions from './useDimensions';
-import useCoordinates from './useCoordinates';
-import useZoomAndPan from './useZoomAndPan';
-import useGrid from './useGrid';
+import Wall from 'features/geometry/Wall';
+import Grid from 'features/geometry/Grid';
+import GeometryControls from 'features/geometry/GeometryControls';
+import useDimensions from 'features/geometry/useDimensions';
+import useCoordinates from 'features/geometry/useCoordinates';
+import useZoomAndPan from 'features/geometry/useZoomAndPan';
+import useGrid from 'features/geometry/useGrid';
 import { useSelector, useDispatch } from 'react-redux';
-import { addWall, saveWall, updateActiveWall } from '../../store/wallSlice';
+import {
+  addWall,
+  saveWall,
+  updateActiveWall
+} from 'features/geometry/wallSlice';
 
 const GeometryDrawing = () => {
   const [mode, setMode] = useState('draw');

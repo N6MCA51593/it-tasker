@@ -1,8 +1,8 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import GeometryDrawing from './components/geometry/GeometryDrawing';
-import store from './store/store';
-import './styles/App.scss';
+import GeometryDrawing from 'features/geometry/GeometryDrawing';
+import store from 'app/store';
+import 'styles/App.scss';
 
 const App = () => {
   return (

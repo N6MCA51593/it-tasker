@@ -1,7 +1,15 @@
 import React, { memo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { addWall, removeWall, saveWall, moveWall } from '../../store/wallSlice';
-import { findFarthestCorner, findNearestPoint } from './wallMathFuncs';
+import {
+  addWall,
+  removeWall,
+  saveWall,
+  moveWall
+} from 'features/geometry/wallSlice';
+import {
+  findFarthestCorner,
+  findNearestPoint
+} from 'features/geometry/wallMathFuncs';
 
 const Wall = ({ mode, getRelCoord, id, activeWall }) => {
   const dispatch = useDispatch();
