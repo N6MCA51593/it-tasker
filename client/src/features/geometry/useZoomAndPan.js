@@ -29,9 +29,9 @@ const useZoomAndPan = ({ width, height }) => {
     setPanVLvl(panVLvl - (height * zoomLvl) / 2);
   };
 
-  const navVB = ({ x, y }) => {
-    panH((initCoords.x - x) / 1000);
-    panV((initCoords.y - y) / 1000);
+  const freePan = ({ x, y }) => {
+    panH((initCoords.x - x) / 500);
+    panV((initCoords.y - y) / 500);
   };
 
   return {
@@ -42,7 +42,7 @@ const useZoomAndPan = ({ width, height }) => {
     zoomLvl,
     zoomIn,
     zoomOut,
-    navVB,
+    freePan,
     setInitCoords
   };
 };

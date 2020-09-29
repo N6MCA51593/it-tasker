@@ -1,11 +1,6 @@
-import React, { useRef, useState, Fragment } from 'react';
+import React from 'react';
 import Wall from 'features/geometry/Wall';
 import Grid from 'features/geometry/Grid';
-import GeometryControls from 'features/controls/GeometryControls';
-import useDimensions from 'features/geometry/useDimensions';
-import useCoordinates from 'features/geometry/useCoordinates';
-import useZoomAndPan from 'features/controls/useZoomAndPan';
-import useGrid from 'features/geometry/useGrid';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   addWall,
@@ -13,31 +8,16 @@ import {
   updateActiveWall
 } from 'features/geometry/wallSlice';
 
-const GeometryDrawing = () => {
-  const [mode, setMode] = useState('draw');
-  const [isPointerDown, setIsPointerDown] = useState(false);
-  const ref = useRef();
-  const { width, height } = useDimensions(ref);
-  const { isGrid, gridStep, toggleGrid } = useGrid();
-  const {
-    zoomLvl,
-    zoomIn,
-    zoomOut,
-    panH,
-    panV,
-    panHLvl,
-    panVLvl,
-    navVB,
-    setInitCoords
-  } = useZoomAndPan({ width, height });
-  const { getRelCoord } = useCoordinates({
-    isGrid,
-    gridStep,
-    zoomLvl,
-    panHLvl,
-    panVLvl,
-    ref
-  });
+const GeometryDrawing = ({
+  mode,
+  isGrid,
+  getRelCoord,
+  panHLvl,
+  panVLvl,
+  zoomLvl,
+  width,
+  height
+}) => {
   const dispatch = useDispatch();
   const ids = useSelector(state => state.walls.ids);
   const activeWall = useSelector(state =>
@@ -61,60 +41,36 @@ const GeometryDrawing = () => {
       const y = getRelCoord(e).y;
       dispatch(updateActiveWall({ x, y }));
     }
-    if (mode === 'nav' && isPointerDown) {
-      navVB(getRelCoord(e));
-    }
   };
 
   return (
-    <Fragment>
-      <div
-        ref={ref}
-        onClick={e => handleClick(e)}
-        onMouseMove={e => handleMouseMove(e)}
-        onPointerDown={e => {
-          setInitCoords(getRelCoord(e));
-          setIsPointerDown(true);
-        }}
-        onPointerUp={() => {
-          setInitCoords(null);
-          setIsPointerDown(false);
-        }}
-        className='draw-area'
+    <div
+      onClick={e => handleClick(e)}
+      onMouseMove={e => handleMouseMove(e)}
+      className='draw-area'
+    >
+      <svg
+        viewBox={`${panHLvl} ${panVLvl} ${width * zoomLvl} ${height * zoomLvl}`}
       >
-        <svg
-          viewBox={`${panHLvl} ${panVLvl} ${width * zoomLvl} ${
-            height * zoomLvl
-          }`}
-        >
-          {isGrid && (
-            <Grid
-              panVLvl={panVLvl}
-              panHLvl={panHLvl}
-              width={width * zoomLvl}
-              height={height * zoomLvl}
-            />
-          )}
-          {ids.map((e, i) => (
-            <Wall
-              key={i}
-              activeWall={activeWall ? activeWall.id : null}
-              id={e}
-              mode={mode}
-              getRelCoord={getRelCoord}
-            />
-          ))}
-        </svg>
-      </div>
-      <GeometryControls
-        zoomIn={zoomIn}
-        zoomOut={zoomOut}
-        panH={panH}
-        panV={panV}
-        setMode={setMode}
-        toggleGrid={toggleGrid}
-      />
-    </Fragment>
+        {isGrid && (
+          <Grid
+            panVLvl={panVLvl}
+            panHLvl={panHLvl}
+            width={width * zoomLvl}
+            height={height * zoomLvl}
+          />
+        )}
+        {ids.map((e, i) => (
+          <Wall
+            key={i}
+            activeWall={activeWall ? activeWall.id : null}
+            id={e}
+            mode={mode}
+            getRelCoord={getRelCoord}
+          />
+        ))}
+      </svg>
+    </div>
   );
 };
 

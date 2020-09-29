@@ -3,7 +3,6 @@ import { createSlice, nanoid, createEntityAdapter } from '@reduxjs/toolkit';
 const wallsAdapter = createEntityAdapter();
 const initialState = wallsAdapter.getInitialState({
   activeWall: null,
-  mode: 'draw',
   movingWallCoords: null
 });
 
