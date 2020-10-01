@@ -64,7 +64,11 @@ const wallsSlice = createSlice({
       state.activeWall = payload.id;
       state.movingWallCoords = payload.coords;
     },
-    removeWall: wallsAdapter.removeOne
+    removeWall: wallsAdapter.removeOne,
+    cancelDrawing(state) {
+      wallsAdapter.removeOne(state, state.activeWall);
+      state.activeWall = null;
+    }
   }
 });
 
@@ -73,7 +77,8 @@ export const {
   updateActiveWall,
   removeWall,
   saveWall,
-  moveWall
+  moveWall,
+  cancelDrawing
 } = wallsSlice.actions;
 
 export default wallsSlice.reducer;

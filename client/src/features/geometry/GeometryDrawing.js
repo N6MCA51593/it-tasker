@@ -7,6 +7,7 @@ import {
   saveWall,
   updateActiveWall
 } from 'features/geometry/wallSlice';
+import FloorGeometry from 'features/geometry/FloorGeometry';
 
 const GeometryDrawing = ({
   mode,

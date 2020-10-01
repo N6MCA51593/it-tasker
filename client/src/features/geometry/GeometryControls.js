@@ -1,4 +1,6 @@
 import React from 'react';
+import { cancelDrawing } from 'features/geometry/wallSlice';
+import { useDispatch } from 'react-redux';
 
 const GeometryControls = ({
   zoomIn,
@@ -8,10 +10,12 @@ const GeometryControls = ({
   setMode,
   toggleGrid
 }) => {
+  const dispatch = useDispatch();
   return (
     <div className='geometry-controls'>
       <button onClick={() => setMode('nav')}>Nav</button>
       <button onClick={() => setMode('draw')}>Draw</button>
+      <button onClick={() => dispatch(cancelDrawing())}>Cancel</button>
       <button onClick={() => setMode('remove')}>Remove</button>
       <button onClick={() => setMode('move')}>Move</button>
       <button onClick={() => toggleGrid()}>Grid</button>

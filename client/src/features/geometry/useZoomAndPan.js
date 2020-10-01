@@ -30,8 +30,8 @@ const useZoomAndPan = ({ width, height }) => {
   };
 
   const freePan = ({ x, y }) => {
-    panH((initCoords.x - x) / 500);
-    panV((initCoords.y - y) / 500);
+    panH((initCoords.x - x) / (500 * zoomLvl));
+    panV((initCoords.y - y) / (500 * zoomLvl));
   };
 
   return {
