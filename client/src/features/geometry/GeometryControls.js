@@ -1,5 +1,6 @@
 import React from 'react';
 import { cancelDrawing } from 'features/geometry/wallSlice';
+import sharedAct from 'features/geometry/sharedActions';
 import { useDispatch } from 'react-redux';
 
 const GeometryControls = ({
@@ -14,6 +15,11 @@ const GeometryControls = ({
   return (
     <div className='geometry-controls'>
       <button onClick={() => setMode('nav')}>Nav</button>
+      <button
+        onClick={() => dispatch(sharedAct({ id: '123', text: 'henlo stinky' }))}
+      >
+        shared
+      </button>
       <button onClick={() => setMode('draw')}>Draw</button>
       <button onClick={() => dispatch(cancelDrawing())}>Cancel</button>
       <button onClick={() => setMode('remove')}>Remove</button>
