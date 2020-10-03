@@ -7,7 +7,6 @@ import {
   saveWall,
   updateActiveWall
 } from 'features/geometry/wallSlice';
-import FloorGeometry from 'features/geometry/FloorGeometry';
 
 const GeometryDrawing = ({
   mode,
@@ -26,13 +25,15 @@ const GeometryDrawing = ({
   );
 
   const handleClick = e => {
-    if (mode === 'draw') {
+    if (mode === 'draw' || 'move') {
       const { x, y } = isGrid ? getRelCoord(e, true) : getRelCoord(e);
       if (activeWall) {
         dispatch(saveWall({ x, y }));
       }
 
-      dispatch(addWall({ x, y }));
+      if (mode === 'draw') {
+        dispatch(addWall({ x, y }));
+      }
     }
   };
 

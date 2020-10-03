@@ -4,7 +4,8 @@ import useDimensions from 'features/geometry/useDimensions';
 import useCoordinates from 'features/geometry/useCoordinates';
 import useZoomAndPan from 'features/geometry/useZoomAndPan';
 import useGrid from 'features/geometry/useGrid';
-import GeometryDrawing from 'features/geometry/GeometryDrawing';
+//import GeometryDrawing from 'features/geometry/GeometryDrawing';
+import AreaDrawing from 'features/geometry/AreaDrawing';
 
 const Geometry = () => {
   const [mode, setMode] = useState('draw');
@@ -77,7 +78,7 @@ const Geometry = () => {
         onPointerLeave={() => handlePointerLeave()}
         onWheel={e => handleWheel(e)}
       >
-        <GeometryDrawing
+        {/*<GeometryDrawing
           mode={mode}
           isGrid={isGrid}
           getRelCoord={getRelCoord}
@@ -86,7 +87,19 @@ const Geometry = () => {
           zoomLvl={zoomLvl}
           width={width}
           height={height}
-        />
+        />*/}
+        {
+          <AreaDrawing
+            mode={mode}
+            isGrid={isGrid}
+            getRelCoord={getRelCoord}
+            panHLvl={panHLvl}
+            panVLvl={panVLvl}
+            zoomLvl={zoomLvl}
+            width={width}
+            height={height}
+          />
+        }
       </div>
       <GeometryControls
         zoomIn={zoomIn}
