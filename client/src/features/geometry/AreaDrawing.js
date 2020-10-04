@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-//import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import FloorGeometry from 'features/geometry/FloorGeometry';
 import Grid from 'features/geometry/Grid';
+import { addArea, updateActiveArea } from 'features/geometry/areaSlice';
+import Area from 'features/geometry/Area';
 
 const AreaDrawing = ({
   mode,
@@ -13,11 +15,23 @@ const AreaDrawing = ({
   width,
   height
 }) => {
-  //const dispatch = useDispatch();
+  const dispatch = useDispatch();
+  const activeArea = useSelector(state =>
+    state.areas.activeArea ? state.areas.entities[state.areas.activeArea] : null
+  );
+  const ids = useSelector(state => state.areas.ids);
 
-  const handleClick = e => {};
+  const handleClick = e => {
+    const { x, y } = isGrid ? getRelCoord(e, true) : getRelCoord(e);
+    dispatch(addArea(`${x}, ${y}`));
+  };
 
-  const handleMouseMove = e => {};
+  const handleMouseMove = e => {
+    if (activeArea) {
+      const { x, y } = getRelCoord(e);
+      dispatch(updateActiveArea(`${x}, ${y}`));
+    }
+  };
 
   return (
     <div
@@ -37,6 +51,9 @@ const AreaDrawing = ({
           />
         )}
         <FloorGeometry />
+        {ids.map(id => (
+          <Area key={id} id={id} />
+        ))}
       </svg>
     </div>
   );

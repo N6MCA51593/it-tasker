@@ -8,7 +8,8 @@ const useCoordinates = ({
   panVLvl,
   ref
 }) => {
-  const findClosestNode = (x, y, gridStep, diff) => {
+  const findClosestNode = (x, y, gridStep) => {
+    const diff = gridStep / 4;
     const divX = Math.trunc(x / gridStep) * gridStep;
     const divY = Math.trunc(y / gridStep) * gridStep;
     const nodes = [
@@ -39,7 +40,7 @@ const useCoordinates = ({
       const y = Math.round((e.clientY - boundingRect.top) * zoomLvl + panVLvl);
 
       if (isGrid && checkGrid) {
-        return findClosestNode(x, y, gridStep, 15);
+        return findClosestNode(x, y, gridStep);
       } else {
         return { x, y };
       }
