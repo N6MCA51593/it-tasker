@@ -13,7 +13,8 @@ const AreaDrawing = ({
   panVLvl,
   zoomLvl,
   width,
-  height
+  height,
+  gridStep
 }) => {
   const dispatch = useDispatch();
   const activeArea = useSelector(state =>
@@ -48,6 +49,7 @@ const AreaDrawing = ({
             panHLvl={panHLvl}
             width={width * zoomLvl}
             height={height * zoomLvl}
+            gridStep={gridStep}
           />
         )}
         <FloorGeometry />

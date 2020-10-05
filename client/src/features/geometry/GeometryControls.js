@@ -8,7 +8,9 @@ const GeometryControls = ({
   panH,
   panV,
   setMode,
-  toggleGrid
+  toggleGrid,
+  gridStepUp,
+  gridStepDown
 }) => {
   const dispatch = useDispatch();
   return (
@@ -19,6 +21,8 @@ const GeometryControls = ({
       <button onClick={() => setMode('remove')}>Remove</button>
       <button onClick={() => setMode('move')}>Move</button>
       <button onClick={() => toggleGrid()}>Grid</button>
+      <button onClick={() => gridStepUp()}>^</button>
+      <button onClick={() => gridStepDown()}>⌄</button>
       <button onClick={() => zoomIn()}> + </button>
       <button onClick={() => zoomOut()}> - </button>
       <button onClick={() => panV(-1)}> T </button>

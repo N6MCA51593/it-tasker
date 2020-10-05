@@ -16,7 +16,8 @@ const GeometryDrawing = ({
   panVLvl,
   zoomLvl,
   width,
-  height
+  height,
+  gridStep
 }) => {
   const dispatch = useDispatch();
   const ids = useSelector(state => state.walls.ids);
@@ -60,6 +61,7 @@ const GeometryDrawing = ({
             panHLvl={panHLvl}
             width={width * zoomLvl}
             height={height * zoomLvl}
+            gridStep={gridStep}
           />
         )}
         {ids.map((e, i) => (

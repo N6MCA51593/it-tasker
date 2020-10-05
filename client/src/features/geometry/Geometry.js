@@ -12,7 +12,7 @@ const Geometry = () => {
   const [isPointerDown, setIsPointerDown] = useState(false);
   const ref = useRef();
   const { width, height } = useDimensions(ref);
-  const { isGrid, gridStep, toggleGrid } = useGrid();
+  const { isGrid, gridStep, toggleGrid, gridStepUp, gridStepDown } = useGrid();
   const {
     zoomLvl,
     zoomIn,
@@ -22,7 +22,8 @@ const Geometry = () => {
     panHLvl,
     panVLvl,
     freePan,
-    setInitCoords
+    setInitCoords,
+    wheelZoom
   } = useZoomAndPan({ width, height });
   const { getRelCoord } = useCoordinates({
     isGrid,
@@ -61,11 +62,7 @@ const Geometry = () => {
   };
 
   const handleWheel = e => {
-    if (e.deltaY > 0) {
-      zoomOut();
-    } else {
-      zoomIn();
-    }
+    wheelZoom(getRelCoord(e), e.deltaY);
   };
 
   return (
@@ -87,6 +84,7 @@ const Geometry = () => {
           zoomLvl={zoomLvl}
           width={width}
           height={height}
+          gridStep={gridStep}
         />*/}
         {
           <AreaDrawing
@@ -98,6 +96,7 @@ const Geometry = () => {
             zoomLvl={zoomLvl}
             width={width}
             height={height}
+            gridStep={gridStep}
           />
         }
       </div>
@@ -108,6 +107,8 @@ const Geometry = () => {
         panV={panV}
         setMode={setMode}
         toggleGrid={toggleGrid}
+        gridStepUp={gridStepUp}
+        gridStepDown={gridStepDown}
       />
     </Fragment>
   );
