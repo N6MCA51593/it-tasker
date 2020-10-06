@@ -2,11 +2,12 @@ import { useState } from 'react';
 
 const useZoomAndPan = ({ width, height }) => {
   const [panVLvl, setPanVLvl] = useState(0);
-  const [initCoords, setInitCoords] = useState(null);
   const [panHLvl, setPanHLvl] = useState(0);
   const [zoomLvl, setZoom] = useState(1.1);
+  const [initCoords, setInitCoords] = useState(null);
 
-  const zoomStep = 2;
+  const zoomInStep = 0.8;
+  const zoomOutStep = 1.2;
   const panStep = 50;
 
   const panV = (steps = 1) => {
@@ -18,15 +19,15 @@ const useZoomAndPan = ({ width, height }) => {
   };
 
   const zoomIn = () => {
-    setZoom(zoomLvl / zoomStep);
-    setPanHLvl(panHLvl + (width * zoomLvl) / 4);
-    setPanVLvl(panVLvl + (height * zoomLvl) / 4);
+    setPanHLvl(panHLvl - (width / 2 - panHLvl) * (zoomInStep - 1));
+    setPanVLvl(panVLvl - (height / 2 - panVLvl) * (zoomInStep - 1));
+    setZoom(zoomLvl * zoomInStep);
   };
 
   const zoomOut = () => {
-    setZoom(zoomLvl * zoomStep);
-    setPanHLvl(panHLvl - (width * zoomLvl) / 2);
-    setPanVLvl(panVLvl - (height * zoomLvl) / 2);
+    setPanHLvl(panHLvl - (width / 2 - panHLvl) * (zoomOutStep - 1));
+    setPanVLvl(panVLvl - (height / 2 - panVLvl) * (zoomOutStep - 1));
+    setZoom(zoomLvl * zoomOutStep);
   };
 
   const freePan = ({ x, y }) => {
@@ -36,32 +37,13 @@ const useZoomAndPan = ({ width, height }) => {
 
   const wheelZoom = ({ x, y }, delta) => {
     if (delta < 0) {
-      // const newX =
-      //   panHLvl + panStep * ((x - width / 2) / (100 * zoomLvl)) * zoomLvl;
-      // const newY =
-      //   panVLvl + panStep * ((y - height / 2) / (100 * zoomLvl)) * zoomLvl;
-      const newX = x - width / 2;
-      const newY = y - height / 2;
-      console.log(x);
-      console.log(newX);
-
-      setZoom(zoomLvl / zoomStep);
-      // setPanHLvl(newX);
-      // setPanVLvl(newY);
-      setPanHLvl(newX + (width * zoomLvl) / (4 * zoomLvl));
-      setPanVLvl(newY + (height * zoomLvl) / (4 * zoomLvl));
+      setPanHLvl(panHLvl - (x - panHLvl) * (zoomInStep - 1));
+      setPanVLvl(panVLvl - (y - panVLvl) * (zoomInStep - 1));
+      setZoom(zoomLvl * zoomInStep);
     } else {
-      // const newX =
-      //   panHLvl + panStep * ((width / 2 - x) / (100 * zoomLvl)) * zoomLvl;
-      // const newY =
-      //   panVLvl + panStep * ((height / 2 - y) / (100 * zoomLvl)) * zoomLvl;
-      const newX = x - width / 2;
-      const newY = y - height / 2;
-      setZoom(zoomLvl * zoomStep);
-      setPanHLvl(newX);
-      setPanVLvl(newY);
-      // setPanHLvl(newX - (width * zoomLvl) / 2);
-      // setPanVLvl(newY - (height * zoomLvl) / 2);
+      setPanHLvl(panHLvl - (x - panHLvl) * (zoomOutStep - 1));
+      setPanVLvl(panVLvl - (y - panVLvl) * (zoomOutStep - 1));
+      setZoom(zoomLvl * zoomOutStep);
     }
   };
 
