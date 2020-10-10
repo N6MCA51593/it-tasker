@@ -69,6 +69,7 @@ const Geometry = () => {
     <Fragment>
       <div
         ref={ref}
+        mode={mode}
         onPointerDown={e => handlePointerDown(e)}
         onPointerUp={() => handlePointerUp()}
         onPointerMove={e => handlePointerMove(e)}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import FloorGeometry from 'features/geometry/FloorGeometry';
 import Grid from 'features/geometry/Grid';
@@ -23,8 +23,10 @@ const AreaDrawing = ({
   const ids = useSelector(state => state.areas.ids);
 
   const handleClick = e => {
-    const { x, y } = isGrid ? getRelCoord(e, true) : getRelCoord(e);
-    dispatch(addArea(`${x}, ${y}`));
+    if (mode === 'draw') {
+      const { x, y } = isGrid ? getRelCoord(e, true) : getRelCoord(e);
+      dispatch(addArea(`${x}, ${y}`));
+    }
   };
 
   const handleMouseMove = e => {
@@ -54,7 +56,7 @@ const AreaDrawing = ({
         )}
         <FloorGeometry />
         {ids.map(id => (
-          <Area key={id} id={id} />
+          <Area key={id} id={id} mode={mode} />
         ))}
       </svg>
     </div>
