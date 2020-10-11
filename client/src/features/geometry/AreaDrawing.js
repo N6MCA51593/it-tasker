@@ -25,14 +25,14 @@ const AreaDrawing = ({
   const handleClick = e => {
     if (mode === 'draw') {
       const { x, y } = isGrid ? getRelCoord(e, true) : getRelCoord(e);
-      dispatch(addArea(`${x}, ${y}`));
+      dispatch(addArea(`${x},${y}`));
     }
   };
 
   const handleMouseMove = e => {
     if (activeArea) {
       const { x, y } = getRelCoord(e);
-      dispatch(updateActiveArea(`${x}, ${y}`));
+      dispatch(updateActiveArea(`${x},${y}`));
     }
   };
 
