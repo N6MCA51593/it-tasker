@@ -1,11 +1,52 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { moveLabel, renameLabel } from 'features/geometry/areaSlice';
 
-const RoomNameLabel = ({ coords, name }) => {
+const RoomNameLabel = ({ coords, name, mode, id }) => {
+  const [labelName, setLabelName] = useState(name);
+  const [isEditing, setIsEditing] = useState(false);
+  const dispatch = useDispatch();
   const { x, y } = coords;
+  const handleClick = e => {
+    if (mode === 'label-move') {
+      dispatch(moveLabel(id));
+    }
+    if (mode === 'label-rename') {
+      setIsEditing(!isEditing);
+    }
+  };
+  const handleChange = e => {
+    setLabelName(e.target.value);
+  };
+  const onBlur = () => {
+    setIsEditing(false);
+    if (name !== labelName) {
+      dispatch(renameLabel({ id, name: labelName }));
+    }
+  };
   return (
-    <text x={x} y={y}>
-      {name}
-    </text>
+    <g>
+      {!isEditing && (
+        <text x={x} y={y} onClick={e => handleClick(e)}>
+          {labelName}
+        </text>
+      )}
+      {isEditing && (
+        <foreignObject
+          x={x}
+          y={y - 15}
+          width='100px'
+          height='100px'
+          className='text-edit'
+        >
+          <input
+            value={labelName}
+            onChange={e => handleChange(e)}
+            onBlur={() => onBlur()}
+          ></input>
+        </foreignObject>
+      )}
+    </g>
   );
 };
 

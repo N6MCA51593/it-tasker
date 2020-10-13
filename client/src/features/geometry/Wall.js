@@ -9,7 +9,7 @@ import {
 import {
   findFarthestCorner,
   findNearestPoint
-} from 'features/geometry/wallMathFuncs';
+} from 'features/geometry/geometryMathFuncs';
 
 const Wall = ({ mode, getRelCoord, id, activeWall }) => {
   const dispatch = useDispatch();

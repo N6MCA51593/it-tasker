@@ -29,6 +29,8 @@ const GeometryControls = ({
         <button onClick={() => setMode('redraw')}>Redraw</button>
         <button onClick={() => setMode('remove')}>Remove</button>
         <button onClick={() => dispatch(saveArea())}>Save Area</button>
+        <button onClick={() => setMode('label-move')}>Move Label</button>
+        <button onClick={() => setMode('label-rename')}>Rename Label</button>
       </div>
       <div>
         <button onClick={() => toggleGrid()}>Grid</button>

@@ -2,7 +2,11 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import FloorGeometry from 'features/geometry/FloorGeometry';
 import Grid from 'features/geometry/Grid';
-import { addArea, updateActiveArea } from 'features/geometry/areaSlice';
+import {
+  addArea,
+  updateActiveArea,
+  saveArea
+} from 'features/geometry/areaSlice';
 import Area from 'features/geometry/Area';
 
 const AreaDrawing = ({
@@ -17,9 +21,12 @@ const AreaDrawing = ({
   gridStep
 }) => {
   const dispatch = useDispatch();
-  const activeArea = useSelector(state =>
-    state.areas.activeArea ? state.areas.entities[state.areas.activeArea] : null
-  );
+  const { activeArea, activeLabel } = useSelector(state => {
+    return {
+      activeArea: state.areas.activeArea,
+      activeLabel: state.areas.activeLabel
+    };
+  });
   const ids = useSelector(state => state.areas.ids);
 
   const handleClick = e => {
@@ -27,12 +34,20 @@ const AreaDrawing = ({
       const { x, y } = isGrid ? getRelCoord(e, true) : getRelCoord(e);
       dispatch(addArea(`${x},${y}`));
     }
+    if (activeLabel) {
+      const { x, y } = isGrid ? getRelCoord(e, true) : getRelCoord(e);
+      dispatch(saveArea({ x, y }));
+    }
   };
 
   const handleMouseMove = e => {
     if (activeArea) {
       const { x, y } = getRelCoord(e);
       dispatch(updateActiveArea(`${x},${y}`));
+    }
+    if (activeLabel) {
+      const { x, y } = getRelCoord(e);
+      dispatch(updateActiveArea({ x, y }));
     }
   };
 

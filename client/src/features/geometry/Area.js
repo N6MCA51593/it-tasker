@@ -5,9 +5,9 @@ import RoomNameLabel from 'features/geometry/RoomNameLabel';
 
 const Area = ({ id, mode }) => {
   const dispatch = useDispatch();
-  const points = useSelector(state => state.areas.entities[id].points);
-  const name = useSelector(state => state.areas.entities[id].name);
-  const coords = useSelector(state => state.areas.entities[id].labelCoords);
+  const { points, name, labelCoords: coords } = useSelector(
+    state => state.areas.entities[id]
+  );
   const handleClick = e => {
     if (mode === 'remove') {
       dispatch(removeArea(id));
@@ -28,7 +28,9 @@ const Area = ({ id, mode }) => {
         strokeDasharray='2'
         fillRule='nonzero'
       />
-      {coords && <RoomNameLabel name={name} coords={coords} />}
+      {coords && (
+        <RoomNameLabel name={name} coords={coords} mode={mode} id={id} />
+      )}
     </g>
   );
 };

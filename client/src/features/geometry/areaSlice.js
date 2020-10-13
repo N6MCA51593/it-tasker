@@ -1,38 +1,13 @@
 import { createSlice, nanoid, createEntityAdapter } from '@reduxjs/toolkit';
+import { polygonCentroid } from 'features/geometry/geometryMathFuncs';
 
 const areasAdapter = createEntityAdapter();
 const initialState = areasAdapter.getInitialState({
   activeArea: null,
   toRedraw: null,
-  mode: 'draw'
+  mode: 'draw',
+  activeLabel: false
 });
-
-function polygonCentroid(pts) {
-  pts = pts.map(e => {
-    return { x: parseInt(e.split(',')[0]), y: parseInt(e.split(',')[1]) };
-  });
-  let first = pts[0],
-    last = pts[pts.length - 1];
-  if (first.x != last.x || first.y != last.y) pts.push(first);
-  let twicearea = 0,
-    x = 0,
-    y = 0,
-    nPts = pts.length,
-    p1,
-    p2,
-    f;
-  for (let i = 0, j = nPts - 1; i < nPts; j = i++) {
-    p1 = pts[i];
-    p2 = pts[j];
-    f =
-      (p1.y - first.y) * (p2.x - first.x) - (p2.y - first.y) * (p1.x - first.x);
-    twicearea += f;
-    x += (p1.x + p2.x - 2 * first.x) * f;
-    y += (p1.y + p2.y - 2 * first.y) * f;
-  }
-  f = twicearea * 3;
-  return { x: x / f + first.x, y: y / f + first.y };
-}
 
 const areasSlice = createSlice({
   name: 'areas',
@@ -68,21 +43,40 @@ const areasSlice = createSlice({
       }
     },
     updateActiveArea(state, { payload }) {
-      state.entities[state.activeArea].points[
-        state.entities[state.activeArea].points.length - 1
-      ] = payload;
+      if (state.activeArea) {
+        state.entities[state.activeArea].points[
+          state.entities[state.activeArea].points.length - 1
+        ] = payload;
+      } else if (state.activeLabel) {
+        state.entities[state.activeLabel].labelCoords = payload;
+      }
     },
     redrawArea(state, { payload }) {
       state.entities[payload].points = [];
+      state.entities[payload].labelCoords = {};
       state.toRedraw = payload;
     },
+    moveLabel(state, { payload }) {
+      state.activeLabel = payload;
+    },
+    renameLabel(state, { payload }) {
+      state.entities[payload.id].name = payload.name;
+    },
     removeArea: areasAdapter.removeOne,
-    saveArea(state) {
-      state.entities[state.activeArea].points.pop();
-      state.entities[state.activeArea].labelCoords = polygonCentroid(
-        state.entities[state.activeArea].points
-      );
-      state.activeArea = null;
+    saveArea(state, { payload }) {
+      if (state.activeArea) {
+        const area = state.entities[state.activeArea];
+        area.points.pop();
+        area.labelCoords = polygonCentroid(area.points);
+        if (area.points.length < 3) {
+          areasAdapter.removeOne(state, state.activeArea);
+        }
+        state.activeArea = null;
+      }
+      if (state.activeLabel) {
+        state.entities[state.activeLabel].labelCoords = payload;
+        state.activeLabel = null;
+      }
     }
   }
 });
@@ -93,7 +87,9 @@ export const {
   updateActiveArea,
   saveArea,
   removeArea,
-  redrawArea
+  redrawArea,
+  moveLabel,
+  renameLabel
 } = areasSlice.actions;
 
 export default areasSlice.reducer;
