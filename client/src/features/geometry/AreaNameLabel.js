@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { moveLabel, renameLabel } from 'features/geometry/areaSlice';
 
-const RoomNameLabel = ({ coords, name, mode, id }) => {
+const AreaNameLabel = ({ coords, name, mode, id }) => {
   const [labelName, setLabelName] = useState(name);
   const [isEditing, setIsEditing] = useState(false);
   const dispatch = useDispatch();
@@ -50,4 +50,4 @@ const RoomNameLabel = ({ coords, name, mode, id }) => {
   );
 };
 
-export default RoomNameLabel;
+export default AreaNameLabel;

@@ -1,9 +1,9 @@
 import React, { memo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { removeArea, redrawArea } from 'features/geometry/areaSlice';
-import RoomNameLabel from 'features/geometry/RoomNameLabel';
+import AreaNameLabel from 'features/geometry/AreaNameLabel';
 
-const Area = ({ id, mode }) => {
+const Area = ({ id, mode, addDevice }) => {
   const dispatch = useDispatch();
   const { points, name, labelCoords: coords } = useSelector(
     state => state.areas.entities[id]
@@ -12,8 +12,13 @@ const Area = ({ id, mode }) => {
     if (mode === 'remove') {
       dispatch(removeArea(id));
     }
+
     if (mode === 'redraw') {
       dispatch(redrawArea(id));
+    }
+
+    if (mode === 'add-device') {
+      addDevice(id, e);
     }
   };
 
@@ -29,7 +34,7 @@ const Area = ({ id, mode }) => {
         fillRule='nonzero'
       />
       {coords && (
-        <RoomNameLabel name={name} coords={coords} mode={mode} id={id} />
+        <AreaNameLabel name={name} coords={coords} mode={mode} id={id} />
       )}
     </g>
   );

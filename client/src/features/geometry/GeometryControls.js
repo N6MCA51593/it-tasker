@@ -17,6 +17,9 @@ const GeometryControls = ({
   return (
     <div className='geometry-controls'>
       <div>
+        <button onClick={() => setMode('add-device')}>Add</button>
+      </div>
+      <div>
         <button onClick={() => setMode('nav')}>Nav</button>
         <button onClick={() => setMode('draw')}>Draw</button>
         <button onClick={() => setMode('remove')}>Remove</button>

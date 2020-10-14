@@ -7,8 +7,9 @@ import {
   updateActiveArea,
   saveArea
 } from 'features/geometry/areaSlice';
+import { addDevice as addDeviceAction } from 'features/geometry/deviceSlice';
 import Area from 'features/geometry/Area';
-
+import Device from 'features/geometry/Device';
 const AreaDrawing = ({
   mode,
   isGrid,
@@ -29,12 +30,18 @@ const AreaDrawing = ({
   });
   const ids = useSelector(state => state.areas.ids);
 
+  const addDevice = (id, e) => {
+    const { x, y } = isGrid ? getRelCoord(e, true) : getRelCoord(e);
+    dispatch(addDeviceAction({ id, coords: { x, y } }));
+  };
+
   const handleClick = e => {
     if (mode === 'draw') {
       const { x, y } = isGrid ? getRelCoord(e, true) : getRelCoord(e);
       dispatch(addArea(`${x},${y}`));
     }
-    if (activeLabel) {
+
+    if (mode === 'label-move' && activeLabel) {
       const { x, y } = isGrid ? getRelCoord(e, true) : getRelCoord(e);
       dispatch(saveArea({ x, y }));
     }
@@ -45,6 +52,7 @@ const AreaDrawing = ({
       const { x, y } = getRelCoord(e);
       dispatch(updateActiveArea(`${x},${y}`));
     }
+
     if (activeLabel) {
       const { x, y } = getRelCoord(e);
       dispatch(updateActiveArea({ x, y }));
@@ -71,7 +79,7 @@ const AreaDrawing = ({
         )}
         <FloorGeometry />
         {ids.map(id => (
-          <Area key={id} id={id} mode={mode} />
+          <Area key={id} id={id} mode={mode} addDevice={addDevice} />
         ))}
       </svg>
     </div>
