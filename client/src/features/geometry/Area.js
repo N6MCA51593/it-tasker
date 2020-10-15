@@ -33,7 +33,7 @@ const Area = ({ id, mode, addDevice }) => {
         strokeDasharray='2'
         fillRule='nonzero'
       />
-      {coords && (
+      {coords && !isNaN(coords.x) && (
         <AreaNameLabel name={name} coords={coords} mode={mode} id={id} />
       )}
     </g>

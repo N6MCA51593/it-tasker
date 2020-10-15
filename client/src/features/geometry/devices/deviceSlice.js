@@ -1,7 +1,9 @@
 import { createSlice, nanoid, createEntityAdapter } from '@reduxjs/toolkit';
 
 const devicesAdapter = createEntityAdapter();
-const initialState = devicesAdapter.getInitialState({});
+const initialState = devicesAdapter.getInitialState({
+  activeDevice: null
+});
 
 const devicesSlice = createSlice({
   name: 'devices',
@@ -9,13 +11,13 @@ const devicesSlice = createSlice({
   reducers: {
     addDevice: {
       reducer(state, { payload }) {
-        const { x, y } = payload.coords;
         devicesAdapter.addOne(state, payload);
+        state.activeDevice = payload.id;
       },
-      prepare(coords) {
+      prepare(payload) {
         const id = nanoid();
         return {
-          payload: { id, coords }
+          payload: { id, area: payload.id, coords: payload.coords }
         };
       }
     }

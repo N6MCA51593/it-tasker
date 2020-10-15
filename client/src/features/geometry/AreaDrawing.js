@@ -7,9 +7,10 @@ import {
   updateActiveArea,
   saveArea
 } from 'features/geometry/areaSlice';
-import { addDevice as addDeviceAction } from 'features/geometry/deviceSlice';
+import { addDevice as addDeviceAction } from 'features/geometry/devices/deviceSlice';
 import Area from 'features/geometry/Area';
-import Device from 'features/geometry/Device';
+import DeviceDrawing from 'features/geometry/devices/DeviceDrawing';
+
 const AreaDrawing = ({
   mode,
   isGrid,
@@ -81,6 +82,7 @@ const AreaDrawing = ({
         {ids.map(id => (
           <Area key={id} id={id} mode={mode} addDevice={addDevice} />
         ))}
+        <DeviceDrawing isGrid={isGrid} getRelCoord={getRelCoord} mode={mode} />
       </svg>
     </div>
   );
