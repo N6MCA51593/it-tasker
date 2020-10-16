@@ -43,7 +43,7 @@ const AreaNameLabel = ({ coords, name, mode, id }) => {
             value={labelName}
             onChange={e => handleChange(e)}
             onBlur={() => onBlur()}
-          ></input>
+          />
         </foreignObject>
       )}
     </g>

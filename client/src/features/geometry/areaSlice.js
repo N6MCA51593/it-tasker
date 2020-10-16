@@ -29,7 +29,7 @@ const areasSlice = createSlice({
             areasAdapter.addOne(state, {
               id: payload.id,
               points,
-              name: `Area ${state.ids.length + 1}`
+              name: payload.name
             });
             state.activeArea = payload.id;
           }
@@ -38,7 +38,7 @@ const areasSlice = createSlice({
       prepare(point) {
         const id = nanoid();
         return {
-          payload: { id, point }
+          payload: { id, point, name: 'New Area' }
         };
       }
     },
