@@ -1,6 +1,6 @@
 import React from 'react';
-import { cancelDrawing } from 'features/geometry/wallSlice';
-import { saveArea } from 'features/geometry/areaSlice';
+import { cancelDrawing } from 'features/geometry/walls/wallSlice';
+import { saveArea } from 'features/geometry/areas/areaSlice';
 import { useDispatch } from 'react-redux';
 
 const GeometryControls = ({

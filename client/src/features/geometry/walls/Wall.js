@@ -5,7 +5,7 @@ import {
   removeWall,
   saveWall,
   moveWall
-} from 'features/geometry/wallSlice';
+} from 'features/geometry/walls/wallSlice';
 import {
   findFarthestCorner,
   findNearestPoint

@@ -5,7 +5,7 @@ import useCoordinates from 'features/geometry/useCoordinates';
 import useZoomAndPan from 'features/geometry/useZoomAndPan';
 import useGrid from 'features/geometry/useGrid';
 //import GeometryDrawing from 'features/geometry/GeometryDrawing';
-import AreaDrawing from 'features/geometry/AreaDrawing';
+import AreaDrawing from 'features/geometry/areas/AreaDrawing';
 
 const Geometry = () => {
   const [mode, setMode] = useState('draw');

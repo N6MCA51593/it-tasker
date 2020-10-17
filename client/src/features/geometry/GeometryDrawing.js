@@ -1,12 +1,12 @@
 import React from 'react';
-import Wall from 'features/geometry/Wall';
+import Wall from 'features/geometry/walls/Wall';
 import Grid from 'features/geometry/Grid';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   addWall,
   saveWall,
   updateActiveWall
-} from 'features/geometry/wallSlice';
+} from 'features/geometry/walls/wallSlice';
 
 const GeometryDrawing = ({
   mode,

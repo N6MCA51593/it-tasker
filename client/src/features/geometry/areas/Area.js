@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { removeArea, redrawArea } from 'features/geometry/areaSlice';
-import AreaNameLabel from 'features/geometry/AreaNameLabel';
+import { removeArea, redrawArea } from 'features/geometry/areas/areaSlice';
+import AreaNameLabel from 'features/geometry/areas/AreaNameLabel';
 
 const Area = ({ id, mode, addDevice }) => {
   const dispatch = useDispatch();

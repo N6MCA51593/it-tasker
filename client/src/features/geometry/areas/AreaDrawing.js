@@ -6,9 +6,9 @@ import {
   addArea,
   updateActiveArea,
   saveArea
-} from 'features/geometry/areaSlice';
+} from 'features/geometry/areas/areaSlice';
 import { addDevice as addDeviceAction } from 'features/geometry/devices/deviceSlice';
-import Area from 'features/geometry/Area';
+import Area from 'features/geometry/areas/Area';
 import DeviceDrawing from 'features/geometry/devices/DeviceDrawing';
 
 const AreaDrawing = ({
