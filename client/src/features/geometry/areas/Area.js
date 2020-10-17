@@ -11,13 +11,9 @@ const Area = ({ id, mode, addDevice }) => {
   const handleClick = e => {
     if (mode === 'remove') {
       dispatch(removeArea(id));
-    }
-
-    if (mode === 'redraw') {
+    } else if (mode === 'redraw') {
       dispatch(redrawArea(id));
-    }
-
-    if (mode === 'add-device') {
+    } else if (mode === 'add-device') {
       addDevice(id, e);
     }
   };

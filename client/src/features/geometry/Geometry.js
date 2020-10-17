@@ -4,7 +4,7 @@ import useDimensions from 'features/geometry/useDimensions';
 import useCoordinates from 'features/geometry/useCoordinates';
 import useZoomAndPan from 'features/geometry/useZoomAndPan';
 import useGrid from 'features/geometry/useGrid';
-//import GeometryDrawing from 'features/geometry/GeometryDrawing';
+//import GeometryDrawing from 'features/geometry/walls/GeometryDrawing';
 import AreaDrawing from 'features/geometry/areas/AreaDrawing';
 
 const Geometry = () => {

@@ -2,7 +2,9 @@ import { createSlice, nanoid, createEntityAdapter } from '@reduxjs/toolkit';
 
 const devicesAdapter = createEntityAdapter();
 const initialState = devicesAdapter.getInitialState({
-  activeDevice: null
+  activeDevice: null,
+  isMoving: false,
+  devicesHistory: null
 });
 
 const devicesSlice = createSlice({
@@ -36,7 +38,7 @@ const devicesSlice = createSlice({
           ...payload
         }
       });
-      if (state.activeDevice) {
+      if (state.activeDevice && !state.isMoving) {
         state.activeDevice = null;
       }
     },
@@ -46,6 +48,17 @@ const devicesSlice = createSlice({
       } else {
         state.activeDevice = null;
       }
+    },
+    removeDevice: devicesAdapter.removeOne,
+    moveDevice(state, { payload }) {
+      state.activeDevice = payload;
+      state.isMoving = true;
+    },
+    setHistory(state) {
+      state.devicesHistory = state.entities;
+    },
+    undo(state) {
+      devicesAdapter.setAll(state, state.devicesHistory);
     }
   }
 });
@@ -53,7 +66,11 @@ const devicesSlice = createSlice({
 export const {
   addDevice,
   updateActiveDevice,
-  setActiveDevice
+  setActiveDevice,
+  removeDevice,
+  moveDevice,
+  setHistory,
+  undo
 } = devicesSlice.actions;
 
 export default devicesSlice.reducer;

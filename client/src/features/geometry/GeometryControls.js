@@ -17,7 +17,19 @@ const GeometryControls = ({
   return (
     <div className='geometry-controls'>
       <div>
+        <button onClick={() => setMode('nav')}>Nav</button>
         <button onClick={() => setMode('add-device')}>Add</button>
+        <button onClick={() => setMode('remove-device')}>Remove</button>
+        <button onClick={() => setMode('move-device')}>Move</button>
+      </div>
+      <div>
+        <button onClick={() => setMode('nav')}>Nav</button>
+        <button onClick={() => setMode('draw')}>Draw</button>
+        <button onClick={() => setMode('remove')}>Remove</button>
+        <button onClick={() => setMode('redraw')}>Redraw</button>
+        <button onClick={() => dispatch(saveArea())}>Save Area</button>
+        <button onClick={() => setMode('label-move')}>Move Label</button>
+        <button onClick={() => setMode('label-rename')}>Rename Label</button>
       </div>
       <div>
         <button onClick={() => setMode('nav')}>Nav</button>
@@ -25,15 +37,6 @@ const GeometryControls = ({
         <button onClick={() => setMode('remove')}>Remove</button>
         <button onClick={() => setMode('move')}>Move</button>
         <button onClick={() => dispatch(cancelDrawing())}>Cancel</button>
-      </div>
-      <div>
-        <button onClick={() => setMode('nav')}>Nav</button>
-        <button onClick={() => setMode('draw')}>Draw</button>
-        <button onClick={() => setMode('redraw')}>Redraw</button>
-        <button onClick={() => setMode('remove')}>Remove</button>
-        <button onClick={() => dispatch(saveArea())}>Save Area</button>
-        <button onClick={() => setMode('label-move')}>Move Label</button>
-        <button onClick={() => setMode('label-rename')}>Rename Label</button>
       </div>
       <div>
         <button onClick={() => toggleGrid()}>Grid</button>

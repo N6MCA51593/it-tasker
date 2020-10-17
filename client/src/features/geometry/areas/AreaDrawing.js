@@ -40,9 +40,7 @@ const AreaDrawing = ({
     if (mode === 'draw') {
       const { x, y } = isGrid ? getRelCoord(e, true) : getRelCoord(e);
       dispatch(addArea(`${x},${y}`));
-    }
-
-    if (mode === 'label-move' && activeLabel) {
+    } else if (mode === 'label-move' && activeLabel) {
       const { x, y } = isGrid ? getRelCoord(e, true) : getRelCoord(e);
       dispatch(saveArea({ x, y }));
     }

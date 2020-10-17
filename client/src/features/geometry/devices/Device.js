@@ -4,7 +4,11 @@ import DevicePopUp from 'features/geometry/devices/DevicePopUp';
 import DeviceOptions from 'features/geometry/devices/DeviceOptions';
 import StatusIndicator from 'features/geometry/devices/StatusIndicator';
 import DeviceIcon from 'features/geometry/devices/DeviceIcon';
-import { setActiveDevice } from 'features/geometry/devices/deviceSlice';
+import {
+  setActiveDevice,
+  removeDevice,
+  moveDevice
+} from 'features/geometry/devices/deviceSlice';
 
 const Device = ({ id, mode }) => {
   const dispatch = useDispatch();
@@ -20,6 +24,10 @@ const Device = ({ id, mode }) => {
   const handleClick = () => {
     if (mode === 'nav') {
       dispatch(setActiveDevice(id));
+    } else if (mode === 'remove-device') {
+      dispatch(removeDevice(id));
+    } else if (mode === 'move-device') {
+      dispatch(moveDevice(id));
     }
   };
 
@@ -32,7 +40,7 @@ const Device = ({ id, mode }) => {
         <StatusIndicator status={status} x={x} y={y} />
         <DeviceIcon type={type} x={x} y={y} />
       </g>
-      {isActive && (
+      {isActive && mode !== 'move-device' && (
         <DevicePopUp x={x} y={y}>
           <DeviceOptions device={device} />
         </DevicePopUp>

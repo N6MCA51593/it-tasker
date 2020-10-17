@@ -7,17 +7,18 @@ const AreaNameLabel = ({ coords, name, mode, id }) => {
   const [isEditing, setIsEditing] = useState(false);
   const dispatch = useDispatch();
   const { x, y } = coords;
-  const handleClick = e => {
+  const handleClick = () => {
     if (mode === 'label-move') {
       dispatch(moveLabel(id));
-    }
-    if (mode === 'label-rename') {
+    } else if (mode === 'label-rename') {
       setIsEditing(!isEditing);
     }
   };
+
   const handleChange = e => {
     setLabelName(e.target.value);
   };
+
   const onBlur = () => {
     setIsEditing(false);
     if (name !== labelName) {
@@ -27,7 +28,7 @@ const AreaNameLabel = ({ coords, name, mode, id }) => {
   return (
     <g>
       {!isEditing && (
-        <text x={x} y={y} onClick={e => handleClick(e)}>
+        <text x={x} y={y} onClick={() => handleClick()} className='name-label'>
           {labelName}
         </text>
       )}

@@ -68,3 +68,8 @@ button {
 .device-disabled {
   pointer-events: none;
 }
+
+.name-label {
+  cursor: default;
+  user-select: none;
+}
