@@ -29,7 +29,7 @@ const AreaNameLabel = ({ coords, name, mode, id }) => {
     <g>
       {!isEditing && (
         <text x={x} y={y} onClick={() => handleClick()} className='name-label'>
-          {labelName}
+          {labelName ? labelName : '-.-'}
         </text>
       )}
       {isEditing && (
