@@ -26,7 +26,7 @@ const Device = ({ id, mode }) => {
       dispatch(setActiveDevice(id));
     } else if (mode === 'remove-device') {
       dispatch(removeDevice(id));
-    } else if (mode === 'move-device') {
+    } else if (mode === 'move-device' && !isActive) {
       dispatch(moveDevice(id));
     }
   };
@@ -35,7 +35,11 @@ const Device = ({ id, mode }) => {
     <g>
       <g
         onClick={() => handleClick()}
-        className={mode === 'add-device' ? 'device-disabled' : ''}
+        className={
+          mode === 'add-device' || (mode === 'move-device' && isActive)
+            ? 'device-disabled'
+            : ''
+        }
       >
         <StatusIndicator status={status} x={x} y={y} />
         <DeviceIcon type={type} x={x} y={y} />

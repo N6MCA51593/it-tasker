@@ -9,8 +9,8 @@ import {
 } from 'features/geometry/areas/areaSlice';
 import { addDevice as addDeviceAction } from 'features/geometry/devices/deviceSlice';
 import Area from 'features/geometry/areas/Area';
-import DeviceDrawing from 'features/geometry/devices/DeviceDrawing';
-
+import Device from 'features/geometry/devices/Device';
+import { updateActiveDevice } from 'features/geometry/devices/deviceSlice';
 const AreaDrawing = ({
   mode,
   isGrid,
@@ -29,11 +29,22 @@ const AreaDrawing = ({
       activeLabel: state.areas.activeLabel
     };
   });
-  const ids = useSelector(state => state.areas.ids);
+  const areaIds = useSelector(state => state.areas.ids);
+  const deviceIds = useSelector(state => state.devices.ids);
+  const { activeDevice, isMoving } = useSelector(state => {
+    return {
+      activeDevice: state.devices.activeDevice,
+      isMoving: state.devices.isMoving
+    };
+  });
 
   const addDevice = (id, e) => {
     const { x, y } = isGrid ? getRelCoord(e, true) : getRelCoord(e);
-    dispatch(addDeviceAction({ id, coords: { x, y } }));
+    if (mode === 'move-device' && activeDevice) {
+      dispatch(updateActiveDevice({ coords: { x, y }, area: id }));
+    } else if (mode === 'add-device') {
+      dispatch(addDeviceAction({ id, coords: { x, y } }));
+    }
   };
 
   const handleClick = e => {
@@ -47,14 +58,14 @@ const AreaDrawing = ({
   };
 
   const handleMouseMove = e => {
-    if (activeArea) {
-      const { x, y } = getRelCoord(e);
-      dispatch(updateActiveArea(`${x},${y}`));
-    }
-
     if (activeLabel) {
       const { x, y } = getRelCoord(e);
       dispatch(updateActiveArea({ x, y }));
+    } else if (activeArea) {
+      const { x, y } = getRelCoord(e);
+      dispatch(updateActiveArea(`${x},${y}`));
+    } else if (isMoving && activeDevice) {
+      dispatch(updateActiveDevice({ coords: getRelCoord(e) }));
     }
   };
 
@@ -77,10 +88,12 @@ const AreaDrawing = ({
           />
         )}
         <FloorGeometry />
-        {ids.map(id => (
+        {areaIds.map(id => (
           <Area key={id} id={id} mode={mode} addDevice={addDevice} />
         ))}
-        <DeviceDrawing isGrid={isGrid} getRelCoord={getRelCoord} mode={mode} />
+        {deviceIds.map(id => (
+          <Device key={id} id={id} mode={mode} />
+        ))}
       </svg>
     </div>
   );

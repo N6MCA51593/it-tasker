@@ -38,6 +38,10 @@ const devicesSlice = createSlice({
           ...payload
         }
       });
+      if (state.activeDevice && state.isMoving && payload.area) {
+        state.isMoving = false;
+      }
+
       if (state.activeDevice && !state.isMoving) {
         state.activeDevice = null;
       }

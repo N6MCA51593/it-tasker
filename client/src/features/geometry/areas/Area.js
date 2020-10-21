@@ -13,7 +13,7 @@ const Area = ({ id, mode, addDevice }) => {
       dispatch(removeArea(id));
     } else if (mode === 'redraw') {
       dispatch(redrawArea(id));
-    } else if (mode === 'add-device') {
+    } else if (mode === 'add-device' || mode === 'move-device') {
       addDevice(id, e);
     }
   };
