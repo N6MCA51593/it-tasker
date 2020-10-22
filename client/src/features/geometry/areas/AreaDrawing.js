@@ -29,6 +29,7 @@ const AreaDrawing = ({
       activeLabel: state.areas.activeLabel
     };
   });
+  const activeFloor = useSelector(state => state.floors.activeFloor);
   const areaIds = useSelector(state => state.areas.ids);
   const deviceIds = useSelector(state => state.devices.ids);
   const { activeDevice, isMoving } = useSelector(state => {
@@ -43,14 +44,14 @@ const AreaDrawing = ({
     if (mode === 'move-device' && activeDevice) {
       dispatch(updateActiveDevice({ coords: { x, y }, area: id }));
     } else if (mode === 'add-device') {
-      dispatch(addDeviceAction({ id, coords: { x, y } }));
+      dispatch(addDeviceAction({ id, coords: { x, y }, floor: activeFloor }));
     }
   };
 
   const handleClick = e => {
     if (mode === 'draw') {
       const { x, y } = isGrid ? getRelCoord(e, true) : getRelCoord(e);
-      dispatch(addArea(`${x},${y}`));
+      dispatch(addArea({ point: `${x},${y}`, floor: activeFloor }));
     } else if (mode === 'label-move' && activeLabel) {
       const { x, y } = isGrid ? getRelCoord(e, true) : getRelCoord(e);
       dispatch(saveArea({ x, y }));

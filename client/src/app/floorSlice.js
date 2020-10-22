@@ -14,6 +14,7 @@ const floorsSlice = createSlice({
       reducer(state, { payload }) {
         if (state.ids.length === 0) {
           floorAdapter.addMany(state, payload);
+          state.activeFloor = state.ids[0];
         }
       },
       prepare() {
@@ -21,8 +22,6 @@ const floorsSlice = createSlice({
           return {
             id: e,
             name: `Floor ${i + 1}`,
-            devices: [],
-            areas: [],
             geometry: null
           };
         });

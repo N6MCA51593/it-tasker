@@ -5,7 +5,6 @@ const areasAdapter = createEntityAdapter();
 const initialState = areasAdapter.getInitialState({
   activeArea: null,
   toRedraw: null,
-  mode: 'draw',
   activeLabel: false
 });
 
@@ -15,7 +14,7 @@ const areasSlice = createSlice({
   reducers: {
     addArea: {
       reducer(state, { payload }) {
-        const { point } = payload;
+        const { point, floor } = payload;
         if (state.activeArea) {
           let points = state.entities[state.activeArea].points;
           points.splice(points.length - 1, 1, point, point);
@@ -29,16 +28,17 @@ const areasSlice = createSlice({
             areasAdapter.addOne(state, {
               id: payload.id,
               points,
+              floor,
               name: payload.name
             });
             state.activeArea = payload.id;
           }
         }
       },
-      prepare(point) {
+      prepare({ point, floor }) {
         const id = nanoid();
         return {
-          payload: { id, point, name: 'New Area' }
+          payload: { id, point, floor, name: 'New Area' }
         };
       }
     },
@@ -82,7 +82,6 @@ const areasSlice = createSlice({
 });
 
 export const {
-  setMode,
   addArea,
   updateActiveArea,
   saveArea,
