@@ -1,5 +1,33 @@
 import { createSelector } from '@reduxjs/toolkit';
 
-export const areaIds = state => state.areas.ids;
-export const deviceIds = state => state.devices.ids;
-export const wallIds = state => state.walls.ids;
+// Areas
+export const selectAllAreas = state => state.areas.ids;
+export const selectActiveArea = state => state.areas.activeArea;
+export const selectActiveLabel = state => state.areas.activeLabel;
+export const selectAreaById = (state, id) => state.areas.entities[id];
+
+// Devices
+export const selectAllDevices = state => state.devices.ids;
+export const selectActiveDevice = state => state.devices.activeDevice;
+export const selectIsDeviceMoving = state => state.devices.isMoving;
+export const selectDeviceById = (state, id) => state.devices.entities[id];
+// Active device must be rendered last to prevent clipping issues with the options popup
+export const selectAllDevicesMemo = createSelector(
+  [selectAllDevices, selectActiveDevice],
+  (devices, activeDevice) =>
+    activeDevice
+      ? [...devices.filter(device => device !== activeDevice), activeDevice]
+      : devices
+);
+
+// Walls
+export const selectAllWalls = state => state.walls.ids;
+export const selectActiveWallItem = state =>
+  state.walls.entities[state.walls.activeWall];
+export const selectWallById = (state, id) => state.walls.entities[id];
+
+// Floors
+export const selectActiveFloor = state => state.floors.activeFloor;
+
+// UI State
+export const selectActiveUiState = state => state.uiState.activeState;

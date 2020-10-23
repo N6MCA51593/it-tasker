@@ -2,7 +2,6 @@ import { createSlice, nanoid, createEntityAdapter } from '@reduxjs/toolkit';
 
 const floorAdapter = createEntityAdapter();
 const initialState = floorAdapter.getInitialState({
-  uiState: 'main',
   activeFloor: null
 });
 

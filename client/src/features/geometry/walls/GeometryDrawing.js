@@ -2,6 +2,7 @@ import React from 'react';
 import Wall from 'features/geometry/walls/Wall';
 import Grid from 'features/geometry/Grid';
 import { useSelector, useDispatch } from 'react-redux';
+import { selectAllWalls, selectActiveWallItem } from 'app/selectors';
 import {
   addWall,
   saveWall,
@@ -20,10 +21,8 @@ const GeometryDrawing = ({
   gridStep
 }) => {
   const dispatch = useDispatch();
-  const ids = useSelector(state => state.walls.ids);
-  const activeWall = useSelector(state =>
-    state.walls.activeWall ? state.walls.entities[state.walls.activeWall] : null
-  );
+  const ids = useSelector(selectAllWalls);
+  const activeWall = useSelector(selectActiveWallItem);
 
   const handleClick = e => {
     if (mode === 'draw' || 'move') {

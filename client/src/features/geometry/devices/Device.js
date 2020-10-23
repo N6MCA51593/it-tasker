@@ -4,16 +4,17 @@ import DevicePopUp from 'features/geometry/devices/DevicePopUp';
 import DeviceOptions from 'features/geometry/devices/DeviceOptions';
 import StatusIndicator from 'features/geometry/devices/StatusIndicator';
 import DeviceIcon from 'features/geometry/devices/DeviceIcon';
+import { selectDeviceById } from 'app/selectors';
 import {
   setActiveDevice,
   removeDevice,
   moveDevice
 } from 'features/geometry/devices/deviceSlice';
 
-const Device = ({ id, mode }) => {
+const Device = ({ id, mode, activeDevice }) => {
   const dispatch = useDispatch();
-  const device = useSelector(state => state.devices.entities[id]);
-  const isActive = useSelector(state => state.devices.activeDevice) === id;
+  const device = useSelector(state => selectDeviceById(state, id));
+  const isActive = activeDevice === id;
   const {
     status,
     type,

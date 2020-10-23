@@ -11,6 +11,16 @@ import { addDevice as addDeviceAction } from 'features/geometry/devices/deviceSl
 import Area from 'features/geometry/areas/Area';
 import Device from 'features/geometry/devices/Device';
 import { updateActiveDevice } from 'features/geometry/devices/deviceSlice';
+import {
+  selectAllAreas,
+  selectAllDevicesMemo,
+  selectActiveArea,
+  selectActiveLabel,
+  selectActiveDevice,
+  selectIsDeviceMoving,
+  selectActiveFloor
+} from 'app/selectors';
+
 const AreaDrawing = ({
   mode,
   isGrid,
@@ -23,21 +33,13 @@ const AreaDrawing = ({
   gridStep
 }) => {
   const dispatch = useDispatch();
-  const { activeArea, activeLabel } = useSelector(state => {
-    return {
-      activeArea: state.areas.activeArea,
-      activeLabel: state.areas.activeLabel
-    };
-  });
-  const activeFloor = useSelector(state => state.floors.activeFloor);
-  const areaIds = useSelector(state => state.areas.ids);
-  const deviceIds = useSelector(state => state.devices.ids);
-  const { activeDevice, isMoving } = useSelector(state => {
-    return {
-      activeDevice: state.devices.activeDevice,
-      isMoving: state.devices.isMoving
-    };
-  });
+  const activeArea = useSelector(selectActiveArea);
+  const activeLabel = useSelector(selectActiveLabel);
+  const activeFloor = useSelector(selectActiveFloor);
+  const areaIds = useSelector(selectAllAreas);
+  const deviceIds = useSelector(selectAllDevicesMemo);
+  const activeDevice = useSelector(selectActiveDevice);
+  const isMoving = useSelector(selectIsDeviceMoving);
 
   const addDevice = (id, e) => {
     const { x, y } = isGrid ? getRelCoord(e, true) : getRelCoord(e);
@@ -93,7 +95,7 @@ const AreaDrawing = ({
           <Area key={id} id={id} mode={mode} addDevice={addDevice} />
         ))}
         {deviceIds.map(id => (
-          <Device key={id} id={id} mode={mode} />
+          <Device key={id} id={id} mode={mode} activeDevice={activeDevice} />
         ))}
       </svg>
     </div>

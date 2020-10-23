@@ -1,5 +1,6 @@
 import React, { memo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { selectWallById } from 'app/selectors';
 import {
   addWall,
   removeWall,
@@ -13,7 +14,7 @@ import {
 
 const Wall = ({ mode, getRelCoord, id, activeWall }) => {
   const dispatch = useDispatch();
-  const coords = useSelector(state => state.walls.entities[id].coords);
+  const { coords } = useSelector(state => selectWallById(state, id));
   const { x1, y1, x2, y2 } = coords;
   const r = 7;
   const isActive = activeWall === id;

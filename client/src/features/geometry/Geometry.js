@@ -7,7 +7,7 @@ import useGrid from 'features/geometry/useGrid';
 //import GeometryDrawing from 'features/geometry/walls/GeometryDrawing';
 import AreaDrawing from 'features/geometry/areas/AreaDrawing';
 import { useDispatch } from 'react-redux';
-import { generateFloors } from 'app/floorSlice';
+import { generateFloors } from 'features/geometry/floors/floorSlice';
 
 const Geometry = () => {
   const [mode, setMode] = useState('draw');

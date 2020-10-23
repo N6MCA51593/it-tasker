@@ -1,12 +1,13 @@
 import React, { memo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { selectAreaById } from 'app/selectors';
 import { removeArea, redrawArea } from 'features/geometry/areas/areaSlice';
 import AreaNameLabel from 'features/geometry/areas/AreaNameLabel';
 
 const Area = ({ id, mode, addDevice }) => {
   const dispatch = useDispatch();
-  const { points, name, labelCoords: coords } = useSelector(
-    state => state.areas.entities[id]
+  const { points, name, labelCoords: coords } = useSelector(state =>
+    selectAreaById(state, id)
   );
   const handleClick = e => {
     if (mode === 'remove') {
