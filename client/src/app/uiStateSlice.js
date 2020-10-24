@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  activeState: 'main'
+  activeState: 'edit-areas'
 };
 
 const uiStateSlice = createSlice({

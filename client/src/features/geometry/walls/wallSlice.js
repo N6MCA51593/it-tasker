@@ -35,10 +35,10 @@ const wallsSlice = createSlice({
         wallsAdapter.addOne(state, payload);
         state.activeWall = payload.id;
       },
-      prepare(coords) {
+      prepare({ coords, floor }) {
         const id = nanoid();
         return {
-          payload: { id, coords }
+          payload: { id, coords, floor }
         };
       }
     },

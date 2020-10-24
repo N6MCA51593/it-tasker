@@ -12,7 +12,7 @@ import {
   findNearestPoint
 } from 'features/geometry/geometryMathFuncs';
 
-const Wall = ({ mode, getRelCoord, id, activeWall }) => {
+const Wall = ({ mode, getRelCoord, id, activeWall, activeFloor }) => {
   const dispatch = useDispatch();
   const { coords } = useSelector(state => selectWallById(state, id));
   const { x1, y1, x2, y2 } = coords;
@@ -29,7 +29,9 @@ const Wall = ({ mode, getRelCoord, id, activeWall }) => {
         r,
         coords
       );
-      activeWall ? dispatch(saveWall({ x, y })) : dispatch(addWall({ x, y }));
+      activeWall
+        ? dispatch(saveWall({ x, y }))
+        : dispatch(addWall({ coords: { x, y }, floor: activeFloor }));
     } else if (mode === 'remove') {
       dispatch(removeWall(id));
     } else if (mode === 'move') {

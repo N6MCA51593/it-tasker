@@ -1,13 +1,14 @@
-import React, { useRef, useState, Fragment, useEffect } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import GeometryControls from 'features/geometry/GeometryControls';
 import useDimensions from 'features/geometry/useDimensions';
 import useCoordinates from 'features/geometry/useCoordinates';
 import useZoomAndPan from 'features/geometry/useZoomAndPan';
 import useGrid from 'features/geometry/useGrid';
-//import GeometryDrawing from 'features/geometry/walls/GeometryDrawing';
+import GeometryDrawing from 'features/geometry/walls/GeometryDrawing';
 import AreaDrawing from 'features/geometry/areas/AreaDrawing';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { generateFloors } from 'features/geometry/floors/floorSlice';
+import { selectActiveUiState } from 'app/selectors';
 
 const Geometry = () => {
   const [mode, setMode] = useState('draw');
@@ -36,6 +37,7 @@ const Geometry = () => {
     ref
   });
   const dispatch = useDispatch();
+  const uiState = useSelector(selectActiveUiState);
 
   useEffect(() => {
     dispatch(generateFloors());
@@ -73,28 +75,30 @@ const Geometry = () => {
   };
 
   return (
-    <Fragment>
-      <div
-        ref={ref}
-        mode={mode}
-        onPointerDown={e => handlePointerDown(e)}
-        onPointerUp={() => handlePointerUp()}
-        onPointerMove={e => handlePointerMove(e)}
-        onPointerLeave={() => handlePointerLeave()}
-        onWheel={e => handleWheel(e)}
-      >
-        {/*<GeometryDrawing
-          mode={mode}
-          isGrid={isGrid}
-          getRelCoord={getRelCoord}
-          panHLvl={panHLvl}
-          panVLvl={panVLvl}
-          zoomLvl={zoomLvl}
-          width={width}
-          height={height}
-          gridStep={gridStep}
-        />*/}
-        {
+    <div
+      className='geometry'
+      ref={ref}
+      onPointerDown={e => handlePointerDown(e)}
+      onPointerUp={() => handlePointerUp()}
+      onPointerMove={e => handlePointerMove(e)}
+      onPointerLeave={() => handlePointerLeave()}
+      onWheel={e => handleWheel(e)}
+    >
+      <div>
+        {uiState === 'edit-geometry' && (
+          <GeometryDrawing
+            mode={mode}
+            isGrid={isGrid}
+            getRelCoord={getRelCoord}
+            panHLvl={panHLvl}
+            panVLvl={panVLvl}
+            zoomLvl={zoomLvl}
+            width={width}
+            height={height}
+            gridStep={gridStep}
+          />
+        )}
+        {uiState === 'edit-areas' && (
           <AreaDrawing
             mode={mode}
             isGrid={isGrid}
@@ -106,7 +110,7 @@ const Geometry = () => {
             height={height}
             gridStep={gridStep}
           />
-        }
+        )}
       </div>
       <GeometryControls
         zoomIn={zoomIn}
@@ -117,8 +121,9 @@ const Geometry = () => {
         toggleGrid={toggleGrid}
         gridStepUp={gridStepUp}
         gridStepDown={gridStepDown}
+        uiState={uiState}
       />
-    </Fragment>
+    </div>
   );
 };
 

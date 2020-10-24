@@ -2,7 +2,11 @@ import React from 'react';
 import Wall from 'features/geometry/walls/Wall';
 import Grid from 'features/geometry/Grid';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectAllWalls, selectActiveWallItem } from 'app/selectors';
+import {
+  selectAllWalls,
+  selectActiveWallItem,
+  selectActiveFloor
+} from 'app/selectors';
 import {
   addWall,
   saveWall,
@@ -23,6 +27,7 @@ const GeometryDrawing = ({
   const dispatch = useDispatch();
   const ids = useSelector(selectAllWalls);
   const activeWall = useSelector(selectActiveWallItem);
+  const activeFloor = useSelector(selectActiveFloor);
 
   const handleClick = e => {
     if (mode === 'draw' || 'move') {
@@ -32,7 +37,7 @@ const GeometryDrawing = ({
       }
 
       if (mode === 'draw') {
-        dispatch(addWall({ x, y }));
+        dispatch(addWall({ coords: { x, y }, floor: activeFloor }));
       }
     }
   };
@@ -70,6 +75,7 @@ const GeometryDrawing = ({
             id={e}
             mode={mode}
             getRelCoord={getRelCoord}
+            activeFloor={activeFloor}
           />
         ))}
       </svg>
