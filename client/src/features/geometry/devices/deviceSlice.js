@@ -21,6 +21,7 @@ const devicesSlice = createSlice({
         return {
           payload: {
             id,
+            floor: payload.floor,
             area: payload.id,
             coords: payload.coords,
             name: 'New Device',
@@ -63,6 +64,14 @@ const devicesSlice = createSlice({
     },
     undo(state) {
       devicesAdapter.setAll(state, state.devicesHistory);
+    }
+  },
+  extraReducers: {
+    'areas/removeArea': (state, { payload }) => {
+      const toRemove = Object.keys(state.entities).filter(
+        key => state.entities[key].area === payload
+      );
+      devicesAdapter.removeMany(state, toRemove);
     }
   }
 });
