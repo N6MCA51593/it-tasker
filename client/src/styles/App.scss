@@ -100,4 +100,8 @@ button {
 .name-label {
   cursor: default;
   user-select: none;
+
+  &-disabled {
+    pointer-events: none;
+  }
 }

@@ -28,7 +28,12 @@ const AreaNameLabel = ({ coords, name, mode, id }) => {
   return (
     <g>
       {!isEditing && (
-        <text x={x} y={y} onClick={() => handleClick()} className='name-label'>
+        <text
+          x={x}
+          y={y}
+          onClick={() => handleClick()}
+          className={`name-label${mode === 'label-rename' ? '' : '-disabled'}`}
+        >
           {labelName ? labelName : '-.-'}
         </text>
       )}
