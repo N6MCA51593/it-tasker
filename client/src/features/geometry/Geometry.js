@@ -98,7 +98,7 @@ const Geometry = () => {
             gridStep={gridStep}
           />
         )}
-        {uiState === 'edit-areas' && (
+        {uiState !== 'edit-geometry' && (
           <AreaDrawing
             mode={mode}
             isGrid={isGrid}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { cancelDrawing } from 'features/geometry/walls/wallSlice';
 import { saveArea } from 'features/geometry/areas/areaSlice';
 import { setUiState } from 'app/uiStateSlice';
@@ -16,6 +16,13 @@ const GeometryControls = ({
   uiState
 }) => {
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (uiState === 'main') {
+      setMode('nav');
+    }
+  }, [uiState, setMode]);
+
   return (
     <div className='geometry-controls'>
       {uiState === 'edit-areas' && (
