@@ -1,9 +1,17 @@
-import { createSlice, nanoid, createEntityAdapter } from '@reduxjs/toolkit';
+import {
+  createSlice,
+  nanoid,
+  createEntityAdapter,
+  createAsyncThunk
+} from '@reduxjs/toolkit';
 
 const wallsAdapter = createEntityAdapter();
 const initialState = wallsAdapter.getInitialState({
   activeWall: null,
-  movingWallCoords: null
+  movingWallCoords: null,
+  toDelete: [],
+  toUpsert: [],
+  wallsHistory: null
 });
 
 const getCoords = (state, { x, y }) => {
@@ -18,6 +26,56 @@ const getCoords = (state, { x, y }) => {
   }
   return res;
 };
+
+const reqParamsBuilder = (toUpsert, toDelete) => {
+  const reducer = (accum, cv, ci, arr) => {
+    if (arr.length === 0) {
+      accum = '';
+      return;
+    }
+
+    if (accum[0] === 'u') {
+      return ci === arr.length - 1 ? accum + cv : accum + cv + '&upd=';
+    } else {
+      return ci === arr.length - 1 ? accum + cv : accum + cv + '&del=';
+    }
+  };
+
+  const upsQuery =
+    toUpsert.length > 0 ? toUpsert.reduce(reducer, 'upd=') + '&' : '';
+  const delQuery = toDelete.length > 0 ? toDelete.reduce(reducer, 'del=') : '';
+
+  const query = '?' + upsQuery + delQuery;
+
+  return query;
+};
+
+export const updateWallsReq = createAsyncThunk(
+  'walls/updateWalls',
+  async (_, { dispatch, getState }) => {
+    const currState = getState();
+    const params = reqParamsBuilder(
+      currState.walls.toUpsert,
+      currState.walls.toDelete
+    );
+
+    const body = currState.walls.toUpsert.map(e => currState.walls.entities[e]);
+
+    const response = await fetch(
+      'http://localhost:5000/api/update/geometry' + params,
+      {
+        method: 'POST',
+        body: JSON.stringify(body),
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        mode: 'cors'
+      }
+    );
+    const res = await response.json();
+    return res;
+  }
+);
 
 const wallsSlice = createSlice({
   name: 'walls',
@@ -43,8 +101,10 @@ const wallsSlice = createSlice({
       }
     },
     saveWall(state, { payload }) {
+      const id = state.activeWall;
+      state.toUpsert.push(id);
       wallsAdapter.updateOne(state, {
-        id: state.activeWall,
+        id,
         changes: {
           coords: getCoords(state, payload)
         }
@@ -53,6 +113,10 @@ const wallsSlice = createSlice({
       state.movingWallCoords = null;
     },
     updateActiveWall(state, { payload }) {
+      if (!state.wallsHistory) {
+        state.wallsHistory = state.entities;
+      }
+
       wallsAdapter.updateOne(state, {
         id: state.activeWall,
         changes: {
@@ -64,10 +128,23 @@ const wallsSlice = createSlice({
       state.activeWall = payload.id;
       state.movingWallCoords = payload.coords;
     },
-    removeWall: wallsAdapter.removeOne,
+    removeWall(state, { payload }) {
+      if (state.toUpsert.includes(payload)) {
+        state.toUpsert.filter(e => e === payload);
+      } else {
+        state.toDelete.push(payload);
+      }
+      wallsAdapter.removeOne(state, payload);
+    },
     cancelDrawing(state) {
       wallsAdapter.removeOne(state, state.activeWall);
       state.activeWall = null;
+    },
+    saveChanges(state) {},
+    cancelChanges(state) {
+      if (state.wallsHistory) {
+        wallsAdapter.setAll(state, state.wallsHistory);
+      }
     }
   }
 });

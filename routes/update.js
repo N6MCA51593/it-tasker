@@ -5,7 +5,8 @@ const router = express.Router();
 // @desc      Update geometry
 // @access    Private
 router.post('/geometry', async (req, res) => {
-  return;
+  console.log(req.body);
+  res.json({ test: 'ok' });
 });
 
 module.exports = router;

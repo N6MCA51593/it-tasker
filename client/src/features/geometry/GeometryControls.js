@@ -1,5 +1,8 @@
 import React, { useEffect } from 'react';
-import { cancelDrawing } from 'features/geometry/walls/wallSlice';
+import {
+  cancelDrawing,
+  updateWallsReq
+} from 'features/geometry/walls/wallSlice';
 import { saveArea } from 'features/geometry/areas/areaSlice';
 import { setUiState } from 'app/uiStateSlice';
 import { useDispatch } from 'react-redux';
@@ -50,6 +53,7 @@ const GeometryControls = ({
           <button onClick={() => setMode('remove')}>Remove</button>
           <button onClick={() => setMode('move')}>Move</button>
           <button onClick={() => dispatch(cancelDrawing())}>Cancel</button>
+          <button onClick={() => dispatch(updateWallsReq())}>Request</button>
         </div>
       )}
       <div className='nav-controls'>
