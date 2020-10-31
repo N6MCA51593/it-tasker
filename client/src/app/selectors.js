@@ -31,3 +31,4 @@ export const selectActiveFloor = state => state.floors.activeFloor;
 
 // UI State
 export const selectActiveUiState = state => state.uiState.activeState;
+export const selectUiLoadingState = state => state.uiState.isLoading;

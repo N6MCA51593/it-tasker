@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  activeState: 'edit-areas'
+  activeState: 'edit-areas',
+  isLoading: true
 };
 
 const uiStateSlice = createSlice({
@@ -10,6 +11,11 @@ const uiStateSlice = createSlice({
   reducers: {
     setUiState(state, { payload }) {
       state.activeState = payload;
+    }
+  },
+  extraReducers: {
+    'loadAppData/fulfilled': state => {
+      state.isLoading = false;
     }
   }
 });

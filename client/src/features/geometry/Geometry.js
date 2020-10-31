@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState } from 'react';
 import GeometryControls from 'features/geometry/GeometryControls';
 import useDimensions from 'features/geometry/useDimensions';
 import useCoordinates from 'features/geometry/useCoordinates';
@@ -6,8 +6,7 @@ import useZoomAndPan from 'features/geometry/useZoomAndPan';
 import useGrid from 'features/geometry/useGrid';
 import GeometryDrawing from 'features/geometry/walls/GeometryDrawing';
 import AreaDrawing from 'features/geometry/areas/AreaDrawing';
-import { useDispatch, useSelector } from 'react-redux';
-import { generateFloors } from 'features/geometry/floors/floorSlice';
+import { useSelector } from 'react-redux';
 import { selectActiveUiState } from 'app/selectors';
 
 const Geometry = () => {
@@ -36,12 +35,7 @@ const Geometry = () => {
     panVLvl,
     ref
   });
-  const dispatch = useDispatch();
   const uiState = useSelector(selectActiveUiState);
-
-  useEffect(() => {
-    dispatch(generateFloors());
-  }, [dispatch]);
 
   const handlePointerMove = e => {
     if (mode === 'nav' && isPointerDown) {

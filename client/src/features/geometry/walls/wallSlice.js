@@ -59,7 +59,10 @@ export const updateWallsReq = createAsyncThunk(
       currState.walls.toDelete
     );
 
-    const body = currState.walls.toUpsert.map(e => currState.walls.entities[e]);
+    // Remove duplicates
+    const body = [...new Set(currState.walls.toUpsert)].map(
+      e => currState.walls.entities[e]
+    );
 
     const response = await fetch(
       'http://localhost:5000/api/update/geometry' + params,
@@ -140,11 +143,17 @@ const wallsSlice = createSlice({
       wallsAdapter.removeOne(state, state.activeWall);
       state.activeWall = null;
     },
-    saveChanges(state) {},
     cancelChanges(state) {
       if (state.wallsHistory) {
         wallsAdapter.setAll(state, state.wallsHistory);
       }
+    }
+  },
+  extraReducers: {
+    [updateWallsReq.fulfilled]: state => {
+      state.toDelete = [];
+      state.toUpsert = [];
+      state.wallsHistory = null;
     }
   }
 });
