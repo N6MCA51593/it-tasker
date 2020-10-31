@@ -1,5 +1,7 @@
+const { query } = require('express');
 const express = require('express');
 const router = express.Router();
+const pool = require('../DBclient');
 
 // @route     POST api/update/geometry
 // @desc      Update geometry
