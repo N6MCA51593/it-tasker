@@ -27,37 +27,22 @@ const getCoords = (state, { x, y }) => {
   return res;
 };
 
-const reqParamsBuilder = (toUpsert, toDelete) => {
+const reqParamsBuilder = toDelete => {
   const reducer = (accum, cv, ci, arr) => {
-    if (arr.length === 0) {
-      accum = '';
-      return;
-    }
-
-    if (accum[0] === 'u') {
-      return ci === arr.length - 1 ? accum + cv : accum + cv + '&upd=';
-    } else {
-      return ci === arr.length - 1 ? accum + cv : accum + cv + '&del=';
-    }
+    return ci === arr.length - 1 ? accum + cv : accum + cv + '&del=';
   };
 
-  const upsQuery =
-    toUpsert.length > 0 ? toUpsert.reduce(reducer, 'upd=') + '&' : '';
-  const delQuery = toDelete.length > 0 ? toDelete.reduce(reducer, 'del=') : '';
-
-  const query = '?' + upsQuery + delQuery;
-
-  return query;
+  const delQuery =
+    toDelete.length > 0 ? toDelete.reduce(reducer, '?del=') : '?';
+  return delQuery;
 };
 
 export const updateWallsReq = createAsyncThunk(
   'walls/updateWalls',
   async (_, { dispatch, getState }) => {
     const currState = getState();
-    const params = reqParamsBuilder(
-      currState.walls.toUpsert,
-      currState.walls.toDelete
-    );
+    const floor = currState.floors.activeFloor;
+    const params = reqParamsBuilder(currState.walls.toDelete) + '&fl=' + floor;
 
     // Remove duplicates
     const body = [...new Set(currState.walls.toUpsert)].map(
@@ -76,6 +61,7 @@ export const updateWallsReq = createAsyncThunk(
       }
     );
     const res = await response.json();
+    console.log(res);
     return res;
   }
 );
@@ -133,7 +119,7 @@ const wallsSlice = createSlice({
     },
     removeWall(state, { payload }) {
       if (state.toUpsert.includes(payload)) {
-        state.toUpsert.filter(e => e === payload);
+        state.toUpsert = state.toUpsert.filter(e => e !== payload);
       } else {
         state.toDelete.push(payload);
       }

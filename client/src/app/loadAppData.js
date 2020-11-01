@@ -7,6 +7,5 @@ export const loadAppData = createAsyncThunk('loadAppData', async () => {
   })
     .then(res => res.json())
     .catch(e => console.log(e));
-  console.log(response);
   return response;
 });

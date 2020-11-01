@@ -12,7 +12,17 @@ const floorsSlice = createSlice({
   extraReducers: {
     'loadAppData/fulfilled': (state, { payload }) => {
       floorAdapter.addMany(state, payload.floors);
-      state.activeFloor = state.ids[0];
+      state.activeFloor = '1IELCN-gENaKaAg20_nP8';
+    },
+    'walls/updateWalls/fulfilled': (state, { payload }) => {
+      console.log(payload);
+      floorAdapter.updateOne(state, {
+        id: payload.id,
+        changes: {
+          geometry: payload.geometry
+        }
+      });
+      state.activeFloor = payload.id;
     }
   }
 });

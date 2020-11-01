@@ -28,6 +28,8 @@ export const selectWallById = (state, id) => state.walls.entities[id];
 
 // Floors
 export const selectActiveFloor = state => state.floors.activeFloor;
+export const selectActiveFloorItem = state =>
+  state.floors.entities[state.floors.activeFloor];
 
 // UI State
 export const selectActiveUiState = state => state.uiState.activeState;

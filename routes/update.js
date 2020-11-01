@@ -1,25 +1,34 @@
 const express = require('express');
 const router = express.Router();
 const { db, pgp } = require('../db');
+const generateWallQuery = require('../utils/generateWallQuery');
 
 // @route     POST api/update/geometry
 // @desc      Update geometry
 // @access    Private
 router.post('/geometry', async (req, res) => {
+  const reducer = (accum, wall) => {
+    const { x1, y1, x2, y2 } = wall.coords;
+    return accum + `M ${x1} ${y1} L ${x2} ${y2}`;
+  };
+  const toDelete = req.query.del;
   const toUpsert = req.body;
-  if (toUpsert && toUpsert.length > 0) {
-    try {
-      console.log(toUpsert);
-      const q =
-        pgp.helpers.insert(toUpsert, ['id', 'coords', 'floor'], 'walls') +
-        ' on conflict (id) do update set coords=excluded.coords';
-      console.log(q);
-      await db.none(q);
-    } catch (error) {
-      console.log(error);
-    }
+  const floor = req.query.fl;
+
+  try {
+    // console.log(toUpsert);
+    // console.log(delQuery);
+    const query = generateWallQuery(toUpsert, toDelete, floor);
+    const walls = await db.any(query);
+    const geometry = walls.reduce(reducer, '');
+    await db.none('UPDATE floors SET geometry = $1 WHERE id = $2', [
+      geometry,
+      floor
+    ]);
+    res.json({ id: floor, geometry });
+  } catch (error) {
+    res.status(400).json({ error: 'Server error' });
   }
-  res.json({ test: 'ok' });
 });
 
 module.exports = router;
