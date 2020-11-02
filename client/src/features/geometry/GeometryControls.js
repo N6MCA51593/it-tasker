@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import {
   cancelDrawing,
-  updateWallsReq
+  updateWallsReq,
+  cancelChanges
 } from 'features/geometry/walls/wallSlice';
 import { saveArea } from 'features/geometry/areas/areaSlice';
 import { setUiGlobalState, setUiGeoState } from 'app/uiStateSlice';
@@ -80,8 +81,11 @@ const GeometryControls = ({
           <button onClick={() => dispatch(setUiGeoState(ui.moveWallGeo))}>
             Move
           </button>
-          <button onClick={() => dispatch(cancelDrawing())}>Cancel</button>
-          <button onClick={() => dispatch(updateWallsReq())}>Request</button>
+          <button onClick={() => dispatch(cancelDrawing())}>
+            Cancel Drawing
+          </button>
+          <button onClick={() => dispatch(updateWallsReq())}>Save</button>
+          <button onClick={() => dispatch(cancelChanges())}>Cancel</button>
         </div>
       )}
       <div className='nav-controls'>

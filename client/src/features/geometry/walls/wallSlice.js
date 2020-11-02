@@ -4,6 +4,7 @@ import {
   createEntityAdapter,
   createAsyncThunk
 } from '@reduxjs/toolkit';
+import { editGeomGlob } from 'common/uiStates';
 
 const wallsAdapter = createEntityAdapter();
 const initialState = wallsAdapter.getInitialState({
@@ -61,7 +62,6 @@ export const updateWallsReq = createAsyncThunk(
       }
     );
     const res = await response.json();
-    console.log(res);
     return res;
   }
 );
@@ -102,10 +102,6 @@ const wallsSlice = createSlice({
       state.movingWallCoords = null;
     },
     updateActiveWall(state, { payload }) {
-      if (!state.wallsHistory) {
-        state.wallsHistory = state.entities;
-      }
-
       wallsAdapter.updateOne(state, {
         id: state.activeWall,
         changes: {
@@ -132,6 +128,10 @@ const wallsSlice = createSlice({
     cancelChanges(state) {
       if (state.wallsHistory) {
         wallsAdapter.setAll(state, state.wallsHistory);
+        state.activeWall = null;
+        state.movingWallCoords = null;
+        state.toDelete = [];
+        state.toUpsert = [];
       }
     }
   },
@@ -140,6 +140,17 @@ const wallsSlice = createSlice({
       state.toDelete = [];
       state.toUpsert = [];
       state.wallsHistory = null;
+    },
+    'loadAppData/fulfilled': (state, { payload }) => {
+      wallsAdapter.addMany(state, payload.walls);
+    },
+    'uiState/setUiGlobalState': (state, { payload }) => {
+      if (payload === editGeomGlob && !state.wallsHistory) {
+        state.wallsHistory = state.entities;
+      } else if (state.wallsHistory) {
+        wallsAdapter.setAll(state, state.wallsHistory);
+        state.wallsHistory = null;
+      }
     }
   }
 });
@@ -150,7 +161,8 @@ export const {
   removeWall,
   saveWall,
   moveWall,
-  cancelDrawing
+  cancelDrawing,
+  cancelChanges
 } = wallsSlice.actions;
 
 export default wallsSlice.reducer;

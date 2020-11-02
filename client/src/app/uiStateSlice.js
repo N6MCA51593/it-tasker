@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { navGeo, editAreasGlob, mainGlob } from 'common/uiStates';
+import { navGeo, mainGlob } from 'common/uiStates';
 
 const initialState = {
   activeGlobalState: mainGlob,

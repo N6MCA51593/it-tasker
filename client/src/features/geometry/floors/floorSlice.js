@@ -15,7 +15,6 @@ const floorsSlice = createSlice({
       state.activeFloor = '1IELCN-gENaKaAg20_nP8';
     },
     'walls/updateWalls/fulfilled': (state, { payload }) => {
-      console.log(payload);
       floorAdapter.updateOne(state, {
         id: payload.id,
         changes: {

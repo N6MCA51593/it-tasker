@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { db, pgp } = require('../db');
+const { db } = require('../db');
 const generateWallQuery = require('../utils/generateWallQuery');
 
 // @route     POST api/update/geometry
@@ -16,8 +16,6 @@ router.post('/geometry', async (req, res) => {
   const floor = req.query.fl;
 
   try {
-    // console.log(toUpsert);
-    // console.log(delQuery);
     const query = generateWallQuery(toUpsert, toDelete, floor);
     const walls = await db.any(query);
     const geometry = walls.reduce(reducer, '');

@@ -25,7 +25,7 @@ const useCoordinates = ({
           Math.pow(nodes[i][0] - x, 2) + Math.pow(nodes[i][1] - y, 2)
         ) <= diff
       ) {
-        return { x: nodes[i][0], y: nodes[i][1] };
+        return { x: Math.round(nodes[i][0]), y: Math.round(nodes[i][1]) };
       }
     }
 
