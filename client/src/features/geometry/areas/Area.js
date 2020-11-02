@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { selectAreaById } from 'app/selectors';
 import { removeArea, redrawArea } from 'features/geometry/areas/areaSlice';
 import AreaNameLabel from 'features/geometry/areas/AreaNameLabel';
+import * as ui from 'common/uiStates';
 
 const Area = ({ id, mode, addDevice }) => {
   const dispatch = useDispatch();
@@ -10,11 +11,11 @@ const Area = ({ id, mode, addDevice }) => {
     selectAreaById(state, id)
   );
   const handleClick = e => {
-    if (mode === 'remove') {
+    if (mode === ui.removeAreaGeo) {
       dispatch(removeArea(id));
-    } else if (mode === 'redraw') {
+    } else if (mode === ui.redrawAreaGeo) {
       dispatch(redrawArea(id));
-    } else if (mode === 'add-device' || mode === 'move-device') {
+    } else if (mode === ui.addDeviceGeo || mode === ui.moveDeviceGeo) {
       addDevice(id, e);
     }
   };

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { moveLabel, renameLabel } from 'features/geometry/areas/areaSlice';
+import { moveAreaLabelGeo, renameAreaLabelGeo } from 'common/uiStates';
 
 const AreaNameLabel = ({ coords, name, mode, id }) => {
   const [labelName, setLabelName] = useState(name);
@@ -8,9 +9,9 @@ const AreaNameLabel = ({ coords, name, mode, id }) => {
   const dispatch = useDispatch();
   const { x, y } = coords;
   const handleClick = () => {
-    if (mode === 'label-move') {
+    if (mode === moveAreaLabelGeo) {
       dispatch(moveLabel(id));
-    } else if (mode === 'label-rename') {
+    } else if (mode === renameAreaLabelGeo) {
       setIsEditing(!isEditing);
     }
   };
@@ -25,15 +26,15 @@ const AreaNameLabel = ({ coords, name, mode, id }) => {
       dispatch(renameLabel({ id, name: labelName }));
     }
   };
+
+  const className = `name-label${
+    mode === renameAreaLabelGeo || mode === moveAreaLabelGeo ? '' : '-disabled'
+  }`;
+
   return (
     <g>
       {!isEditing && (
-        <text
-          x={x}
-          y={y}
-          onClick={() => handleClick()}
-          className={`name-label${mode === 'label-rename' ? '' : '-disabled'}`}
-        >
+        <text x={x} y={y} onClick={() => handleClick()} className={className}>
           {labelName ? labelName : '-.-'}
         </text>
       )}

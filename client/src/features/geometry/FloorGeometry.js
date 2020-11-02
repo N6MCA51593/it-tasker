@@ -4,10 +4,9 @@ import { selectActiveFloorItem } from 'app/selectors';
 
 const FloorGeometry = () => {
   const floor = useSelector(selectActiveFloorItem);
-  console.log(floor?.geometry);
   return (
     <path
-      d={floor && floor.geometry}
+      d={floor?.geometry}
       strokeWidth='8'
       stroke='#17161c'
       strokeLinecap='round'

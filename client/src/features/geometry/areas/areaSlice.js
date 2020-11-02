@@ -5,7 +5,10 @@ const areasAdapter = createEntityAdapter();
 const initialState = areasAdapter.getInitialState({
   activeArea: null,
   toRedraw: null,
-  activeLabel: false
+  activeLabel: false,
+  toUpsert: [],
+  toDelete: [],
+  areasHistory: null
 });
 
 const areasSlice = createSlice({

@@ -1,4 +1,4 @@
-const pgp = require('pg-promise')();
+const pgp = require('pg-promise')({ capSQL: true });
 const { DB_USER, DB_PW, DB_HOST, DB_PORT, DB_STRING } = process.env;
 const cn = {
   user: DB_USER,

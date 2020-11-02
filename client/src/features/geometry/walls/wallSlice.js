@@ -39,7 +39,7 @@ const reqParamsBuilder = toDelete => {
 
 export const updateWallsReq = createAsyncThunk(
   'walls/updateWalls',
-  async (_, { dispatch, getState }) => {
+  async (_, { getState }) => {
     const currState = getState();
     const floor = currState.floors.activeFloor;
     const params = reqParamsBuilder(currState.walls.toDelete) + '&fl=' + floor;

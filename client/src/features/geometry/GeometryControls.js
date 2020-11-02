@@ -4,15 +4,15 @@ import {
   updateWallsReq
 } from 'features/geometry/walls/wallSlice';
 import { saveArea } from 'features/geometry/areas/areaSlice';
-import { setUiState } from 'app/uiStateSlice';
+import { setUiGlobalState, setUiGeoState } from 'app/uiStateSlice';
 import { useDispatch } from 'react-redux';
+import * as ui from 'common/uiStates';
 
 const GeometryControls = ({
   zoomIn,
   zoomOut,
   panH,
   panV,
-  setMode,
   toggleGrid,
   gridStepUp,
   gridStepDown,
@@ -21,37 +21,65 @@ const GeometryControls = ({
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (uiState === 'main') {
-      setMode('nav');
+    if (uiState === ui.mainGlob) {
+      dispatch(setUiGeoState(ui.navGeo));
     }
-  }, [uiState, setMode]);
+  }, [uiState, dispatch]);
 
   return (
     <div className='geometry-controls'>
       {uiState === 'edit-areas' && (
         <div className='device-controls'>
-          <button onClick={() => setMode('add-device')}>Add</button>
-          <button onClick={() => setMode('remove-device')}>Remove</button>
-          <button onClick={() => setMode('move-device')}>Move</button>
+          <button onClick={() => dispatch(setUiGeoState(ui.addDeviceGeo))}>
+            Add
+          </button>
+          <button onClick={() => dispatch(setUiGeoState(ui.removeDeviceGeo))}>
+            Remove
+          </button>
+          <button onClick={() => dispatch(setUiGeoState(ui.moveDeviceGeo))}>
+            Move
+          </button>
         </div>
       )}
       {uiState === 'edit-areas' && (
         <div className='area-controls'>
-          <button onClick={() => setMode('nav')}>Nav</button>
-          <button onClick={() => setMode('draw')}>Draw</button>
-          <button onClick={() => setMode('remove')}>Remove</button>
-          <button onClick={() => setMode('redraw')}>Redraw</button>
+          <button onClick={() => dispatch(setUiGeoState(ui.navGeo))}>
+            Nav
+          </button>
+          <button onClick={() => dispatch(setUiGeoState(ui.addAreaGeo))}>
+            Draw
+          </button>
+          <button onClick={() => dispatch(setUiGeoState(ui.removeAreaGeo))}>
+            Remove
+          </button>
+          <button onClick={() => dispatch(setUiGeoState(ui.redrawAreaGeo))}>
+            Redraw
+          </button>
           <button onClick={() => dispatch(saveArea())}>Save Area</button>
-          <button onClick={() => setMode('label-move')}>Move Label</button>
-          <button onClick={() => setMode('label-rename')}>Rename Label</button>
+          <button onClick={() => dispatch(setUiGeoState(ui.moveAreaLabelGeo))}>
+            Move Label
+          </button>
+          <button
+            onClick={() => dispatch(setUiGeoState(ui.renameAreaLabelGeo))}
+          >
+            Rename Label
+          </button>
         </div>
       )}
       {uiState === 'edit-geometry' && (
         <div className='wall-controls'>
-          <button onClick={() => setMode('nav')}>Nav</button>
-          <button onClick={() => setMode('draw')}>Draw</button>
-          <button onClick={() => setMode('remove')}>Remove</button>
-          <button onClick={() => setMode('move')}>Move</button>
+          <button onClick={() => dispatch(setUiGeoState(ui.navGeo))}>
+            Nav
+          </button>
+          <button onClick={() => dispatch(setUiGeoState(ui.addWallGeo))}>
+            Draw
+          </button>
+          <button onClick={() => dispatch(setUiGeoState(ui.removeWallGeo))}>
+            Remove
+          </button>
+          <button onClick={() => dispatch(setUiGeoState(ui.moveWallGeo))}>
+            Move
+          </button>
           <button onClick={() => dispatch(cancelDrawing())}>Cancel</button>
           <button onClick={() => dispatch(updateWallsReq())}>Request</button>
         </div>
@@ -68,11 +96,13 @@ const GeometryControls = ({
         <button onClick={() => panH()}> R </button>
       </div>
       <div className='state-nav-controls'>
-        <button onClick={() => dispatch(setUiState('main'))}>Main</button>
-        <button onClick={() => dispatch(setUiState('edit-geometry'))}>
+        <button onClick={() => dispatch(setUiGlobalState(ui.mainGlob))}>
+          Main
+        </button>
+        <button onClick={() => dispatch(setUiGlobalState(ui.editGeomGlob))}>
           Geom
         </button>
-        <button onClick={() => dispatch(setUiState('edit-areas'))}>
+        <button onClick={() => dispatch(setUiGlobalState(ui.editAreasGlob))}>
           Areas/Dev
         </button>
       </div>

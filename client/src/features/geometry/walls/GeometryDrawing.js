@@ -12,6 +12,7 @@ import {
   saveWall,
   updateActiveWall
 } from 'features/geometry/walls/wallSlice';
+import * as ui from 'common/uiStates';
 
 const GeometryDrawing = ({
   mode,
@@ -30,13 +31,13 @@ const GeometryDrawing = ({
   const activeFloor = useSelector(selectActiveFloor);
 
   const handleClick = e => {
-    if (mode === 'draw' || 'move') {
+    if (mode === ui.addWallGeo || ui.moveWallGeo) {
       const { x, y } = isGrid ? getRelCoord(e, true) : getRelCoord(e);
       if (activeWall) {
         dispatch(saveWall({ x, y }));
       }
 
-      if (mode === 'draw') {
+      if (mode === ui.addWallGeo) {
         dispatch(addWall({ coords: { x, y }, floor: activeFloor }));
       }
     }

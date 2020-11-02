@@ -32,5 +32,7 @@ export const selectActiveFloorItem = state =>
   state.floors.entities[state.floors.activeFloor];
 
 // UI State
-export const selectActiveUiState = state => state.uiState.activeState;
+export const selectActiveGlobalUiState = state =>
+  state.uiState.activeGlobalState;
+export const selectActiveGeoState = state => state.uiState.activeGeometryState;
 export const selectUiLoadingState = state => state.uiState.isLoading;

@@ -10,6 +10,7 @@ import {
   removeDevice,
   moveDevice
 } from 'features/geometry/devices/deviceSlice';
+import * as ui from 'common/uiStates';
 
 const Device = ({ id, mode, activeDevice }) => {
   const dispatch = useDispatch();
@@ -23,11 +24,11 @@ const Device = ({ id, mode, activeDevice }) => {
   } = device;
 
   const handleClick = () => {
-    if (mode === 'nav') {
+    if (mode === ui.navGeo) {
       dispatch(setActiveDevice(id));
-    } else if (mode === 'remove-device') {
+    } else if (mode === ui.removeDeviceGeo) {
       dispatch(removeDevice(id));
-    } else if (mode === 'move-device' && !isActive) {
+    } else if (mode === ui.moveDeviceGeo && !isActive) {
       dispatch(moveDevice(id));
     }
   };
@@ -37,7 +38,7 @@ const Device = ({ id, mode, activeDevice }) => {
       <g
         onClick={() => handleClick()}
         className={
-          mode === 'add-device' || (mode === 'move-device' && isActive)
+          mode === ui.addDeviceGeo || (mode === ui.moveDeviceGeo && isActive)
             ? 'device-disabled'
             : ''
         }
@@ -45,7 +46,7 @@ const Device = ({ id, mode, activeDevice }) => {
         <StatusIndicator status={status} x={x} y={y} />
         <DeviceIcon type={type} x={x} y={y} />
       </g>
-      {isActive && mode !== 'move-device' && (
+      {isActive && mode !== ui.moveDeviceGeo && (
         <DevicePopUp x={x} y={y}>
           <DeviceOptions device={device} />
         </DevicePopUp>

@@ -12,8 +12,9 @@ import {
   selectActiveDevice,
   selectIsDeviceMoving,
   selectActiveFloor,
-  selectActiveUiState
+  selectActiveGlobalUiState
 } from 'app/selectors';
+import * as ui from 'common/uiStates';
 
 const useEditing = ({ mode, isGrid, getRelCoord }) => {
   const dispatch = useDispatch();
@@ -22,22 +23,22 @@ const useEditing = ({ mode, isGrid, getRelCoord }) => {
   const activeFloor = useSelector(selectActiveFloor);
   const activeDevice = useSelector(selectActiveDevice);
   const isMoving = useSelector(selectIsDeviceMoving);
-  const uiState = useSelector(selectActiveUiState);
+  const uiState = useSelector(selectActiveGlobalUiState);
 
   const addDevice = (id, e) => {
     const { x, y } = isGrid ? getRelCoord(e, true) : getRelCoord(e);
-    if (mode === 'move-device' && activeDevice) {
+    if (mode === ui.moveDeviceGeo && activeDevice) {
       dispatch(updateActiveDevice({ coords: { x, y }, area: id }));
-    } else if (mode === 'add-device') {
+    } else if (mode === ui.addDeviceGeo) {
       dispatch(addDeviceAction({ id, coords: { x, y }, floor: activeFloor }));
     }
   };
 
   const handleClickEdit = e => {
-    if (mode === 'draw') {
+    if (mode === ui.addAreaGeo) {
       const { x, y } = isGrid ? getRelCoord(e, true) : getRelCoord(e);
       dispatch(addArea({ point: `${x},${y}`, floor: activeFloor }));
-    } else if (mode === 'label-move' && activeLabel) {
+    } else if (mode === ui.moveAreaLabelGeo && activeLabel) {
       const { x, y } = isGrid ? getRelCoord(e, true) : getRelCoord(e);
       dispatch(saveArea({ x, y }));
     }
@@ -58,8 +59,8 @@ const useEditing = ({ mode, isGrid, getRelCoord }) => {
   const handleClickMain = params => {};
 
   return {
-    handleClick: uiState === 'main' ? handleClickMain : handleClickEdit,
-    handleMouseMove: uiState === 'main' ? null : handleMouseMoveEdit,
+    handleClick: uiState === ui.mainGlob ? handleClickMain : handleClickEdit,
+    handleMouseMove: uiState === ui.mainGlob ? null : handleMouseMoveEdit,
     addDevice,
     activeDevice
   };

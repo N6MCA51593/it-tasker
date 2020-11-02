@@ -4,7 +4,7 @@ const generateWallQuery = (toUpsert, toDelete, floor) => {
   const upsQuery =
     toUpsert.length > 0
       ? pgp.helpers.insert(toUpsert, ['id', 'coords', 'floor'], 'walls') +
-        ' on conflict (id) do update set coords=excluded.coords'
+        ' ON CONFLICT (id) DO UPDATE SET coords=EXCLUDED.coords'
       : '';
 
   const delQuery = toDelete

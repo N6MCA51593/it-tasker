@@ -7,10 +7,10 @@ import useGrid from 'features/geometry/useGrid';
 import GeometryDrawing from 'features/geometry/walls/GeometryDrawing';
 import AreaDrawing from 'features/geometry/areas/AreaDrawing';
 import { useSelector } from 'react-redux';
-import { selectActiveUiState } from 'app/selectors';
+import { selectActiveGlobalUiState, selectActiveGeoState } from 'app/selectors';
+import * as ui from 'common/uiStates';
 
 const Geometry = () => {
-  const [mode, setMode] = useState('draw');
   const [isPointerDown, setIsPointerDown] = useState(false);
   const ref = useRef();
   const { width, height } = useDimensions(ref);
@@ -35,30 +35,31 @@ const Geometry = () => {
     panVLvl,
     ref
   });
-  const uiState = useSelector(selectActiveUiState);
+  const uiState = useSelector(selectActiveGlobalUiState);
+  const mode = useSelector(selectActiveGeoState);
 
   const handlePointerMove = e => {
-    if (mode === 'nav' && isPointerDown) {
+    if (mode === ui.navGeo && isPointerDown) {
       freePan(getRelCoord(e));
     }
   };
 
   const handlePointerDown = e => {
-    if (mode === 'nav') {
+    if (mode === ui.navGeo) {
       setInitCoords(getRelCoord(e));
       setIsPointerDown(true);
     }
   };
 
   const handlePointerUp = () => {
-    if (mode === 'nav') {
+    if (mode === ui.navGeo) {
       setInitCoords(null);
       setIsPointerDown(false);
     }
   };
 
   const handlePointerLeave = () => {
-    if (mode === 'nav') {
+    if (mode === ui.navGeo) {
       setInitCoords(null);
       setIsPointerDown(false);
     }
@@ -79,7 +80,7 @@ const Geometry = () => {
       onWheel={e => handleWheel(e)}
     >
       <div>
-        {uiState === 'edit-geometry' && (
+        {uiState === ui.editGeomGlob && (
           <GeometryDrawing
             mode={mode}
             isGrid={isGrid}
@@ -92,7 +93,7 @@ const Geometry = () => {
             gridStep={gridStep}
           />
         )}
-        {uiState !== 'edit-geometry' && (
+        {uiState !== ui.editGeomGlob && (
           <AreaDrawing
             mode={mode}
             isGrid={isGrid}
@@ -111,7 +112,6 @@ const Geometry = () => {
         zoomOut={zoomOut}
         panH={panH}
         panV={panV}
-        setMode={setMode}
         toggleGrid={toggleGrid}
         gridStepUp={gridStepUp}
         gridStepDown={gridStepDown}
