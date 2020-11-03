@@ -1,9 +1,4 @@
-import {
-  createSlice,
-  nanoid,
-  createEntityAdapter,
-  createAsyncThunk
-} from '@reduxjs/toolkit';
+import { createSlice, nanoid, createEntityAdapter } from '@reduxjs/toolkit';
 import { editGeomGlob } from 'common/uiStates';
 
 const wallsAdapter = createEntityAdapter();
@@ -27,44 +22,6 @@ const getCoords = (state, { x, y }) => {
   }
   return res;
 };
-
-const reqParamsBuilder = toDelete => {
-  const reducer = (accum, cv, ci, arr) => {
-    return ci === arr.length - 1 ? accum + cv : accum + cv + '&del=';
-  };
-
-  const delQuery =
-    toDelete.length > 0 ? toDelete.reduce(reducer, '?del=') : '?';
-  return delQuery;
-};
-
-export const updateWallsReq = createAsyncThunk(
-  'walls/updateWalls',
-  async (_, { getState }) => {
-    const currState = getState();
-    const floor = currState.floors.activeFloor;
-    const params = reqParamsBuilder(currState.walls.toDelete) + '&fl=' + floor;
-
-    // Remove duplicates
-    const body = [...new Set(currState.walls.toUpsert)].map(
-      e => currState.walls.entities[e]
-    );
-
-    const response = await fetch(
-      'http://localhost:5000/api/update/geometry' + params,
-      {
-        method: 'POST',
-        body: JSON.stringify(body),
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        mode: 'cors'
-      }
-    );
-    const res = await response.json();
-    return res;
-  }
-);
 
 const wallsSlice = createSlice({
   name: 'walls',
@@ -136,12 +93,12 @@ const wallsSlice = createSlice({
     }
   },
   extraReducers: {
-    [updateWallsReq.fulfilled]: state => {
+    'api/updateGeometry/fulfilled': state => {
       state.toDelete = [];
       state.toUpsert = [];
       state.wallsHistory = null;
     },
-    'loadAppData/fulfilled': (state, { payload }) => {
+    'api/loadAppData/fulfilled': (state, { payload }) => {
       wallsAdapter.addMany(state, payload.walls);
     },
     'uiState/setUiGlobalState': (state, { payload }) => {

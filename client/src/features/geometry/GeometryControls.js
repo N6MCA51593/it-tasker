@@ -1,10 +1,14 @@
 import React, { useEffect } from 'react';
 import {
   cancelDrawing,
-  updateWallsReq,
-  cancelChanges
+  cancelChanges as cancelWallChanges
 } from 'features/geometry/walls/wallSlice';
-import { saveArea } from 'features/geometry/areas/areaSlice';
+import { updateGeometry } from 'features/api/updateGeometry';
+import { updateInteractables } from 'features/api/updateInteractables';
+import {
+  saveArea,
+  cancelChanges as cancelInteractablesChanges
+} from 'features/geometry/areas/areaSlice';
 import { setUiGlobalState, setUiGeoState } from 'app/uiStateSlice';
 import { useDispatch } from 'react-redux';
 import * as ui from 'common/uiStates';
@@ -29,7 +33,7 @@ const GeometryControls = ({
 
   return (
     <div className='geometry-controls'>
-      {uiState === 'edit-areas' && (
+      {uiState === ui.editAreasGlob && (
         <div className='device-controls'>
           <button onClick={() => dispatch(setUiGeoState(ui.addDeviceGeo))}>
             Add
@@ -42,7 +46,7 @@ const GeometryControls = ({
           </button>
         </div>
       )}
-      {uiState === 'edit-areas' && (
+      {uiState === ui.editAreasGlob && (
         <div className='area-controls'>
           <button onClick={() => dispatch(setUiGeoState(ui.navGeo))}>
             Nav
@@ -65,9 +69,13 @@ const GeometryControls = ({
           >
             Rename Label
           </button>
+          <button onClick={() => dispatch(updateInteractables())}>Save</button>
+          <button onClick={() => dispatch(cancelInteractablesChanges())}>
+            Cancel
+          </button>
         </div>
       )}
-      {uiState === 'edit-geometry' && (
+      {uiState === ui.editGeomGlob && (
         <div className='wall-controls'>
           <button onClick={() => dispatch(setUiGeoState(ui.navGeo))}>
             Nav
@@ -84,8 +92,8 @@ const GeometryControls = ({
           <button onClick={() => dispatch(cancelDrawing())}>
             Cancel Drawing
           </button>
-          <button onClick={() => dispatch(updateWallsReq())}>Save</button>
-          <button onClick={() => dispatch(cancelChanges())}>Cancel</button>
+          <button onClick={() => dispatch(updateGeometry())}>Save</button>
+          <button onClick={() => dispatch(cancelWallChanges())}>Cancel</button>
         </div>
       )}
       <div className='nav-controls'>

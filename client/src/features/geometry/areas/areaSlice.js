@@ -1,5 +1,6 @@
 import { createSlice, nanoid, createEntityAdapter } from '@reduxjs/toolkit';
 import { polygonCentroid } from 'features/geometry/geometryMathFuncs';
+import { editAreasGlob } from 'common/uiStates';
 
 const areasAdapter = createEntityAdapter();
 const initialState = areasAdapter.getInitialState({
@@ -63,9 +64,18 @@ const areasSlice = createSlice({
       state.activeLabel = payload;
     },
     renameLabel(state, { payload }) {
-      state.entities[payload.id].name = payload.name;
+      const { name, id } = payload;
+      state.toUpsert.push(id);
+      state.entities[id].name = name;
     },
-    removeArea: areasAdapter.removeOne,
+    removeArea(state, { payload }) {
+      if (state.toUpsert.includes(payload)) {
+        state.toUpsert = state.toUpsert.filter(e => e !== payload);
+      } else {
+        state.toDelete.push(payload);
+      }
+      areasAdapter.removeOne(state, payload);
+    },
     saveArea(state, { payload }) {
       if (state.activeArea) {
         const area = state.entities[state.activeArea];
@@ -73,12 +83,44 @@ const areasSlice = createSlice({
         area.labelCoords = polygonCentroid(area.points);
         if (area.points.length < 3) {
           areasAdapter.removeOne(state, state.activeArea);
+        } else {
+          state.toUpsert.push(area.id);
         }
         state.activeArea = null;
       }
       if (state.activeLabel) {
-        state.entities[state.activeLabel].labelCoords = payload;
+        const id = state.activeLabel;
+        state.entities[id].labelCoords = payload;
+        state.toUpsert.push(id);
         state.activeLabel = null;
+      }
+    },
+    cancelChanges(state) {
+      if (state.areasHistory) {
+        areasAdapter.setAll(state, state.areasHistory);
+        state.activeArea = null;
+        state.activeLabel = null;
+        state.toRedraw = null;
+        state.toDelete = [];
+        state.toUpsert = [];
+      }
+    }
+  },
+  extraReducers: {
+    'api/updateInteractables/fulfilled': state => {
+      state.toDelete = [];
+      state.toUpsert = [];
+      state.areasHistory = null;
+    },
+    'api/loadAppData/fulfilled': (state, { payload }) => {
+      areasAdapter.addMany(state, payload.areas);
+    },
+    'uiState/setUiGlobalState': (state, { payload }) => {
+      if (payload === editAreasGlob && !state.areasHistory) {
+        state.areasHistory = state.entities;
+      } else if (state.areasHistory) {
+        areasAdapter.setAll(state, state.areasHistory);
+        state.areasHistory = null;
       }
     }
   }
@@ -91,7 +133,8 @@ export const {
   removeArea,
   redrawArea,
   moveLabel,
-  renameLabel
+  renameLabel,
+  cancelChanges
 } = areasSlice.actions;
 
 export default areasSlice.reducer;

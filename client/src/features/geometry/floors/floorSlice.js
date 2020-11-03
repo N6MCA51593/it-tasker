@@ -10,11 +10,11 @@ const floorsSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: {
-    'loadAppData/fulfilled': (state, { payload }) => {
+    'api/loadAppData/fulfilled': (state, { payload }) => {
       floorAdapter.addMany(state, payload.floors);
       state.activeFloor = '1IELCN-gENaKaAg20_nP8';
     },
-    'walls/updateWalls/fulfilled': (state, { payload }) => {
+    'api/updateGeometry/fulfilled': (state, { payload }) => {
       floorAdapter.updateOne(state, {
         id: payload.id,
         changes: {

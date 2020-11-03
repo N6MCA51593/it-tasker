@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import Geometry from 'features/geometry/Geometry';
 import { useDispatch, useSelector } from 'react-redux';
-import { loadAppData } from './loadAppData';
+import { loadAppData } from '../features/api/loadAppData';
 import { selectUiLoadingState } from './selectors';
 
 const MainContainer = () => {

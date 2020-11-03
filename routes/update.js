@@ -29,4 +29,29 @@ router.post('/geometry', async (req, res) => {
   }
 });
 
+// @route     POST api/update/interactables
+// @desc      Update areas and devices
+// @access    Private
+router.post('/interactables', async (req, res) => {
+  const toDeleteAreas = req.query.adel;
+  const toDeleteDevices = req.query.ddel;
+  const toUpsertAreas = req.body.areas;
+  const toUpsertDevices = req.body.devices;
+  const floor = req.query.fl;
+  console.log(toUpsertAreas);
+  console.log(toUpsertDevices);
+  try {
+    // const query = generateWallQuery(toUpsert, toDelete, floor);
+    // const walls = await db.any(query);
+    // const geometry = walls.reduce(reducer, '');
+    // await db.none('UPDATE floors SET geometry = $1 WHERE id = $2', [
+    //   geometry,
+    //   floor
+    // ]);
+    res.json({ test: 'ok' });
+  } catch (error) {
+    res.status(400).json({ error: 'Server error' });
+  }
+});
+
 module.exports = router;

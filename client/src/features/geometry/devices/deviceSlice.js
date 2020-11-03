@@ -1,10 +1,13 @@
 import { createSlice, nanoid, createEntityAdapter } from '@reduxjs/toolkit';
+import { editAreasGlob } from 'common/uiStates';
 
 const devicesAdapter = createEntityAdapter();
 const initialState = devicesAdapter.getInitialState({
   activeDevice: null,
   isMoving: false,
-  devicesHistory: null
+  devicesHistory: null,
+  toUpsert: [],
+  toDelete: []
 });
 
 const devicesSlice = createSlice({
@@ -13,6 +16,7 @@ const devicesSlice = createSlice({
   reducers: {
     addDevice: {
       reducer(state, { payload }) {
+        state.toUpsert.push(payload.id);
         devicesAdapter.addOne(state, payload);
         state.activeDevice = payload.id;
       },
@@ -44,6 +48,7 @@ const devicesSlice = createSlice({
       }
 
       if (state.activeDevice && !state.isMoving) {
+        state.toUpsert.push(state.activeDevice);
         state.activeDevice = null;
       }
     },
@@ -54,16 +59,17 @@ const devicesSlice = createSlice({
         state.activeDevice = null;
       }
     },
-    removeDevice: devicesAdapter.removeOne,
+    removeDevice(state, { payload }) {
+      if (state.toUpsert.includes(payload)) {
+        state.toUpsert = state.toUpsert.filter(e => e !== payload);
+      } else {
+        state.toDelete.push(payload);
+      }
+      devicesAdapter.removeOne(state, payload);
+    },
     moveDevice(state, { payload }) {
       state.activeDevice = payload;
       state.isMoving = true;
-    },
-    setHistory(state) {
-      state.devicesHistory = state.entities;
-    },
-    undo(state) {
-      devicesAdapter.setAll(state, state.devicesHistory);
     }
   },
   extraReducers: {
@@ -71,7 +77,31 @@ const devicesSlice = createSlice({
       const toRemove = Object.keys(state.entities).filter(
         key => state.entities[key].area === payload
       );
+      state.toUpsert = state.toUpsert.filter(e => !toRemove.includes(e));
       devicesAdapter.removeMany(state, toRemove);
+    },
+    'areas/cancelChanges': state => {
+      devicesAdapter.setAll(state, state.devicesHistory);
+      state.activeDevice = null;
+      state.isMoving = null;
+      state.toDelete = [];
+      state.toUpsert = [];
+    },
+    'api/updateInteractables/fulfilled': state => {
+      state.toDelete = [];
+      state.toUpsert = [];
+      state.devicesHistory = null;
+    },
+    'api/loadAppData/fulfilled': (state, { payload }) => {
+      devicesAdapter.addMany(state, payload.devices);
+    },
+    'uiState/setUiGlobalState': (state, { payload }) => {
+      if (payload === editAreasGlob && !state.devicesHistory) {
+        state.devicesHistory = state.entities;
+      } else if (state.devicesHistory) {
+        devicesAdapter.setAll(state, state.devicesHistory);
+        state.devicesHistory = null;
+      }
     }
   }
 });
@@ -81,9 +111,7 @@ export const {
   updateActiveDevice,
   setActiveDevice,
   removeDevice,
-  moveDevice,
-  setHistory,
-  undo
+  moveDevice
 } = devicesSlice.actions;
 
 export default devicesSlice.reducer;

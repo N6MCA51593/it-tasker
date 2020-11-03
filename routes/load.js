@@ -10,7 +10,7 @@ router.get('/', async (req, res) => {
     const [floors, walls] = await db.multi(
       'SELECT * FROM floors;SELECT * FROM walls'
     );
-    res.json({ floors, walls });
+    res.json({ floors, walls, areas: [], devices: [] });
   } catch (error) {
     console.log(err);
   }

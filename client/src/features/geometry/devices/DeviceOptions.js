@@ -3,9 +3,7 @@ import useInput from 'common/useInput';
 import { useDispatch } from 'react-redux';
 import {
   updateActiveDevice,
-  setActiveDevice,
-  setHistory,
-  undo
+  setActiveDevice
 } from 'features/geometry/devices/deviceSlice';
 
 const DeviceOptions = ({ device }) => {
@@ -60,8 +58,6 @@ const DeviceOptions = ({ device }) => {
       </label>
       <button onClick={() => save()}>Save</button>
       <button onClick={() => cancel()}>Cancel</button>
-      <button onClick={() => dispatch(setHistory())}>Set</button>
-      <button onClick={() => dispatch(undo())}>Undo</button>
     </div>
   );
 };
