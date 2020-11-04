@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { navGeo, mainGlob, editAreasGlob } from 'common/uiStates';
+import { navGeo, mainGlob } from 'common/uiStates';
 
 const initialState = {
-  activeGlobalState: editAreasGlob,
+  activeGlobalState: mainGlob,
   activeGeometryState: navGeo,
   isLoading: true
 };
@@ -23,6 +23,10 @@ const uiStateSlice = createSlice({
       state.isLoading = false;
     },
     'api/updateGeometry/fulfilled': state => {
+      state.activeGlobalState = mainGlob;
+      state.activeGeometryState = navGeo;
+    },
+    'api/updateInteractables/fulfilled': state => {
       state.activeGlobalState = mainGlob;
       state.activeGeometryState = navGeo;
     }

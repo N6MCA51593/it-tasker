@@ -12,6 +12,7 @@ import {
 import { setUiGlobalState, setUiGeoState } from 'app/uiStateSlice';
 import { useDispatch } from 'react-redux';
 import * as ui from 'common/uiStates';
+import FloorSwitcher from 'features/geometry/FloorSwitcher';
 
 const GeometryControls = ({
   zoomIn,
@@ -118,6 +119,7 @@ const GeometryControls = ({
           Areas/Dev
         </button>
       </div>
+      <FloorSwitcher />
     </div>
   );
 };

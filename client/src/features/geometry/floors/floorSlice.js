@@ -8,7 +8,11 @@ const initialState = floorAdapter.getInitialState({
 const floorsSlice = createSlice({
   name: 'floors',
   initialState,
-  reducers: {},
+  reducers: {
+    setActiveFloor(state, { payload }) {
+      state.activeFloor = payload;
+    }
+  },
   extraReducers: {
     'api/loadAppData/fulfilled': (state, { payload }) => {
       floorAdapter.addMany(state, payload.floors);
@@ -26,6 +30,6 @@ const floorsSlice = createSlice({
   }
 });
 
-//export const {} = floorsSlice.actions;
+export const { setActiveFloor } = floorsSlice.actions;
 
 export default floorsSlice.reducer;

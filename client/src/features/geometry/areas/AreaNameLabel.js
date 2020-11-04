@@ -12,6 +12,7 @@ const AreaNameLabel = ({ coords, name, mode, id }) => {
     if (mode === moveAreaLabelGeo) {
       dispatch(moveLabel(id));
     } else if (mode === renameAreaLabelGeo) {
+      setLabelName(name);
       setIsEditing(!isEditing);
     }
   };
@@ -35,7 +36,7 @@ const AreaNameLabel = ({ coords, name, mode, id }) => {
     <g>
       {!isEditing && (
         <text x={x} y={y} onClick={() => handleClick()} className={className}>
-          {labelName ? labelName : '-.-'}
+          {name ? name : '-.-'}
         </text>
       )}
       {isEditing && (
@@ -50,6 +51,7 @@ const AreaNameLabel = ({ coords, name, mode, id }) => {
             value={labelName}
             onChange={e => handleChange(e)}
             onBlur={() => onBlur()}
+            autoFocus
           />
         </foreignObject>
       )}

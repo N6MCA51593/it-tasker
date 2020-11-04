@@ -39,8 +39,6 @@ router.post('/interactables', async (req, res) => {
   const toUpsertAreas = req.body.areas;
   const toUpsertDevices = req.body.devices;
   const floor = req.query.fl;
-  //console.log(toUpsertAreas);
-  // console.log(toUpsertDevices);
   try {
     const query = generateInteractablesQuery(
       toUpsertAreas,

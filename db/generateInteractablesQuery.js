@@ -46,7 +46,7 @@ const generateInteractablesQuery = (
     delDevicesQuery
   ]);
 
-  console.log(query);
+  // console.log(query);
   return query;
 };
 

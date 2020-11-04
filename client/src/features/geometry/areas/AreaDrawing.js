@@ -4,7 +4,10 @@ import FloorGeometry from 'features/geometry/FloorGeometry';
 import Grid from 'features/geometry/Grid';
 import Area from 'features/geometry/areas/Area';
 import Device from 'features/geometry/devices/Device';
-import { selectAllAreas, selectAllDevicesMemo } from 'app/selectors';
+import {
+  selectActiveFloorAreas,
+  selectActiveFloorDevicesMemo
+} from 'app/selectors';
 import useEditing from 'features/geometry/areas/useEditing';
 
 const AreaDrawing = ({
@@ -18,8 +21,8 @@ const AreaDrawing = ({
   height,
   gridStep
 }) => {
-  const areaIds = useSelector(selectAllAreas);
-  const deviceIds = useSelector(selectAllDevicesMemo);
+  const areaIds = useSelector(selectActiveFloorAreas);
+  const deviceIds = useSelector(selectActiveFloorDevicesMemo);
   const { handleClick, handleMouseMove, activeDevice, addDevice } = useEditing({
     mode,
     isGrid,

@@ -3,7 +3,7 @@ import Wall from 'features/geometry/walls/Wall';
 import Grid from 'features/geometry/Grid';
 import { useSelector, useDispatch } from 'react-redux';
 import {
-  selectAllWalls,
+  selectActiveFloorWalls,
   selectActiveWallItem,
   selectActiveFloor
 } from 'app/selectors';
@@ -26,7 +26,7 @@ const GeometryDrawing = ({
   gridStep
 }) => {
   const dispatch = useDispatch();
-  const ids = useSelector(selectAllWalls);
+  const ids = useSelector(selectActiveFloorWalls);
   const activeWall = useSelector(selectActiveWallItem);
   const activeFloor = useSelector(selectActiveFloor);
 

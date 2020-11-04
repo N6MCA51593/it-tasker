@@ -6,12 +6,17 @@ export const updateInteractables = createAsyncThunk(
   async (_, { getState }) => {
     const { devices, areas, floors } = getState();
     const floor = floors.activeFloor;
-    const params =
-      '?' +
-      reqQueryParams(areas.toDelete, 'adel') +
-      reqQueryParams(areas.toDelete, 'ddel') +
-      '&fl=' +
-      floor;
+    const areasParams = reqQueryParams(areas.toDelete, 'adel');
+    const devicesParams = reqQueryParams(devices.toDelete, 'ddel');
+    // const params =
+    //   '?' +
+    //    +
+    //    +
+    //   '&fl=' +
+    //   floor;
+    const params = `?${
+      (areasParams ? areasParams + '&' : '') + devicesParams
+    }&fl=${floor}`;
 
     // Remove duplicates
     const body = {
