@@ -4,7 +4,7 @@ export const reqQueryParams = (toDelete, param) => {
   };
 
   const delQuery =
-    toDelete.length > 0 ? toDelete.reduce(reducer, `?${param}=`) : '';
+    toDelete.length > 0 ? toDelete.reduce(reducer, `${param}=`) : '';
 
   return delQuery;
 };

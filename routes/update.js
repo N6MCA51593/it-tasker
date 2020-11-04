@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const { db } = require('../db');
-const generateWallQuery = require('../utils/generateWallQuery');
+const { db } = require('../db/db');
+const generateWallQuery = require('../db/generateWallQuery');
+const generateInteractablesQuery = require('../db/generateInteractablesQuery');
 
 // @route     POST api/update/geometry
 // @desc      Update geometry
@@ -38,18 +39,20 @@ router.post('/interactables', async (req, res) => {
   const toUpsertAreas = req.body.areas;
   const toUpsertDevices = req.body.devices;
   const floor = req.query.fl;
-  console.log(toUpsertAreas);
-  console.log(toUpsertDevices);
+  //console.log(toUpsertAreas);
+  // console.log(toUpsertDevices);
   try {
-    // const query = generateWallQuery(toUpsert, toDelete, floor);
-    // const walls = await db.any(query);
-    // const geometry = walls.reduce(reducer, '');
-    // await db.none('UPDATE floors SET geometry = $1 WHERE id = $2', [
-    //   geometry,
-    //   floor
-    // ]);
+    const query = generateInteractablesQuery(
+      toUpsertAreas,
+      toDeleteAreas,
+      toUpsertDevices,
+      toDeleteDevices,
+      floor
+    );
+    await db.none(query);
     res.json({ test: 'ok' });
   } catch (error) {
+    console.log(error);
     res.status(400).json({ error: 'Server error' });
   }
 });
