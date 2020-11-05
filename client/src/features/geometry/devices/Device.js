@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import DevicePopUp from 'features/geometry/devices/DevicePopUp';
 import DeviceOptions from 'features/geometry/devices/DeviceOptions';
@@ -55,4 +55,4 @@ const Device = ({ id, mode, activeDevice }) => {
   );
 };
 
-export default Device;
+export default memo(Device);

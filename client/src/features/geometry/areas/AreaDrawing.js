@@ -9,6 +9,7 @@ import {
   selectActiveFloorDevicesMemo
 } from 'app/selectors';
 import useEditing from 'features/geometry/areas/useEditing';
+import Defs from 'features/geometry/Defs';
 
 const AreaDrawing = ({
   mode,
@@ -39,6 +40,7 @@ const AreaDrawing = ({
       <svg
         viewBox={`${panHLvl} ${panVLvl} ${width * zoomLvl} ${height * zoomLvl}`}
       >
+        <Defs />
         {isGrid && (
           <Grid
             panVLvl={panVLvl}
