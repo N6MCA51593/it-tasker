@@ -17,7 +17,6 @@ const generateWallQuery = (toUpsert, toDelete, floor) => {
     { query: 'SELECT * FROM walls WHERE floor = $1', values: [floor] }
   ]);
 
-  console.log(query);
   return query;
 };
 
