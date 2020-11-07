@@ -1,4 +1,10 @@
-import { createSelector } from '@reduxjs/toolkit';
+import {
+  createSelector,
+  createSelectorCreator,
+  defaultMemoize
+} from 'reselect';
+
+//const customMemoSelector = createSelectorCreator(defaultMemoize)
 
 // Floors
 export const selectActiveFloor = state => state.floors.activeFloor;
@@ -16,6 +22,7 @@ export const selectUiLoadingState = state => state.uiState.isLoading;
 // Areas
 export const selectAllAreas = state => state.areas.ids;
 export const selectAllAreaItems = state => state.areas.entities;
+export const selectAllAreaItemsCustomSelector = state => state.areas.entities;
 export const selectActiveArea = state => state.areas.activeArea;
 export const selectActiveLabel = state => state.areas.activeLabel;
 export const selectAreaById = (state, id) => state.areas.entities[id];
