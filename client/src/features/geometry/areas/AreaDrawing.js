@@ -6,7 +6,7 @@ import Area from 'features/geometry/areas/Area';
 import Device from 'features/geometry/devices/Device';
 import {
   selectActiveFloorAreas,
-  selectActiveFloorDevicesMemo
+  selectActiveFloorDevicesOrdered
 } from 'app/selectors';
 import useEditing from 'features/geometry/areas/useEditing';
 import Defs from 'features/geometry/Defs';
@@ -23,7 +23,7 @@ const AreaDrawing = ({
   gridStep
 }) => {
   const areaIds = useSelector(selectActiveFloorAreas);
-  const deviceIds = useSelector(selectActiveFloorDevicesMemo);
+  const deviceIds = useSelector(selectActiveFloorDevicesOrdered);
   const { handleClick, handleMouseMove, activeDevice, addDevice } = useEditing({
     mode,
     isGrid,
