@@ -5,12 +5,12 @@ import {
 } from 'reselect';
 
 // Custom equality check to prevent filtering on every change to entity arrays
-const equalityFuncion = (a, b) =>
+const equalityFunction = (a, b) =>
   a === b || Object.values(a).length === Object.values(b).length;
 
 const customMemoSelector = createSelectorCreator(
   defaultMemoize,
-  equalityFuncion
+  equalityFunction
 );
 
 // Floors
