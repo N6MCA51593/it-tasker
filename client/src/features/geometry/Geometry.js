@@ -7,8 +7,8 @@ import useGrid from 'features/geometry/useGrid';
 import GeometryDrawing from 'features/geometry/walls/GeometryDrawing';
 import { useSelector } from 'react-redux';
 import { selectActiveGlobalUiState, selectActiveGeoState } from 'app/selectors';
+import InteractablesWithEditing from 'features/geometry/interactables/InteractablesWithEditing';
 import * as ui from 'common/uiStates';
-import WithGeometryEditing from 'features/geometry/areas/withGeometryEditing';
 
 const Geometry = () => {
   const [isPointerDown, setIsPointerDown] = useState(false);
@@ -94,7 +94,7 @@ const Geometry = () => {
           />
         )}
         {uiState !== ui.editGeomGlob && (
-          <WithGeometryEditing
+          <InteractablesWithEditing
             mode={mode}
             isGrid={isGrid}
             getRelCoord={getRelCoord}

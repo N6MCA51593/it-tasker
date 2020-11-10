@@ -8,7 +8,7 @@ import { updateInteractables } from 'features/api/updateInteractables';
 import {
   saveArea,
   cancelChanges as cancelInteractablesChanges
-} from 'features/geometry/areas/areaSlice';
+} from 'features/geometry/interactables/areas/areaSlice';
 import { setUiGlobalState, setUiGeoState } from 'app/uiStateSlice';
 import { useDispatch } from 'react-redux';
 import * as ui from 'common/uiStates';

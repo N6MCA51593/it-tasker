@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { moveLabel, renameLabel } from 'features/geometry/areas/areaSlice';
+import {
+  moveLabel,
+  renameLabel
+} from 'features/geometry/interactables/areas/areaSlice';
 import { moveAreaLabelGeo, renameAreaLabelGeo } from 'common/uiStates';
 
 const AreaNameLabel = ({ coords, name, mode, id }) => {

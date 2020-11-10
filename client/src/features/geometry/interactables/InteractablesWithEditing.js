@@ -4,9 +4,9 @@ import {
   addArea,
   updateActiveArea,
   saveArea
-} from 'features/geometry/areas/areaSlice';
-import { addDevice as addDeviceAction } from 'features/geometry/devices/deviceSlice';
-import { updateActiveDevice } from 'features/geometry/devices/deviceSlice';
+} from 'features/geometry/interactables/areas/areaSlice';
+import { addDevice as addDeviceAction } from 'features/geometry/interactables/devices/deviceSlice';
+import { updateActiveDevice } from 'features/geometry/interactables/devices/deviceSlice';
 import {
   selectActiveArea,
   selectActiveLabel,
@@ -15,9 +15,9 @@ import {
   selectActiveFloor
 } from 'app/selectors';
 import * as ui from 'common/uiStates';
-import AreaDrawing from 'features/geometry/areas/AreaDrawing';
+import Interactables from 'features/geometry/interactables/Interactables';
 
-const WithGeometryEditing = AreaComponent =>
+const InteractablesWithEditing = InteractablesComponent =>
   function Composed(props) {
     const dispatch = useDispatch();
     const activeArea = useSelector(selectActiveArea);
@@ -59,7 +59,7 @@ const WithGeometryEditing = AreaComponent =>
     };
 
     return (
-      <AreaComponent
+      <InteractablesComponent
         handleClick={handleClickEdit}
         handleMouseMove={handleMouseMoveEdit}
         addDevice={addDevice}
@@ -69,4 +69,4 @@ const WithGeometryEditing = AreaComponent =>
     );
   };
 
-export default WithGeometryEditing(AreaDrawing);
+export default InteractablesWithEditing(Interactables);

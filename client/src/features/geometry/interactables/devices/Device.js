@@ -1,15 +1,15 @@
 import React, { memo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import DevicePopUp from 'features/geometry/devices/DevicePopUp';
-import DeviceOptions from 'features/geometry/devices/DeviceOptions';
-import StatusIndicator from 'features/geometry/devices/StatusIndicator';
-import DeviceIcon from 'features/geometry/devices/DeviceIcon';
+import DevicePopUp from 'features/geometry/interactables/devices/DevicePopUp';
+import DeviceOptions from 'features/geometry/interactables/devices/DeviceOptions';
+import StatusIndicator from 'features/geometry/interactables/devices/StatusIndicator';
+import DeviceIcon from 'features/geometry/interactables/devices/DeviceIcon';
 import { selectDeviceById } from 'app/selectors';
 import {
   setActiveDevice,
   removeDevice,
   moveDevice
-} from 'features/geometry/devices/deviceSlice';
+} from 'features/geometry/interactables/devices/deviceSlice';
 import * as ui from 'common/uiStates';
 
 const Device = ({ id, mode, activeDevice }) => {

@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import wallsReducer from 'features/geometry/walls/wallSlice';
-import areasReducer from 'features/geometry/areas/areaSlice';
-import devicesReducer from 'features/geometry/devices/deviceSlice';
+import areasReducer from 'features/geometry/interactables/areas/areaSlice';
+import devicesReducer from 'features/geometry/interactables/devices/deviceSlice';
 import floorsReducer from '../features/geometry/floors/floorSlice';
 import uiStateReducer from 'app/uiStateSlice';
 

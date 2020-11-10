@@ -2,16 +2,15 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import FloorGeometry from 'features/geometry/FloorGeometry';
 import Grid from 'features/geometry/Grid';
-import Area from 'features/geometry/areas/Area';
-import Device from 'features/geometry/devices/Device';
+import Area from 'features/geometry/interactables/areas/Area';
+import Device from 'features/geometry/interactables/devices/Device';
 import {
   selectActiveFloorAreas,
   selectActiveFloorDevicesOrdered
 } from 'app/selectors';
-//import useEditing from 'features/geometry/areas/useEditing';
 import Defs from 'features/geometry/Defs';
 
-const AreaDrawing = ({
+const Interactables = ({
   mode,
   isGrid,
   panHLvl,
@@ -23,7 +22,7 @@ const AreaDrawing = ({
   handleClick,
   handleMouseMove,
   activeDevice,
-  addDevice
+  ...props
 }) => {
   const areaIds = useSelector(selectActiveFloorAreas);
   const deviceIds = useSelector(selectActiveFloorDevicesOrdered);
@@ -50,7 +49,7 @@ const AreaDrawing = ({
         )}
         <FloorGeometry />
         {areaIds.map(id => (
-          <Area key={id} id={id} mode={mode} addDevice={addDevice} />
+          <Area key={id} id={id} mode={mode} addDevice={props.addDevice} />
         ))}
         {deviceIds.map(id => (
           <Device key={id} id={id} mode={mode} activeDevice={activeDevice} />
@@ -60,4 +59,4 @@ const AreaDrawing = ({
   );
 };
 
-export default AreaDrawing;
+export default Interactables;

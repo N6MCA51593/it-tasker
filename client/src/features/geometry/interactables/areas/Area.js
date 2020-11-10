@@ -1,8 +1,11 @@
 import React, { memo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectAreaById } from 'app/selectors';
-import { removeArea, redrawArea } from 'features/geometry/areas/areaSlice';
-import AreaNameLabel from 'features/geometry/areas/AreaNameLabel';
+import {
+  removeArea,
+  redrawArea
+} from 'features/geometry/interactables/areas/areaSlice';
+import AreaNameLabel from 'features/geometry/interactables/areas/AreaNameLabel';
 import * as ui from 'common/uiStates';
 
 const Area = ({ id, mode, addDevice }) => {

@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import {
   updateActiveDevice,
   setActiveDevice
-} from 'features/geometry/devices/deviceSlice';
+} from 'features/geometry/interactables/devices/deviceSlice';
 
 const DeviceOptions = ({ device }) => {
   const dispatch = useDispatch();

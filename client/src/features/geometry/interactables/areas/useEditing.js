@@ -3,9 +3,9 @@ import {
   addArea,
   updateActiveArea,
   saveArea
-} from 'features/geometry/areas/areaSlice';
-import { addDevice as addDeviceAction } from 'features/geometry/devices/deviceSlice';
-import { updateActiveDevice } from 'features/geometry/devices/deviceSlice';
+} from 'features/geometry/interactables/areas/areaSlice';
+import { addDevice as addDeviceAction } from 'features/geometry/interactables/devices/deviceSlice';
+import { updateActiveDevice } from 'features/geometry/interactables/devices/deviceSlice';
 import {
   selectActiveArea,
   selectActiveLabel,
