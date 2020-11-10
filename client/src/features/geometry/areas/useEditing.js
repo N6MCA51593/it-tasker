@@ -27,6 +27,7 @@ const useEditing = ({ mode, isGrid, getRelCoord }) => {
 
   const addDevice = (id, e) => {
     const { x, y } = isGrid ? getRelCoord(e, true) : getRelCoord(e);
+    console.log(x);
     if (mode === ui.moveDeviceGeo && activeDevice) {
       dispatch(updateActiveDevice({ coords: { x, y }, area: id }));
     } else if (mode === ui.addDeviceGeo) {

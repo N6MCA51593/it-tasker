@@ -8,27 +8,25 @@ import {
   selectActiveFloorAreas,
   selectActiveFloorDevicesOrdered
 } from 'app/selectors';
-import useEditing from 'features/geometry/areas/useEditing';
+//import useEditing from 'features/geometry/areas/useEditing';
 import Defs from 'features/geometry/Defs';
 
 const AreaDrawing = ({
   mode,
   isGrid,
-  getRelCoord,
   panHLvl,
   panVLvl,
   zoomLvl,
   width,
   height,
-  gridStep
+  gridStep,
+  handleClick,
+  handleMouseMove,
+  activeDevice,
+  addDevice
 }) => {
   const areaIds = useSelector(selectActiveFloorAreas);
   const deviceIds = useSelector(selectActiveFloorDevicesOrdered);
-  const { handleClick, handleMouseMove, activeDevice, addDevice } = useEditing({
-    mode,
-    isGrid,
-    getRelCoord
-  });
 
   const handlers = {
     onClick: e => handleClick(e),

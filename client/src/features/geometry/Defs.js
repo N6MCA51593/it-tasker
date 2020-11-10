@@ -11,7 +11,9 @@ const Defs = () => {
       strokeLinecap='round'
       strokeLinejoin='round'
       id='icon'
+      className='device-icon'
     >
+      <path stroke='none' d='M0 0h24v24H0z' fill='none' />
       <path d='M6 17.6l-2 -1.1v-2.5' />
       <path d='M4 10v-2.5l2 -1.1' />
       <path d='M10 4.1l2 -1.1l2 1.1' />

@@ -5,10 +5,10 @@ import useCoordinates from 'features/geometry/useCoordinates';
 import useZoomAndPan from 'features/geometry/useZoomAndPan';
 import useGrid from 'features/geometry/useGrid';
 import GeometryDrawing from 'features/geometry/walls/GeometryDrawing';
-import AreaDrawing from 'features/geometry/areas/AreaDrawing';
 import { useSelector } from 'react-redux';
 import { selectActiveGlobalUiState, selectActiveGeoState } from 'app/selectors';
 import * as ui from 'common/uiStates';
+import WithGeometryEditing from 'features/geometry/areas/withGeometryEditing';
 
 const Geometry = () => {
   const [isPointerDown, setIsPointerDown] = useState(false);
@@ -94,7 +94,7 @@ const Geometry = () => {
           />
         )}
         {uiState !== ui.editGeomGlob && (
-          <AreaDrawing
+          <WithGeometryEditing
             mode={mode}
             isGrid={isGrid}
             getRelCoord={getRelCoord}

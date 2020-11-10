@@ -61,5 +61,5 @@ export const polygonCentroid = pts => {
     y += (p1.y + p2.y - 2 * first.y) * f;
   }
   f = twicearea * 3;
-  return { x: x / f + first.x, y: y / f + first.y };
+  return { x: x / f + first.x - 20, y: y / f + first.y };
 };
