@@ -4,6 +4,13 @@
   padding: 0;
 }
 
+.main-container {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 0.5rem;
+  margin: 0.5rem;
+}
+
 .draw-area {
   position: relative;
   width: 100%;
@@ -115,4 +122,17 @@ button {
 
 .device-icon {
   pointer-events: all;
+}
+
+.task-container {
+  border: 1px solid #000;
+
+  .task-controls {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    border-bottom: 1px solid #000;
+    padding: 0.5rem 0;
+  }
 }

@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
 import Geometry from 'features/geometry/Geometry';
 import { useDispatch, useSelector } from 'react-redux';
-import { loadAppData } from '../features/api/loadAppData';
+import { loadAppData } from 'features/api/loadAppData';
 import { selectUiLoadingState } from './selectors';
+import TaskContainer from 'features/tasks/TaskContainer';
 
 const MainContainer = () => {
   const dispatch = useDispatch();
@@ -10,7 +11,14 @@ const MainContainer = () => {
   useEffect(() => {
     dispatch(loadAppData());
   }, [dispatch]);
-  return !isLoading && <Geometry />;
+  return (
+    !isLoading && (
+      <div className='main-container'>
+        <Geometry />
+        <TaskContainer />
+      </div>
+    )
+  );
 };
 
 export default MainContainer;
