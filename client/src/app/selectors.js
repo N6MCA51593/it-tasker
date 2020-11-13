@@ -79,3 +79,18 @@ export const selectActiveFloorWalls = createSelector(
   [selectAllWalls, selectAllWallItemsCustom, selectActiveFloor],
   (ids, walls, activeFloor) => ids.filter(id => walls[id].floor === activeFloor)
 );
+
+// Tasker
+export const selectTaskerItemById = (state, id) => state.tasker.entities[id];
+export const selectTaskerActiveAndEditing = state => {
+  return {
+    activeItem: state.tasker.activeItem,
+    isEditing: state.tasker.isEditing
+  };
+};
+const selectAllTaskerItemIds = state => state.tasker.ids;
+const selectAllTaskerItemEntities = state => state.tasker.entities;
+export const selectAllCollections = createSelector(
+  [selectAllTaskerItemIds, selectAllTaskerItemEntities],
+  (ids, entities) => ids.filter(id => entities[id].type === 'collection')
+);
