@@ -19,9 +19,7 @@ const DeviceList = ({ id, isEditing, clickHandler }) => {
           id={id}
           isEditing={isEditing}
           clickHandler={clickHandler}
-          items={devices.map(deivceId =>
-            deviceItems.filter(device => device.id === deviceId)
-          )}
+          items={deviceItems.filter(device => device.floor === id)}
         />
       ))}
     </div>
