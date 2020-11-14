@@ -150,3 +150,8 @@ button {
     gap: 0.1rem;
   }
 }
+
+.collection-single-page {
+  display: flex;
+  flex-direction: column;
+}

@@ -17,14 +17,15 @@ const taskerSlice = createSlice({
         state.activeItem = payload.id;
         state.isEditing = true;
       },
-      prepare({ deviceId = null, type }) {
+      prepare({ deviceId = null, deviceFloor = null, type }) {
         const id = nanoid();
         const createdAt = new Date().toISOString();
         const lastEdited = createdAt;
         const devices = deviceId ? [deviceId] : [];
+        const floors = deviceFloor ? [deviceFloor] : [];
         const name = 'New ' + type;
         return {
-          payload: { id, type, name, devices, createdAt, lastEdited }
+          payload: { id, type, name, devices, floors, createdAt, lastEdited }
         };
       }
     }
