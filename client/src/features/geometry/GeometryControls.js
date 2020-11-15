@@ -34,7 +34,7 @@ const GeometryControls = ({
 
   return (
     <div className='geometry-controls'>
-      {uiState === ui.editAreasGlob && (
+      {uiState === ui.editInteractablesGlob && (
         <div className='device-controls'>
           <button onClick={() => dispatch(setUiGeoState(ui.addDeviceGeo))}>
             Add
@@ -47,7 +47,7 @@ const GeometryControls = ({
           </button>
         </div>
       )}
-      {uiState === ui.editAreasGlob && (
+      {uiState === ui.editInteractablesGlob && (
         <div className='area-controls'>
           <button onClick={() => dispatch(setUiGeoState(ui.navGeo))}>
             Nav
@@ -115,7 +115,9 @@ const GeometryControls = ({
         <button onClick={() => dispatch(setUiGlobalState(ui.editGeomGlob))}>
           Geom
         </button>
-        <button onClick={() => dispatch(setUiGlobalState(ui.editAreasGlob))}>
+        <button
+          onClick={() => dispatch(setUiGlobalState(ui.editInteractablesGlob))}
+        >
           Areas/Dev
         </button>
       </div>

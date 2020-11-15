@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { navGeo, mainGlob } from 'common/uiStates';
+import { navGeo, mainGlob, editCollectionGlob } from 'common/uiStates';
 
 const initialState = {
   activeGlobalState: mainGlob,
@@ -29,6 +29,11 @@ const uiStateSlice = createSlice({
     'api/updateInteractables/fulfilled': state => {
       state.activeGlobalState = mainGlob;
       state.activeGeometryState = navGeo;
+    },
+    'tasker/addItem': (state, { payload }) => {
+      if (payload.type === 'collection') {
+        state.activeGlobalState = editCollectionGlob;
+      }
     }
   }
 });

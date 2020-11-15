@@ -1,10 +1,10 @@
 import React from 'react';
 
-const DeviceIcon = ({ type, x, y }) => {
+const DeviceIcon = ({ type, x, y, className }) => {
   return (
     <g>
       {type === 'PC' ? (
-        <use href='#icon' x={x} y={y} />
+        <use href='#icon' x={x} y={y} className={className} />
       ) : (
         <circle
           cx={x}
@@ -13,6 +13,7 @@ const DeviceIcon = ({ type, x, y }) => {
           stroke='blue'
           fill='transparent'
           strokeWidth='5'
+          className={className}
         />
       )}
     </g>

@@ -4,34 +4,54 @@ import DevicePopUp from 'features/geometry/interactables/devices/DevicePopUp';
 import DeviceOptions from 'features/geometry/interactables/devices/DeviceOptions';
 import StatusIndicator from 'features/geometry/interactables/devices/StatusIndicator';
 import DeviceIcon from 'features/geometry/interactables/devices/DeviceIcon';
-import { selectDeviceById } from 'app/selectors';
+import {
+  selectDeviceById,
+  selectActiveGlobalUiState,
+  selectTaskerActiveAndEditing,
+  selectByDeviceEntry
+} from 'app/selectors';
 import {
   setActiveDevice,
   removeDevice,
   moveDevice
 } from 'features/geometry/interactables/devices/deviceSlice';
+import { toggleDevice } from 'features/tasker/taskerSlice';
 import * as ui from 'common/uiStates';
 
 const Device = ({ id, mode, activeDevice }) => {
   const dispatch = useDispatch();
   const device = useSelector(state => selectDeviceById(state, id));
+  const taskerItems = useSelector(state => selectByDeviceEntry(state, id));
+  const { activeItem, isEditing } = useSelector(selectTaskerActiveAndEditing);
+  const globalUiState = useSelector(selectActiveGlobalUiState);
   const isActive = activeDevice === id;
   const {
     status,
     type,
+    floor,
     coords: { x },
     coords: { y }
   } = device;
 
   const handleClick = () => {
-    if (mode === ui.navGeo) {
+    if (mode === ui.navGeo && globalUiState === ui.editInteractablesGlob) {
       dispatch(setActiveDevice(id));
     } else if (mode === ui.removeDeviceGeo) {
       dispatch(removeDevice(id));
     } else if (mode === ui.moveDeviceGeo && !isActive) {
       dispatch(moveDevice(id));
+    } else if (
+      globalUiState === ui.editCollectionGlob ||
+      globalUiState === ui.editNoteGlob ||
+      globalUiState === ui.editTaskGlob
+    ) {
+      dispatch(toggleDevice({ id, floor }));
     }
   };
+
+  const iconClassName = taskerItems?.[activeItem]
+    ? 'device-icon-selected'
+    : 'device-icon';
 
   return (
     <g>
@@ -44,7 +64,7 @@ const Device = ({ id, mode, activeDevice }) => {
         }
       >
         <StatusIndicator status={status} x={x} y={y} />
-        <DeviceIcon type={type} x={x} y={y} />
+        <DeviceIcon type={type} x={x} y={y} className={iconClassName} />
       </g>
       {isActive && mode !== ui.moveDeviceGeo && (
         <DevicePopUp x={x} y={y}>

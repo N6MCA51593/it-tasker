@@ -7,13 +7,13 @@ const DeviceList = ({ id, isEditing, clickHandler }) => {
   const { devices, floors } = useSelector(state =>
     selectTaskerItemById(state, id)
   );
-  const floorsDeduped = new Set([floors]);
+  const floorsDeduped = [...new Set(floors)];
 
   const deviceItems = useSelector(state => selectDevicesById(state, devices));
 
   return (
     <div>
-      {[...floorsDeduped].map(id => (
+      {floorsDeduped.map(id => (
         <FloorRow
           key={id}
           id={id}

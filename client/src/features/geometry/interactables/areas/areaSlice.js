@@ -1,6 +1,6 @@
 import { createSlice, nanoid, createEntityAdapter } from '@reduxjs/toolkit';
 import { polygonCentroid } from 'features/geometry/geometryMathFuncs';
-import { editAreasGlob } from 'common/uiStates';
+import { editInteractablesGlob } from 'common/uiStates';
 
 const areasAdapter = createEntityAdapter();
 const initialState = areasAdapter.getInitialState({
@@ -116,7 +116,7 @@ const areasSlice = createSlice({
       areasAdapter.addMany(state, payload.areas);
     },
     'uiState/setUiGlobalState': (state, { payload }) => {
-      if (payload === editAreasGlob && !state.areasHistory) {
+      if (payload === editInteractablesGlob && !state.areasHistory) {
         state.areasHistory = state.entities;
       } else if (state.areasHistory) {
         areasAdapter.setAll(state, state.areasHistory);

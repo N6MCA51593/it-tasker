@@ -15,8 +15,7 @@ const customMemoSelector = createSelectorCreator(
 
 // Floors
 export const selectActiveFloor = state => state.floors.activeFloor;
-export const selectFloorById = state => (state, id) =>
-  state.floors.entities[id];
+export const selectFloorById = (state, id) => state.floors.entities[id];
 export const selectAllFloorItems = state =>
   Object.values(state.floors.entities);
 export const selectActiveFloorItem = state =>
@@ -86,6 +85,7 @@ export const selectActiveFloorWalls = createSelector(
 
 // Tasker
 export const selectTaskerItemById = (state, id) => state.tasker.entities[id];
+export const selectByDeviceEntry = (state, id) => state.tasker.byDevice[id];
 export const selectTaskerActiveAndEditing = state => {
   return {
     activeItem: state.tasker.activeItem,
