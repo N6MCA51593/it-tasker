@@ -8,12 +8,6 @@ export const updateInteractables = createAsyncThunk(
     const floor = floors.activeFloor;
     const areasParams = reqQueryParams(areas.toDelete, 'adel');
     const devicesParams = reqQueryParams(devices.toDelete, 'ddel');
-    // const params =
-    //   '?' +
-    //    +
-    //    +
-    //   '&fl=' +
-    //   floor;
     const params = `?${
       (areasParams ? areasParams + '&' : '') + devicesParams
     }&fl=${floor}`;

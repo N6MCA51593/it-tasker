@@ -34,6 +34,9 @@ const uiStateSlice = createSlice({
       if (payload.type === 'collection') {
         state.activeGlobalState = editCollectionGlob;
       }
+    },
+    'tasker/cancelChanges': state => {
+      state.activeGlobalState = mainGlob;
     }
   }
 });

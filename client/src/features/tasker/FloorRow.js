@@ -9,7 +9,11 @@ const FloorRow = ({ id, isEditing, clickHandler, items }) => {
       <span>{name}</span>
       <div className='collection-row-items'>
         {items.map(device => (
-          <div className='collection-row-item' key={device.id}>
+          <div
+            className='collection-row-item'
+            key={device.id}
+            onClick={clickHandler}
+          >
             {device.name}
           </div>
         ))}

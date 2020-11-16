@@ -18,13 +18,16 @@ router.post('/geometry', async (req, res) => {
 
   try {
     const query = generateWallQuery(toUpsert, toDelete, floor);
-    const walls = await db.any(query);
-    const geometry = walls.reduce(reducer, '');
-    await db.none('UPDATE floors SET geometry = $1 WHERE id = $2', [
-      geometry,
-      floor
-    ]);
-    res.json({ id: floor, geometry });
+    const newGeometry = await db.tx(async t => {
+      const walls = await t.any(query);
+      const geometry = walls.reduce(reducer, '');
+      await t.none('UPDATE floors SET geometry = $1 WHERE id = $2', [
+        geometry,
+        floor
+      ]);
+      return geometry;
+    });
+    res.json({ id: floor, geometry: newGeometry });
   } catch (error) {
     res.status(400).json({ error: 'Server error' });
   }
@@ -47,7 +50,26 @@ router.post('/interactables', async (req, res) => {
       toDeleteDevices,
       floor
     );
-    await db.none(query);
+    await db.tx(async t => await t.none(query));
+    res.json({ test: 'ok' });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ error: 'Server error' });
+  }
+});
+
+// @route     POST api/update/interactables
+// @desc      Update areas and devices
+// @access    Private
+router.post('/task', async (req, res) => {
+  const toAdd = req.query.add;
+  const toDelete = req.query.del;
+
+  console.log(toAdd);
+  console.log(toDelete);
+  console.log(req.body);
+
+  try {
     res.json({ test: 'ok' });
   } catch (error) {
     console.log(error);

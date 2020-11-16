@@ -4,6 +4,8 @@ const taskerAdapter = createEntityAdapter();
 const initialState = taskerAdapter.getInitialState({
   activeItem: null,
   isEditing: false,
+  isLoading: false,
+  taskerHistory: null,
   byDevice: {}
 });
 
@@ -52,14 +54,14 @@ const taskerSlice = createSlice({
     toggleDevice(state, { payload }) {
       const { id: device, floor } = payload;
       if (state.byDevice[device]?.[state.activeItem]) {
-        const indexDevice = state.entities[state.activeItem].devices.indexOf(
+        const deviceIndex = state.entities[state.activeItem].devices.indexOf(
           device
         );
-        const indexFloor = state.entities[state.activeItem].floors.indexOf(
+        const floorIndex = state.entities[state.activeItem].floors.indexOf(
           floor
         );
-        state.entities[state.activeItem].devices.splice(indexDevice, 1);
-        state.entities[state.activeItem].floors.splice(indexFloor, 1);
+        state.entities[state.activeItem].devices.splice(deviceIndex, 1);
+        state.entities[state.activeItem].floors.splice(floorIndex, 1);
         delete state.byDevice[device][state.activeItem];
       } else {
         state.entities[state.activeItem].devices.push(device);
@@ -69,10 +71,34 @@ const taskerSlice = createSlice({
         }
         state.byDevice[device][state.activeItem] = { isCheckedOff: false };
       }
+    },
+    cancelChanges(state) {
+      const activeItem = state.entities[state.activeItem];
+      if (activeItem.isNew) {
+        for (let i = 0, l = activeItem.devices.length; i < l; i++) {
+          delete state.byDevice[activeItem.devices[i]];
+        }
+
+        taskerAdapter.removeOne(state, state.activeItem);
+        state.activeItem = null;
+      } else {
+      }
+      state.isEditing = false;
+    },
+    saveChanges(state, { payload }) {
+      taskerAdapter.updateOne(state, {
+        id: state.activeItem,
+        changes: { ...payload }
+      });
     }
   }
 });
 
-export const { addItem, toggleDevice } = taskerSlice.actions;
+export const {
+  addItem,
+  toggleDevice,
+  cancelChanges,
+  saveChanges
+} = taskerSlice.actions;
 
 export default taskerSlice.reducer;
