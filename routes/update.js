@@ -3,6 +3,7 @@ const router = express.Router();
 const { db } = require('../db/db');
 const generateWallQuery = require('../db/generateWallQuery');
 const generateInteractablesQuery = require('../db/generateInteractablesQuery');
+const generateTaskerUpdateQuery = require('../db/generateTaskerUpdateQuery');
 
 // @route     POST api/update/geometry
 // @desc      Update geometry
@@ -64,13 +65,16 @@ router.post('/interactables', async (req, res) => {
 router.post('/task', async (req, res) => {
   const toAdd = req.query.add;
   const toDelete = req.query.del;
+  const ts = new Date().toISOString();
 
   console.log(toAdd);
   console.log(toDelete);
   console.log(req.body);
 
   try {
-    res.json({ test: 'ok' });
+    const query = generateTaskerUpdateQuery(toAdd, toDelete, req.body, ts);
+    await db.tx(async t => await t.none(query));
+    res.json({ status: 'ok', ts });
   } catch (error) {
     console.log(error);
     res.status(400).json({ error: 'Server error' });

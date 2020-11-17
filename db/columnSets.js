@@ -39,11 +39,43 @@ const onConflictDevices =
   ' ON CONFLICT(id) DO UPDATE SET ' +
   devicesCs.assignColumns({ from: 'EXCLUDED', skip: ['id', 'floor'] });
 
+const taskerItemsCs = new pgp.helpers.ColumnSet(
+  [
+    '?id',
+    'name',
+    'type',
+    { name: 'description', def: '' },
+    { name: 'createdAt', def: new Date().toISOString() },
+    { name: 'lastEditedAt', def: new Date().toISOString() },
+    { name: 'isCheckedOff', def: false }
+  ],
+  {
+    table: 'tasker_items'
+  }
+);
+
+const onConflictTaskerItems =
+  ' ON CONFLICT(id) DO UPDATE SET ' +
+  taskerItemsCs.assignColumns({
+    from: 'EXCLUDED',
+    skip: ['id', 'type', 'createdAt', 'isCheckedOff']
+  });
+
+const taskerItemsDevicesCs = new pgp.helpers.ColumnSet(
+  ['?deviceId', '?itemId', { name: 'isCheckedOff', def: false }],
+  {
+    table: 'tasker_items_devices'
+  }
+);
+
 module.exports = {
   wallsCs,
   onConflictWalls,
   areasCs,
   onConflictAreas,
   devicesCs,
-  onConflictDevices
+  onConflictDevices,
+  taskerItemsCs,
+  onConflictTaskerItems,
+  taskerItemsDevicesCs
 };

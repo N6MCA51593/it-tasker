@@ -32,8 +32,6 @@ const taskerSlice = createSlice({
       },
       prepare({ deviceId = null, deviceFloor = null, type }) {
         const id = nanoid();
-        const createdAt = new Date().toISOString();
-        const lastEditedAt = createdAt;
         const devices = deviceId ? [deviceId] : [];
         const floors = deviceFloor ? [deviceFloor] : [];
         const name = 'New ' + type;
@@ -44,8 +42,6 @@ const taskerSlice = createSlice({
             name,
             devices,
             floors,
-            createdAt,
-            lastEditedAt,
             isNew: true
           }
         };
@@ -84,21 +80,21 @@ const taskerSlice = createSlice({
       } else {
       }
       state.isEditing = false;
-    },
-    saveChanges(state, { payload }) {
-      taskerAdapter.updateOne(state, {
-        id: state.activeItem,
-        changes: { ...payload }
-      });
+    }
+  },
+  extraReducers: {
+    'api/updateTaskerItem/fulfilled': (state, { payload }) => {
+      const { ts } = payload;
+      if (state.entities[state.activeItem].isNew) {
+        state.entities[state.activeItem].createdAt = ts;
+        state.entities[state.activeItem].isNew = false;
+      }
+      state.entities[state.activeItem].lasteEditedAt = ts;
+      state.isEditing = false;
     }
   }
 });
 
-export const {
-  addItem,
-  toggleDevice,
-  cancelChanges,
-  saveChanges
-} = taskerSlice.actions;
+export const { addItem, toggleDevice, cancelChanges } = taskerSlice.actions;
 
 export default taskerSlice.reducer;
