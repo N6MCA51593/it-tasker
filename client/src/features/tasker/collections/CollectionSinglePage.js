@@ -2,7 +2,7 @@ import React from 'react';
 import useInput from 'common/useInput';
 import { selectTaskerItemById } from 'app/selectors';
 import { useSelector, useDispatch } from 'react-redux';
-import { cancelChanges } from 'features/tasker/taskerSlice';
+import { cancelChanges, toggleEditing } from 'features/tasker/taskerSlice';
 import { updateTaskerItem } from 'features/api/updateTaskerItem';
 import DeviceList from 'features/tasker/DeviceList';
 import EditingControls from 'features/tasker/EditingControls';
@@ -31,7 +31,13 @@ const CollectionSinglePage = ({ id, isEditing }) => {
     );
   }
 
-  return <div className='collection-single-page'>{name}</div>;
+  return (
+    <div className='collection-single-page'>
+      {name}
+      <DeviceList id={id} />
+      <button onClick={() => dispatch(toggleEditing())}>Edit</button>
+    </div>
+  );
 };
 
 export default CollectionSinglePage;

@@ -53,7 +53,7 @@ export const selectActiveDevice = state => state.devices.activeDevice;
 export const selectIsDeviceMoving = state => state.devices.isMoving;
 export const selectDeviceById = (state, id) => state.devices.entities[id];
 export const selectDevicesById = (state, ids) =>
-  ids.map(id => state.devices.entities[id]);
+  ids && ids.map(id => state.devices.entities[id]);
 export const selectActiveFloorDevices = createSelector(
   [selectAllDevices, selectAllDeviceItemsCustom, selectActiveFloor],
   (ids, devices, activeFloor) =>

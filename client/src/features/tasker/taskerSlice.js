@@ -23,9 +23,7 @@ const taskerSlice = createSlice({
             state.byDevice[deviceId] = {};
           }
 
-          state.byDevice[deviceId][id] = {
-            isCheckedOff: false
-          };
+          state.byDevice[deviceId][id] = false;
         }
         state.activeItem = id;
         state.isEditing = true;
@@ -65,7 +63,7 @@ const taskerSlice = createSlice({
         if (!state.byDevice[device]) {
           state.byDevice[device] = {};
         }
-        state.byDevice[device][state.activeItem] = { isCheckedOff: false };
+        state.byDevice[device][state.activeItem] = false;
       }
     },
     cancelChanges(state) {
@@ -80,21 +78,53 @@ const taskerSlice = createSlice({
       } else {
       }
       state.isEditing = false;
+    },
+    setActiveItem(state, { payload }) {
+      state.activeItem = payload;
+    },
+    toggleEditing(state) {
+      state.isEditing = !state.isEditing;
     }
   },
   extraReducers: {
     'api/updateTaskerItem/fulfilled': (state, { payload }) => {
-      const { ts } = payload;
-      if (state.entities[state.activeItem].isNew) {
-        state.entities[state.activeItem].createdAt = ts;
-        state.entities[state.activeItem].isNew = false;
+      const { ts, id } = payload;
+      if (state.entities[id].isNew) {
+        state.entities[id].createdAt = ts;
+        state.entities[id].isNew = false;
       }
-      state.entities[state.activeItem].lasteEditedAt = ts;
+      state.entities[id].lasteEditedAt = ts;
       state.isEditing = false;
+    },
+    'api/loadAppData/fulfilled': (state, { payload }) => {
+      const { tasks, taskDevices } = payload;
+      taskerAdapter.addMany(state, tasks);
+      for (let i = 0, l = taskDevices.length; i < l; i++) {
+        const { itemId, deviceId, isCheckedOff } = taskDevices[i];
+        if (!state.entities[itemId].devices) {
+          state.entities[itemId].devices = [];
+          state.entities[itemId].floors = [];
+        }
+
+        state.entities[itemId].floors.push(taskDevices[i].floor);
+        state.entities[itemId].devices.push(taskDevices[i].deviceId);
+
+        if (!state.byDevice[deviceId]) {
+          state.byDevice[deviceId] = {};
+        }
+
+        state.byDevice[deviceId][itemId] = isCheckedOff;
+      }
     }
   }
 });
 
-export const { addItem, toggleDevice, cancelChanges } = taskerSlice.actions;
+export const {
+  addItem,
+  toggleDevice,
+  cancelChanges,
+  setActiveItem,
+  toggleEditing
+} = taskerSlice.actions;
 
 export default taskerSlice.reducer;

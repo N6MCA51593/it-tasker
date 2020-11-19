@@ -34,7 +34,6 @@ const generateTaskerUpdateQuery = (toAdd, toDelete, item, ts) => {
     delDevicesQuery
   ]);
 
-  console.log(query);
   return query;
 };
 

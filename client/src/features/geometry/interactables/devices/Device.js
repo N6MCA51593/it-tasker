@@ -48,10 +48,10 @@ const Device = ({ id, mode, activeDevice }) => {
       dispatch(toggleDevice({ id, floor }));
     }
   };
-
-  const iconClassName = taskerItems?.[activeItem]
-    ? 'device-icon-selected'
-    : 'device-icon';
+  const iconClassName =
+    taskerItems?.[activeItem] === false
+      ? 'device-icon-selected'
+      : 'device-icon';
 
   return (
     <g>
