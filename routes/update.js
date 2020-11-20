@@ -63,8 +63,14 @@ router.post('/interactables', async (req, res) => {
 // @desc      Update areas and devices
 // @access    Private
 router.post('/task', async (req, res) => {
-  const toAdd = req.query.add;
-  const toDelete = req.query.del;
+  const toAdd =
+    req.query.add && !Array.isArray(req.query.add)
+      ? [req.query.add]
+      : req.query.add;
+  const toDelete =
+    req.query.del && !Array.isArray(req.query.del)
+      ? [req.query.del]
+      : req.query.del;
   const ts = new Date().toISOString();
   const item = req.body;
 

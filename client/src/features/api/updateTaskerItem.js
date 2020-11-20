@@ -12,7 +12,6 @@ export const updateTaskerItem = createAsyncThunk(
       params = '?' + reqQueryParams(devices, 'add');
     } else {
       const newDeviceSet = new Set(devices);
-      console.log(newDeviceSet);
       const oldDeviceSet = new Set(tasker.taskerHistory.devices);
       const toAddArr = [...newDeviceSet].filter(id => !oldDeviceSet.has(id));
       const toDeleteArr = [...oldDeviceSet].filter(id => !newDeviceSet.has(id));
