@@ -89,6 +89,7 @@ export const selectByDeviceEntry = (state, id) => state.tasker.byDevice[id];
 export const selectTaskerActiveAndEditing = state => {
   return {
     activeItem: state.tasker.activeItem,
+    activeItemType: state.tasker.activeItemType,
     isEditing: state.tasker.isEditing
   };
 };

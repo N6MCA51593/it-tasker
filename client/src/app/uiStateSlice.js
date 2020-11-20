@@ -1,5 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { navGeo, mainGlob, editCollectionGlob } from 'common/uiStates';
+import {
+  navGeo,
+  mainGlob,
+  editTaskerItemGlob,
+  viewTaskerItemGlob
+} from 'common/uiStates';
 
 const initialState = {
   activeGlobalState: mainGlob,
@@ -30,13 +35,24 @@ const uiStateSlice = createSlice({
       state.activeGlobalState = mainGlob;
       state.activeGeometryState = navGeo;
     },
-    'tasker/addItem': (state, { payload }) => {
-      if (payload.type === 'collection') {
-        state.activeGlobalState = editCollectionGlob;
+    'tasker/addItem': state => {
+      state.activeGlobalState = editTaskerItemGlob;
+    },
+    'api/updateTaskerItem/fulfilled': state => {
+      if (state.activeGlobalState === editTaskerItemGlob) {
+        state.activeGlobalState = viewTaskerItemGlob;
       }
     },
     'tasker/cancelChanges': state => {
       state.activeGlobalState = mainGlob;
+    },
+    'tasker/setActiveItem': state => {
+      state.activeGlobalState = viewTaskerItemGlob;
+    },
+    'tasker/toggleEditing': state => {
+      state.activeGlobalState === viewTaskerItemGlob
+        ? (state.activeGlobalState = editTaskerItemGlob)
+        : (state.activeGlobalState = viewTaskerItemGlob);
     }
   }
 });

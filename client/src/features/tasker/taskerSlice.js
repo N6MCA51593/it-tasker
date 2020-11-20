@@ -3,6 +3,7 @@ import { createSlice, nanoid, createEntityAdapter } from '@reduxjs/toolkit';
 const taskerAdapter = createEntityAdapter();
 const initialState = taskerAdapter.getInitialState({
   activeItem: null,
+  activeItemType: null,
   isEditing: false,
   isLoading: false,
   taskerHistory: null,
@@ -26,6 +27,7 @@ const taskerSlice = createSlice({
           state.byDevice[deviceId][id] = false;
         }
         state.activeItem = id;
+        state.activeItemType = payload.type;
         state.isEditing = true;
       },
       prepare({ deviceId = null, deviceFloor = null, type }) {
@@ -47,7 +49,7 @@ const taskerSlice = createSlice({
     },
     toggleDevice(state, { payload }) {
       const { id: device, floor } = payload;
-      if (state.byDevice[device]?.[state.activeItem]) {
+      if (typeof state.byDevice[device]?.[state.activeItem] != 'undefined') {
         const deviceIndex = state.entities[state.activeItem].devices.indexOf(
           device
         );
@@ -58,11 +60,17 @@ const taskerSlice = createSlice({
         state.entities[state.activeItem].floors.splice(floorIndex, 1);
         delete state.byDevice[device][state.activeItem];
       } else {
+        if (!state.entities[state.activeItem].devices) {
+          state.entities[state.activeItem].devices = [];
+          state.entities[state.activeItem].floors = [];
+        }
+
         state.entities[state.activeItem].devices.push(device);
         state.entities[state.activeItem].floors.push(floor);
         if (!state.byDevice[device]) {
           state.byDevice[device] = {};
         }
+
         state.byDevice[device][state.activeItem] = false;
       }
     },
@@ -81,9 +89,13 @@ const taskerSlice = createSlice({
     },
     setActiveItem(state, { payload }) {
       state.activeItem = payload;
+      state.activeItemType = state.entities[payload].type;
     },
     toggleEditing(state) {
       state.isEditing = !state.isEditing;
+      !state.taskerHistory
+        ? (state.taskerHistory = state.entities[state.activeItem])
+        : (state.taskerHistory = null);
     }
   },
   extraReducers: {
@@ -93,8 +105,10 @@ const taskerSlice = createSlice({
         state.entities[id].createdAt = ts;
         state.entities[id].isNew = false;
       }
+
       state.entities[id].lasteEditedAt = ts;
       state.isEditing = false;
+      state.taskerHistory = null;
     },
     'api/loadAppData/fulfilled': (state, { payload }) => {
       const { tasks, taskDevices } = payload;

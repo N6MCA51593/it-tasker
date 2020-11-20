@@ -1,9 +1,8 @@
 export const mainGlob = 'main';
 export const editGeomGlob = 'edit-geometry';
 export const editInteractablesGlob = 'edit-areas';
-export const editCollectionGlob = 'edit-collection';
-export const editTaskGlob = 'edit-task';
-export const editNoteGlob = 'edit-note';
+export const viewTaskerItemGlob = 'view-tasker-item';
+export const editTaskerItemGlob = 'edit-tasker-item';
 
 export const navGeo = 'nav';
 

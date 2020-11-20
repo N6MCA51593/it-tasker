@@ -8,11 +8,11 @@ export const updateTaskerItem = createAsyncThunk(
     const item = tasker.entities[tasker.activeItem];
     const { isNew, devices } = item;
     let params = '';
-    console.log(item);
     if (isNew) {
       params = '?' + reqQueryParams(devices, 'add');
     } else {
       const newDeviceSet = new Set(devices);
+      console.log(newDeviceSet);
       const oldDeviceSet = new Set(tasker.taskerHistory.devices);
       const toAddArr = [...newDeviceSet].filter(id => !oldDeviceSet.has(id));
       const toDeleteArr = [...oldDeviceSet].filter(id => !newDeviceSet.has(id));
@@ -22,19 +22,28 @@ export const updateTaskerItem = createAsyncThunk(
     }
 
     const body = { ...item, ...changes };
-    const response = await fetch(
-      'http://localhost:5000/api/update/task' + params,
-      {
-        method: 'POST',
-        body: JSON.stringify(body),
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        mode: 'cors'
+
+    try {
+      const response = await fetch(
+        'http://localhost:5000/api/update/task' + params,
+        {
+          method: 'POST',
+          body: JSON.stringify(body),
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          mode: 'cors'
+        }
+      );
+
+      if (response.status >= 400 && response.status < 600) {
+        throw new Error('Server Error');
       }
-    );
-    const res = await response.json();
-    console.log(res);
-    return res;
+
+      const res = await response.json();
+      return res;
+    } catch (error) {
+      throw new Error('Server Error');
+    }
   }
 );

@@ -22,7 +22,9 @@ const Device = ({ id, mode, activeDevice }) => {
   const dispatch = useDispatch();
   const device = useSelector(state => selectDeviceById(state, id));
   const taskerItems = useSelector(state => selectByDeviceEntry(state, id));
-  const { activeItem, isEditing } = useSelector(selectTaskerActiveAndEditing);
+  const { activeItem, isEditing, activeItemType } = useSelector(
+    selectTaskerActiveAndEditing
+  );
   const globalUiState = useSelector(selectActiveGlobalUiState);
   const isActive = activeDevice === id;
   const {
@@ -40,11 +42,7 @@ const Device = ({ id, mode, activeDevice }) => {
       dispatch(removeDevice(id));
     } else if (mode === ui.moveDeviceGeo && !isActive) {
       dispatch(moveDevice(id));
-    } else if (
-      globalUiState === ui.editCollectionGlob ||
-      globalUiState === ui.editNoteGlob ||
-      globalUiState === ui.editTaskGlob
-    ) {
+    } else if (globalUiState === ui.editTaskerItemGlob) {
       dispatch(toggleDevice({ id, floor }));
     }
   };
