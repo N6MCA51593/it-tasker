@@ -11,20 +11,27 @@ export const updateGeometry = createAsyncThunk(
     // Remove duplicates
     const body = [...new Set(walls.toUpsert)].map(e => walls.entities[e]);
 
-    const res = await fetch(
-      'http://localhost:5000/api/update/geometry' + params,
-      {
-        method: 'POST',
-        body: JSON.stringify(body),
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        mode: 'cors'
-      }
-    )
-      .then(res => res.json())
-      .catch(e => console.log(e));
+    try {
+      const response = await fetch(
+        'http://localhost:5000/api/update/geometry' + params,
+        {
+          method: 'POST',
+          body: JSON.stringify(body),
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          mode: 'cors'
+        }
+      );
 
-    return res;
+      if (response.status >= 400 && response.status < 600) {
+        throw new Error('Server Error');
+      }
+
+      const res = await response.json();
+      return res;
+    } catch (error) {
+      throw new Error('Server Error');
+    }
   }
 );

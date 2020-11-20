@@ -1,11 +1,19 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 export const loadAppData = createAsyncThunk('api/loadAppData', async () => {
-  const response = await fetch('http://localhost:5000/api/load', {
-    method: 'GET',
-    mode: 'cors'
-  })
-    .then(res => res.json())
-    .catch(e => console.log(e));
-  return response;
+  try {
+    const response = await fetch('http://localhost:5000/api/load', {
+      method: 'GET',
+      mode: 'cors'
+    });
+
+    if (response.status >= 400 && response.status < 600) {
+      throw new Error('Server Error');
+    }
+
+    const res = await response.json();
+    return res;
+  } catch (error) {
+    throw new Error('Server Error');
+  }
 });

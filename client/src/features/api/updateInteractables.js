@@ -18,19 +18,27 @@ export const updateInteractables = createAsyncThunk(
       devices: [...new Set(devices.toUpsert)].map(e => devices.entities[e])
     };
 
-    const response = await fetch(
-      'http://localhost:5000/api/update/interactables' + params,
-      {
-        method: 'POST',
-        body: JSON.stringify(body),
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        mode: 'cors'
+    try {
+      const response = await fetch(
+        'http://localhost:5000/api/update/interactables' + params,
+        {
+          method: 'POST',
+          body: JSON.stringify(body),
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          mode: 'cors'
+        }
+      );
+
+      if (response.status >= 400 && response.status < 600) {
+        throw new Error('Server Error');
       }
-    );
-    const res = await response.json();
-    console.log(res);
-    return res;
+
+      const res = await response.json();
+      return res;
+    } catch (error) {
+      throw new Error('Server Error');
+    }
   }
 );

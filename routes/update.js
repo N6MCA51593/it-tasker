@@ -77,7 +77,7 @@ router.post('/task', async (req, res) => {
   try {
     const query = generateTaskerUpdateQuery(toAdd, toDelete, item, ts);
     await db.tx(async t => await t.none(query));
-    res.json({ status: 'ok', ts, id: item.id });
+    res.json({ status: 'ok', ts, id: item.id, name: item.name });
   } catch (error) {
     console.log(error);
     res.status(400).json({ error: 'Server error' });
