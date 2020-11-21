@@ -10,6 +10,7 @@ const Defs = () => {
       strokeLinecap='round'
       strokeLinejoin='round'
       id='icon'
+      transform='matrix(1 0 0 -1 -12.3 -7)'
     >
       <path stroke='none' d='M0 0h24v24H0z' />
       <path d='M6 17.6l-2 -1.1v-2.5' />

@@ -1,20 +1,17 @@
 import React, { Fragment } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import {
-  selectAllCollections,
-  selectTaskerActiveAndEditing
-} from 'app/selectors';
 import { addItem } from 'features/tasker/taskerSlice';
-import CollectionSinglePage from 'features/tasker/collections/CollectionSinglePage';
 import TaskerListItem from 'features/tasker/TaskerListItem';
+import TaskSinglePage from 'features/tasker/tasks/TaskSinglePage';
+import { selectTaskerActiveAndEditing, selectAllTasks } from 'app/selectors';
 
-const Collections = () => {
+const Tasks = () => {
   const dispatch = useDispatch();
-  const ids = useSelector(selectAllCollections);
+  const ids = useSelector(selectAllTasks);
   const { activeItem, isEditing } = useSelector(selectTaskerActiveAndEditing);
 
   if (activeItem) {
-    return <CollectionSinglePage id={activeItem} isEditing={isEditing} />;
+    return <TaskSinglePage id={activeItem} isEditing={isEditing} />;
   }
 
   return (
@@ -22,11 +19,9 @@ const Collections = () => {
       {ids.map(id => (
         <TaskerListItem key={id} id={id} />
       ))}
-      <button onClick={() => dispatch(addItem({ type: 'collection' }))}>
-        Add
-      </button>
+      <button onClick={() => dispatch(addItem({ type: 'task' }))}>Add</button>
     </Fragment>
   );
 };
 
-export default Collections;
+export default Tasks;

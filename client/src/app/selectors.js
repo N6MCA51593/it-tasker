@@ -99,3 +99,7 @@ export const selectAllCollections = createSelector(
   [selectAllTaskerItemIds, selectAllTaskerItemEntities],
   (ids, entities) => ids.filter(id => entities[id].type === 'collection')
 );
+export const selectAllTasks = createSelector(
+  [selectAllTaskerItemIds, selectAllTaskerItemEntities],
+  (ids, entities) => ids.filter(id => entities[id].type === 'task')
+);

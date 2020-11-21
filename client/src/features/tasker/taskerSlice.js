@@ -87,15 +87,25 @@ const taskerSlice = createSlice({
       }
       state.isEditing = false;
     },
-    setActiveItem(state, { payload }) {
-      state.activeItem = payload;
-      state.activeItemType = state.entities[payload].type;
+    toggleActiveItem(state, { payload }) {
+      if (!state.activeItem) {
+        state.activeItem = payload;
+        state.activeItemType = state.entities[payload].type;
+      } else {
+        state.activeItem = null;
+      }
     },
     toggleEditing(state) {
       state.isEditing = !state.isEditing;
-      !state.taskerHistory
-        ? (state.taskerHistory = state.entities[state.activeItem])
-        : (state.taskerHistory = null);
+      if (state.taskerHistory) {
+        state.taskerHistory = null;
+      } else {
+        const item = state.entities[state.activeItem];
+        state.taskerHistory = item;
+        state.taskerHistory.byDeivce =
+          item.devices &&
+          item.devices.map(device => state.byDevice[device][item.id]);
+      }
     }
   },
   extraReducers: {
@@ -138,7 +148,7 @@ export const {
   addItem,
   toggleDevice,
   cancelChanges,
-  setActiveItem,
+  toggleActiveItem,
   toggleEditing
 } = taskerSlice.actions;
 

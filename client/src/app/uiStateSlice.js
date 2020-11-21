@@ -46,8 +46,10 @@ const uiStateSlice = createSlice({
     'tasker/cancelChanges': state => {
       state.activeGlobalState = mainGlob;
     },
-    'tasker/setActiveItem': state => {
-      state.activeGlobalState = viewTaskerItemGlob;
+    'tasker/toggleActiveItem': state => {
+      state.activeGlobalState === viewTaskerItemGlob
+        ? (state.activeGlobalState = mainGlob)
+        : (state.activeGlobalState = viewTaskerItemGlob);
     },
     'tasker/toggleEditing': state => {
       state.activeGlobalState === viewTaskerItemGlob

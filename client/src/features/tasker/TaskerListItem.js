@@ -3,7 +3,7 @@ import { selectTaskerItemById } from 'app/selectors';
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleActiveItem } from 'features/tasker/taskerSlice';
 
-const CollectionTableItem = ({ id }) => {
+const TaskerListItem = ({ id }) => {
   const dispatch = useDispatch();
   const { name } = useSelector(state => selectTaskerItemById(state, id));
   return (
@@ -16,4 +16,4 @@ const CollectionTableItem = ({ id }) => {
   );
 };
 
-export default CollectionTableItem;
+export default TaskerListItem;
