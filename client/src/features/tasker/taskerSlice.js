@@ -82,10 +82,31 @@ const taskerSlice = createSlice({
         }
 
         taskerAdapter.removeOne(state, state.activeItem);
-        state.activeItem = null;
       } else {
+        const oldItem = state.taskerHistory;
+        const newItem = state.entities[state.activeItem];
+        if (oldItem.devices) {
+          const oldDeviceSet = new Set(oldItem.devices);
+          const newDeviceSet = new Set(newItem.devices);
+          const toDeleteArr = [...newDeviceSet].filter(
+            id => !oldDeviceSet.has(id)
+          );
+
+          for (let i = 0, l = toDeleteArr.length; i < l; i++) {
+            delete state.byDevice[toDeleteArr[i]][oldItem.id];
+          }
+
+          for (let i = 0, l = oldItem.devices.length; i < l; i++) {
+            state.byDevice[oldItem.devices[i]][oldItem.id] =
+              oldItem.byDeivce[i];
+          }
+        }
+        delete oldItem.byDeivce;
+        state.entities[state.activeItem] = oldItem;
+        state.taskerHistory = null;
       }
       state.isEditing = false;
+      state.activeItem = null;
     },
     toggleActiveItem(state, { payload }) {
       if (!state.activeItem) {
