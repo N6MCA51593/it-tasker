@@ -74,6 +74,11 @@ const taskerSlice = createSlice({
         state.byDevice[device][state.activeItem] = false;
       }
     },
+    toggleDeviceCheckOff(state, { payload }) {
+      state.byDevice[payload][state.activeItem] = !state.byDevice[payload][
+        state.activeItem
+      ];
+    },
     cancelChanges(state) {
       const activeItem = state.entities[state.activeItem];
       if (activeItem.isNew) {
@@ -170,7 +175,8 @@ export const {
   toggleDevice,
   cancelChanges,
   toggleActiveItem,
-  toggleEditing
+  toggleEditing,
+  toggleDeviceCheckOff
 } = taskerSlice.actions;
 
 export default taskerSlice.reducer;

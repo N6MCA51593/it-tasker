@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import {
   cancelChanges,
   toggleActiveItem,
+  toggleDevice,
   toggleEditing
 } from 'features/tasker/taskerSlice';
 import { updateTaskerItem } from 'features/api/updateTaskerItem';
@@ -23,13 +24,16 @@ const CollectionSinglePage = ({ id, isEditing }) => {
     const cancel = () => {
       dispatch(cancelChanges());
     };
+    const clickHandler = (id, floor) => {
+      dispatch(toggleDevice({ id, floor }));
+    };
     return (
       <div className='collection-single-page'>
         <label>
           Name:
           <input {...bindName} />
         </label>
-        <DeviceList id={id} />
+        <DeviceList id={id} clickHandler={clickHandler} />
         <EditingControls save={save} cancel={cancel} />
       </div>
     );

@@ -12,7 +12,7 @@ const FloorRow = ({ id, isEditing, clickHandler, items }) => {
           <div
             className='collection-row-item'
             key={device.id}
-            onClick={clickHandler}
+            onClick={() => clickHandler(device.id, device.floor)}
           >
             {device.name}
           </div>
