@@ -30,9 +30,9 @@ const InteractablesWithEditing = InteractablesComponent =>
     const addDevice = (id, e) => {
       const { x, y } = isGrid ? getRelCoord(e, true) : getRelCoord(e);
       if (mode === ui.moveDeviceGeo && activeDevice) {
-        dispatch(updateActiveDevice({ coords: { x, y }, area: id }));
+        dispatch(updateActiveDevice({ x, y, area: id }));
       } else if (mode === ui.addDeviceGeo) {
-        dispatch(addDeviceAction({ id, coords: { x, y }, floor: activeFloor }));
+        dispatch(addDeviceAction({ id, x, y, floor: activeFloor }));
       }
     };
 
@@ -54,7 +54,8 @@ const InteractablesWithEditing = InteractablesComponent =>
         const { x, y } = getRelCoord(e);
         dispatch(updateActiveArea(`${x},${y}`));
       } else if (isMoving && activeDevice) {
-        dispatch(updateActiveDevice({ coords: getRelCoord(e) }));
+        const { x, y } = getRelCoord(e);
+        dispatch(updateActiveDevice({ x, y }));
       }
     };
 

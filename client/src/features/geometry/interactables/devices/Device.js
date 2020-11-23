@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import DevicePopUp from 'features/geometry/interactables/devices/DevicePopUp';
 import DeviceOptions from 'features/geometry/interactables/devices/DeviceOptions';
 import StatusIndicator from 'features/geometry/interactables/devices/StatusIndicator';
@@ -8,7 +8,7 @@ import {
   selectDeviceById,
   selectActiveGlobalUiState,
   selectTaskerActiveAndEditing,
-  selectByDeviceEntry
+  selectDeviceActiveItemStatus
 } from 'app/selectors';
 import {
   setActiveDevice,
@@ -20,20 +20,21 @@ import * as ui from 'common/uiStates';
 
 const Device = ({ id, mode, activeDevice }) => {
   const dispatch = useDispatch();
-  const device = useSelector(state => selectDeviceById(state, id));
-  const taskerItems = useSelector(state => selectByDeviceEntry(state, id));
-  const { activeItem, isEditing, activeItemType } = useSelector(
-    selectTaskerActiveAndEditing
+  const device = useSelector(
+    state => selectDeviceById(state, id),
+    shallowEqual
   );
+  const activeTaskerItemStatus = useSelector(state =>
+    selectDeviceActiveItemStatus(state, id)
+  );
+  const { activeItem, isEditing, activeItemType } = useSelector(
+    selectTaskerActiveAndEditing,
+    shallowEqual
+  );
+  console.log('object');
   const globalUiState = useSelector(selectActiveGlobalUiState);
   const isActive = activeDevice === id;
-  const {
-    status,
-    type,
-    floor,
-    coords: { x },
-    coords: { y }
-  } = device;
+  const { status, type, floor, x, y } = device;
 
   const handleClick = () => {
     if (mode === ui.navGeo && globalUiState === ui.editInteractablesGlob) {
@@ -47,9 +48,7 @@ const Device = ({ id, mode, activeDevice }) => {
     }
   };
   const iconClassName =
-    taskerItems?.[activeItem] === false
-      ? 'device-icon-selected'
-      : 'device-icon';
+    activeTaskerItemStatus === false ? 'device-icon-selected' : 'device-icon';
 
   return (
     <g>

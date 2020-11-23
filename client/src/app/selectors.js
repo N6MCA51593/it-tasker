@@ -86,6 +86,8 @@ export const selectActiveFloorWalls = createSelector(
 // Tasker
 export const selectTaskerItemById = (state, id) => state.tasker.entities[id];
 export const selectByDeviceEntry = (state, id) => state.tasker.byDevice[id];
+export const selectDeviceActiveItemStatus = (state, id) =>
+  state.tasker.byDevice[id]?.[state.tasker.activeItem];
 export const selectTaskerActiveAndEditing = state => {
   return {
     activeItem: state.tasker.activeItem,

@@ -20,16 +20,7 @@ const onConflictAreas =
   areasCs.assignColumns({ from: 'EXCLUDED', skip: ['id', 'floor'] });
 
 const devicesCs = new pgp.helpers.ColumnSet(
-  [
-    '?id',
-    'area',
-    '?floor',
-    'coords:json',
-    'name',
-    'type',
-    'description',
-    'status'
-  ],
+  ['?id', 'area', '?floor', 'x', 'y', 'name', 'type', 'description', 'status'],
   {
     table: 'devices'
   }
