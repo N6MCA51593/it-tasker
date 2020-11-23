@@ -7,7 +7,7 @@ import DeviceIcon from 'features/geometry/interactables/devices/DeviceIcon';
 import {
   selectDeviceById,
   selectActiveGlobalUiState,
-  selectTaskerActiveAndEditing,
+  //selectTaskerActiveAndEditing,
   selectDeviceActiveItemStatus
 } from 'app/selectors';
 import {
@@ -27,11 +27,10 @@ const Device = ({ id, mode, activeDevice }) => {
   const activeTaskerItemStatus = useSelector(state =>
     selectDeviceActiveItemStatus(state, id)
   );
-  const { activeItem, isEditing, activeItemType } = useSelector(
-    selectTaskerActiveAndEditing,
-    shallowEqual
-  );
-  console.log('object');
+  // const { activeItem, isEditing, activeItemType } = useSelector(
+  //   selectTaskerActiveAndEditing,
+  //   shallowEqual
+  // );
   const globalUiState = useSelector(selectActiveGlobalUiState);
   const isActive = activeDevice === id;
   const { status, type, floor, x, y } = device;
