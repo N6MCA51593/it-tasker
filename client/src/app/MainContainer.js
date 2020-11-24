@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import Geometry from 'features/geometry/Geometry';
 import { useDispatch, useSelector } from 'react-redux';
 import { loadAppData } from 'features/api/loadAppData';
-import { selectUiLoadingState } from './selectors';
 import TaskerContainer from 'features/tasker/TaskerContainer';
+import { selectUiLoadingState } from './selectors';
 
 const MainContainer = () => {
   const dispatch = useDispatch();

@@ -9,6 +9,7 @@ import { useSelector } from 'react-redux';
 import { selectActiveGlobalUiState, selectActiveGeoState } from 'app/selectors';
 import InteractablesWithEditing from 'features/geometry/interactables/InteractablesWithEditing';
 import * as ui from 'common/uiStates';
+import Interactables from 'features/geometry/interactables/Interactables';
 
 const Geometry = () => {
   const [isPointerDown, setIsPointerDown] = useState(false);
@@ -93,7 +94,7 @@ const Geometry = () => {
             gridStep={gridStep}
           />
         )}
-        {uiState !== ui.editGeomGlob && (
+        {uiState === ui.editInteractablesGlob && (
           <InteractablesWithEditing
             mode={mode}
             isGrid={isGrid}
@@ -106,6 +107,20 @@ const Geometry = () => {
             gridStep={gridStep}
           />
         )}
+        {uiState !== ui.editInteractablesGlob &&
+          uiState !== ui.editGeomGlob && (
+            <Interactables
+              mode={mode}
+              isGrid={isGrid}
+              getRelCoord={getRelCoord}
+              panHLvl={panHLvl}
+              panVLvl={panVLvl}
+              zoomLvl={zoomLvl}
+              width={width}
+              height={height}
+              gridStep={gridStep}
+            />
+          )}
       </div>
       <GeometryControls
         zoomIn={zoomIn}

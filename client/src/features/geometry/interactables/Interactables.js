@@ -28,7 +28,7 @@ const Interactables = ({
   const deviceIds = useSelector(selectActiveFloorDevicesOrdered);
 
   const handlers = {
-    onClick: e => handleClick(e),
+    onClick: handleClick ? e => handleClick(e) : null,
     onMouseMove: handleMouseMove ? e => handleMouseMove(e) : null
   };
 
@@ -52,7 +52,7 @@ const Interactables = ({
           <Area key={id} id={id} mode={mode} addDevice={props.addDevice} />
         ))}
         {deviceIds.map(id => (
-          <Device key={id} id={id} mode={mode} activeDevice={activeDevice} />
+          <Device key={id} id={id} mode={mode} />
         ))}
       </svg>
     </div>

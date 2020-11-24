@@ -7,8 +7,23 @@ const initialState = devicesAdapter.getInitialState({
   isMoving: false,
   devicesHistory: null,
   toUpsert: [],
-  toDelete: []
+  toDelete: [],
+  byArea: {}
 });
+
+const buildByAreas = state => {
+  console.log('object');
+  state.byArea = {};
+  for (let i = 0, l = state.ids.length; i < l; i++) {
+    const id = state.ids[i];
+    const device = state.entities[id];
+    if (!state.byArea[device.area]) {
+      state.byArea[device.area] = [];
+    }
+
+    state.byArea[device.area].push(id);
+  }
+};
 
 const devicesSlice = createSlice({
   name: 'devices',
@@ -92,15 +107,17 @@ const devicesSlice = createSlice({
       state.toDelete = [];
       state.toUpsert = [];
       state.devicesHistory = null;
+      buildByAreas(state);
     },
     'api/loadAppData/fulfilled': (state, { payload }) => {
       devicesAdapter.addMany(state, payload.devices);
+      buildByAreas(state);
     },
     'uiState/setUiGlobalState': (state, { payload }) => {
       if (payload === editInteractablesGlob && !state.devicesHistory) {
         state.devicesHistory = state.entities;
       } else if (state.devicesHistory) {
-        devicesAdapter.setAll(state, state.devicesHistory);
+        devicesAdapter.setAll(state, state.devicesHistory); // temp
         state.devicesHistory = null;
       }
     }

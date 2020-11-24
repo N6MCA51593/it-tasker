@@ -7,8 +7,40 @@ const initialState = taskerAdapter.getInitialState({
   isEditing: false,
   isLoading: false,
   taskerHistory: null,
-  byDevice: {}
+  byDevice: {},
+  activeTaskByArea: {}
 });
+
+const toggleDeviceFn = (state, payloadItem, isPartiallyToggled) => {
+  const { id: device, floor } = payloadItem;
+  if (
+    typeof state.byDevice[device]?.[state.activeItem] !== 'undefined' &&
+    !isPartiallyToggled
+  ) {
+    const deviceIndex = state.entities[state.activeItem].devices.indexOf(
+      device
+    );
+    const floorIndex = state.entities[state.activeItem].floors.indexOf(floor);
+    state.entities[state.activeItem].devices.splice(deviceIndex, 1);
+    state.entities[state.activeItem].floors.splice(floorIndex, 1);
+    delete state.byDevice[device][state.activeItem];
+  } else {
+    if (typeof state.byDevice[device]?.[state.activeItem] === 'undefined') {
+      if (!state.entities[state.activeItem].devices) {
+        state.entities[state.activeItem].devices = [];
+        state.entities[state.activeItem].floors = [];
+      }
+
+      state.entities[state.activeItem].devices.push(device);
+      state.entities[state.activeItem].floors.push(floor);
+      if (!state.byDevice[device]) {
+        state.byDevice[device] = {};
+      }
+
+      state.byDevice[device][state.activeItem] = false;
+    }
+  }
+};
 
 const taskerSlice = createSlice({
   name: 'tasker',
@@ -48,30 +80,20 @@ const taskerSlice = createSlice({
       }
     },
     toggleDevice(state, { payload }) {
-      const { id: device, floor } = payload;
-      if (typeof state.byDevice[device]?.[state.activeItem] != 'undefined') {
-        const deviceIndex = state.entities[state.activeItem].devices.indexOf(
-          device
-        );
-        const floorIndex = state.entities[state.activeItem].floors.indexOf(
-          floor
-        );
-        state.entities[state.activeItem].devices.splice(deviceIndex, 1);
-        state.entities[state.activeItem].floors.splice(floorIndex, 1);
-        delete state.byDevice[device][state.activeItem];
+      if (Array.isArray(payload)) {
+        const toggledDevicesArrLength = payload.filter(
+          device =>
+            typeof state.byDevice[device.id]?.[state.activeItem] !== 'undefined'
+        ).length;
+        const isPartiallyToggled =
+          toggledDevicesArrLength > 0 &&
+          toggledDevicesArrLength < payload.length;
+
+        for (let i = 0, l = payload.length; i < l; i++) {
+          toggleDeviceFn(state, payload[i], isPartiallyToggled);
+        }
       } else {
-        if (!state.entities[state.activeItem].devices) {
-          state.entities[state.activeItem].devices = [];
-          state.entities[state.activeItem].floors = [];
-        }
-
-        state.entities[state.activeItem].devices.push(device);
-        state.entities[state.activeItem].floors.push(floor);
-        if (!state.byDevice[device]) {
-          state.byDevice[device] = {};
-        }
-
-        state.byDevice[device][state.activeItem] = false;
+        toggleDeviceFn(state, payload);
       }
     },
     toggleDeviceCheckOff(state, { payload }) {

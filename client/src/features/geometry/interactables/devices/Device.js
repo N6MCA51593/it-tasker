@@ -18,7 +18,7 @@ import {
 import { toggleDevice } from 'features/tasker/taskerSlice';
 import * as ui from 'common/uiStates';
 
-const Device = ({ id, mode, activeDevice }) => {
+const Device = ({ id, mode }) => {
   const dispatch = useDispatch();
   const device = useSelector(
     state => selectDeviceById(state, id),
@@ -32,7 +32,7 @@ const Device = ({ id, mode, activeDevice }) => {
   //   shallowEqual
   // );
   const globalUiState = useSelector(selectActiveGlobalUiState);
-  const isActive = activeDevice === id;
+  const isActive = useSelector(state => state.devices.activeDevice === id);
   const { status, type, floor, x, y } = device;
 
   const handleClick = () => {
