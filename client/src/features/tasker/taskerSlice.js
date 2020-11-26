@@ -1,9 +1,10 @@
 import { createSlice, nanoid, createEntityAdapter } from '@reduxjs/toolkit';
+import { taskTT } from 'common/uiStates';
 
 const taskerAdapter = createEntityAdapter();
 const initialState = taskerAdapter.getInitialState({
   activeItem: null,
-  activeItemType: null,
+  activeItemType: taskTT,
   isEditing: false,
   isLoading: false,
   taskerHistory: null,
@@ -154,6 +155,9 @@ const taskerSlice = createSlice({
           item.devices &&
           item.devices.map(device => state.byDevice[device][item.id]);
       }
+    },
+    setActiveItemType(state, { payload }) {
+      state.activeItemType = payload;
     }
   },
   extraReducers: {
@@ -198,7 +202,8 @@ export const {
   cancelChanges,
   toggleActiveItem,
   toggleEditing,
-  toggleDeviceCheckOff
+  toggleDeviceCheckOff,
+  setActiveItemType
 } = taskerSlice.actions;
 
 export default taskerSlice.reducer;

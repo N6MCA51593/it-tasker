@@ -1,13 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Controls from 'features/tasker/Controls';
-import TaskerItemsContainer from 'features/tasker/TaskerItemsContainer';
-
+//import TaskerItemsContainer from 'features/tasker/TaskerItemsContainer';
+import TaskerItemsContainer2 from 'features/tasker/TaskerItemsContainer2';
 const TaskerContainer = () => {
-  const [activeTab, setActiveTab] = useState('tasks');
   return (
     <div className='task-container'>
-      <Controls activeTab={activeTab} setActiveTab={setActiveTab} />
-      <TaskerItemsContainer activeTab={activeTab} />
+      <Controls />
+      <TaskerItemsContainer2 />
     </div>
   );
 };

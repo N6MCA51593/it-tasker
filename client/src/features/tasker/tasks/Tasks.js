@@ -3,12 +3,17 @@ import { useSelector, useDispatch } from 'react-redux';
 import { addItem } from 'features/tasker/taskerSlice';
 import TaskerListItem from 'features/tasker/TaskerListItem';
 import TaskSinglePage from 'features/tasker/tasks/TaskSinglePage';
-import { selectTaskerActiveAndEditing, selectAllTasks } from 'app/selectors';
+import {
+  selectTaskerActiveItemProperties,
+  selectAllTasks
+} from 'app/selectors';
 
 const Tasks = () => {
   const dispatch = useDispatch();
   const ids = useSelector(selectAllTasks);
-  const { activeItem, isEditing } = useSelector(selectTaskerActiveAndEditing);
+  const { activeItem, isEditing } = useSelector(
+    selectTaskerActiveItemProperties
+  );
 
   if (activeItem) {
     return <TaskSinglePage id={activeItem} isEditing={isEditing} />;

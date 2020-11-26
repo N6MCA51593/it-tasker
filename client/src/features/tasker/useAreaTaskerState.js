@@ -1,30 +1,30 @@
-import { selectTaskerActiveAndEditing } from 'app/selectors';
+import {
+  selectChildDevices,
+  selectTaskerActiveItemProperties
+} from 'app/selectors';
 import { toggleDevice } from 'features/tasker/taskerSlice';
 import { useCallback } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 
 const useAreaTaskerState = (id, floor) => {
   const dispatch = useDispatch();
-  const { activeItem, isEditing } = useSelector(
-    selectTaskerActiveAndEditing,
+  const childDevices = useSelector(
+    state => selectChildDevices(state, id),
     shallowEqual
   );
-  const deviceChildren = useSelector(
-    state =>
-      state.devices.ids.filter(
-        deviceId => state.devices.entities[deviceId].area === id
-      ),
+  const { activeItem, isEditing } = useSelector(
+    selectTaskerActiveItemProperties,
     shallowEqual
   );
 
   const toggleChildren = useCallback(() => {
     if (activeItem && isEditing) {
-      const payload = deviceChildren.map(deviceId => {
+      const payload = childDevices.map(deviceId => {
         return { id: deviceId, floor };
       });
       dispatch(toggleDevice(payload));
     }
-  }, [dispatch, deviceChildren, floor, activeItem, isEditing]);
+  }, [dispatch, childDevices, floor, activeItem, isEditing]);
 
   return {
     toggleChildren

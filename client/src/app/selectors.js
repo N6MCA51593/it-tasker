@@ -41,6 +41,7 @@ export const selectActiveFloorAreas = createSelector(
   [selectAllAreas, selectAllAreaItemsCustom, selectActiveFloor],
   (ids, areas, activeFloor) => ids.filter(id => areas[id].floor === activeFloor)
 );
+export const selectChildDevices = (state, id) => state.devices.byArea[id];
 
 // Devices
 export const selectAllDevices = state => state.devices.ids;
@@ -88,7 +89,7 @@ export const selectTaskerItemById = (state, id) => state.tasker.entities[id];
 export const selectByDeviceEntry = (state, id) => state.tasker.byDevice[id];
 export const selectDeviceActiveItemStatus = (state, id) =>
   state.tasker.byDevice[id]?.[state.tasker.activeItem];
-export const selectTaskerActiveAndEditing = state => {
+export const selectTaskerActiveItemProperties = state => {
   return {
     activeItem: state.tasker.activeItem,
     activeItemType: state.tasker.activeItemType,
@@ -100,6 +101,15 @@ const selectAllTaskerItemEntities = state => state.tasker.entities;
 export const selectAllCollections = createSelector(
   [selectAllTaskerItemIds, selectAllTaskerItemEntities],
   (ids, entities) => ids.filter(id => entities[id].type === 'collection')
+); // Remove
+export const selectAllActiveItemTypeTasks = createSelector(
+  [
+    selectAllTaskerItemIds,
+    selectAllTaskerItemEntities,
+    state => state.tasker.activeItemType
+  ],
+  (ids, entities, activeItemtype) =>
+    ids.filter(id => entities[id].type === activeItemtype)
 );
 export const selectAllTasks = createSelector(
   [selectAllTaskerItemIds, selectAllTaskerItemEntities],

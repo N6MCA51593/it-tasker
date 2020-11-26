@@ -12,7 +12,6 @@ const initialState = devicesAdapter.getInitialState({
 });
 
 const buildByAreas = state => {
-  console.log('object');
   state.byArea = {};
   for (let i = 0, l = state.ids.length; i < l; i++) {
     const id = state.ids[i];

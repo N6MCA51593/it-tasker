@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { selectTaskerItemById, selectDevicesById } from 'app/selectors';
 import { useSelector } from 'react-redux';
 import FloorRow from 'features/tasker/FloorRow';
 
-const DeviceList = ({ id, isEditing, clickHandler }) => {
+const DeviceList = ({ id }) => {
   const { devices, floors } = useSelector(state =>
     selectTaskerItemById(state, id)
   );
@@ -17,8 +17,6 @@ const DeviceList = ({ id, isEditing, clickHandler }) => {
         <FloorRow
           key={id}
           id={id}
-          isEditing={isEditing}
-          clickHandler={clickHandler}
           items={deviceItems.filter(device => device.floor === id)}
         />
       ))}
@@ -26,4 +24,4 @@ const DeviceList = ({ id, isEditing, clickHandler }) => {
   );
 };
 
-export default DeviceList;
+export default memo(DeviceList);

@@ -19,3 +19,7 @@ export const renameAreaLabelGeo = 'rename-label';
 export const addWallGeo = 'add-wall';
 export const moveWallGeo = 'move-wall';
 export const removeWallGeo = 'remove-wall';
+
+export const collectionTT = 'collection';
+export const taskTT = 'task';
+export const noteTT = 'note';
