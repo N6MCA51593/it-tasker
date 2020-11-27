@@ -1,14 +1,35 @@
 import React from 'react';
-import Collections from 'features/tasker/collections/Collections';
-import Tasks from 'features/tasker/tasks/Tasks';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
+import {
+  selectAllActiveItemTypeTasks,
+  selectTaskerActiveItemProperties
+} from 'app/selectors';
+import { addItem } from 'features/tasker/taskerSlice';
+import TaskerListItem from 'features/tasker/TaskerListItem';
+import TaskerSinglePageItem from 'features/tasker/TaskerSinglePageItem';
 
-const TaskerItemsContainer = ({ activeTab }) => {
+const TaskerItemsContainer2 = () => {
+  const dispatch = useDispatch();
+  const ids = useSelector(selectAllActiveItemTypeTasks);
+  const { activeItem, isEditing, activeItemType } = useSelector(
+    selectTaskerActiveItemProperties,
+    shallowEqual
+  );
+
+  if (activeItem) {
+    return <TaskerSinglePageItem id={activeItem} isEditing={isEditing} />;
+  }
+
   return (
     <div className='tasker-items-container'>
-      {activeTab === 'collections' && <Collections />}
-      {activeTab === 'tasks' && <Tasks />}
+      {ids.map(id => (
+        <TaskerListItem key={id} id={id} />
+      ))}
+      <button onClick={() => dispatch(addItem({ type: activeItemType }))}>
+        Add
+      </button>
     </div>
   );
 };
 
-export default TaskerItemsContainer;
+export default TaskerItemsContainer2;

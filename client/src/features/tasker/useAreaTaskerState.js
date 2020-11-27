@@ -2,7 +2,7 @@ import {
   selectChildDevices,
   selectTaskerActiveItemProperties
 } from 'app/selectors';
-import { toggleDevice } from 'features/tasker/taskerSlice';
+import { toggleDevice, removeDevices } from 'features/tasker/taskerSlice';
 import { useCallback } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 
@@ -17,8 +17,20 @@ const useAreaTaskerState = (id, floor) => {
     shallowEqual
   );
 
+  const removeChildren = useCallback(
+    devices => {
+      if (activeItem && isEditing) {
+        const payload = devices.map(device => {
+          return { device: device.id, floor: device.floor };
+        });
+        dispatch(removeDevices(payload));
+      }
+    },
+    [dispatch, activeItem, isEditing]
+  );
+
   const toggleChildren = useCallback(() => {
-    if (activeItem && isEditing) {
+    if (activeItem && isEditing && childDevices) {
       const payload = childDevices.map(deviceId => {
         return { id: deviceId, floor };
       });
@@ -27,7 +39,8 @@ const useAreaTaskerState = (id, floor) => {
   }, [dispatch, childDevices, floor, activeItem, isEditing]);
 
   return {
-    toggleChildren
+    toggleChildren,
+    removeChildren
   };
 };
 

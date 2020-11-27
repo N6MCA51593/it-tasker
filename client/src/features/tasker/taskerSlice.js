@@ -8,9 +8,48 @@ const initialState = taskerAdapter.getInitialState({
   isEditing: false,
   isLoading: false,
   taskerHistory: null,
-  byDevice: {},
-  activeTaskByArea: {}
+  byDevice: {}
 });
+
+const cancelChangesFn = state => {
+  const activeItem = state.entities[state.activeItem];
+  if (activeItem.isNew) {
+    for (let i = 0, l = activeItem.devices.length; i < l; i++) {
+      delete state.byDevice[activeItem.devices[i]];
+    }
+
+    taskerAdapter.removeOne(state, state.activeItem);
+  } else {
+    const oldItem = state.taskerHistory;
+    const newItem = state.entities[state.activeItem];
+    if (oldItem.devices) {
+      const oldDeviceSet = new Set(oldItem.devices);
+      const newDeviceSet = new Set(newItem.devices);
+      const toDeleteArr = [...newDeviceSet].filter(id => !oldDeviceSet.has(id));
+
+      for (let i = 0, l = toDeleteArr.length; i < l; i++) {
+        delete state.byDevice[toDeleteArr[i]][oldItem.id];
+      }
+
+      for (let i = 0, l = oldItem.devices.length; i < l; i++) {
+        state.byDevice[oldItem.devices[i]][oldItem.id] = oldItem.byDeivce[i];
+      }
+    }
+    delete oldItem.byDeivce;
+    state.entities[state.activeItem] = oldItem;
+    state.taskerHistory = null;
+  }
+  state.isEditing = false;
+  state.activeItem = null;
+};
+
+const removeDeviceFn = (state, device, floor) => {
+  const deviceIndex = state.entities[state.activeItem].devices.indexOf(device);
+  const floorIndex = state.entities[state.activeItem].floors.indexOf(floor);
+  state.entities[state.activeItem].devices.splice(deviceIndex, 1);
+  state.entities[state.activeItem].floors.splice(floorIndex, 1);
+  delete state.byDevice[device][state.activeItem];
+};
 
 const toggleDeviceFn = (state, payloadItem, isPartiallyToggled) => {
   const { id: device, floor } = payloadItem;
@@ -18,13 +57,7 @@ const toggleDeviceFn = (state, payloadItem, isPartiallyToggled) => {
     typeof state.byDevice[device]?.[state.activeItem] !== 'undefined' &&
     !isPartiallyToggled
   ) {
-    const deviceIndex = state.entities[state.activeItem].devices.indexOf(
-      device
-    );
-    const floorIndex = state.entities[state.activeItem].floors.indexOf(floor);
-    state.entities[state.activeItem].devices.splice(deviceIndex, 1);
-    state.entities[state.activeItem].floors.splice(floorIndex, 1);
-    delete state.byDevice[device][state.activeItem];
+    removeDeviceFn(state, device, floor);
   } else {
     if (typeof state.byDevice[device]?.[state.activeItem] === 'undefined') {
       if (!state.entities[state.activeItem].devices) {
@@ -98,43 +131,41 @@ const taskerSlice = createSlice({
       }
     },
     toggleDeviceCheckOff(state, { payload }) {
-      state.byDevice[payload][state.activeItem] = !state.byDevice[payload][
-        state.activeItem
-      ];
+      let requestObject = {};
+      if (Array.isArray(payload)) {
+        const checkedOffDevicesArrLength = payload.filter(
+          id => state.byDevice[id][state.activeItem]
+        ).length;
+        const isPartiallyCheckedOff =
+          checkedOffDevicesArrLength > 0 &&
+          checkedOffDevicesArrLength < payload.length;
+        for (let i = 0, l = payload.length; i < l; i++) {
+          const id = payload[i];
+          if (isPartiallyCheckedOff) {
+            state.byDevice[id][state.activeItem] = true;
+            requestObject[id] = true;
+          } else {
+            requestObject[id] = !state.byDevice[id][state.activeItem];
+            state.byDevice[id][state.activeItem] = !state.byDevice[id][
+              state.activeItem
+            ];
+          }
+        }
+      } else {
+        requestObject[payload] = !state.byDevice[payload][state.activeItem];
+        state.byDevice[payload][state.activeItem] = !state.byDevice[payload][
+          state.activeItem
+        ];
+      }
+    },
+    removeDevices(state, { payload }) {
+      for (let i = 0, l = payload.length; i < l; i++) {
+        const { device, floor } = payload[i];
+        removeDeviceFn(state, device, floor);
+      }
     },
     cancelChanges(state) {
-      const activeItem = state.entities[state.activeItem];
-      if (activeItem.isNew) {
-        for (let i = 0, l = activeItem.devices.length; i < l; i++) {
-          delete state.byDevice[activeItem.devices[i]];
-        }
-
-        taskerAdapter.removeOne(state, state.activeItem);
-      } else {
-        const oldItem = state.taskerHistory;
-        const newItem = state.entities[state.activeItem];
-        if (oldItem.devices) {
-          const oldDeviceSet = new Set(oldItem.devices);
-          const newDeviceSet = new Set(newItem.devices);
-          const toDeleteArr = [...newDeviceSet].filter(
-            id => !oldDeviceSet.has(id)
-          );
-
-          for (let i = 0, l = toDeleteArr.length; i < l; i++) {
-            delete state.byDevice[toDeleteArr[i]][oldItem.id];
-          }
-
-          for (let i = 0, l = oldItem.devices.length; i < l; i++) {
-            state.byDevice[oldItem.devices[i]][oldItem.id] =
-              oldItem.byDeivce[i];
-          }
-        }
-        delete oldItem.byDeivce;
-        state.entities[state.activeItem] = oldItem;
-        state.taskerHistory = null;
-      }
-      state.isEditing = false;
-      state.activeItem = null;
+      cancelChangesFn(state);
     },
     toggleActiveItem(state, { payload }) {
       if (!state.activeItem) {
@@ -157,6 +188,11 @@ const taskerSlice = createSlice({
       }
     },
     setActiveItemType(state, { payload }) {
+      if (state.isEditing) {
+        cancelChangesFn(state);
+      } else {
+        state.activeItem = null;
+      }
       state.activeItemType = payload;
     }
   },
@@ -203,7 +239,8 @@ export const {
   toggleActiveItem,
   toggleEditing,
   toggleDeviceCheckOff,
-  setActiveItemType
+  setActiveItemType,
+  removeDevices
 } = taskerSlice.actions;
 
 export default taskerSlice.reducer;

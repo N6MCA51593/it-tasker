@@ -8,14 +8,18 @@ import {
   selectDeviceById,
   selectActiveGlobalUiState,
   //selectTaskerActiveItemProperties,
-  selectDeviceActiveItemStatus
+  selectDeviceActiveItemStatus,
+  selectTaskerActiveItemProperties
 } from 'app/selectors';
 import {
   setActiveDevice,
   removeDevice,
   moveDevice
 } from 'features/geometry/interactables/devices/deviceSlice';
-import { toggleDevice } from 'features/tasker/taskerSlice';
+import {
+  toggleDevice,
+  toggleDeviceCheckOff
+} from 'features/tasker/taskerSlice';
 import * as ui from 'common/uiStates';
 
 const Device = ({ id, mode }) => {
@@ -27,10 +31,10 @@ const Device = ({ id, mode }) => {
   const activeTaskerItemStatus = useSelector(state =>
     selectDeviceActiveItemStatus(state, id)
   );
-  // const { activeItem, isEditing, activeItemType } = useSelector(
-  //   selectTaskerActiveItemProperties,
-  //   shallowEqual
-  // );
+  const { activeItemType } = useSelector(
+    selectTaskerActiveItemProperties,
+    shallowEqual
+  );
   const globalUiState = useSelector(selectActiveGlobalUiState);
   const isActive = useSelector(state => state.devices.activeDevice === id);
   const { status, type, floor, x, y } = device;
@@ -44,10 +48,17 @@ const Device = ({ id, mode }) => {
       dispatch(moveDevice(id));
     } else if (globalUiState === ui.editTaskerItemGlob) {
       dispatch(toggleDevice({ id, floor }));
+    } else if (
+      activeItemType === ui.taskTT &&
+      typeof activeTaskerItemStatus !== 'undefined'
+    ) {
+      dispatch(toggleDeviceCheckOff(id));
     }
   };
   const iconClassName =
-    activeTaskerItemStatus === false ? 'device-icon-selected' : 'device-icon';
+    typeof activeTaskerItemStatus !== 'undefined'
+      ? 'device-icon-selected'
+      : 'device-icon';
 
   return (
     <g>

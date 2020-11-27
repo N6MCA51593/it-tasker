@@ -13,6 +13,7 @@ app.use(
 app.use(express.json());
 app.use('/api/update', require('./routes/update'));
 app.use('/api/load', require('./routes/load'));
+app.use('/api/check-off', require('./routes/check-off'));
 
 // app.use(express.static('client/build'));
 // app.get('*', (req, res) => {
