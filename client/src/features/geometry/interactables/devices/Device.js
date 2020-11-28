@@ -21,6 +21,7 @@ import {
   toggleDeviceCheckOff
 } from 'features/tasker/taskerSlice';
 import * as ui from 'common/uiStates';
+import { checkOffDevices } from 'features/api/checkOffDevices';
 
 const Device = ({ id, mode }) => {
   const dispatch = useDispatch();
@@ -52,7 +53,8 @@ const Device = ({ id, mode }) => {
       activeItemType === ui.taskTT &&
       typeof activeTaskerItemStatus !== 'undefined'
     ) {
-      dispatch(toggleDeviceCheckOff(id));
+      //dispatch(toggleDeviceCheckOff(id));
+      dispatch(checkOffDevices(id));
     }
   };
   const iconClassName =
