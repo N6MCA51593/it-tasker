@@ -7,7 +7,9 @@ const initialState = taskerAdapter.getInitialState({
   activeItemType: taskTT,
   isEditing: false,
   isLoading: false,
-  taskerHistory: null
+  taskerHistory: null,
+  byDevice: {},
+  requestObject: {}
 });
 
 const cancelChangesFn = state => {
@@ -130,6 +132,7 @@ const taskerSlice = createSlice({
       }
     },
     toggleDeviceCheckOff(state, { payload }) {
+      state.requestObject.id = state.activeItem;
       if (Array.isArray(payload)) {
         const checkedOffDevicesArrLength = payload.filter(
           id => state.byDevice[id][state.activeItem]
@@ -141,13 +144,18 @@ const taskerSlice = createSlice({
           const id = payload[i];
           if (isPartiallyCheckedOff) {
             state.byDevice[id][state.activeItem] = true;
+            state.requestObject[id] = true;
           } else {
+            state.requestObject[id] = !state.byDevice[id][state.activeItem];
             state.byDevice[id][state.activeItem] = !state.byDevice[id][
               state.activeItem
             ];
           }
         }
       } else {
+        state.requestObject[payload] = !state.byDevice[payload][
+          state.activeItem
+        ];
         state.byDevice[payload][state.activeItem] = !state.byDevice[payload][
           state.activeItem
         ];

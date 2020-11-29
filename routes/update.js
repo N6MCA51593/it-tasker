@@ -59,8 +59,8 @@ router.post('/interactables', async (req, res) => {
   }
 });
 
-// @route     POST api/update/interactables
-// @desc      Update areas and devices
+// @route     POST api/update/task
+// @desc      Update task item
 // @access    Private
 router.post('/task', async (req, res) => {
   const toAdd =

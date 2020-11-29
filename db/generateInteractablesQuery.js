@@ -10,8 +10,7 @@ const generateInteractablesQuery = (
   toUpsertAreas,
   toDeleteAreas,
   toUpsertDevices,
-  toDeleteDevices,
-  floor
+  toDeleteDevices
 ) => {
   const toUpsertAreasFormatted = toUpsertAreas.map(e => {
     return { ...e, points: `{${e.points.join(',')}}` };
