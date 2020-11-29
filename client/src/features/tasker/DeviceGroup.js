@@ -3,11 +3,9 @@ import {
   selectTaskerActiveItemProperties
 } from 'app/selectors';
 import { taskTT } from 'common/uiStates';
+import { checkOffDevices } from 'features/api/checkOffDevices';
 import DeviceItem from 'features/tasker/DeviceItem';
-import {
-  toggleDevice,
-  toggleDeviceCheckOff
-} from 'features/tasker/taskerSlice';
+import { toggleDevice } from 'features/tasker/taskerSlice';
 import useAreaTaskerState from 'features/tasker/useAreaTaskerState';
 import React from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
@@ -15,7 +13,7 @@ import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 const DeviceGroup = ({ areaId, devices }) => {
   const dispatch = useDispatch();
   const { name, floor } = useSelector(state => selectAreaById(state, areaId));
-  const { toggleChildren } = useAreaTaskerState(areaId, floor);
+  const { removeChildren } = useAreaTaskerState(areaId, floor);
   const { isEditing, activeItemType } = useSelector(
     selectTaskerActiveItemProperties,
     shallowEqual
@@ -25,15 +23,15 @@ const DeviceGroup = ({ areaId, devices }) => {
     if (isEditing) {
       dispatch(toggleDevice({ id, floor }));
     } else if (activeItemType === taskTT) {
-      dispatch(toggleDeviceCheckOff(id));
+      dispatch(checkOffDevices(id));
     }
   };
 
   const areaClickHandler = () => {
     if (isEditing) {
-      toggleChildren();
+      removeChildren(devices);
     } else if (activeItemType === taskTT) {
-      dispatch(toggleDeviceCheckOff(devices.map(device => device.id)));
+      dispatch(checkOffDevices(devices.map(device => device.id)));
     }
   };
 

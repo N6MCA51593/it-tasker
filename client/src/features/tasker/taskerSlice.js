@@ -197,6 +197,9 @@ const taskerSlice = createSlice({
         state.activeItem = null;
       }
       state.activeItemType = payload;
+    },
+    clearRequestObject(state) {
+      state.requestObject = {};
     }
   },
   extraReducers: {
@@ -243,7 +246,8 @@ export const {
   toggleEditing,
   toggleDeviceCheckOff,
   setActiveItemType,
-  removeDevices
+  removeDevices,
+  clearRequestObject
 } = taskerSlice.actions;
 
 export default taskerSlice.reducer;

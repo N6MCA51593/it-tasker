@@ -1,12 +1,15 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { toggleDeviceCheckOff } from 'features/tasker/taskerSlice';
+import {
+  clearRequestObject,
+  toggleDeviceCheckOff
+} from 'features/tasker/taskerSlice';
 
 export const checkOffDevices = createAsyncThunk(
   'api/checkOffDevices',
   async (payload, { dispatch, getState }) => {
     dispatch(toggleDeviceCheckOff(payload));
-    const { requestObject } = getState().tasker;
-    console.log(requestObject);
+    const requestObject = { ...getState().tasker.requestObject };
+    dispatch(clearRequestObject());
     try {
       const response = await fetch(
         'http://localhost:5000/api/check-off/devices',

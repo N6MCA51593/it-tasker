@@ -7,7 +7,6 @@ import DeviceIcon from 'features/geometry/interactables/devices/DeviceIcon';
 import {
   selectDeviceById,
   selectActiveGlobalUiState,
-  //selectTaskerActiveItemProperties,
   selectDeviceActiveItemStatus,
   selectTaskerActiveItemProperties
 } from 'app/selectors';
@@ -16,10 +15,7 @@ import {
   removeDevice,
   moveDevice
 } from 'features/geometry/interactables/devices/deviceSlice';
-import {
-  toggleDevice,
-  toggleDeviceCheckOff
-} from 'features/tasker/taskerSlice';
+import { toggleDevice } from 'features/tasker/taskerSlice';
 import * as ui from 'common/uiStates';
 import { checkOffDevices } from 'features/api/checkOffDevices';
 
@@ -53,7 +49,6 @@ const Device = ({ id, mode }) => {
       activeItemType === ui.taskTT &&
       typeof activeTaskerItemStatus !== 'undefined'
     ) {
-      //dispatch(toggleDeviceCheckOff(id));
       dispatch(checkOffDevices(id));
     }
   };
