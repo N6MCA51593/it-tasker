@@ -9,7 +9,7 @@ const initialState = taskerAdapter.getInitialState({
   isLoading: false,
   taskerHistory: null,
   byDevice: {},
-  requestObject: {}
+  toggleCheckOffRequestObject: {}
 });
 
 const cancelChangesFn = state => {
@@ -132,7 +132,7 @@ const taskerSlice = createSlice({
       }
     },
     toggleDeviceCheckOff(state, { payload }) {
-      state.requestObject.id = state.activeItem;
+      state.toggleCheckOffRequestObject.id = state.activeItem;
       if (Array.isArray(payload)) {
         const checkedOffDevicesArrLength = payload.filter(
           id => state.byDevice[id][state.activeItem]
@@ -144,16 +144,18 @@ const taskerSlice = createSlice({
           const id = payload[i];
           if (isPartiallyCheckedOff) {
             state.byDevice[id][state.activeItem] = true;
-            state.requestObject[id] = true;
+            state.toggleCheckOffRequestObject[id] = true;
           } else {
-            state.requestObject[id] = !state.byDevice[id][state.activeItem];
+            state.toggleCheckOffRequestObject[id] = !state.byDevice[id][
+              state.activeItem
+            ];
             state.byDevice[id][state.activeItem] = !state.byDevice[id][
               state.activeItem
             ];
           }
         }
       } else {
-        state.requestObject[payload] = !state.byDevice[payload][
+        state.toggleCheckOffRequestObject[payload] = !state.byDevice[payload][
           state.activeItem
         ];
         state.byDevice[payload][state.activeItem] = !state.byDevice[payload][
@@ -199,7 +201,7 @@ const taskerSlice = createSlice({
       state.activeItemType = payload;
     },
     clearRequestObject(state) {
-      state.requestObject = {};
+      state.toggleCheckOffRequestObject = {};
     }
   },
   extraReducers: {
@@ -234,6 +236,16 @@ const taskerSlice = createSlice({
 
         state.byDevice[deviceId][itemId] = isCheckedOff;
       }
+    },
+    'api/removeTaskerItem/fulfilled': (state, { payload }) => {
+      state.activeItem = null;
+      const devices = state.entities[payload].devices;
+      if (Array.isArray(devices)) {
+        for (const device of devices) {
+          delete state.byDevice[device][payload];
+        }
+      }
+      taskerAdapter.removeOne(state, payload);
     }
   }
 });

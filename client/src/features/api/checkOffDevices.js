@@ -8,7 +8,7 @@ export const checkOffDevices = createAsyncThunk(
   'api/checkOffDevices',
   async (payload, { dispatch, getState }) => {
     dispatch(toggleDeviceCheckOff(payload));
-    const requestObject = { ...getState().tasker.requestObject };
+    const requestObject = { ...getState().tasker.toggleCheckOffRequestObject };
     dispatch(clearRequestObject());
     try {
       const response = await fetch(

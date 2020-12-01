@@ -214,8 +214,24 @@ button {
   }
 }
 
+.confirmation-popup {
+  background-color: bisque;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+  height: 100px;
+  border: 1px solid blueviolet;
+
+  div {
+    display: flex;
+    flex-direction: row;
+  }
+}
+
 // .test2 {
 //   opacity: 0.5;
 //   stroke: red;
 //   transform: translate(-10px, -30px);
+//   //transform: rotate(45deg);
 // }
