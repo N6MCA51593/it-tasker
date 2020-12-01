@@ -16,6 +16,7 @@ const customMemoSelector = createSelectorCreator(
 // Floors
 export const selectActiveFloor = state => state.floors.activeFloor;
 export const selectFloorById = (state, id) => state.floors.entities[id];
+export const selectAllFloors = state => state.floors.ids;
 export const selectAllFloorItems = state =>
   Object.values(state.floors.entities);
 export const selectActiveFloorItem = state =>

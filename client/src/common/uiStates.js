@@ -23,3 +23,4 @@ export const removeWallGeo = 'remove-wall';
 export const collectionTT = 'collection';
 export const taskTT = 'task';
 export const noteTT = 'note';
+export const floorTT = 'floor';

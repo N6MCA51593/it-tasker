@@ -1,4 +1,4 @@
-import { collectionTT, noteTT, taskTT } from 'common/uiStates';
+import { collectionTT, floorTT, noteTT, taskTT } from 'common/uiStates';
 import { setActiveItemType } from 'features/tasker/taskerSlice';
 import React from 'react';
 import { useDispatch } from 'react-redux';
@@ -12,8 +12,9 @@ const Controls = () => {
       <button onClick={() => dispatch(setActiveItemType(collectionTT))}>
         Collections
       </button>
-      <button onClick={() => dispatch()}>Floors</button>
-      <button onClick={() => dispatch()}>Info</button>
+      <button onClick={() => dispatch(setActiveItemType(floorTT))}>
+        Floors
+      </button>
     </div>
   );
 };

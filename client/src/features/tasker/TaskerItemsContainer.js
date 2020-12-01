@@ -8,7 +8,7 @@ import { addItem } from 'features/tasker/taskerSlice';
 import TaskerListItem from 'features/tasker/TaskerListItem';
 import TaskerSinglePageItem from 'features/tasker/TaskerSinglePageItem';
 
-const TaskerItemsContainer2 = () => {
+const TaskerItemsContainer = () => {
   const dispatch = useDispatch();
   const ids = useSelector(selectAllActiveItemTypeTasks);
   const { activeItem, isEditing, activeItemType } = useSelector(
@@ -32,4 +32,4 @@ const TaskerItemsContainer2 = () => {
   );
 };
 
-export default TaskerItemsContainer2;
+export default TaskerItemsContainer;

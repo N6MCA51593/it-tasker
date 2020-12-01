@@ -6,6 +6,7 @@ import TaskerItemTextEditables from 'features/tasker/TaskerItemTextEditables';
 import ConfirmationPopUp from 'common/ConfirmationPopUp';
 import useConfirmationPopUp from 'common/useConfirmationPopUp';
 import { removeTaskerItem } from 'features/api/removeTaskerItem';
+import { checkOffTaskerItem } from 'features/api/checkOffTaskerItem';
 
 const TaskerSinglePageItem = ({ id, isEditing }) => {
   const dispatch = useDispatch();
@@ -28,6 +29,9 @@ const TaskerSinglePageItem = ({ id, isEditing }) => {
             />
           )}
         </div>
+      )}
+      {!isEditing && (
+        <button onClick={() => dispatch(checkOffTaskerItem(id))}>Toggle</button>
       )}
       {!isEditing && (
         <button onClick={() => dispatch(toggleActiveItem())}>Back</button>

@@ -1,4 +1,4 @@
-import { createSlice, createEntityAdapter } from '@reduxjs/toolkit';
+import { createSlice, createEntityAdapter, nanoid } from '@reduxjs/toolkit';
 
 const floorAdapter = createEntityAdapter();
 const initialState = floorAdapter.getInitialState({
@@ -11,6 +11,20 @@ const floorsSlice = createSlice({
   reducers: {
     setActiveFloor(state, { payload }) {
       state.activeFloor = payload;
+    },
+    addFloor: {
+      reducer(state, { payload }) {
+        floorAdapter.addOne(state, {
+          id: payload,
+          name: 'New Floor',
+          geometry: null,
+          shortName: 'Fl'
+        });
+      },
+      prepare() {
+        const id = nanoid();
+        return { payload: id };
+      }
     }
   },
   extraReducers: {
@@ -30,6 +44,6 @@ const floorsSlice = createSlice({
   }
 });
 
-export const { setActiveFloor } = floorsSlice.actions;
+export const { setActiveFloor, addFloor } = floorsSlice.actions;
 
 export default floorsSlice.reducer;

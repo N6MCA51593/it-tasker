@@ -238,14 +238,35 @@ const taskerSlice = createSlice({
       }
     },
     'api/removeTaskerItem/fulfilled': (state, { payload }) => {
+      const id = payload;
       state.activeItem = null;
-      const devices = state.entities[payload].devices;
+      const devices = state.entities[id].devices;
       if (Array.isArray(devices)) {
         for (const device of devices) {
-          delete state.byDevice[device][payload];
+          delete state.byDevice[device][id];
         }
       }
       taskerAdapter.removeOne(state, payload);
+    },
+    'api/checkOffTaskerItem/fulfilled': (state, { payload }) => {
+      const id = payload;
+      const item = state.entities[id];
+      if (item.type === taskTT) {
+        if (item.isCheckedOff) {
+          state.entities[id].isCheckedOff = false;
+        } else {
+          state.entities[id].isCheckedOff = true;
+          if (item.devices) {
+            for (const device of item.devices) {
+              state.byDevice[device][id] = true;
+            }
+          }
+        }
+      } else {
+        state.entities[id].isCheckedOff = !item.isCheckedOff;
+      }
+
+      state.activeItem = null;
     }
   }
 });
