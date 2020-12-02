@@ -4,6 +4,7 @@ const { db } = require('../db/db');
 const generateWallQuery = require('../db/generateWallQuery');
 const generateInteractablesQuery = require('../db/generateInteractablesQuery');
 const generateTaskerUpdateQuery = require('../db/generateTaskerUpdateQuery');
+const e = require('express');
 
 // @route     POST api/update/geometry
 // @desc      Update geometry
@@ -78,6 +79,53 @@ router.post('/task', async (req, res) => {
     const query = generateTaskerUpdateQuery(toAdd, toDelete, item, ts);
     await db.tx(async t => await t.none(query));
     res.json({ status: 'ok', ts, id: item.id, name: item.name });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ error: 'Server error' });
+  }
+});
+
+// @route     POST api/update/floor
+// @desc      Update floor
+// @access    Private
+router.post('/floor', async (req, res) => {
+  const floor = req.body;
+  const floors = await db.many('SELECT * FROM floors');
+  console.log(floors);
+  const positions = floors.map(e => e.position);
+  const collisionIndex = positions.indexOf(floor.position);
+  let positionUpdate = [];
+  if (collisionIndex !== -1 && floors[collisionIndex].id !== floor.id) {
+    positionUpdate = floors.map(e => {
+      if (floor.position <= e.position) {
+        return { id: e.id, position: e.position + 1 };
+      }
+    });
+  } else if (collisionIndex !== -1 && floors[collisionIndex].id === floor.id) {
+    const { position, oldPosition } = floor;
+    const diff = position - oldPosition;
+    if (diff !== 0) {
+      const direction = diff > 0 ? -1 : 1;
+      positionUpdate = floors.map(e => {
+        if (
+          position <= e.position &&
+          oldPosition > e.position &&
+          direction < 0
+        ) {
+          return { id: e.id, position: e.position - direction };
+        } else if (
+          position >= e.position &&
+          oldPosition < e.position &&
+          direction > 0
+        ) {
+          return { id: e.id, position: e.position - direction };
+        }
+      });
+    }
+  }
+  console.log(positionUpdate);
+  try {
+    res.json({ status: 'ok' });
   } catch (error) {
     console.log(error);
     res.status(400).json({ error: 'Server error' });

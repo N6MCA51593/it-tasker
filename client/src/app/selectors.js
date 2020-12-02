@@ -21,6 +21,8 @@ export const selectAllFloorItems = state =>
   Object.values(state.floors.entities);
 export const selectActiveFloorItem = state =>
   state.floors.entities[state.floors.activeFloor];
+export const selectMaxPosition = state =>
+  Math.max(...state.floors.ids.map(id => state.floors.entities[id].position));
 
 // UI State
 export const selectActiveGlobalUiState = state =>

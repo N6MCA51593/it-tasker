@@ -20,7 +20,9 @@ const generateTaskerUpdateQuery = (toAdd, toDelete, item, ts) => {
     pgp.helpers.insert(item, taskerItemsCs) + onConflictTaskerItems;
   const delDevicesQuery = toDelete
     ? {
-        query: 'DELETE FROM tasker_items_devices WHERE "deviceId" IN ($1:list)',
+        query:
+          'DELETE FROM tasker_items_devices WHERE "deviceId" IN ($1:list) AND "itemId" = ' +
+          `'${item.id}'`,
         values: [toDelete]
       }
     : '';

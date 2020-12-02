@@ -14,11 +14,15 @@ const floorsSlice = createSlice({
     },
     addFloor: {
       reducer(state, { payload }) {
+        const position =
+          Math.max(...state.ids.map(id => state.entities[id].position)) + 1;
         floorAdapter.addOne(state, {
           id: payload,
           name: 'New Floor',
           geometry: null,
-          shortName: 'Fl'
+          shortName: 'F' + position,
+          position,
+          isNew: true
         });
       },
       prepare() {
