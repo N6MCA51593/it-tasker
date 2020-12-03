@@ -4,7 +4,8 @@ const { db } = require('../db/db');
 const generateWallQuery = require('../db/generateWallQuery');
 const generateInteractablesQuery = require('../db/generateInteractablesQuery');
 const generateTaskerUpdateQuery = require('../db/generateTaskerUpdateQuery');
-const e = require('express');
+const generateFloorPositionUpdateQuery = require('../db/generateFloorPositionUpdateQuery');
+const generateFloorUpdateQuery = require('../db/generateFloorUpdateQuery');
 
 // @route     POST api/update/geometry
 // @desc      Update geometry
@@ -91,41 +92,19 @@ router.post('/task', async (req, res) => {
 router.post('/floor', async (req, res) => {
   const floor = req.body;
   const floors = await db.many('SELECT * FROM floors');
-  console.log(floors);
-  const positions = floors.map(e => e.position);
-  const collisionIndex = positions.indexOf(floor.position);
-  let positionUpdate = [];
-  if (collisionIndex !== -1 && floors[collisionIndex].id !== floor.id) {
-    positionUpdate = floors.map(e => {
-      if (floor.position <= e.position) {
-        return { id: e.id, position: e.position + 1 };
-      }
-    });
-  } else if (collisionIndex !== -1 && floors[collisionIndex].id === floor.id) {
-    const { position, oldPosition } = floor;
-    const diff = position - oldPosition;
-    if (diff !== 0) {
-      const direction = diff > 0 ? -1 : 1;
-      positionUpdate = floors.map(e => {
-        if (
-          position <= e.position &&
-          oldPosition > e.position &&
-          direction < 0
-        ) {
-          return { id: e.id, position: e.position - direction };
-        } else if (
-          position >= e.position &&
-          oldPosition < e.position &&
-          direction > 0
-        ) {
-          return { id: e.id, position: e.position - direction };
-        }
-      });
-    }
-  }
-  console.log(positionUpdate);
+  const posQuery = generateFloorPositionUpdateQuery(floor, floors);
   try {
-    res.json({ status: 'ok' });
+    let updatedFloors = [];
+    if (posQuery) {
+      updatedFloors = await db.many(posQuery);
+    }
+    console.log(updatedFloors);
+    const floorUpd = { ...floor };
+    delete floorUpd.oldPosition;
+    const floorQuery = generateFloorUpdateQuery(floorUpd);
+    const floorUpdated = await db.one(floorQuery);
+    console.log(floorUpdated);
+    res.send(floorUpdated);
   } catch (error) {
     console.log(error);
     res.status(400).json({ error: 'Server error' });

@@ -2,7 +2,8 @@ import { createSlice, createEntityAdapter, nanoid } from '@reduxjs/toolkit';
 
 const floorAdapter = createEntityAdapter();
 const initialState = floorAdapter.getInitialState({
-  activeFloor: null
+  activeFloor: null,
+  editingFloor: null
 });
 
 const floorsSlice = createSlice({
@@ -24,11 +25,15 @@ const floorsSlice = createSlice({
           position,
           isNew: true
         });
+        state.editingFloor = payload;
       },
       prepare() {
         const id = nanoid();
         return { payload: id };
       }
+    },
+    setEditingFloor(state, { payload }) {
+      state.editingFloor = payload ? payload : null;
     }
   },
   extraReducers: {
@@ -44,10 +49,17 @@ const floorsSlice = createSlice({
         }
       });
       state.activeFloor = payload.id;
+    },
+    'api/updateFloor/fulfilled': (state, { payload }) => {
+      console.log(payload);
     }
   }
 });
 
-export const { setActiveFloor, addFloor } = floorsSlice.actions;
+export const {
+  setActiveFloor,
+  addFloor,
+  setEditingFloor
+} = floorsSlice.actions;
 
 export default floorsSlice.reducer;

@@ -59,6 +59,13 @@ const taskerItemsDevicesCs = new pgp.helpers.ColumnSet(
   }
 );
 
+const floorsCs = new pgp.helpers.ColumnSet(
+  ['?id', 'geometry', 'position', 'name', 'shortName'],
+  {
+    table: 'floors'
+  }
+);
+
 module.exports = {
   wallsCs,
   onConflictWalls,
@@ -68,5 +75,6 @@ module.exports = {
   onConflictDevices,
   taskerItemsCs,
   onConflictTaskerItems,
-  taskerItemsDevicesCs
+  taskerItemsDevicesCs,
+  floorsCs
 };

@@ -5,12 +5,13 @@ import useInput from 'common/useInput';
 import useConfirmationPopUp from 'common/useConfirmationPopUp';
 import ConfirmationPopUp from 'common/ConfirmationPopUp';
 import { updateFloor } from 'features/api/updateFloor';
+import { setEditingFloor } from 'features/tasker/floors/floorSlice';
 
 const FloorListItem = ({ id }) => {
   const dispatch = useDispatch();
   const floor = useSelector(state => selectFloorById(state, id));
-  const { name, shortName, isNew, position } = floor;
-  const [isEditing, setIsEditing] = useState(isNew);
+  const { name, shortName, position } = floor;
+  const isEditing = useSelector(state => state.floors.editingFloor === id);
   const [positionState, setPositionState] = useState(position);
   const { value: nameState, bind: bindName } = useInput(name);
   const { value: shortNameState, bind: bindShortNameState } = useInput(
@@ -51,14 +52,17 @@ const FloorListItem = ({ id }) => {
             dispatch(
               updateFloor({
                 ...floor,
-                position: positionState
+                oldPosition: position,
+                position: positionState,
+                name: nameState,
+                shortName: shortNameState
               })
             )
           }
         >
           Save
         </button>
-        <button onClick={() => setIsEditing(false)}>Cancel</button>
+        <button onClick={() => dispatch(setEditingFloor())}>Cancel</button>
         {isShowing && (
           <ConfirmationPopUp
             togglePopUp={togglePopUp}
@@ -73,7 +77,9 @@ const FloorListItem = ({ id }) => {
     <div className='collection-table-item'>
       {name}
       {shortName}
-      <button onClick={() => setIsEditing(true)}>Edit</button>
+      <button onClick={() => dispatch(dispatch(setEditingFloor(id)))}>
+        Edit
+      </button>
       <button onClick={() => togglePopUp()}>Delete</button>
       {isShowing && (
         <ConfirmationPopUp
