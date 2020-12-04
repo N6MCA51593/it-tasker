@@ -18,7 +18,7 @@ export const updateFloor = createAsyncThunk(
       }
 
       const updatedFloors = await response.json();
-      return { id: payload, updatedFloors };
+      return { id: payload.id, updatedFloors };
     } catch (error) {
       throw new Error('Server Error');
     }

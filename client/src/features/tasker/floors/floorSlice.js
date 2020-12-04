@@ -19,9 +19,9 @@ const floorsSlice = createSlice({
           Math.max(...state.ids.map(id => state.entities[id].position)) + 1;
         floorAdapter.addOne(state, {
           id: payload,
-          name: 'New Floor',
+          name: 'New Level',
           geometry: null,
-          shortName: 'F' + position,
+          shortName: 'L' + position,
           position,
           isNew: true
         });
@@ -33,13 +33,38 @@ const floorsSlice = createSlice({
       }
     },
     setEditingFloor(state, { payload }) {
-      state.editingFloor = payload ? payload : null;
+      if (state.editingFloor) {
+        if (!state.entities[state.editingFloor].isNew) {
+          state.editingFloor = null;
+        } else {
+          const id = state.editingFloor;
+          floorAdapter.removeOne(state, id);
+          state.editingFloor = null;
+        }
+      } else {
+        state.editingFloor = payload;
+      }
     }
   },
   extraReducers: {
     'api/loadAppData/fulfilled': (state, { payload }) => {
       floorAdapter.addMany(state, payload.floors);
       state.activeFloor = '1IELCN-gENaKaAg20_nP8';
+    },
+    'api/removeFloor/fulfilled': (state, { payload }) => {
+      const { deletedFloorId } = payload;
+      if (state.activeFloor === deletedFloorId) {
+        state.activeFloor = '1IELCN-gENaKaAg20_nP8';
+      }
+
+      if (payload.floors) {
+        for (const floor of payload.floors) {
+          state.entities[floor.id].position = floor.position;
+        }
+      }
+
+      state.editingFloor = null;
+      floorAdapter.removeOne(state, deletedFloorId);
     },
     'api/updateGeometry/fulfilled': (state, { payload }) => {
       floorAdapter.updateOne(state, {
@@ -52,11 +77,13 @@ const floorsSlice = createSlice({
     },
     'api/updateFloor/fulfilled': (state, { payload }) => {
       const { id, updatedFloors } = payload;
-      console.log(updatedFloors);
       for (const floor of updatedFloors) {
         if (floor.id === id) {
           state.entities[id].shortName = floor.shortName;
           state.entities[id].name = floor.name;
+          if (state.entities[id].isNew) {
+            state.entities[id].isNew = undefined;
+          }
         }
 
         state.entities[floor.id].position = floor.position;

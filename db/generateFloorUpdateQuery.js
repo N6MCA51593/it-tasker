@@ -3,9 +3,9 @@ const { floorsCs } = require('./columnSets');
 
 const generateFloorUpdateQuery = floor => {
   const condition = pgp.as.format(' WHERE id = ${id}', floor);
-  const query =
-    pgp.helpers.update(floor, floorsCs) + condition + ' RETURNING *';
-  console.log(query);
+  const query = floor.isNew
+    ? pgp.helpers.insert(floor, floorsCs) + ' RETURNING *'
+    : pgp.helpers.update(floor, floorsCs) + condition + ' RETURNING *';
 
   return query;
 };

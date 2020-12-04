@@ -104,6 +104,7 @@ router.post('/floor', async (req, res) => {
     const floorQuery = generateFloorUpdateQuery(floorUpd);
     const floorUpdated = await db.one(floorQuery);
     updatedFloors.push(floorUpdated);
+
     res.send(updatedFloors);
   } catch (error) {
     console.log(error);

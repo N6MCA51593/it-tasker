@@ -112,6 +112,10 @@ const devicesSlice = createSlice({
       devicesAdapter.addMany(state, payload.devices);
       buildByAreas(state);
     },
+    'api/removeFloor/fulfilled': (state, { payload }) => {
+      devicesAdapter.setAll(state, payload.devices);
+      buildByAreas(state);
+    },
     'uiState/setUiGlobalState': (state, { payload }) => {
       if (payload === editInteractablesGlob && !state.devicesHistory) {
         state.devicesHistory = state.entities;

@@ -12,6 +12,26 @@ const initialState = taskerAdapter.getInitialState({
   toggleCheckOffRequestObject: {}
 });
 
+const handleApiData = (state, taskDevices) => {
+  state.byDevice = {};
+  for (const row of taskDevices) {
+    const { itemId, deviceId, isCheckedOff, floor } = row;
+    if (!state.entities[itemId].devices) {
+      state.entities[itemId].devices = [];
+      state.entities[itemId].floors = [];
+    }
+
+    state.entities[itemId].floors.push(floor);
+    state.entities[itemId].devices.push(deviceId);
+
+    if (!state.byDevice[deviceId]) {
+      state.byDevice[deviceId] = {};
+    }
+
+    state.byDevice[deviceId][itemId] = isCheckedOff;
+  }
+};
+
 const cancelChangesFn = state => {
   const activeItem = state.entities[state.activeItem];
   if (activeItem.isNew) {
@@ -220,22 +240,12 @@ const taskerSlice = createSlice({
     'api/loadAppData/fulfilled': (state, { payload }) => {
       const { tasks, taskDevices } = payload;
       taskerAdapter.addMany(state, tasks);
-      for (let i = 0, l = taskDevices.length; i < l; i++) {
-        const { itemId, deviceId, isCheckedOff } = taskDevices[i];
-        if (!state.entities[itemId].devices) {
-          state.entities[itemId].devices = [];
-          state.entities[itemId].floors = [];
-        }
-
-        state.entities[itemId].floors.push(taskDevices[i].floor);
-        state.entities[itemId].devices.push(taskDevices[i].deviceId);
-
-        if (!state.byDevice[deviceId]) {
-          state.byDevice[deviceId] = {};
-        }
-
-        state.byDevice[deviceId][itemId] = isCheckedOff;
-      }
+      handleApiData(state, taskDevices);
+    },
+    'api/removeFloor/fulfilled': (state, { payload }) => {
+      const { tasks, taskDevices } = payload;
+      taskerAdapter.setAll(state, tasks);
+      handleApiData(state, taskDevices);
     },
     'api/removeTaskerItem/fulfilled': (state, { payload }) => {
       const id = payload;

@@ -115,6 +115,9 @@ const areasSlice = createSlice({
     'api/loadAppData/fulfilled': (state, { payload }) => {
       areasAdapter.addMany(state, payload.areas);
     },
+    'api/removeFloor/fulfilled': (state, { payload }) => {
+      areasAdapter.setAll(state, payload.areas);
+    },
     'uiState/setUiGlobalState': (state, { payload }) => {
       if (payload === editInteractablesGlob && !state.areasHistory) {
         state.areasHistory = state.entities;

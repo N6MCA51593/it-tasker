@@ -101,6 +101,9 @@ const wallsSlice = createSlice({
     'api/loadAppData/fulfilled': (state, { payload }) => {
       wallsAdapter.addMany(state, payload.walls);
     },
+    'api/removeFloor/fulfilled': (state, { payload }) => {
+      wallsAdapter.setAll(state, payload.walls);
+    },
     'uiState/setUiGlobalState': (state, { payload }) => {
       if (payload === editGeomGlob && !state.wallsHistory) {
         state.wallsHistory = state.entities;
