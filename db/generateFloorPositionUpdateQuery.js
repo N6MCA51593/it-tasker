@@ -1,18 +1,17 @@
 const { pgp } = require('./db');
-const { floorsCs } = require('../db/columnSets');
 
 const generateFloorPositionUpdateQuery = (floor, floors) => {
   const { position, oldPosition, id, isNew } = floor;
-  const diff = !!(position - oldPosition);
+  const diff = position - oldPosition;
   let positionUpdate = [];
 
-  if (diff && isNew) {
+  if (!!diff && isNew) {
     positionUpdate = floors.map(e => {
       if (position <= e.position) {
         return { id: e.id, position: e.position + 1 };
       }
     });
-  } else if (diff && !isNew) {
+  } else if (!!diff && !isNew) {
     const direction = diff > 0 ? -1 : 1;
     positionUpdate = floors.map(e => {
       if (
@@ -43,7 +42,6 @@ const generateFloorPositionUpdateQuery = (floor, floors) => {
       ? `UPDATE "floors" AS t SET "position" = v."position" FROM (VALUES${values}) ` +
         `AS v("id","position") WHERE v.id = t.id RETURNING *`
       : ``;
-
   return query;
 };
 

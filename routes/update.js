@@ -98,13 +98,13 @@ router.post('/floor', async (req, res) => {
     if (posQuery) {
       updatedFloors = await db.many(posQuery);
     }
-    console.log(updatedFloors);
+
     const floorUpd = { ...floor };
     delete floorUpd.oldPosition;
     const floorQuery = generateFloorUpdateQuery(floorUpd);
     const floorUpdated = await db.one(floorQuery);
-    console.log(floorUpdated);
-    res.send(floorUpdated);
+    updatedFloors.push(floorUpdated);
+    res.send(updatedFloors);
   } catch (error) {
     console.log(error);
     res.status(400).json({ error: 'Server error' });

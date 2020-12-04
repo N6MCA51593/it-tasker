@@ -1,12 +1,12 @@
 import React from 'react';
-import { selectAllFloors } from 'app/selectors';
+import { selectAllFloorsSorted } from 'app/selectors';
 import { addFloor } from 'features/tasker/floors/floorSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import FloorListItem from 'features/tasker/floors/FloorListItem';
 
 const FloorItemsContainer = () => {
   const dispatch = useDispatch();
-  const ids = useSelector(selectAllFloors);
+  const ids = useSelector(selectAllFloorsSorted);
 
   return (
     <div className='tasker-items-container'>

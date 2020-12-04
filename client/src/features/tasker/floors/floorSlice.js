@@ -51,7 +51,17 @@ const floorsSlice = createSlice({
       state.activeFloor = payload.id;
     },
     'api/updateFloor/fulfilled': (state, { payload }) => {
-      console.log(payload);
+      const { id, updatedFloors } = payload;
+      console.log(updatedFloors);
+      for (const floor of updatedFloors) {
+        if (floor.id === id) {
+          state.entities[id].shortName = floor.shortName;
+          state.entities[id].name = floor.name;
+        }
+
+        state.entities[floor.id].position = floor.position;
+        state.editingFloor = null;
+      }
     }
   }
 });

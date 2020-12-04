@@ -19,6 +19,15 @@ export const selectFloorById = (state, id) => state.floors.entities[id];
 export const selectAllFloors = state => state.floors.ids;
 export const selectAllFloorItems = state =>
   Object.values(state.floors.entities);
+export const selectAllFloorsSorted = createSelector(
+  [selectAllFloors, state => state.floors.entities],
+  (ids, entities) =>
+    [...ids].sort((a, b) => {
+      const posA = entities[a].position;
+      const posB = entities[b].position;
+      return posA - posB;
+    })
+);
 export const selectActiveFloorItem = state =>
   state.floors.entities[state.floors.activeFloor];
 export const selectMaxPosition = state =>
