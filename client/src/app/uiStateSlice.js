@@ -9,7 +9,8 @@ import {
 const initialState = {
   activeGlobalState: mainGlob,
   activeGeometryState: navGeo,
-  isLoading: true
+  isLoading: true,
+  isHoveringOverDevicePopUp: false
 };
 
 const uiStateSlice = createSlice({
@@ -21,6 +22,13 @@ const uiStateSlice = createSlice({
     },
     setUiGeoState(state, { payload }) {
       state.activeGeometryState = payload;
+    },
+    setDeviceHoverStatus(state, { payload }) {
+      if (payload) {
+        state.isHoveringOverDevicePopUp = payload;
+      } else {
+        state.isHoveringOverDevicePopUp = !state.isHoveringOverDevicePopUp;
+      }
     }
   },
   extraReducers: {
@@ -37,6 +45,12 @@ const uiStateSlice = createSlice({
     },
     'tasker/addItem': state => {
       state.activeGlobalState = editTaskerItemGlob;
+    },
+    'devices/setActiveDevice': state => {
+      state.isHoveringOverDevicePopUp = false;
+    },
+    'devices/updateActiveDevice': state => {
+      state.isHoveringOverDevicePopUp = false;
     },
     'api/updateTaskerItem/fulfilled': state => {
       if (state.activeGlobalState === editTaskerItemGlob) {
@@ -62,6 +76,10 @@ const uiStateSlice = createSlice({
   }
 });
 
-export const { setUiGlobalState, setUiGeoState } = uiStateSlice.actions;
+export const {
+  setUiGlobalState,
+  setUiGeoState,
+  setDeviceHoverStatus
+} = uiStateSlice.actions;
 
 export default uiStateSlice.reducer;

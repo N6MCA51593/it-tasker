@@ -136,6 +136,12 @@ button {
   flex-direction: column;
   height: 90vh;
 
+  .task-controls-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
   .task-controls {
     width: 100%;
     display: flex;

@@ -35,7 +35,7 @@ const floorsSlice = createSlice({
     setEditingFloor(state, { payload }) {
       if (state.editingFloor) {
         if (!state.entities[state.editingFloor].isNew) {
-          state.editingFloor = null;
+          state.editingFloor = payload ? payload : null;
         } else {
           const id = state.editingFloor;
           floorAdapter.removeOne(state, id);

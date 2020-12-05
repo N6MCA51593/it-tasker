@@ -1,3 +1,4 @@
+import { noteTT, taskTT } from 'common/uiStates';
 import {
   createSelector,
   createSelectorCreator,
@@ -19,6 +20,13 @@ export const selectFloorById = (state, id) => state.floors.entities[id];
 export const selectAllFloors = state => state.floors.ids;
 export const selectAllFloorItems = state =>
   Object.values(state.floors.entities);
+export const selectAllFloorItemsSorted = createSelector(
+  [selectAllFloorItems],
+  entities =>
+    [...entities].sort((a, b) => {
+      return a.position - b.position;
+    })
+);
 export const selectAllFloorsSorted = createSelector(
   [selectAllFloors, state => state.floors.entities],
   (ids, entities) =>
@@ -118,10 +126,28 @@ export const selectAllActiveItemTypeTasks = createSelector(
   [
     selectAllTaskerItemIds,
     selectAllTaskerItemEntities,
-    state => state.tasker.activeItemType
+    state => state.tasker.activeItemType,
+    state => state.tasker.isCheckedOffTaskFilter,
+    state => state.tasker.isCheckedOffNoteFilter
   ],
-  (ids, entities, activeItemtype) =>
-    ids.filter(id => entities[id].type === activeItemtype)
+  (ids, entities, activeItemtype, taskFilter, noteFilter) =>
+    ids.filter(id => {
+      const { type, isCheckedOff } = entities[id];
+      if (type === activeItemtype) {
+        if (type === taskTT) {
+          if (isCheckedOff === taskFilter || taskFilter === null) {
+            return true;
+          }
+        } else if (type === noteTT) {
+          if (isCheckedOff === noteFilter || noteFilter === null) {
+            return true;
+          }
+        } else {
+          return true;
+        }
+      }
+      return false;
+    })
 );
 export const selectAllTasks = createSelector(
   [selectAllTaskerItemIds, selectAllTaskerItemEntities],

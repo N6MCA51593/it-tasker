@@ -38,6 +38,9 @@ const Geometry = () => {
   });
   const uiState = useSelector(selectActiveGlobalUiState);
   const mode = useSelector(selectActiveGeoState);
+  const isHoveringOverDevicePopUp = useSelector(
+    state => state.uiState.isHoveringOverDevicePopUp
+  );
 
   const handlePointerMove = e => {
     if (mode === ui.navGeo && isPointerDown) {
@@ -46,7 +49,7 @@ const Geometry = () => {
   };
 
   const handlePointerDown = e => {
-    if (mode === ui.navGeo) {
+    if (mode === ui.navGeo && !isHoveringOverDevicePopUp) {
       setInitCoords(getRelCoord(e));
       setIsPointerDown(true);
     }

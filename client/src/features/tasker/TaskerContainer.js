@@ -15,7 +15,10 @@ const TaskerContainer = () => {
 
   return (
     <div className='task-container'>
-      <Controls />
+      <Controls
+        isFloorContainerActive={isFloorContainerActive}
+        activeItemType={activeItemType}
+      />
       {!isFloorContainerActive && <TaskerItemsContainer />}
       {isFloorContainerActive && <FloorItemsContainer />}
     </div>

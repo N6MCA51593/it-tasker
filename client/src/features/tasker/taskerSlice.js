@@ -9,7 +9,9 @@ const initialState = taskerAdapter.getInitialState({
   isLoading: false,
   taskerHistory: null,
   byDevice: {},
-  toggleCheckOffRequestObject: {}
+  toggleCheckOffRequestObject: {},
+  isCheckedOffTaskFilter: null,
+  isCheckedOffNoteFilter: null
 });
 
 const handleApiData = (state, taskDevices) => {
@@ -129,7 +131,8 @@ const taskerSlice = createSlice({
             name,
             devices,
             floors,
-            isNew: true
+            isNew: true,
+            isCheckedOff: false
           }
         };
       }
@@ -222,6 +225,12 @@ const taskerSlice = createSlice({
     },
     clearRequestObject(state) {
       state.toggleCheckOffRequestObject = {};
+    },
+    setTaskFilter(state, { payload }) {
+      state.isCheckedOffTaskFilter = payload;
+    },
+    setNoteFilter(state, { payload }) {
+      state.isCheckedOffNoteFilter = payload;
     }
   },
   extraReducers: {
@@ -290,7 +299,9 @@ export const {
   toggleDeviceCheckOff,
   setActiveItemType,
   removeDevices,
-  clearRequestObject
+  clearRequestObject,
+  setNoteFilter,
+  setTaskFilter
 } = taskerSlice.actions;
 
 export default taskerSlice.reducer;
