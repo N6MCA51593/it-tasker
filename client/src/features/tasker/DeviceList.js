@@ -2,8 +2,9 @@ import React, { memo } from 'react';
 import { selectTaskerItemById, selectDevicesById } from 'app/selectors';
 import { useSelector } from 'react-redux';
 import FloorRow from 'features/tasker/FloorRow';
+import CollectionImport from 'features/tasker/CollectionImport';
 
-const DeviceList = ({ id }) => {
+const DeviceList = ({ id, isEditing }) => {
   const { devices, floors } = useSelector(state =>
     selectTaskerItemById(state, id)
   );
@@ -13,6 +14,7 @@ const DeviceList = ({ id }) => {
 
   return (
     <div>
+      {isEditing && <CollectionImport />}
       {floorsDeduped.map(id => (
         <FloorRow
           key={id}

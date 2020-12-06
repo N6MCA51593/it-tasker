@@ -118,10 +118,11 @@ export const selectTaskerActiveItemProperties = state => {
 };
 const selectAllTaskerItemIds = state => state.tasker.ids;
 const selectAllTaskerItemEntities = state => state.tasker.entities;
-export const selectAllCollections = createSelector(
+export const selectAllCollectionItems = createSelector(
   [selectAllTaskerItemIds, selectAllTaskerItemEntities],
-  (ids, entities) => ids.filter(id => entities[id].type === 'collection')
-); // Remove
+  (ids, entities) =>
+    ids.filter(id => entities[id].type === 'collection').map(id => entities[id])
+);
 export const selectAllActiveItemTypeTasks = createSelector(
   [
     selectAllTaskerItemIds,

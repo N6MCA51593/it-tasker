@@ -15,7 +15,7 @@ const TaskerSinglePageItem = ({ id, isEditing }) => {
   return (
     <div className='collection-single-page'>
       <TaskerItemTextEditables id={id} />
-      <DeviceList id={id} />
+      <DeviceList id={id} isEditing={isEditing} />
       {!isEditing && (
         <button onClick={() => dispatch(toggleEditing())}>Edit</button>
       )}

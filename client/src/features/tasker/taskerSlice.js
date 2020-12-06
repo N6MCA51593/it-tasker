@@ -154,15 +154,6 @@ const taskerSlice = createSlice({
         toggleDeviceFn(state, payload);
       }
     },
-    importFromCollection(state, { payload }) {
-      const collection = state.entities[payload];
-      const collectionDevices = new Set(collection.devices);
-      const activeItemDevices = new Set(
-        state.entities[state.activeItem].devices
-      );
-      const collectionFloors = new Set(collection.floors);
-      const activeItemFloors = new Set(state.entities[state.activeItem].floors);
-    },
     toggleDeviceCheckOff(state, { payload }) {
       state.toggleCheckOffRequestObject.id = state.activeItem;
       if (Array.isArray(payload)) {
