@@ -71,7 +71,7 @@ const Device = ({ id, mode }) => {
         <DeviceIcon type={type} x={x} y={y} className={iconClassName} />
       </g>
       {isActive && mode !== ui.moveDeviceGeo && (
-        <DevicePopUp x={x} y={y}>
+        <DevicePopUp x={x} y={y} mode={mode}>
           <DeviceOptions device={device} />
         </DevicePopUp>
       )}

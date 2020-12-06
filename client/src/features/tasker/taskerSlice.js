@@ -37,8 +37,8 @@ const handleApiData = (state, taskDevices) => {
 const cancelChangesFn = state => {
   const activeItem = state.entities[state.activeItem];
   if (activeItem.isNew) {
-    for (let i = 0, l = activeItem.devices.length; i < l; i++) {
-      delete state.byDevice[activeItem.devices[i]];
+    for (const deviceId of activeItem.devices) {
+      delete state.byDevice[deviceId];
     }
 
     taskerAdapter.removeOne(state, state.activeItem);
@@ -50,8 +50,8 @@ const cancelChangesFn = state => {
       const newDeviceSet = new Set(newItem.devices);
       const toDeleteArr = [...newDeviceSet].filter(id => !oldDeviceSet.has(id));
 
-      for (let i = 0, l = toDeleteArr.length; i < l; i++) {
-        delete state.byDevice[toDeleteArr[i]][oldItem.id];
+      for (const deviceId of toDeleteArr) {
+        delete state.byDevice[deviceId][oldItem.id];
       }
 
       for (let i = 0, l = oldItem.devices.length; i < l; i++) {
@@ -147,12 +147,21 @@ const taskerSlice = createSlice({
           toggledDevicesArrLength > 0 &&
           toggledDevicesArrLength < payload.length;
 
-        for (let i = 0, l = payload.length; i < l; i++) {
-          toggleDeviceFn(state, payload[i], isPartiallyToggled);
+        for (const device of payload) {
+          toggleDeviceFn(state, device, isPartiallyToggled);
         }
       } else {
         toggleDeviceFn(state, payload);
       }
+    },
+    importFromCollection(state, { payload }) {
+      const collection = state.entities[payload];
+      const collectionDevices = new Set(collection.devices);
+      const activeItemDevices = new Set(
+        state.entities[state.activeItem].devices
+      );
+      const collectionFloors = new Set(collection.floors);
+      const activeItemFloors = new Set(state.entities[state.activeItem].floors);
     },
     toggleDeviceCheckOff(state, { payload }) {
       state.toggleCheckOffRequestObject.id = state.activeItem;
@@ -163,8 +172,7 @@ const taskerSlice = createSlice({
         const isPartiallyCheckedOff =
           checkedOffDevicesArrLength > 0 &&
           checkedOffDevicesArrLength < payload.length;
-        for (let i = 0, l = payload.length; i < l; i++) {
-          const id = payload[i];
+        for (const id of payload) {
           if (isPartiallyCheckedOff) {
             state.byDevice[id][state.activeItem] = true;
             state.toggleCheckOffRequestObject[id] = true;
@@ -187,8 +195,8 @@ const taskerSlice = createSlice({
       }
     },
     removeDevices(state, { payload }) {
-      for (let i = 0, l = payload.length; i < l; i++) {
-        const { device, floor } = payload[i];
+      for (const deviceItem of payload) {
+        const { device, floor } = deviceItem;
         removeDeviceFn(state, device, floor);
       }
     },
