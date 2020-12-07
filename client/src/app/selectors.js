@@ -1,4 +1,5 @@
-import { noteTT, taskTT } from 'common/uiStates';
+import { sortTaskerItems } from 'app/taskerSorting';
+import { collectionTT, noteTT, taskTT } from 'common/uiStates';
 import {
   createSelector,
   createSelectorCreator,
@@ -46,6 +47,21 @@ export const selectActiveGlobalUiState = state =>
   state.uiState.activeGlobalState;
 export const selectActiveGeoState = state => state.uiState.activeGeometryState;
 export const selectUiLoadingState = state => state.uiState.isLoading;
+const selectActiveTaskerItemTypeSortingOrder = createSelector(
+  [state => state.tasker.activeItemType, state => state.uiState],
+  (activeType, uiState) => {
+    switch (activeType) {
+      case taskTT:
+        return uiState.taskSortingOrder;
+      case noteTT:
+        return uiState.noteSortingOrder;
+      case collectionTT:
+        return uiState.collectionSortingOrder;
+      default:
+        return null;
+    }
+  }
+);
 
 // Areas
 export const selectAllAreas = state => state.areas.ids;
@@ -131,10 +147,10 @@ export const selectAllActiveItemTypeTasks = createSelector(
     state => state.tasker.isCheckedOffTaskFilter,
     state => state.tasker.isCheckedOffNoteFilter
   ],
-  (ids, entities, activeItemtype, taskFilter, noteFilter) =>
+  (ids, entities, activeItemType, taskFilter, noteFilter) =>
     ids.filter(id => {
       const { type, isCheckedOff } = entities[id];
-      if (type === activeItemtype) {
+      if (type === activeItemType) {
         if (type === taskTT) {
           if (isCheckedOff === taskFilter || taskFilter === null) {
             return true;
@@ -149,6 +165,18 @@ export const selectAllActiveItemTypeTasks = createSelector(
       }
       return false;
     })
+);
+export const selectAllActiveItemTypeTasksSorted = createSelector(
+  [
+    selectAllActiveItemTypeTasks,
+    selectAllTaskerItemEntities,
+    selectActiveTaskerItemTypeSortingOrder,
+    state => state.tasker.byDevice
+  ],
+  (ids, entities, sortingOrder, byDevice) => {
+    const sorting = sortTaskerItems(entities, sortingOrder, byDevice);
+    return ids.sort((a, b) => sorting(a, b));
+  }
 );
 export const selectAllTasks = createSelector(
   [selectAllTaskerItemIds, selectAllTaskerItemEntities],

@@ -10,7 +10,10 @@ const initialState = {
   activeGlobalState: mainGlob,
   activeGeometryState: navGeo,
   isLoading: true,
-  isHoveringOverDevicePopUp: false
+  isHoveringOverDevicePopUp: false,
+  taskSortingOrder: 'completion_desc',
+  noteSortingOrder: 'created_at_asc',
+  collectionSortingOrder: 'created_at_asc'
 };
 
 const uiStateSlice = createSlice({

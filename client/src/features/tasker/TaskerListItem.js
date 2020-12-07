@@ -5,13 +5,16 @@ import { toggleActiveItem } from 'features/tasker/taskerSlice';
 
 const TaskerListItem = ({ id }) => {
   const dispatch = useDispatch();
-  const { name } = useSelector(state => selectTaskerItemById(state, id));
+  const { name, createdAt } = useSelector(state =>
+    selectTaskerItemById(state, id)
+  );
   return (
     <div
       className='collection-table-item'
       onClick={() => dispatch(toggleActiveItem(id))}
     >
       {name}
+      {createdAt}
     </div>
   );
 };

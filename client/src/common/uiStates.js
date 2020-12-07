@@ -20,7 +20,16 @@ export const addWallGeo = 'add-wall';
 export const moveWallGeo = 'move-wall';
 export const removeWallGeo = 'remove-wall';
 
+// Tasker item types
 export const collectionTT = 'collection';
 export const taskTT = 'task';
 export const noteTT = 'note';
 export const floorTT = 'floor';
+
+// Tasker item sorting orders
+export const createdAtAsc = 'created-at-asc';
+export const createdAtDesc = 'created-at-desc';
+export const lastEditedAtAsc = 'last-Edited-at-asc';
+export const lastEditedAtDesc = 'last-Edited-at-desc';
+export const completionAsc = 'completionAsc';
+export const completionDesc = 'completionDesc';

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import {
-  selectAllActiveItemTypeTasks,
+  selectAllActiveItemTypeTasksSorted,
   selectTaskerActiveItemProperties
 } from 'app/selectors';
 import { addItem } from 'features/tasker/taskerSlice';
@@ -10,7 +10,7 @@ import TaskerSinglePageItem from 'features/tasker/TaskerSinglePageItem';
 
 const TaskerItemsContainer = () => {
   const dispatch = useDispatch();
-  const ids = useSelector(selectAllActiveItemTypeTasks);
+  const ids = useSelector(selectAllActiveItemTypeTasksSorted);
   const { activeItem, isEditing, activeItemType } = useSelector(
     selectTaskerActiveItemProperties,
     shallowEqual
