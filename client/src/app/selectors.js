@@ -1,5 +1,5 @@
 import { sortTaskerItems } from 'app/taskerSorting';
-import { collectionTT, noteTT, taskTT } from 'common/uiStates';
+import { COLLECTION_TT, NOTE_TT, TASK_TT } from 'app/constants';
 import {
   createSelector,
   createSelectorCreator,
@@ -51,11 +51,11 @@ const selectActiveTaskerItemTypeSortingOrder = createSelector(
   [state => state.tasker.activeItemType, state => state.uiState],
   (activeType, uiState) => {
     switch (activeType) {
-      case taskTT:
+      case TASK_TT:
         return uiState.taskSortingOrder;
-      case noteTT:
+      case NOTE_TT:
         return uiState.noteSortingOrder;
-      case collectionTT:
+      case COLLECTION_TT:
         return uiState.collectionSortingOrder;
       default:
         return null;
@@ -151,11 +151,11 @@ export const selectAllActiveItemTypeTasks = createSelector(
     ids.filter(id => {
       const { type, isCheckedOff } = entities[id];
       if (type === activeItemType) {
-        if (type === taskTT) {
+        if (type === TASK_TT) {
           if (isCheckedOff === taskFilter || taskFilter === null) {
             return true;
           }
-        } else if (type === noteTT) {
+        } else if (type === NOTE_TT) {
           if (isCheckedOff === noteFilter || noteFilter === null) {
             return true;
           }

@@ -1,10 +1,10 @@
 import { createSlice, nanoid, createEntityAdapter } from '@reduxjs/toolkit';
-import { taskTT } from 'common/uiStates';
+import { TASK_TT } from 'app/constants';
 
 const taskerAdapter = createEntityAdapter();
 const initialState = taskerAdapter.getInitialState({
   activeItem: null,
-  activeItemType: taskTT,
+  activeItemType: TASK_TT,
   isEditing: false,
   isLoading: false,
   taskerHistory: null,
@@ -269,7 +269,7 @@ const taskerSlice = createSlice({
     'api/checkOffTaskerItem/fulfilled': (state, { payload }) => {
       const id = payload;
       const item = state.entities[id];
-      if (item.type === taskTT) {
+      if (item.type === TASK_TT) {
         if (item.isCheckedOff) {
           state.entities[id].isCheckedOff = false;
         } else {

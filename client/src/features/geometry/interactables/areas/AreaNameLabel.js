@@ -4,7 +4,7 @@ import {
   moveLabel,
   renameLabel
 } from 'features/geometry/interactables/areas/areaSlice';
-import { moveAreaLabelGeo, renameAreaLabelGeo } from 'common/uiStates';
+import { MOVE_AREA_LABEL_GEO, RENAME_AREA_LABEL_GEO } from 'app/constants';
 
 const AreaNameLabel = ({ coords, name, mode, id }) => {
   const [labelName, setLabelName] = useState(name);
@@ -12,9 +12,9 @@ const AreaNameLabel = ({ coords, name, mode, id }) => {
   const dispatch = useDispatch();
   const { x, y } = coords;
   const handleClick = () => {
-    if (mode === moveAreaLabelGeo) {
+    if (mode === MOVE_AREA_LABEL_GEO) {
       dispatch(moveLabel(id));
-    } else if (mode === renameAreaLabelGeo) {
+    } else if (mode === RENAME_AREA_LABEL_GEO) {
       setLabelName(name);
       setIsEditing(!isEditing);
     }
@@ -32,7 +32,9 @@ const AreaNameLabel = ({ coords, name, mode, id }) => {
   };
 
   const className = `name-label${
-    mode === renameAreaLabelGeo || mode === moveAreaLabelGeo ? '' : '-disabled'
+    mode === RENAME_AREA_LABEL_GEO || mode === MOVE_AREA_LABEL_GEO
+      ? ''
+      : '-disabled'
   }`;
 
   return (

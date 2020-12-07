@@ -11,7 +11,7 @@ import {
 } from 'features/geometry/interactables/areas/areaSlice';
 import { setUiGlobalState, setUiGeoState } from 'app/uiStateSlice';
 import { useDispatch } from 'react-redux';
-import * as ui from 'common/uiStates';
+import * as ui from 'app/constants';
 import FloorSwitcher from 'features/geometry/FloorSwitcher';
 
 const GeometryControls = ({
@@ -27,46 +27,48 @@ const GeometryControls = ({
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (uiState === ui.mainGlob) {
-      dispatch(setUiGeoState(ui.navGeo));
+    if (uiState === ui.MAIN_GLOB) {
+      dispatch(setUiGeoState(ui.NAV_GEO));
     }
   }, [uiState, dispatch]);
 
   return (
     <div className='geometry-controls'>
-      {uiState === ui.editInteractablesGlob && (
+      {uiState === ui.EDIT_INTERACTABLES_GLOB && (
         <div className='device-controls'>
-          <button onClick={() => dispatch(setUiGeoState(ui.addDeviceGeo))}>
+          <button onClick={() => dispatch(setUiGeoState(ui.ADD_DEVICE_GEO))}>
             Add
           </button>
-          <button onClick={() => dispatch(setUiGeoState(ui.removeDeviceGeo))}>
+          <button onClick={() => dispatch(setUiGeoState(ui.REMOVE_DEVICE_GEO))}>
             Remove
           </button>
-          <button onClick={() => dispatch(setUiGeoState(ui.moveDeviceGeo))}>
+          <button onClick={() => dispatch(setUiGeoState(ui.MOVE_DEVICE_GEO))}>
             Move
           </button>
         </div>
       )}
-      {uiState === ui.editInteractablesGlob && (
+      {uiState === ui.EDIT_INTERACTABLES_GLOB && (
         <div className='area-controls'>
-          <button onClick={() => dispatch(setUiGeoState(ui.navGeo))}>
+          <button onClick={() => dispatch(setUiGeoState(ui.NAV_GEO))}>
             Nav
           </button>
-          <button onClick={() => dispatch(setUiGeoState(ui.addAreaGeo))}>
+          <button onClick={() => dispatch(setUiGeoState(ui.ADD_AREA_GEO))}>
             Draw
           </button>
-          <button onClick={() => dispatch(setUiGeoState(ui.removeAreaGeo))}>
+          <button onClick={() => dispatch(setUiGeoState(ui.REMOVE_AREA_GEO))}>
             Remove
           </button>
-          <button onClick={() => dispatch(setUiGeoState(ui.redrawAreaGeo))}>
+          <button onClick={() => dispatch(setUiGeoState(ui.REDRAW_AREA_GEO))}>
             Redraw
           </button>
           <button onClick={() => dispatch(saveArea())}>Save Area</button>
-          <button onClick={() => dispatch(setUiGeoState(ui.moveAreaLabelGeo))}>
+          <button
+            onClick={() => dispatch(setUiGeoState(ui.MOVE_AREA_LABEL_GEO))}
+          >
             Move Label
           </button>
           <button
-            onClick={() => dispatch(setUiGeoState(ui.renameAreaLabelGeo))}
+            onClick={() => dispatch(setUiGeoState(ui.RENAME_AREA_LABEL_GEO))}
           >
             Rename Label
           </button>
@@ -76,18 +78,18 @@ const GeometryControls = ({
           </button>
         </div>
       )}
-      {uiState === ui.editGeomGlob && (
+      {uiState === ui.EDIT_GEOM_GLOB && (
         <div className='wall-controls'>
-          <button onClick={() => dispatch(setUiGeoState(ui.navGeo))}>
+          <button onClick={() => dispatch(setUiGeoState(ui.NAV_GEO))}>
             Nav
           </button>
-          <button onClick={() => dispatch(setUiGeoState(ui.addWallGeo))}>
+          <button onClick={() => dispatch(setUiGeoState(ui.ADD_WALL_GEO))}>
             Draw
           </button>
-          <button onClick={() => dispatch(setUiGeoState(ui.removeWallGeo))}>
+          <button onClick={() => dispatch(setUiGeoState(ui.REMOVE_WALL_GEO))}>
             Remove
           </button>
-          <button onClick={() => dispatch(setUiGeoState(ui.moveWallGeo))}>
+          <button onClick={() => dispatch(setUiGeoState(ui.MOVE_WALL_GEO))}>
             Move
           </button>
           <button onClick={() => dispatch(cancelDrawing())}>
@@ -109,14 +111,14 @@ const GeometryControls = ({
         <button onClick={() => panH()}> R </button>
       </div>
       <div className='state-nav-controls'>
-        <button onClick={() => dispatch(setUiGlobalState(ui.mainGlob))}>
+        <button onClick={() => dispatch(setUiGlobalState(ui.MAIN_GLOB))}>
           Main
         </button>
-        <button onClick={() => dispatch(setUiGlobalState(ui.editGeomGlob))}>
+        <button onClick={() => dispatch(setUiGlobalState(ui.EDIT_GEOM_GLOB))}>
           Geom
         </button>
         <button
-          onClick={() => dispatch(setUiGlobalState(ui.editInteractablesGlob))}
+          onClick={() => dispatch(setUiGlobalState(ui.EDIT_INTERACTABLES_GLOB))}
         >
           Areas/Dev
         </button>

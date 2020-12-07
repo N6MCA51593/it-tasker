@@ -16,8 +16,16 @@ import {
   moveDevice
 } from 'features/geometry/interactables/devices/deviceSlice';
 import { toggleDevice } from 'features/tasker/taskerSlice';
-import * as ui from 'common/uiStates';
 import { checkOffDevices } from 'features/api/checkOffDevices';
+import {
+  ADD_DEVICE_GEO,
+  EDIT_INTERACTABLES_GLOB,
+  EDIT_TASKER_ITEMS_GLOB,
+  MOVE_DEVICE_GEO,
+  NAV_GEO,
+  REMOVE_DEVICE_GEO,
+  TASK_TT
+} from 'app/constants';
 
 const Device = ({ id, mode }) => {
   const dispatch = useDispatch();
@@ -37,16 +45,16 @@ const Device = ({ id, mode }) => {
   const { status, type, floor, x, y } = device;
 
   const handleClick = () => {
-    if (mode === ui.navGeo && globalUiState === ui.editInteractablesGlob) {
+    if (mode === NAV_GEO && globalUiState === EDIT_INTERACTABLES_GLOB) {
       dispatch(setActiveDevice(id));
-    } else if (mode === ui.removeDeviceGeo) {
+    } else if (mode === REMOVE_DEVICE_GEO) {
       dispatch(removeDevice(id));
-    } else if (mode === ui.moveDeviceGeo && !isActive) {
+    } else if (mode === MOVE_DEVICE_GEO && !isActive) {
       dispatch(moveDevice(id));
-    } else if (globalUiState === ui.editTaskerItemGlob) {
+    } else if (globalUiState === EDIT_TASKER_ITEMS_GLOB) {
       dispatch(toggleDevice({ id, floor }));
     } else if (
-      activeItemType === ui.taskTT &&
+      activeItemType === TASK_TT &&
       typeof activeTaskerItemStatus !== 'undefined'
     ) {
       dispatch(checkOffDevices(id));
@@ -62,7 +70,7 @@ const Device = ({ id, mode }) => {
       <g
         onClick={() => handleClick()}
         className={
-          mode === ui.addDeviceGeo || (mode === ui.moveDeviceGeo && isActive)
+          mode === ADD_DEVICE_GEO || (mode === MOVE_DEVICE_GEO && isActive)
             ? 'device-disabled'
             : ''
         }
@@ -70,7 +78,7 @@ const Device = ({ id, mode }) => {
         <StatusIndicator status={status} x={x} y={y} />
         <DeviceIcon type={type} x={x} y={y} className={iconClassName} />
       </g>
-      {isActive && mode !== ui.moveDeviceGeo && (
+      {isActive && mode !== MOVE_DEVICE_GEO && (
         <DevicePopUp x={x} y={y} mode={mode}>
           <DeviceOptions device={device} />
         </DevicePopUp>

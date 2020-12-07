@@ -1,4 +1,4 @@
-import { collectionTT, floorTT, noteTT, taskTT } from 'common/uiStates';
+import { COLLECTION_TT, FLOOR_TT, NOTE_TT, TASK_TT } from 'app/constants';
 import {
   setActiveItemType,
   setNoteFilter,
@@ -13,20 +13,20 @@ const Controls = ({ isFloorContainerActive, activeItemType }) => {
   return (
     <div className='task-controls-container'>
       <div className='task-controls'>
-        <button onClick={() => dispatch(setActiveItemType(taskTT))}>
+        <button onClick={() => dispatch(setActiveItemType(TASK_TT))}>
           Tasks
         </button>
-        <button onClick={() => dispatch(setActiveItemType(noteTT))}>
+        <button onClick={() => dispatch(setActiveItemType(NOTE_TT))}>
           Notes
         </button>
-        <button onClick={() => dispatch(setActiveItemType(collectionTT))}>
+        <button onClick={() => dispatch(setActiveItemType(COLLECTION_TT))}>
           Collections
         </button>
-        <button onClick={() => dispatch(setActiveItemType(floorTT))}>
+        <button onClick={() => dispatch(setActiveItemType(FLOOR_TT))}>
           Floors
         </button>
       </div>
-      {activeItemType === taskTT && (
+      {activeItemType === TASK_TT && (
         <div className='task-controls'>
           <button onClick={() => dispatch(setTaskFilter(null))}>All</button>
           <button onClick={() => dispatch(setTaskFilter(false))}>Active</button>
@@ -35,7 +35,7 @@ const Controls = ({ isFloorContainerActive, activeItemType }) => {
           </button>
         </div>
       )}
-      {activeItemType === noteTT && (
+      {activeItemType === NOTE_TT && (
         <div className='task-controls'>
           <button onClick={() => dispatch(setNoteFilter(null))}>All</button>
           <button onClick={() => dispatch(setNoteFilter(false))}>Active</button>

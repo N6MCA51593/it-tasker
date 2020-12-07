@@ -11,7 +11,7 @@ import {
   findFarthestCorner,
   findNearestPoint
 } from 'features/geometry/geometryMathFuncs';
-import * as ui from 'common/uiStates';
+import { ADD_WALL_GEO, MOVE_WALL_GEO, REMOVE_WALL_GEO } from 'app/constants';
 
 const Wall = ({ mode, getRelCoord, id, activeWall, activeFloor }) => {
   const dispatch = useDispatch();
@@ -22,7 +22,7 @@ const Wall = ({ mode, getRelCoord, id, activeWall, activeFloor }) => {
 
   const handleClick = e => {
     e.stopPropagation();
-    if (mode === ui.addWallGeo || (mode === ui.moveWallGeo && activeWall)) {
+    if (mode === ADD_WALL_GEO || (mode === MOVE_WALL_GEO && activeWall)) {
       const { x, y } = findNearestPoint(
         { x: x1, y: y1 },
         { x: x2, y: y2 },
@@ -33,9 +33,9 @@ const Wall = ({ mode, getRelCoord, id, activeWall, activeFloor }) => {
       activeWall
         ? dispatch(saveWall({ x, y }))
         : dispatch(addWall({ coords: { x, y }, floor: activeFloor }));
-    } else if (mode === ui.removeWallGeo) {
+    } else if (mode === REMOVE_WALL_GEO) {
       dispatch(removeWall(id));
-    } else if (mode === ui.moveWallGeo) {
+    } else if (mode === MOVE_WALL_GEO) {
       dispatch(
         moveWall({ id, coords: findFarthestCorner(getRelCoord(e), coords) })
       );

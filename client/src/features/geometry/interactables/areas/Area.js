@@ -6,8 +6,15 @@ import {
   redrawArea
 } from 'features/geometry/interactables/areas/areaSlice';
 import AreaNameLabel from 'features/geometry/interactables/areas/AreaNameLabel';
-import * as ui from 'common/uiStates';
 import useAreaTaskerState from 'features/tasker/useAreaTaskerState';
+import {
+  ADD_DEVICE_GEO,
+  EDIT_INTERACTABLES_GLOB,
+  EDIT_TASKER_ITEMS_GLOB,
+  MOVE_DEVICE_GEO,
+  REDRAW_AREA_GEO,
+  REMOVE_AREA_GEO
+} from 'app/constants';
 
 const Area = ({ id, mode, addDevice }) => {
   const { points, name, floor, labelCoords: coords } = useSelector(state =>
@@ -18,15 +25,15 @@ const Area = ({ id, mode, addDevice }) => {
   const { toggleChildren } = useAreaTaskerState(id, floor);
 
   const handleClick = e => {
-    if (globalUiState === ui.editInteractablesGlob) {
-      if (mode === ui.removeAreaGeo) {
+    if (globalUiState === EDIT_INTERACTABLES_GLOB) {
+      if (mode === REMOVE_AREA_GEO) {
         dispatch(removeArea(id));
-      } else if (mode === ui.redrawAreaGeo) {
+      } else if (mode === REDRAW_AREA_GEO) {
         dispatch(redrawArea(id));
-      } else if (mode === ui.addDeviceGeo || mode === ui.moveDeviceGeo) {
+      } else if (mode === ADD_DEVICE_GEO || mode === MOVE_DEVICE_GEO) {
         addDevice(id, e);
       }
-    } else if (globalUiState === ui.editTaskerItemGlob) {
+    } else if (globalUiState === EDIT_TASKER_ITEMS_GLOB) {
       toggleChildren();
     }
   };

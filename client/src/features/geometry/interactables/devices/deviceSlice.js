@@ -1,5 +1,5 @@
 import { createSlice, nanoid, createEntityAdapter } from '@reduxjs/toolkit';
-import { editInteractablesGlob } from 'common/uiStates';
+import { EDIT_INTERACTABLES_GLOB } from 'app/constants';
 
 const devicesAdapter = createEntityAdapter();
 const initialState = devicesAdapter.getInitialState({
@@ -117,7 +117,7 @@ const devicesSlice = createSlice({
       buildByAreas(state);
     },
     'uiState/setUiGlobalState': (state, { payload }) => {
-      if (payload === editInteractablesGlob && !state.devicesHistory) {
+      if (payload === EDIT_INTERACTABLES_GLOB && !state.devicesHistory) {
         state.devicesHistory = state.entities;
       } else if (state.devicesHistory) {
         devicesAdapter.setAll(state, state.devicesHistory); // temp

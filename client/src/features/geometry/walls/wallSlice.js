@@ -1,5 +1,5 @@
 import { createSlice, nanoid, createEntityAdapter } from '@reduxjs/toolkit';
-import { editGeomGlob } from 'common/uiStates';
+import { EDIT_GEOM_GLOB } from 'app/constants';
 
 const wallsAdapter = createEntityAdapter();
 const initialState = wallsAdapter.getInitialState({
@@ -105,7 +105,7 @@ const wallsSlice = createSlice({
       wallsAdapter.setAll(state, payload.walls);
     },
     'uiState/setUiGlobalState': (state, { payload }) => {
-      if (payload === editGeomGlob && !state.wallsHistory) {
+      if (payload === EDIT_GEOM_GLOB && !state.wallsHistory) {
         state.wallsHistory = state.entities;
       } else if (state.wallsHistory) {
         wallsAdapter.setAll(state, state.wallsHistory);

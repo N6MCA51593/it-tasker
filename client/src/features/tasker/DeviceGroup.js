@@ -2,7 +2,7 @@ import {
   selectAreaById,
   selectTaskerActiveItemProperties
 } from 'app/selectors';
-import { taskTT } from 'common/uiStates';
+import { TASK_TT } from 'app/constants';
 import { checkOffDevices } from 'features/api/checkOffDevices';
 import DeviceItem from 'features/tasker/DeviceItem';
 import { toggleDevice } from 'features/tasker/taskerSlice';
@@ -22,7 +22,7 @@ const DeviceGroup = ({ areaId, devices }) => {
   const deviceClickHandler = (id, floor) => {
     if (isEditing) {
       dispatch(toggleDevice({ id, floor }));
-    } else if (activeItemType === taskTT) {
+    } else if (activeItemType === TASK_TT) {
       dispatch(checkOffDevices(id));
     }
   };
@@ -30,7 +30,7 @@ const DeviceGroup = ({ areaId, devices }) => {
   const areaClickHandler = () => {
     if (isEditing) {
       removeChildren(devices);
-    } else if (activeItemType === taskTT) {
+    } else if (activeItemType === TASK_TT) {
       dispatch(checkOffDevices(devices.map(device => device.id)));
     }
   };

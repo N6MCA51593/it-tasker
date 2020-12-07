@@ -8,8 +8,12 @@ import GeometryDrawing from 'features/geometry/walls/GeometryDrawing';
 import { useSelector } from 'react-redux';
 import { selectActiveGlobalUiState, selectActiveGeoState } from 'app/selectors';
 import InteractablesWithEditing from 'features/geometry/interactables/InteractablesWithEditing';
-import * as ui from 'common/uiStates';
 import Interactables from 'features/geometry/interactables/Interactables';
+import {
+  EDIT_GEOM_GLOB,
+  EDIT_INTERACTABLES_GLOB,
+  NAV_GEO
+} from 'app/constants';
 
 const Geometry = () => {
   const [isPointerDown, setIsPointerDown] = useState(false);
@@ -43,27 +47,27 @@ const Geometry = () => {
   );
 
   const handlePointerMove = e => {
-    if (mode === ui.navGeo && isPointerDown) {
+    if (mode === NAV_GEO && isPointerDown) {
       freePan(getRelCoord(e));
     }
   };
 
   const handlePointerDown = e => {
-    if (mode === ui.navGeo && !isHoveringOverDevicePopUp) {
+    if (mode === NAV_GEO && !isHoveringOverDevicePopUp) {
       setInitCoords(getRelCoord(e));
       setIsPointerDown(true);
     }
   };
 
   const handlePointerUp = () => {
-    if (mode === ui.navGeo) {
+    if (mode === NAV_GEO) {
       setInitCoords(null);
       setIsPointerDown(false);
     }
   };
 
   const handlePointerLeave = () => {
-    if (mode === ui.navGeo) {
+    if (mode === NAV_GEO) {
       setInitCoords(null);
       setIsPointerDown(false);
     }
@@ -84,7 +88,7 @@ const Geometry = () => {
       onWheel={e => handleWheel(e)}
     >
       <div>
-        {uiState === ui.editGeomGlob && (
+        {uiState === EDIT_GEOM_GLOB && (
           <GeometryDrawing
             mode={mode}
             isGrid={isGrid}
@@ -97,7 +101,7 @@ const Geometry = () => {
             gridStep={gridStep}
           />
         )}
-        {uiState === ui.editInteractablesGlob && (
+        {uiState === EDIT_INTERACTABLES_GLOB && (
           <InteractablesWithEditing
             mode={mode}
             isGrid={isGrid}
@@ -110,20 +114,19 @@ const Geometry = () => {
             gridStep={gridStep}
           />
         )}
-        {uiState !== ui.editInteractablesGlob &&
-          uiState !== ui.editGeomGlob && (
-            <Interactables
-              mode={mode}
-              isGrid={isGrid}
-              getRelCoord={getRelCoord}
-              panHLvl={panHLvl}
-              panVLvl={panVLvl}
-              zoomLvl={zoomLvl}
-              width={width}
-              height={height}
-              gridStep={gridStep}
-            />
-          )}
+        {uiState !== EDIT_INTERACTABLES_GLOB && uiState !== EDIT_GEOM_GLOB && (
+          <Interactables
+            mode={mode}
+            isGrid={isGrid}
+            getRelCoord={getRelCoord}
+            panHLvl={panHLvl}
+            panVLvl={panVLvl}
+            zoomLvl={zoomLvl}
+            width={width}
+            height={height}
+            gridStep={gridStep}
+          />
+        )}
       </div>
       <GeometryControls
         zoomIn={zoomIn}

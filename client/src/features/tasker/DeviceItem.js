@@ -2,7 +2,7 @@ import {
   selectDeviceActiveItemStatus,
   selectTaskerActiveItemProperties
 } from 'app/selectors';
-import { taskTT } from 'common/uiStates';
+import { TASK_TT } from 'app/constants';
 import React from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 
@@ -14,7 +14,7 @@ const DeviceItem = ({ name, clickHandler, id }) => {
   const isCheckedOff = useSelector(state =>
     selectDeviceActiveItemStatus(state, id)
   );
-  const isCheckedOffAble = activeItemType === taskTT;
+  const isCheckedOffAble = activeItemType === TASK_TT;
 
   const baseClassName = 'device-item';
 

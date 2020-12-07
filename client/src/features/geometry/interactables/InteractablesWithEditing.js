@@ -14,8 +14,13 @@ import {
   selectIsDeviceMoving,
   selectActiveFloor
 } from 'app/selectors';
-import * as ui from 'common/uiStates';
 import Interactables from 'features/geometry/interactables/Interactables';
+import {
+  ADD_AREA_GEO,
+  ADD_DEVICE_GEO,
+  MOVE_AREA_LABEL_GEO,
+  MOVE_DEVICE_GEO
+} from 'app/constants';
 
 const InteractablesWithEditing = InteractablesComponent =>
   function Composed(props) {
@@ -29,18 +34,18 @@ const InteractablesWithEditing = InteractablesComponent =>
 
     const addDevice = (id, e) => {
       const { x, y } = isGrid ? getRelCoord(e, true) : getRelCoord(e);
-      if (mode === ui.moveDeviceGeo && activeDevice) {
+      if (mode === MOVE_DEVICE_GEO && activeDevice) {
         dispatch(updateActiveDevice({ x, y, area: id }));
-      } else if (mode === ui.addDeviceGeo) {
+      } else if (mode === ADD_DEVICE_GEO) {
         dispatch(addDeviceAction({ id, x, y, floor: activeFloor }));
       }
     };
 
     const handleClickEdit = e => {
-      if (mode === ui.addAreaGeo) {
+      if (mode === ADD_AREA_GEO) {
         const { x, y } = isGrid ? getRelCoord(e, true) : getRelCoord(e);
         dispatch(addArea({ point: `${x},${y}`, floor: activeFloor }));
-      } else if (mode === ui.moveAreaLabelGeo && activeLabel) {
+      } else if (mode === MOVE_AREA_LABEL_GEO && activeLabel) {
         const { x, y } = isGrid ? getRelCoord(e, true) : getRelCoord(e);
         dispatch(saveArea({ x, y }));
       }

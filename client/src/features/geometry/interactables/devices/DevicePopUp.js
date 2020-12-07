@@ -1,17 +1,17 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { setDeviceHoverStatus } from 'app/uiStateSlice';
-import { navGeo } from 'common/uiStates';
+import { NAV_GEO } from 'app/constants';
 
 const DevicePopUp = ({ x, y, mode, children }) => {
   const dispatch = useDispatch();
   const handleMouseEnter = () => {
-    if (mode === navGeo) {
+    if (mode === NAV_GEO) {
       dispatch(setDeviceHoverStatus(true));
     }
   };
   const handleMouseLeave = () => {
-    if (mode === navGeo) {
+    if (mode === NAV_GEO) {
       dispatch(setDeviceHoverStatus(false));
     }
   };

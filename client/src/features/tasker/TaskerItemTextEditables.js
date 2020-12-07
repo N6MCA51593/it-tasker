@@ -8,7 +8,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { cancelChanges } from 'features/tasker/taskerSlice';
 import { updateTaskerItem } from 'features/api/updateTaskerItem';
 import EditingControls from 'features/tasker/EditingControls';
-import { collectionTT } from 'common/uiStates';
+import { COLLECTION_TT } from 'app/constants';
 
 const TaskerItemTextEditables = ({ id }) => {
   const dispatch = useDispatch();
@@ -40,7 +40,7 @@ const TaskerItemTextEditables = ({ id }) => {
           Name:
           <input {...bindName} />
         </label>
-        {activeTaskerItemType !== collectionTT && (
+        {activeTaskerItemType !== COLLECTION_TT && (
           <label>
             Description:
             <input {...bindDescription} />
@@ -53,7 +53,7 @@ const TaskerItemTextEditables = ({ id }) => {
     return (
       <div>
         {name}
-        {activeTaskerItemType !== collectionTT && description}
+        {activeTaskerItemType !== COLLECTION_TT && description}
       </div>
     );
   }

@@ -1,14 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
 import {
-  navGeo,
-  mainGlob,
-  editTaskerItemGlob,
-  viewTaskerItemGlob
-} from 'common/uiStates';
+  NAV_GEO,
+  MAIN_GLOB,
+  EDIT_TASKER_ITEMS_GLOB,
+  VIEW_TASKER_ITEMS_GLOB
+} from 'app/constants';
 
 const initialState = {
-  activeGlobalState: mainGlob,
-  activeGeometryState: navGeo,
+  activeGlobalState: MAIN_GLOB,
+  activeGeometryState: NAV_GEO,
   isLoading: true,
   isHoveringOverDevicePopUp: false,
   taskSortingOrder: 'completion_desc',
@@ -39,15 +39,15 @@ const uiStateSlice = createSlice({
       state.isLoading = false;
     },
     'api/updateGeometry/fulfilled': state => {
-      state.activeGlobalState = mainGlob;
-      state.activeGeometryState = navGeo;
+      state.activeGlobalState = MAIN_GLOB;
+      state.activeGeometryState = NAV_GEO;
     },
     'api/updateInteractables/fulfilled': state => {
-      state.activeGlobalState = mainGlob;
-      state.activeGeometryState = navGeo;
+      state.activeGlobalState = MAIN_GLOB;
+      state.activeGeometryState = NAV_GEO;
     },
     'tasker/addItem': state => {
-      state.activeGlobalState = editTaskerItemGlob;
+      state.activeGlobalState = EDIT_TASKER_ITEMS_GLOB;
     },
     'devices/setActiveDevice': state => {
       state.isHoveringOverDevicePopUp = false;
@@ -56,25 +56,25 @@ const uiStateSlice = createSlice({
       state.isHoveringOverDevicePopUp = false;
     },
     'api/updateTaskerItem/fulfilled': state => {
-      if (state.activeGlobalState === editTaskerItemGlob) {
-        state.activeGlobalState = viewTaskerItemGlob;
+      if (state.activeGlobalState === EDIT_TASKER_ITEMS_GLOB) {
+        state.activeGlobalState = VIEW_TASKER_ITEMS_GLOB;
       }
     },
     'tasker/cancelChanges': state => {
-      state.activeGlobalState = mainGlob;
+      state.activeGlobalState = MAIN_GLOB;
     },
     'tasker/toggleActiveItem': state => {
-      state.activeGlobalState === viewTaskerItemGlob
-        ? (state.activeGlobalState = mainGlob)
-        : (state.activeGlobalState = viewTaskerItemGlob);
+      state.activeGlobalState === VIEW_TASKER_ITEMS_GLOB
+        ? (state.activeGlobalState = MAIN_GLOB)
+        : (state.activeGlobalState = VIEW_TASKER_ITEMS_GLOB);
     },
     'tasker/setActiveItemType': state => {
-      state.activeGlobalState = mainGlob;
+      state.activeGlobalState = MAIN_GLOB;
     },
     'tasker/toggleEditing': state => {
-      state.activeGlobalState === viewTaskerItemGlob
-        ? (state.activeGlobalState = editTaskerItemGlob)
-        : (state.activeGlobalState = viewTaskerItemGlob);
+      state.activeGlobalState === VIEW_TASKER_ITEMS_GLOB
+        ? (state.activeGlobalState = EDIT_TASKER_ITEMS_GLOB)
+        : (state.activeGlobalState = VIEW_TASKER_ITEMS_GLOB);
     }
   }
 });
