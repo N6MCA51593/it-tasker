@@ -1,4 +1,4 @@
-import { sortTaskerItems } from 'app/taskerSorting';
+import { sortTaskerItems } from 'features/tasker/taskerSorting';
 import { COLLECTION_TT, NOTE_TT, TASK_TT } from 'app/constants';
 import {
   createSelector,
@@ -166,19 +166,53 @@ export const selectAllActiveItemTypeTasks = createSelector(
       return false;
     })
 );
+export const getTaskerCompletionTable = createSelector(
+  [
+    selectAllTaskerItemIds,
+    selectAllTaskerItemEntities,
+    state => state.tasker.byDevice
+  ],
+  (ids, entities, byDevice) => {
+    let completionTable = {};
+    for (const id of ids) {
+      const { type, isCheckedOff, devices } = entities[id];
+      if (type !== TASK_TT) {
+        completionTable[id] = null;
+      } else if (isCheckedOff) {
+        completionTable[id] = 1;
+      } else if (devices) {
+        completionTable[id] =
+          devices.filter(deviceId => byDevice[deviceId][id]).length /
+          devices.length;
+      } else {
+        completionTable[id] = 0;
+      }
+    }
+    return completionTable;
+  }
+);
 export const selectAllActiveItemTypeTasksSorted = createSelector(
   [
     selectAllActiveItemTypeTasks,
     selectAllTaskerItemEntities,
     selectActiveTaskerItemTypeSortingOrder,
-    state => state.tasker.byDevice
+    getTaskerCompletionTable
   ],
-  (ids, entities, sortingOrder, byDevice) => {
-    const sorting = sortTaskerItems(entities, sortingOrder, byDevice);
-    return ids.sort((a, b) => sorting(a, b));
+  (ids, entities, sortingOrder, completionTable) => {
+    const sorting = sortTaskerItems(entities, sortingOrder, completionTable);
+    return [...ids].sort((a, b) => sorting(a, b));
   }
 );
 export const selectAllTasks = createSelector(
   [selectAllTaskerItemIds, selectAllTaskerItemEntities],
   (ids, entities) => ids.filter(id => entities[id].type === 'task')
 );
+export const selectActiveSoringOrder = state => {
+  if (state.tasker.activeItemType === TASK_TT) {
+    return state.uiState.taskSortingOrder;
+  } else if (state.tasker.activeItemType === NOTE_TT) {
+    return state.uiState.noteSortingOrder;
+  } else if (state.tasker.activeItemType === COLLECTION_TT) {
+    return state.uiState.collectionSortingOrder;
+  }
+};

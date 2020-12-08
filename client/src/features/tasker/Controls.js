@@ -1,4 +1,6 @@
 import { COLLECTION_TT, FLOOR_TT, NOTE_TT, TASK_TT } from 'app/constants';
+import { setTaskerSortingOrder } from 'app/uiStateSlice';
+import SortingOrderPicker from 'features/tasker/SortingOrderPicker';
 import {
   setActiveItemType,
   setNoteFilter,
@@ -33,6 +35,7 @@ const Controls = ({ isFloorContainerActive, activeItemType }) => {
           <button onClick={() => dispatch(setTaskFilter(true))}>
             Completed
           </button>
+          <SortingOrderPicker activeItemType={activeItemType} />
         </div>
       )}
       {activeItemType === NOTE_TT && (
@@ -42,6 +45,12 @@ const Controls = ({ isFloorContainerActive, activeItemType }) => {
           <button onClick={() => dispatch(setNoteFilter(true))}>
             Archived
           </button>
+          <SortingOrderPicker activeItemType={activeItemType} />
+        </div>
+      )}
+      {activeItemType === COLLECTION_TT && (
+        <div className='task-controls'>
+          <SortingOrderPicker activeItemType={activeItemType} />
         </div>
       )}
     </div>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import {
+  getTaskerCompletionTable,
   selectAllActiveItemTypeTasksSorted,
   selectTaskerActiveItemProperties
 } from 'app/selectors';
@@ -11,6 +12,7 @@ import TaskerSinglePageItem from 'features/tasker/TaskerSinglePageItem';
 const TaskerItemsContainer = () => {
   const dispatch = useDispatch();
   const ids = useSelector(selectAllActiveItemTypeTasksSorted);
+  const table = useSelector(getTaskerCompletionTable, shallowEqual);
   const { activeItem, isEditing, activeItemType } = useSelector(
     selectTaskerActiveItemProperties,
     shallowEqual

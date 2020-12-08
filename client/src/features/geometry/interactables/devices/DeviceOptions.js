@@ -53,7 +53,7 @@ const DeviceOptions = ({ device }) => {
         Type (icon):
         <select {...bindType}>
           <option value='PC'>PC</option>
-          <option value='other'>Other</option>
+          <option value='Other'>Other</option>
         </select>
       </label>
       <button onClick={() => save()}>Save</button>

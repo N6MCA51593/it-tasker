@@ -3,7 +3,13 @@ import {
   NAV_GEO,
   MAIN_GLOB,
   EDIT_TASKER_ITEMS_GLOB,
-  VIEW_TASKER_ITEMS_GLOB
+  VIEW_TASKER_ITEMS_GLOB,
+  TASK_TT,
+  NOTE_TT,
+  COLLECTION_TT,
+  CREATED_AT_ASC,
+  OTHER_DT,
+  PC_DT
 } from 'app/constants';
 
 const initialState = {
@@ -11,9 +17,13 @@ const initialState = {
   activeGeometryState: NAV_GEO,
   isLoading: true,
   isHoveringOverDevicePopUp: false,
-  taskSortingOrder: 'completion_desc',
-  noteSortingOrder: 'created_at_asc',
-  collectionSortingOrder: 'created_at_asc'
+  taskSortingOrder: CREATED_AT_ASC,
+  noteSortingOrder: CREATED_AT_ASC,
+  collectionSortingOrder: CREATED_AT_ASC,
+  activeDeviceFilters: {
+    [PC_DT]: true,
+    [OTHER_DT]: true
+  }
 };
 
 const uiStateSlice = createSlice({
@@ -31,6 +41,16 @@ const uiStateSlice = createSlice({
         state.isHoveringOverDevicePopUp = payload;
       } else {
         state.isHoveringOverDevicePopUp = !state.isHoveringOverDevicePopUp;
+      }
+    },
+    setTaskerSortingOrder(state, { payload }) {
+      const { value, type } = payload;
+      if (type === TASK_TT) {
+        state.taskSortingOrder = value;
+      } else if (type === NOTE_TT) {
+        state.noteSortingOrder = value;
+      } else if (type === COLLECTION_TT) {
+        state.collectionSortingOrder = value;
       }
     }
   },
@@ -82,7 +102,8 @@ const uiStateSlice = createSlice({
 export const {
   setUiGlobalState,
   setUiGeoState,
-  setDeviceHoverStatus
+  setDeviceHoverStatus,
+  setTaskerSortingOrder
 } = uiStateSlice.actions;
 
 export default uiStateSlice.reducer;
