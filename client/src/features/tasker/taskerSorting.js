@@ -25,7 +25,7 @@ export const sortTaskerItems = (entities, sortingOrder, completionTable) => (
       return new Date(itemA.lastEditedAt) - new Date(itemB.lastEditedAt);
     case COMPLETION_DESC:
       if (!itemA.isCheckedOff && !itemB.isCheckedOff) {
-        return completionTable[itemB] - completionTable[itemA];
+        return completionTable[itemB.id] - completionTable[itemA.id];
       } else if (itemA.isCheckedOff) {
         return -1;
       } else if (itemB.isCheckedOff) {
@@ -34,7 +34,7 @@ export const sortTaskerItems = (entities, sortingOrder, completionTable) => (
       return 0;
     case COMPLETION_ASC:
       if (!itemA.isCheckedOff && !itemB.isCheckedOff) {
-        return completionTable[itemA] - completionTable[itemB];
+        return completionTable[itemA.id] - completionTable[itemB.id];
       } else if (itemA.isCheckedOff) {
         return 1;
       } else if (itemB.isCheckedOff) {

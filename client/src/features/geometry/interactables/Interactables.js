@@ -6,9 +6,11 @@ import Area from 'features/geometry/interactables/areas/Area';
 import Device from 'features/geometry/interactables/devices/Device';
 import {
   selectActiveFloorAreas,
-  selectActiveFloorDevicesOrdered
+  selectActiveFloorDevicesOrdered,
+  selectUiLoadingState
 } from 'app/selectors';
 import Defs from 'features/geometry/Defs';
+import LoadingSpinner from 'common/LoadingSpinner';
 
 const Interactables = ({
   mode,
@@ -26,11 +28,20 @@ const Interactables = ({
 }) => {
   const areaIds = useSelector(selectActiveFloorAreas);
   const deviceIds = useSelector(selectActiveFloorDevicesOrdered);
+  const isLoading = useSelector(selectUiLoadingState);
 
   const handlers = {
     onClick: handleClick ? e => handleClick(e) : null,
     onMouseMove: handleMouseMove ? e => handleMouseMove(e) : null
   };
+
+  if (isLoading) {
+    return (
+      <div className='draw-area'>
+        <LoadingSpinner />
+      </div>
+    );
+  }
 
   return (
     <div {...handlers} className='draw-area'>

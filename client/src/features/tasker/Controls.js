@@ -1,11 +1,7 @@
 import { COLLECTION_TT, FLOOR_TT, NOTE_TT, TASK_TT } from 'app/constants';
-import { setTaskerSortingOrder } from 'app/uiStateSlice';
+import { setNoteFilter, setTaskFilter } from 'app/uiStateSlice';
 import SortingOrderPicker from 'features/tasker/SortingOrderPicker';
-import {
-  setActiveItemType,
-  setNoteFilter,
-  setTaskFilter
-} from 'features/tasker/taskerSlice';
+import { setActiveItemType } from 'features/tasker/taskerSlice';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 

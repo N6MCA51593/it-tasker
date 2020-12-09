@@ -49,12 +49,12 @@ const floorsSlice = createSlice({
   extraReducers: {
     'api/loadAppData/fulfilled': (state, { payload }) => {
       floorAdapter.addMany(state, payload.floors);
-      state.activeFloor = '1IELCN-gENaKaAg20_nP8';
+      state.activeFloor = !state.activeFloor ? state.ids[0] : state.activeFloor;
     },
     'api/removeFloor/fulfilled': (state, { payload }) => {
       const { deletedFloorId } = payload;
       if (state.activeFloor === deletedFloorId) {
-        state.activeFloor = '1IELCN-gENaKaAg20_nP8';
+        state.activeFloor = state.ids[0];
       }
 
       if (payload.floors) {
@@ -88,6 +88,11 @@ const floorsSlice = createSlice({
 
         state.entities[floor.id].position = floor.position;
         state.editingFloor = null;
+      }
+    },
+    'uiState/loadFromLocalStorage': (state, { payload }) => {
+      if (payload) {
+        state.activeFloor = payload.activeFloor;
       }
     }
   }

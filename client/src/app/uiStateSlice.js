@@ -13,13 +13,18 @@ import {
 } from 'app/constants';
 
 const initialState = {
+  isLoading: true,
   activeGlobalState: MAIN_GLOB,
   activeGeometryState: NAV_GEO,
-  isLoading: true,
-  isHoveringOverDevicePopUp: false,
+  isHoveringOverDevicePopUp: false, // Prevents panning on <foreignObject>
+  zoomLvl: 1.1,
+  panVLvl: 0,
+  panHLvl: 0,
   taskSortingOrder: CREATED_AT_ASC,
   noteSortingOrder: CREATED_AT_ASC,
   collectionSortingOrder: CREATED_AT_ASC,
+  isCheckedOffTaskFilter: null,
+  isCheckedOffNoteFilter: null,
   activeDeviceFilters: {
     [PC_DT]: true,
     [OTHER_DT]: true
@@ -52,6 +57,17 @@ const uiStateSlice = createSlice({
       } else if (type === COLLECTION_TT) {
         state.collectionSortingOrder = value;
       }
+    },
+    loadFromLocalStorage(state, { payload }) {
+      for (const value in payload) {
+        state[value] = payload[value];
+      }
+    },
+    setTaskFilter(state, { payload }) {
+      state.isCheckedOffTaskFilter = payload;
+    },
+    setNoteFilter(state, { payload }) {
+      state.isCheckedOffNoteFilter = payload;
     }
   },
   extraReducers: {
@@ -103,7 +119,10 @@ export const {
   setUiGlobalState,
   setUiGeoState,
   setDeviceHoverStatus,
-  setTaskerSortingOrder
+  setTaskerSortingOrder,
+  setNoteFilter,
+  setTaskFilter,
+  loadFromLocalStorage
 } = uiStateSlice.actions;
 
 export default uiStateSlice.reducer;

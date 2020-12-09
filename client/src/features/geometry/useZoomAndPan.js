@@ -1,15 +1,29 @@
+import { useEffect } from 'react';
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 const useZoomAndPan = ({ width, height }) => {
-  const [panVLvl, setPanVLvl] = useState(0);
-  const [panHLvl, setPanHLvl] = useState(0);
-  const [zoomLvl, setZoom] = useState(1.1);
+  const initZoomLvl = useSelector(state => state.uiState.zoomLvl);
+  const initPanVLvl = useSelector(state => state.uiState.panVLvl);
+  const initPanHLvl = useSelector(state => state.uiState.panHLvl);
+  const [panVLvl, setPanVLvl] = useState(initPanVLvl);
+  const [panHLvl, setPanHLvl] = useState(initPanHLvl);
+  const [zoomLvl, setZoom] = useState(initZoomLvl);
   const [initCoords, setInitCoords] = useState(null);
+  const dispatch = useDispatch();
 
   const zoomInStep = 0.8;
   const zoomOutStep = 1.2;
   const panStep = 50;
   const panSmoothing = 0.25;
+  const minZoom = 0.08;
+  const maxZoom = 5;
+
+  useEffect(() => {
+    setZoom(initZoomLvl);
+    setPanVLvl(initPanVLvl);
+    setPanHLvl(initPanHLvl);
+  }, [initZoomLvl, initPanHLvl, initPanVLvl, dispatch]);
 
   const panV = (steps = 1) => {
     setPanVLvl(panVLvl + panStep * steps * zoomLvl);
@@ -20,7 +34,7 @@ const useZoomAndPan = ({ width, height }) => {
   };
 
   const zoomIn = () => {
-    if (zoomLvl > 0.08) {
+    if (zoomLvl > minZoom) {
       setPanHLvl(panHLvl - (width / 2 - panHLvl) * (zoomInStep - 1));
       setPanVLvl(panVLvl - (height / 2 - panVLvl) * (zoomInStep - 1));
       setZoom(zoomLvl * zoomInStep);
@@ -28,7 +42,7 @@ const useZoomAndPan = ({ width, height }) => {
   };
 
   const zoomOut = () => {
-    if (zoomLvl < 35) {
+    if (zoomLvl < maxZoom) {
       setPanHLvl(panHLvl - (width / 2 - panHLvl) * (zoomOutStep - 1));
       setPanVLvl(panVLvl - (height / 2 - panVLvl) * (zoomOutStep - 1));
       setZoom(zoomLvl * zoomOutStep);
@@ -42,13 +56,13 @@ const useZoomAndPan = ({ width, height }) => {
 
   const wheelZoom = ({ x, y }, delta) => {
     if (delta < 0) {
-      if (zoomLvl > 0.08) {
+      if (zoomLvl > minZoom) {
         setPanHLvl(panHLvl - (x - panHLvl) * (zoomInStep - 1));
         setPanVLvl(panVLvl - (y - panVLvl) * (zoomInStep - 1));
         setZoom(zoomLvl * zoomInStep);
       }
     } else {
-      if (zoomLvl < 35) {
+      if (zoomLvl < maxZoom) {
         setPanHLvl(panHLvl - (x - panHLvl) * (zoomOutStep - 1));
         setPanVLvl(panVLvl - (y - panVLvl) * (zoomOutStep - 1));
         setZoom(zoomLvl * zoomOutStep);

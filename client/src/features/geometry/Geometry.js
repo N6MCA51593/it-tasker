@@ -14,6 +14,7 @@ import {
   EDIT_INTERACTABLES_GLOB,
   NAV_GEO
 } from 'app/constants';
+import usePersistingUiState from 'app/usePersistingUiState';
 
 const Geometry = () => {
   const [isPointerDown, setIsPointerDown] = useState(false);
@@ -40,6 +41,7 @@ const Geometry = () => {
     panVLvl,
     ref
   });
+  usePersistingUiState({ isGrid, gridStep, panHLvl, panVLvl, zoomLvl });
   const uiState = useSelector(selectActiveGlobalUiState);
   const mode = useSelector(selectActiveGeoState);
   const isHoveringOverDevicePopUp = useSelector(

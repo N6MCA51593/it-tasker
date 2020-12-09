@@ -12,7 +12,7 @@ import TaskerSinglePageItem from 'features/tasker/TaskerSinglePageItem';
 const TaskerItemsContainer = () => {
   const dispatch = useDispatch();
   const ids = useSelector(selectAllActiveItemTypeTasksSorted);
-  const table = useSelector(getTaskerCompletionTable, shallowEqual);
+  const completionTable = useSelector(getTaskerCompletionTable, shallowEqual);
   const { activeItem, isEditing, activeItemType } = useSelector(
     selectTaskerActiveItemProperties,
     shallowEqual
@@ -25,7 +25,7 @@ const TaskerItemsContainer = () => {
   return (
     <div className='tasker-items-container'>
       {ids.map(id => (
-        <TaskerListItem key={id} id={id} />
+        <TaskerListItem key={id} id={id} completion={completionTable[id]} />
       ))}
       <button onClick={() => dispatch(addItem({ type: activeItemType }))}>
         Add

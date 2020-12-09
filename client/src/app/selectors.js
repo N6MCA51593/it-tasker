@@ -62,6 +62,22 @@ const selectActiveTaskerItemTypeSortingOrder = createSelector(
     }
   }
 );
+export const selectPersistingUiStateBasicValues = state => {
+  const {
+    taskSortingOrder,
+    noteSortingOrder,
+    collectionSortingOrder,
+    isCheckedOffTaskFilter,
+    isCheckedOffNoteFilter
+  } = state.uiState;
+  return {
+    taskSortingOrder,
+    noteSortingOrder,
+    collectionSortingOrder,
+    isCheckedOffTaskFilter,
+    isCheckedOffNoteFilter
+  };
+};
 
 // Areas
 export const selectAllAreas = state => state.areas.ids;
@@ -144,8 +160,8 @@ export const selectAllActiveItemTypeTasks = createSelector(
     selectAllTaskerItemIds,
     selectAllTaskerItemEntities,
     state => state.tasker.activeItemType,
-    state => state.tasker.isCheckedOffTaskFilter,
-    state => state.tasker.isCheckedOffNoteFilter
+    state => state.uiState.isCheckedOffTaskFilter,
+    state => state.uiState.isCheckedOffNoteFilter
   ],
   (ids, entities, activeItemType, taskFilter, noteFilter) =>
     ids.filter(id => {
