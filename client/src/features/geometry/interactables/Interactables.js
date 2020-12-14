@@ -11,6 +11,8 @@ import {
 } from 'app/selectors';
 import Defs from 'features/geometry/Defs';
 import LoadingSpinner from 'common/LoadingSpinner';
+import { EDIT_INTERACTABLES_GLOB } from 'app/constants';
+import DeviceWithEditing from 'features/geometry/interactables/devices/DeviceWithEditing';
 
 const Interactables = ({
   mode,
@@ -29,6 +31,7 @@ const Interactables = ({
   const areaIds = useSelector(selectActiveFloorAreas);
   const deviceIds = useSelector(selectActiveFloorDevicesOrdered);
   const isLoading = useSelector(selectUiLoadingState);
+  const globalUiState = useSelector(state => state.uiState.activeGlobalState);
 
   const handlers = {
     onClick: handleClick ? e => handleClick(e) : null,
@@ -62,9 +65,13 @@ const Interactables = ({
         {areaIds.map(id => (
           <Area key={id} id={id} mode={mode} addDevice={props.addDevice} />
         ))}
-        {deviceIds.map(id => (
-          <Device key={id} id={id} mode={mode} />
-        ))}
+        {deviceIds.map(id =>
+          globalUiState === EDIT_INTERACTABLES_GLOB ? (
+            <DeviceWithEditing key={id} id={id} mode={mode} />
+          ) : (
+            <Device key={id} id={id} mode={mode} />
+          )
+        )}
       </svg>
     </div>
   );

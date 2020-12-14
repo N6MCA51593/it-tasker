@@ -9,7 +9,14 @@ import {
   COLLECTION_TT,
   CREATED_AT_ASC,
   OTHER_DT,
-  PC_DT
+  PC_DT,
+  LAPTOP_DT,
+  PRINTER_DT,
+  PHONE_DT,
+  SOUND_DT,
+  SCREEN_DT,
+  NETWORK_DT,
+  SERVER_DT
 } from 'app/constants';
 
 const initialState = {
@@ -27,6 +34,13 @@ const initialState = {
   isCheckedOffNoteFilter: null,
   activeDeviceFilters: {
     [PC_DT]: true,
+    [LAPTOP_DT]: true,
+    [PRINTER_DT]: true,
+    [PHONE_DT]: true,
+    [SOUND_DT]: true,
+    [SCREEN_DT]: true,
+    [NETWORK_DT]: true,
+    [SERVER_DT]: true,
     [OTHER_DT]: true
   }
 };
@@ -60,7 +74,13 @@ const uiStateSlice = createSlice({
     },
     loadFromLocalStorage(state, { payload }) {
       for (const value in payload) {
-        state[value] = payload[value];
+        if (typeof payload[value] === 'object' && payload[value]) {
+          for (const objValue in payload[value]) {
+            state[value][objValue] = payload[value][objValue];
+          }
+        } else {
+          state[value] = payload[value];
+        }
       }
     },
     setTaskFilter(state, { payload }) {

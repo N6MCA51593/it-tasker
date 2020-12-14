@@ -37,4 +37,11 @@ export const COMPLETION_DESC = 'completion-desc';
 
 // Device types
 export const PC_DT = 'PC';
+export const LAPTOP_DT = 'Laptop';
+export const PRINTER_DT = 'Printer';
+export const PHONE_DT = 'Phone';
+export const SOUND_DT = 'Sound';
+export const SCREEN_DT = 'Screen';
+export const NETWORK_DT = 'Network';
+export const SERVER_DT = 'Server';
 export const OTHER_DT = 'Other';

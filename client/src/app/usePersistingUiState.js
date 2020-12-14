@@ -1,6 +1,6 @@
 import {
   selectActiveFloor,
-  selectPersistingUiStateBasicValues
+  selectPersistingUiStateValues
 } from 'app/selectors';
 import { loadFromLocalStorage } from 'app/uiStateSlice';
 import { useState } from 'react';
@@ -10,7 +10,7 @@ import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 
 const usePersistingUiState = geoUi => {
   const [hasRead, setHasRead] = useState(false);
-  const values = useSelector(selectPersistingUiStateBasicValues, shallowEqual);
+  const values = useSelector(selectPersistingUiStateValues, shallowEqual);
   const activeFloor = useSelector(selectActiveFloor);
   const activeTaskerItemType = useSelector(
     state => state.tasker.activeItemType

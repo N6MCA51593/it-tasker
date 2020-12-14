@@ -62,20 +62,22 @@ const selectActiveTaskerItemTypeSortingOrder = createSelector(
     }
   }
 );
-export const selectPersistingUiStateBasicValues = state => {
+export const selectPersistingUiStateValues = state => {
   const {
     taskSortingOrder,
     noteSortingOrder,
     collectionSortingOrder,
     isCheckedOffTaskFilter,
-    isCheckedOffNoteFilter
+    isCheckedOffNoteFilter,
+    activeDeviceFilters
   } = state.uiState;
   return {
     taskSortingOrder,
     noteSortingOrder,
     collectionSortingOrder,
     isCheckedOffTaskFilter,
-    isCheckedOffNoteFilter
+    isCheckedOffNoteFilter,
+    activeDeviceFilters
   };
 };
 

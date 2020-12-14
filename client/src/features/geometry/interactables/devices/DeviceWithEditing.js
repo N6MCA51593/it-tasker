@@ -7,21 +7,22 @@ import DeviceIcon from 'features/geometry/interactables/devices/DeviceIcon';
 import {
   selectDeviceById,
   selectActiveGlobalUiState,
-  selectDeviceActiveItemStatus,
-  selectTaskerActiveItemProperties
+  selectDeviceActiveItemStatus
 } from 'app/selectors';
-import { toggleDevice } from 'features/tasker/taskerSlice';
-import { checkOffDevices } from 'features/api/checkOffDevices';
+import {
+  setActiveDevice,
+  removeDevice,
+  moveDevice
+} from 'features/geometry/interactables/devices/deviceSlice';
 import {
   ADD_DEVICE_GEO,
-  EDIT_TASKER_ITEMS_GLOB,
-  MAIN_GLOB,
+  EDIT_INTERACTABLES_GLOB,
   MOVE_DEVICE_GEO,
-  TASK_TT
+  NAV_GEO,
+  REMOVE_DEVICE_GEO
 } from 'app/constants';
-import { setActiveDevice } from 'features/geometry/interactables/devices/deviceSlice';
 
-const Device = ({ id, mode }) => {
+const DeviceWithEditing = ({ id, mode }) => {
   const dispatch = useDispatch();
   const device = useSelector(
     state => selectDeviceById(state, id),
@@ -30,37 +31,23 @@ const Device = ({ id, mode }) => {
   const activeTaskerItemStatus = useSelector(state =>
     selectDeviceActiveItemStatus(state, id)
   );
-  const { activeItemType } = useSelector(
-    selectTaskerActiveItemProperties,
-    shallowEqual
-  );
   const globalUiState = useSelector(selectActiveGlobalUiState);
   const isActive = useSelector(state => state.devices.activeDevice === id);
-  const { status, type, floor, x, y } = device;
-  const isVisible = useSelector(
-    state => state.uiState.activeDeviceFilters[type]
-  );
+  const { status, type, x, y } = device;
 
   const handleClick = () => {
-    if (globalUiState === EDIT_TASKER_ITEMS_GLOB) {
-      dispatch(toggleDevice({ id, floor }));
-    } else if (
-      activeItemType === TASK_TT &&
-      typeof activeTaskerItemStatus !== 'undefined'
-    ) {
-      dispatch(checkOffDevices(id));
-    } else if (globalUiState === MAIN_GLOB) {
+    if (mode === NAV_GEO && globalUiState === EDIT_INTERACTABLES_GLOB) {
       dispatch(setActiveDevice(id));
+    } else if (mode === REMOVE_DEVICE_GEO) {
+      dispatch(removeDevice(id));
+    } else if (mode === MOVE_DEVICE_GEO && !isActive) {
+      dispatch(moveDevice(id));
     }
   };
   const iconClassName =
     typeof activeTaskerItemStatus !== 'undefined'
       ? 'device-icon-selected'
       : 'device-icon';
-
-  if (!isVisible && typeof activeTaskerItemStatus === 'undefined') {
-    return null;
-  }
 
   return (
     <g>
@@ -75,7 +62,7 @@ const Device = ({ id, mode }) => {
         <StatusIndicator status={status} x={x} y={y} />
         <DeviceIcon type={type} x={x} y={y} className={iconClassName} />
       </g>
-      {isActive && (
+      {isActive && mode !== MOVE_DEVICE_GEO && (
         <DevicePopUp x={x} y={y} mode={mode}>
           <DeviceOptions device={device} />
         </DevicePopUp>
@@ -84,4 +71,4 @@ const Device = ({ id, mode }) => {
   );
 };
 
-export default memo(Device);
+export default memo(DeviceWithEditing);
