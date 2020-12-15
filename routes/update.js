@@ -6,6 +6,7 @@ const generateInteractablesQuery = require('../db/generateInteractablesQuery');
 const generateTaskerUpdateQuery = require('../db/generateTaskerUpdateQuery');
 const generateFloorPositionUpdateQuery = require('../db/generateFloorPositionUpdateQuery');
 const generateFloorUpdateQuery = require('../db/generateFloorUpdateQuery');
+const generateGeometryUpdateQuery = require('../db/generateGeometryUpdateQuery');
 
 // @route     POST api/update/geometry
 // @desc      Update geometry
@@ -24,17 +25,22 @@ router.post('/geometry', async (req, res) => {
 
   try {
     const query = generateWallQuery(toUpsert, toDelete, floors);
-    console.log(query);
-    // const newGeometry = await db.tx(async t => {
-    //   const walls = await t.any(query);
-    //   const geometry = walls.reduce(reducer, '');
-    //   await t.none('UPDATE floors SET geometry = $1 WHERE id = $2', [
-    //     geometry,
-    //     floor
-    //   ]);
-    //   return geometry;
-    // });
-    // res.json({ id: floor, geometry: newGeometry });
+    const newGeometry = await db.tx(async t => {
+      const walls = await t.multi(query);
+      const geometries = walls
+        .filter(e => e.length > 0)
+        .map(floorWalls => {
+          return {
+            id: floorWalls[0].floor,
+            geometry: floorWalls.reduce(reducer, '')
+          };
+        });
+
+      const geoUpdateQuery = generateGeometryUpdateQuery(geometries);
+      await t.none(geoUpdateQuery);
+      return geometries;
+    });
+    res.json(newGeometry);
   } catch (error) {
     res.status(400).json({ error: 'Server error' });
   }

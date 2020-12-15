@@ -70,13 +70,9 @@ const floorsSlice = createSlice({
       floorAdapter.removeOne(state, deletedFloorId);
     },
     'api/updateGeometry/fulfilled': (state, { payload }) => {
-      floorAdapter.updateOne(state, {
-        id: payload.id,
-        changes: {
-          geometry: payload.geometry
-        }
-      });
-      state.activeFloor = payload.id;
+      for (const floor of payload) {
+        state.entities[floor.id].geometry = floor.geometry;
+      }
     },
     'api/updateFloor/fulfilled': (state, { payload }) => {
       const { id, updatedFloors } = payload;

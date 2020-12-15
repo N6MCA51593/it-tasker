@@ -13,7 +13,7 @@ const generateWallQuery = (toUpsert, toDelete, floors) => {
 
   const selectQueries = floors.map(floor => {
     return {
-      query: 'SELECT FROM walls WHERE floor = $1',
+      query: 'SELECT * FROM walls WHERE floor = $1',
       values: floor
     };
   });
