@@ -1,7 +1,7 @@
 const { pgp } = require('./db');
 const { wallsCs, onConflictWalls } = require('./columnSets');
 
-const generateWallQuery = (toUpsert, toDelete, floor) => {
+const generateWallQuery = (toUpsert, toDelete, floors) => {
   const upsQuery =
     toUpsert.length > 0
       ? pgp.helpers.insert(toUpsert, wallsCs) + onConflictWalls
@@ -11,11 +11,14 @@ const generateWallQuery = (toUpsert, toDelete, floor) => {
     ? { query: 'DELETE FROM walls WHERE id IN ($1:list)', values: [toDelete] }
     : '';
 
-  const query = pgp.helpers.concat([
-    upsQuery,
-    delQuery,
-    { query: 'SELECT * FROM walls WHERE floor = $1', values: [floor] }
-  ]);
+  const selectQueries = floors.map(floor => {
+    return {
+      query: 'SELECT FROM walls WHERE floor = $1',
+      values: floor
+    };
+  });
+
+  const query = pgp.helpers.concat([upsQuery, delQuery, ...selectQueries]);
 
   return query;
 };

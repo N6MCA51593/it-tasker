@@ -4,12 +4,15 @@ import { reqQueryParams } from 'features/api/reqQueryParams';
 export const updateGeometry = createAsyncThunk(
   'api/updateGeometry',
   async (_, { getState }) => {
-    const { floors, walls } = getState();
-    const floor = floors.activeFloor;
-    const params = '?' + reqQueryParams(walls.toDelete, 'del') + '&fl=' + floor;
-
-    // Remove duplicates
+    const { walls } = getState();
     const body = [...new Set(walls.toUpsert)].map(e => walls.entities[e]);
+    const toDeleteIds = walls.toDelete.map(e => e.id);
+    const reqFloors = new Set([...body, ...walls.toDelete].map(e => e.floor));
+    const params =
+      '?' +
+      reqQueryParams(toDeleteIds, 'del') +
+      '&' +
+      reqQueryParams([...reqFloors], 'fl');
 
     try {
       const response = await fetch(
@@ -23,11 +26,9 @@ export const updateGeometry = createAsyncThunk(
           mode: 'cors'
         }
       );
-
       if (response.status >= 400 && response.status < 600) {
         throw new Error('Server Error');
       }
-
       const res = await response.json();
       return res;
     } catch (error) {

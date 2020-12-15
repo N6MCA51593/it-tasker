@@ -17,20 +17,24 @@ router.post('/geometry', async (req, res) => {
   };
   const toDelete = req.query.del;
   const toUpsert = req.body;
-  const floor = req.query.fl;
+  const floors =
+    req.query.fl && !Array.isArray(req.query.fl)
+      ? [req.query.fl]
+      : req.query.fl;
 
   try {
-    const query = generateWallQuery(toUpsert, toDelete, floor);
-    const newGeometry = await db.tx(async t => {
-      const walls = await t.any(query);
-      const geometry = walls.reduce(reducer, '');
-      await t.none('UPDATE floors SET geometry = $1 WHERE id = $2', [
-        geometry,
-        floor
-      ]);
-      return geometry;
-    });
-    res.json({ id: floor, geometry: newGeometry });
+    const query = generateWallQuery(toUpsert, toDelete, floors);
+    console.log(query);
+    // const newGeometry = await db.tx(async t => {
+    //   const walls = await t.any(query);
+    //   const geometry = walls.reduce(reducer, '');
+    //   await t.none('UPDATE floors SET geometry = $1 WHERE id = $2', [
+    //     geometry,
+    //     floor
+    //   ]);
+    //   return geometry;
+    // });
+    // res.json({ id: floor, geometry: newGeometry });
   } catch (error) {
     res.status(400).json({ error: 'Server error' });
   }

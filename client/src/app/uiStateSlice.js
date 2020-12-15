@@ -88,6 +88,9 @@ const uiStateSlice = createSlice({
     },
     setNoteFilter(state, { payload }) {
       state.isCheckedOffNoteFilter = payload;
+    },
+    toggleDeviceFilter(state, { payload }) {
+      state.activeDeviceFilters[payload] = !state.activeDeviceFilters[payload];
     }
   },
   extraReducers: {
@@ -142,7 +145,8 @@ export const {
   setTaskerSortingOrder,
   setNoteFilter,
   setTaskFilter,
-  loadFromLocalStorage
+  loadFromLocalStorage,
+  toggleDeviceFilter
 } = uiStateSlice.actions;
 
 export default uiStateSlice.reducer;

@@ -46,7 +46,7 @@ button {
   position: absolute;
   top: 0;
 
-  div {
+  & > div {
     pointer-events: all;
     position: absolute;
     display: flex;
@@ -74,6 +74,16 @@ button {
 
   .device-controls {
     bottom: 0;
+  }
+
+  .filter-controls {
+    display: flex;
+    flex-direction: column;
+
+    &-container {
+      bottom: 0;
+      right: 10px;
+    }
   }
 }
 .text-edit {

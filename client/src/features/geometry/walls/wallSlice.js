@@ -74,7 +74,10 @@ const wallsSlice = createSlice({
       if (state.toUpsert.includes(payload)) {
         state.toUpsert = state.toUpsert.filter(e => e !== payload);
       } else {
-        state.toDelete.push(payload);
+        state.toDelete.push({
+          id: payload,
+          floor: state.entities[payload].floor
+        });
       }
       wallsAdapter.removeOne(state, payload);
     },
