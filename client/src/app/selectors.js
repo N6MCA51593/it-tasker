@@ -141,6 +141,22 @@ export const selectActiveFloorWalls = createSelector(
 // Tasker
 export const selectTaskerItemById = (state, id) => state.tasker.entities[id];
 export const selectByDeviceEntry = (state, id) => state.tasker.byDevice[id];
+export const selectDeviceActiveTasks = () =>
+  createSelector(
+    state => state.tasker.byDevice,
+    state => state.tasker.entities,
+    (_, id) => id,
+    (byDevice, entities, id) => {
+      if (byDevice[id]) {
+        const activeItems = Object.keys(byDevice[id]).filter(
+          taskId => byDevice[id][taskId]
+        );
+        return activeItems.map(taskId => entities[taskId]);
+      } else {
+        return null;
+      }
+    }
+  );
 export const selectDeviceActiveItemStatus = (state, id) =>
   state.tasker.byDevice[id]?.[state.tasker.activeItem];
 export const selectTaskerActiveItemProperties = state => {
