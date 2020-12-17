@@ -56,10 +56,6 @@ const floorsSlice = createSlice({
     },
     'api/removeFloor/fulfilled': (state, { payload }) => {
       const { deletedFloorId } = payload;
-      if (state.activeFloor === deletedFloorId) {
-        state.activeFloor = state.ids[0];
-      }
-
       if (payload.floors) {
         for (const floor of payload.floors) {
           state.entities[floor.id].position = floor.position;
@@ -68,6 +64,10 @@ const floorsSlice = createSlice({
 
       state.editingFloor = null;
       floorAdapter.removeOne(state, deletedFloorId);
+
+      if (state.activeFloor === deletedFloorId) {
+        state.activeFloor = state.ids[0];
+      }
     },
     'api/updateGeometry/fulfilled': (state, { payload }) => {
       for (const floor of payload) {
