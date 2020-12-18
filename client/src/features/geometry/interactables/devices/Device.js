@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
-import DevicePopUp from 'features/geometry/interactables/devices/DevicePopUp';
+import DevicePopUpContainer from 'features/geometry/interactables/devices/DevicePopUpContainer';
 import StatusIndicator from 'features/geometry/interactables/devices/StatusIndicator';
 import DeviceIcon from 'features/geometry/interactables/devices/DeviceIcon';
 import {
@@ -19,7 +19,7 @@ import {
   TASK_TT
 } from 'app/constants';
 import { setActiveDevice } from 'features/geometry/interactables/devices/deviceSlice';
-import DeviceTaskerItems from 'features/geometry/interactables/devices/DeviceTaskerItems';
+import DeviceMainPopUp from 'features/geometry/interactables/devices/DeviceMainPopUp';
 
 const Device = ({ id, mode }) => {
   const dispatch = useDispatch();
@@ -76,9 +76,9 @@ const Device = ({ id, mode }) => {
         <DeviceIcon type={type} x={x} y={y} className={iconClassName} />
       </g>
       {isActive && (
-        <DevicePopUp x={x} y={y} mode={mode}>
-          <DeviceTaskerItems device={device} />
-        </DevicePopUp>
+        <DevicePopUpContainer x={x} y={y} mode={mode}>
+          <DeviceMainPopUp id={id} />
+        </DevicePopUpContainer>
       )}
     </g>
   );

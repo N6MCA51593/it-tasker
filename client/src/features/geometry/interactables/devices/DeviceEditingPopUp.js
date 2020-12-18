@@ -6,7 +6,7 @@ import {
   setActiveDevice
 } from 'features/geometry/interactables/devices/deviceSlice';
 
-const DeviceOptions = ({ device }) => {
+const DeviceEditingPopUp = ({ device }) => {
   const dispatch = useDispatch();
   const { name, type, description, status } = device;
   const { value: nameState, bind: bindName } = useInput(name);
@@ -62,4 +62,4 @@ const DeviceOptions = ({ device }) => {
   );
 };
 
-export default DeviceOptions;
+export default DeviceEditingPopUp;

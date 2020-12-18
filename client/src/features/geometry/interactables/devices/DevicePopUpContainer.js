@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { setDeviceHoverStatus } from 'app/uiStateSlice';
 import { NAV_GEO } from 'app/constants';
 
-const DevicePopUp = ({ x, y, mode, children }) => {
+const DevicePopUpContainer = ({ x, y, mode, children }) => {
   const dispatch = useDispatch();
   const handleMouseEnter = () => {
     if (mode === NAV_GEO) {
@@ -30,4 +30,4 @@ const DevicePopUp = ({ x, y, mode, children }) => {
   );
 };
 
-export default DevicePopUp;
+export default DevicePopUpContainer;

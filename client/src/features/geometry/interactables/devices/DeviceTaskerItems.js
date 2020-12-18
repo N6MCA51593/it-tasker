@@ -1,18 +1,18 @@
-import React, { useMemo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { setActiveDevice } from 'features/geometry/interactables/devices/deviceSlice';
-import { selectDeviceActiveTasks } from 'app/selectors';
+import DeviceTaskerItem from 'features/geometry/interactables/devices/DeviceTaskerItem';
+import { addItem } from 'features/tasker/taskerSlice';
+import React from 'react';
+import { useDispatch } from 'react-redux';
 
-const DeviceTaskerItems = ({ device }) => {
+const DeviceTaskerItems = ({ taskerItems, type, id }) => {
   const dispatch = useDispatch();
-  const { id, name, type, description, status } = device;
-  const activeTasksSelector = useMemo(selectDeviceActiveTasks, []);
-  const activeTasks = useSelector(state => activeTasksSelector(state, id));
-  console.log(activeTasks);
 
   return (
-    <div className='options'>
-      <button onClick={() => dispatch(setActiveDevice())}>Close</button>
+    <div className='device-tasker-items'>
+      {type}
+      {taskerItems.map(item => (
+        <DeviceTaskerItem key={item.id} taskerItem={item} />
+      ))}
+      <button onClick={() => dispatch(addItem(id, type))}>Add</button>
     </div>
   );
 };

@@ -102,6 +102,12 @@ const devicesSlice = createSlice({
       state.toDelete = [];
       state.toUpsert = [];
     },
+    'floors/setActiveFloor': state => {
+      state.activeDevice = null;
+    },
+    'tasker/toggleActiveItem': state => {
+      state.activeDevice = null;
+    },
     'api/updateInteractables/fulfilled': state => {
       state.toDelete = [];
       state.toUpsert = [];
@@ -117,6 +123,7 @@ const devicesSlice = createSlice({
       buildByAreas(state);
     },
     'uiState/setUiGlobalState': (state, { payload }) => {
+      state.activeDevice = null;
       if (payload === EDIT_INTERACTABLES_GLOB && !state.devicesHistory) {
         state.devicesHistory = state.entities;
       } else if (state.devicesHistory) {

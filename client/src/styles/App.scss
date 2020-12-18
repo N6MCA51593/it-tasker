@@ -260,3 +260,16 @@ button {
 //   transform: translate(-10px, -30px);
 //   //transform: rotate(45deg);
 // }
+.device-tasker-items {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  border: 1px solid #000;
+  gap: 1rem;
+}
+.device-tasker-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  border: 1px solid #000;
+}

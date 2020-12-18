@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
-import DevicePopUp from 'features/geometry/interactables/devices/DevicePopUp';
-import DeviceOptions from 'features/geometry/interactables/devices/DeviceOptions';
+import DevicePopUpContainer from 'features/geometry/interactables/devices/DevicePopUpContainer';
+import DeviceEditingPopUp from 'features/geometry/interactables/devices/DeviceEditingPopUp';
 import StatusIndicator from 'features/geometry/interactables/devices/StatusIndicator';
 import DeviceIcon from 'features/geometry/interactables/devices/DeviceIcon';
 import {
@@ -63,9 +63,9 @@ const DeviceWithEditing = ({ id, mode }) => {
         <DeviceIcon type={type} x={x} y={y} className={iconClassName} />
       </g>
       {isActive && mode !== MOVE_DEVICE_GEO && (
-        <DevicePopUp x={x} y={y} mode={mode}>
-          <DeviceOptions device={device} />
-        </DevicePopUp>
+        <DevicePopUpContainer x={x} y={y} mode={mode}>
+          <DeviceEditingPopUp device={device} />
+        </DevicePopUpContainer>
       )}
     </g>
   );
