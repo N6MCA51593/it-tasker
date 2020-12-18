@@ -5,13 +5,14 @@ import { selectDeviceActiveTaskerItems } from 'app/selectors';
 import { NOTE_TT, TASK_TT } from 'app/constants';
 import DeviceTaskerItems from 'features/geometry/interactables/devices/DeviceTaskerItems';
 
-const DeviceMainPopUp = ({ id }) => {
+const DeviceMainPopUp = ({ id, floor }) => {
   const dispatch = useDispatch();
   const activeTaskerItemsSelector = useMemo(selectDeviceActiveTaskerItems, []);
   const activeTaskerItems = useSelector(state =>
     activeTaskerItemsSelector(state, id)
   );
 
+  console.log(activeTaskerItems);
   const tasks =
     activeTaskerItems &&
     activeTaskerItems.filter(item => item.type === TASK_TT);
@@ -23,10 +24,20 @@ const DeviceMainPopUp = ({ id }) => {
   return (
     <div className='options'>
       {tasks && (
-        <DeviceTaskerItems taskerItems={tasks} type={TASK_TT} id={id} />
+        <DeviceTaskerItems
+          taskerItems={tasks}
+          type={TASK_TT}
+          id={id}
+          floor={floor}
+        />
       )}
       {notes && (
-        <DeviceTaskerItems taskerItems={notes} type={NOTE_TT} id={id} />
+        <DeviceTaskerItems
+          taskerItems={notes}
+          type={NOTE_TT}
+          id={id}
+          floor={floor}
+        />
       )}
       <button onClick={() => dispatch(setActiveDevice())}>Close</button>
     </div>

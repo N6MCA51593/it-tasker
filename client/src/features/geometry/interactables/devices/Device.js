@@ -77,7 +77,7 @@ const Device = ({ id, mode }) => {
       </g>
       {isActive && (
         <DevicePopUpContainer x={x} y={y} mode={mode}>
-          <DeviceMainPopUp id={id} />
+          <DeviceMainPopUp id={id} floor={floor} />
         </DevicePopUpContainer>
       )}
     </g>

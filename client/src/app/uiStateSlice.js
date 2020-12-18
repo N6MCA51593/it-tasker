@@ -107,6 +107,7 @@ const uiStateSlice = createSlice({
     },
     'tasker/addItem': state => {
       state.activeGlobalState = EDIT_TASKER_ITEMS_GLOB;
+      state.isHoveringOverDevicePopUp = false;
     },
     'devices/setActiveDevice': state => {
       state.isHoveringOverDevicePopUp = false;
@@ -126,6 +127,7 @@ const uiStateSlice = createSlice({
       state.activeGlobalState === VIEW_TASKER_ITEMS_GLOB
         ? (state.activeGlobalState = MAIN_GLOB)
         : (state.activeGlobalState = VIEW_TASKER_ITEMS_GLOB);
+      state.isHoveringOverDevicePopUp = false;
     },
     'tasker/setActiveItemType': state => {
       state.activeGlobalState = MAIN_GLOB;

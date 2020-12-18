@@ -36,7 +36,7 @@ const cancelChangesFn = state => {
   const activeItem = state.entities[state.activeItem];
   if (activeItem.isNew) {
     for (const deviceId of activeItem.devices) {
-      delete state.byDevice[deviceId];
+      delete state.byDevice[deviceId][activeItem.id];
     }
 
     taskerAdapter.removeOne(state, state.activeItem);

@@ -108,6 +108,9 @@ const devicesSlice = createSlice({
     'tasker/toggleActiveItem': state => {
       state.activeDevice = null;
     },
+    'tasker/addItem': state => {
+      state.activeDevice = null;
+    },
     'api/updateInteractables/fulfilled': state => {
       state.toDelete = [];
       state.toUpsert = [];
