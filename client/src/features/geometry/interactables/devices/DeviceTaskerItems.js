@@ -9,13 +9,14 @@ const DeviceTaskerItems = ({ taskerItems, type, id, floor }) => {
   return (
     <div className='device-tasker-items'>
       {type}
-      {taskerItems.map(item => (
-        <DeviceTaskerItem
-          key={item.id}
-          taskerItem={item}
-          clickHandler={() => dispatch(toggleActiveItem(item.id))}
-        />
-      ))}
+      {taskerItems &&
+        taskerItems.map(item => (
+          <DeviceTaskerItem
+            key={item.id}
+            taskerItem={item}
+            clickHandler={() => dispatch(toggleActiveItem(item.id))}
+          />
+        ))}
       <button
         onClick={() =>
           dispatch(addItem({ deviceId: id, type, deviceFloor: floor }))

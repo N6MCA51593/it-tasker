@@ -12,7 +12,6 @@ const DeviceMainPopUp = ({ id, floor }) => {
     activeTaskerItemsSelector(state, id)
   );
 
-  console.log(activeTaskerItems);
   const tasks =
     activeTaskerItems &&
     activeTaskerItems.filter(item => item.type === TASK_TT);
@@ -23,22 +22,18 @@ const DeviceMainPopUp = ({ id, floor }) => {
 
   return (
     <div className='options'>
-      {tasks && (
-        <DeviceTaskerItems
-          taskerItems={tasks}
-          type={TASK_TT}
-          id={id}
-          floor={floor}
-        />
-      )}
-      {notes && (
-        <DeviceTaskerItems
-          taskerItems={notes}
-          type={NOTE_TT}
-          id={id}
-          floor={floor}
-        />
-      )}
+      <DeviceTaskerItems
+        taskerItems={tasks}
+        type={TASK_TT}
+        id={id}
+        floor={floor}
+      />
+      <DeviceTaskerItems
+        taskerItems={notes}
+        type={NOTE_TT}
+        id={id}
+        floor={floor}
+      />
       <button onClick={() => dispatch(setActiveDevice())}>Close</button>
     </div>
   );

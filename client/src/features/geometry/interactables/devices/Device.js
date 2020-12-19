@@ -1,7 +1,6 @@
 import React, { memo } from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import DevicePopUpContainer from 'features/geometry/interactables/devices/DevicePopUpContainer';
-import StatusIndicator from 'features/geometry/interactables/devices/StatusIndicator';
 import DeviceIcon from 'features/geometry/interactables/devices/DeviceIcon';
 import {
   selectDeviceById,
@@ -72,7 +71,6 @@ const Device = ({ id, mode }) => {
             : ''
         }
       >
-        <StatusIndicator status={status} x={x} y={y} />
         <DeviceIcon type={type} x={x} y={y} className={iconClassName} />
       </g>
       {isActive && (
