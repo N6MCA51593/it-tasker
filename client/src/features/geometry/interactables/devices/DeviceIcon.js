@@ -2,11 +2,10 @@ import React from 'react';
 
 const DeviceIcon = ({ type, x, y, className }) => {
   return (
-    <g transform='translate(-22 -44)'>
+    <g transform='translate(-21.5 -44)'>
       <svg
         width='44'
         height='44'
-        strokeWidth='1.5'
         stroke='currentColor'
         strokeLinecap='round'
         strokeLinejoin='round'

@@ -11,7 +11,7 @@ const Grid = ({ panHLvl, panVLvl, width, height, gridStep }) => {
         height={gridStep}
         patternUnits='userSpaceOnUse'
       >
-        <path d='M5 2 h2 v2 h2 v2 h-2 v2 h-2 v-2 h-2 v-2 h2 z' />
+        <path d='M6 2 h1 v3 h3 v1 h-3 v3 h-1 v-3 h-3 v-1 h3 z' />
       </pattern>
       <rect
         x={panHLvl + 'px'}

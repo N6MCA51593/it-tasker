@@ -15,17 +15,20 @@ const useCoordinates = ({
     const nodes = [
       [divX, divY],
       [divX + gridStep, divY],
+      [divX - gridStep, divY],
       [divX, divY + gridStep],
-      [divX + gridStep, divY + gridStep]
+      [divX, divY - gridStep],
+      [divX + gridStep, divY + gridStep],
+      [divX - gridStep, divY - gridStep],
+      [divX + gridStep, divY - gridStep],
+      [divX - gridStep, divY + gridStep]
     ];
 
-    for (let i = 0; i < nodes.length; i++) {
+    for (const node of nodes) {
       if (
-        Math.sqrt(
-          Math.pow(nodes[i][0] - x, 2) + Math.pow(nodes[i][1] - y, 2)
-        ) <= diff
+        Math.sqrt(Math.pow(node[0] - x, 2) + Math.pow(node[1] - y, 2)) <= diff
       ) {
-        return { x: Math.round(nodes[i][0]), y: Math.round(nodes[i][1]) };
+        return { x: Math.round(node[0]), y: Math.round(node[1]) };
       }
     }
 
@@ -35,7 +38,6 @@ const useCoordinates = ({
   const getRelCoord = useCallback(
     (e, checkGrid = false) => {
       const boundingRect = ref.current.getBoundingClientRect();
-
       const x = Math.round((e.clientX - boundingRect.left) * zoomLvl + panHLvl);
       const y = Math.round((e.clientY - boundingRect.top) * zoomLvl + panVLvl);
 
