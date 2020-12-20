@@ -1,0 +1,56 @@
+// Device geometry
+
+.device-icon {
+  pointer-events: all;
+  &.selected {
+    fill: yellow;
+  }
+}
+
+.device-disabled {
+  pointer-events: none;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 0.5rem 0;
+
+  label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+}
+
+.device-tasker-items {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  border: 1px solid #000;
+  gap: 1rem;
+}
+
+.device-tasker-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  border: 1px solid #000;
+}
+
+.type-picker {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 80%;
+  height: 100%;
+  margin: auto;
+
+  div {
+    height: 100%;
+    flex: 1;
+  }
+}

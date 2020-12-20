@@ -54,7 +54,7 @@ const Device = ({ id, mode }) => {
   };
   const iconClassName =
     typeof activeTaskerItemStatus !== 'undefined'
-      ? 'device-icon-selected'
+      ? 'device-icon selected'
       : 'device-icon';
 
   if (!isVisible && typeof activeTaskerItemStatus === 'undefined') {

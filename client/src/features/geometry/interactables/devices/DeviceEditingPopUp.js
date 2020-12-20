@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import useInput from 'common/useInput';
 import { useDispatch } from 'react-redux';
 import {
   updateActiveDevice,
   setActiveDevice
 } from 'features/geometry/interactables/devices/deviceSlice';
+import TypePicker from 'features/geometry/interactables/devices/TypePicker';
 
 const DeviceEditingPopUp = ({ device }) => {
   const dispatch = useDispatch();
@@ -14,7 +15,7 @@ const DeviceEditingPopUp = ({ device }) => {
   const { value: descriptionState, bind: bindDescription } = useInput(
     description
   );
-  const { value: typeState, bind: bindType } = useInput(type);
+  const [typeState, setTypeState] = useState(type);
 
   const save = () => {
     dispatch(
@@ -49,13 +50,7 @@ const DeviceEditingPopUp = ({ device }) => {
           <option value='failure'>Failure</option>
         </select>
       </label>
-      <label>
-        Type (icon):
-        <select {...bindType}>
-          <option value='PC'>PC</option>
-          <option value='Other'>Other</option>
-        </select>
-      </label>
+      <TypePicker type={typeState} setType={setTypeState} />
       <button onClick={() => save()}>Save</button>
       <button onClick={() => cancel()}>Cancel</button>
     </div>

@@ -3,17 +3,7 @@ import React from 'react';
 const DeviceIcon = ({ type, x, y, className }) => {
   return (
     <g transform='translate(-21.5 -44)'>
-      <svg
-        width='44'
-        height='44'
-        stroke='currentColor'
-        strokeLinecap='round'
-        strokeLinejoin='round'
-        id='icon'
-        x={x}
-        y={y}
-        className={className}
-      >
+      <svg width='44' height='44' x={x} y={y} className={className}>
         <svg viewBox='0 0 215 268.17'>
           <path
             d='M567.13,191C507.75,191,459,242.72,459,302.08c0,53.87,88.53,141.67,104.91,157.45a3.72,3.72,0,0,0,5.18,0C585.47,443.75,674,356,674,302.08,674,242.72,626.5,191,567.13,191Z'
@@ -33,13 +23,14 @@ const DeviceIcon = ({ type, x, y, className }) => {
             d='M630.71,237.27a9.64,9.64,0,0,1-6.6-2.62A85.13,85.13,0,0,0,566,211.5a83.75,83.75,0,0,0-56.88,22.43,9.66,9.66,0,0,1-6.58,2.6,9.39,9.39,0,0,1-4.54-1.17l-1.24-.68a9.52,9.52,0,0,1-1.8-15.36,105.91,105.91,0,0,1,143-.12,10.18,10.18,0,0,1-1.61,16.26l-.78.47a9.29,9.29,0,0,1-4.82,1.34Z'
             transform='translate(-459 -191)'
           />
-          <circle cx='192.5' cy='60.5' r='12' />
-          <circle cx='62.5' cy='209.5' r='12' />
-          <circle cx='22.5' cy='60.5' r='12' />
+          <circle cx='192.5' cy='60.5' r='12' fill='red' />
+          <circle cx='62.5' cy='209.5' r='12' fill='blue' />
+          <circle cx='22.5' cy='60.5' r='12' fill='green' />
           <path
             d='M566.5,350.5a52,52,0,1,1,52-52c0,1.4-.06,2.79-.17,4.16a8.33,8.33,0,0,0,5.22,8.42h0a7.84,7.84,0,0,0,10.69-6.68q.25-2.91.26-5.9a68,68,0,1,0-68,68c1.78,0,3.55-.07,5.3-.21a7.88,7.88,0,0,0,6.77-10.64h0a8.26,8.26,0,0,0-8.36-5.28C569,350.45,567.75,350.5,566.5,350.5Z'
             transform='translate(-459 -191)'
           />
+          <use href={`#icon-${type}`} transform='translate(67 67)' />
         </svg>
       </svg>
     </g>
