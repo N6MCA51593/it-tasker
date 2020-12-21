@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import {
   getTaskerCompletionTable,
@@ -17,6 +17,11 @@ const TaskerItemsContainer = () => {
     selectTaskerActiveItemProperties,
     shallowEqual
   );
+  const [wasActive, setWasActive] = useState(null);
+
+  useEffect(() => {
+    setWasActive(activeItem);
+  }, [activeItem]);
 
   if (activeItem) {
     return <TaskerSinglePageItem id={activeItem} isEditing={isEditing} />;
@@ -25,7 +30,12 @@ const TaskerItemsContainer = () => {
   return (
     <div className='tasker-items-container'>
       {ids.map(id => (
-        <TaskerListItem key={id} id={id} completion={completionTable[id]} />
+        <TaskerListItem
+          key={id}
+          id={id}
+          completion={completionTable[id]}
+          wasActive={wasActive}
+        />
       ))}
       <button onClick={() => dispatch(addItem({ type: activeItemType }))}>
         Add
