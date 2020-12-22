@@ -9,14 +9,16 @@ const TaskerListItem = ({ id, completion, wasActive }) => {
     selectTaskerItemById(state, id)
   );
   const ref = useRef();
+
   useEffect(() => {
     if (wasActive === id) {
       ref.current.scrollIntoView({
         behavior: 'smooth',
-        block: 'start'
+        block: 'center'
       });
     }
   }, [wasActive, id]);
+
   return (
     <div
       className='collection-table-item'

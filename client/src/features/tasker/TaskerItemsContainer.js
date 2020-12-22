@@ -11,13 +11,13 @@ import TaskerSinglePageItem from 'features/tasker/TaskerSinglePageItem';
 
 const TaskerItemsContainer = () => {
   const dispatch = useDispatch();
+  const [wasActive, setWasActive] = useState(null);
   const ids = useSelector(selectAllActiveItemTypeTasksSorted);
   const completionTable = useSelector(getTaskerCompletionTable, shallowEqual);
   const { activeItem, isEditing, activeItemType } = useSelector(
     selectTaskerActiveItemProperties,
     shallowEqual
   );
-  const [wasActive, setWasActive] = useState(null);
 
   useEffect(() => {
     setWasActive(activeItem);
