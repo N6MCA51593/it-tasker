@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/N6MCA51593/it-tasker/",
   "dependencies": {
+    "bcrypt": "^5.0.0",
     "connect-pg-simple": "^6.2.1",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",

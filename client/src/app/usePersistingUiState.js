@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { useCallback } from 'react';
 import { useEffect } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-
+// TODO User id
 const usePersistingUiState = geoUi => {
   const [hasRead, setHasRead] = useState(false);
   const values = useSelector(selectPersistingUiStateValues, shallowEqual);

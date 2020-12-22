@@ -1,7 +1,10 @@
-const express = require('express');
-const app = express();
-const cors = require('cors');
 require('dotenv').config();
+const express = require('express');
+const session = require('express-session');
+const pgSession = require('connect-pg-simple')(session);
+const app = express();
+const { db } = require('./db/db');
+const cors = require('cors');
 
 app.use(
   cors({
@@ -10,11 +13,25 @@ app.use(
   })
 );
 
+app.use(
+  session({
+    store: new pgSession({
+      pgPromise: db
+    }),
+    name: process.env.SESSION_NAME,
+    secret: process.env.SESSION_SECRET,
+    saveUninitialized: false,
+    resave: false,
+    cookie: { maxAge: 30 * 24 * 60 * 60 * 1000, sameSite: true, httpOnly: true } //TODO Secure cookies
+  })
+);
+
 app.use(express.json());
 app.use('/api/update', require('./routes/update'));
 app.use('/api/load', require('./routes/load'));
 app.use('/api/check-off', require('./routes/check-off'));
 app.use('/api/delete', require('./routes/delete'));
+app.use('/api/auth', require('./routes/auth'));
 
 // app.use(express.static('client/build'));
 // app.get('*', (req, res) => {
