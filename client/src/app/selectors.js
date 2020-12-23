@@ -251,3 +251,6 @@ export const selectActiveSoringOrder = state => {
     return state.uiState.collectionSortingOrder;
   }
 };
+
+// Auth
+export const selectIsAuthenticated = state => state.authState.isAuthenticated;

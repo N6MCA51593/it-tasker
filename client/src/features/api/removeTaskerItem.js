@@ -8,6 +8,7 @@ export const removeTaskerItem = createAsyncThunk(
         `http://localhost:5000/api/delete/task?id=${payload}`,
         {
           method: 'DELETE',
+          credentials: 'include',
           mode: 'cors'
         }
       );

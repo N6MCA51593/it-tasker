@@ -3,8 +3,9 @@ import wallsReducer from 'features/geometry/walls/wallSlice';
 import areasReducer from 'features/geometry/interactables/areas/areaSlice';
 import devicesReducer from 'features/geometry/interactables/devices/deviceSlice';
 import uiStateReducer from 'app/uiStateSlice';
-import floorsReducer from '../features/tasker/floors/floorSlice';
-import taskerReducer from '../features/tasker/taskerSlice';
+import authStateReducer from 'features/auth/authStateSlice';
+import floorsReducer from 'features/tasker/floors/floorSlice';
+import taskerReducer from 'features/tasker/taskerSlice';
 
 export default configureStore({
   reducer: {
@@ -13,6 +14,7 @@ export default configureStore({
     devices: devicesReducer,
     floors: floorsReducer,
     uiState: uiStateReducer,
-    tasker: taskerReducer
+    tasker: taskerReducer,
+    authState: authStateReducer
   }
 });

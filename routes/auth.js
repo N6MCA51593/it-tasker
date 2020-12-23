@@ -2,15 +2,21 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const router = express.Router();
 const { db } = require('../db/db');
-const session = require('express-session');
+
+// @route     Get api/auth/
+// @desc      Check if user session exists
+// @access    Public
+router.get('/', (req, res) => {
+  res.json(req.session.user);
+});
 
 // @route     POST api/auth/signup
 // @desc      Register new account
 // @access    Public
 router.post('/signup', async (req, res) => {
   try {
-    const { username, password } = req.body;
-    if (username.length > 20 || password.length > 20) {
+    const { userName, password } = req.body;
+    if (userName.length > 20 || password.length > 20) {
       return res.status(400).json({
         msg: 'Username or password length exceed maximum length (20)'
       });
@@ -18,7 +24,7 @@ router.post('/signup', async (req, res) => {
 
     const doesAlreadyExist = await db.oneOrNone(
       'SELECT * FROM users WHERE username=$1',
-      username
+      userName
     );
     if (doesAlreadyExist) {
       return res.status(400).json({
@@ -27,10 +33,10 @@ router.post('/signup', async (req, res) => {
     }
     const pwHashed = await bcrypt.hash(password, 8);
     const newUser = await db.one(
-      'INSERT INTO users(username, password) VALUES(${username}, ${pwHashed}) RETURNING *',
-      { username, pwHashed }
+      'INSERT INTO users(username, password) VALUES(${userName}, ${pwHashed}) RETURNING *',
+      { userName, pwHashed }
     );
-    const sessionUser = { id: newUser.id, username: newUser.username };
+    const sessionUser = { id: newUser.id, userName: newUser.username };
     req.session.user = sessionUser;
     res.json(sessionUser);
   } catch (error) {
@@ -44,14 +50,14 @@ router.post('/signup', async (req, res) => {
 // @access    Public
 router.post('/login', async (req, res) => {
   try {
-    const { username, password } = req.body;
+    const { userName, password } = req.body;
     const user = await db.oneOrNone(
       'SELECT * FROM users WHERE username = $1',
-      username
+      userName
     );
 
     if (user && (await bcrypt.compare(password, user.password))) {
-      const sessionUser = { id: user.id, username: user.username };
+      const sessionUser = { id: user.id, userName: user.username };
       req.session.user = sessionUser;
       return res.json(sessionUser);
     } else {
@@ -69,10 +75,10 @@ router.post('/login', async (req, res) => {
 router.post('/logout', async (req, res) => {
   try {
     const user = req.session.user;
-    session.destroy(error => {
+    req.session.destroy(error => {
       if (error) throw error;
       res.clearCookie(process.env.SESSION_NAME);
-      res.send(user);
+      res.json(user);
     });
   } catch (error) {
     console.log(error);

@@ -14,6 +14,7 @@ import { useDispatch } from 'react-redux';
 import * as ui from 'app/constants';
 import FloorSwitcher from 'features/geometry/FloorSwitcher';
 import FilterControls from 'features/geometry/FilterControls';
+import { logout } from 'features/api/logout';
 
 const GeometryControls = ({
   zoomIn,
@@ -112,6 +113,7 @@ const GeometryControls = ({
         <button onClick={() => panH()}> R </button>
       </div>
       <div className='state-nav-controls'>
+        <button onClick={() => dispatch(logout())}>Logout</button>
         <button onClick={() => dispatch(setUiGlobalState(ui.MAIN_GLOB))}>
           Main
         </button>

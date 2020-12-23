@@ -22,7 +22,11 @@ app.use(
     secret: process.env.SESSION_SECRET,
     saveUninitialized: false,
     resave: false,
-    cookie: { maxAge: 30 * 24 * 60 * 60 * 1000, sameSite: true, httpOnly: true } //TODO Secure cookies
+    cookie: {
+      maxAge: 30 * 24 * 60 * 60 * 1000,
+      sameSite: 'strict',
+      httpOnly: true
+    } //TODO Secure cookies
   })
 );
 

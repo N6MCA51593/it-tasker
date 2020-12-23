@@ -24,6 +24,7 @@ export const updateInteractables = createAsyncThunk(
         {
           method: 'POST',
           body: JSON.stringify(body),
+          credentials: 'include',
           headers: {
             'Content-Type': 'application/json'
           },

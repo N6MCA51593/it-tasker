@@ -27,6 +27,7 @@ export const updateTaskerItem = createAsyncThunk(
         'http://localhost:5000/api/update/task' + params,
         {
           method: 'POST',
+          credentials: 'include',
           body: JSON.stringify(body),
           headers: {
             'Content-Type': 'application/json'

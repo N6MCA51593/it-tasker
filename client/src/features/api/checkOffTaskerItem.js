@@ -8,6 +8,7 @@ export const checkOffTaskerItem = createAsyncThunk(
         `http://localhost:5000/api/check-off/task?id=${payload}`,
         {
           method: 'POST',
+          credentials: 'include',
           mode: 'cors'
         }
       );

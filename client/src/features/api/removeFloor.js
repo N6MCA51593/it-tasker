@@ -8,6 +8,7 @@ export const removeFloor = createAsyncThunk(
         `http://localhost:5000/api/delete/floor?id=${payload}`,
         {
           method: 'DELETE',
+          credentials: 'include',
           mode: 'cors'
         }
       );

@@ -1,9 +1,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-export const loadAppData = createAsyncThunk('api/loadAppData', async () => {
+export const logout = createAsyncThunk('api/logout', async () => {
   try {
-    const response = await fetch('http://localhost:5000/api/load', {
-      method: 'GET',
+    const response = await fetch('http://localhost:5000/api/auth/logout', {
+      method: 'POST',
       credentials: 'include',
       mode: 'cors'
     });
@@ -15,6 +15,6 @@ export const loadAppData = createAsyncThunk('api/loadAppData', async () => {
     const res = await response.json();
     return res;
   } catch (error) {
-    throw new Error('Server Error');
+    throw new Error(error);
   }
 });
