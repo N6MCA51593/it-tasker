@@ -7,11 +7,13 @@ const generateTaskerUpdateQuery = require('../db/generateTaskerUpdateQuery');
 const generateFloorPositionUpdateQuery = require('../db/generateFloorPositionUpdateQuery');
 const generateFloorUpdateQuery = require('../db/generateFloorUpdateQuery');
 const generateGeometryUpdateQuery = require('../db/generateGeometryUpdateQuery');
+const authMiddleware = require('../authMiddleware');
 
 // @route     POST api/update/geometry
 // @desc      Update geometry
 // @access    Private
-router.post('/geometry', async (req, res) => {
+router.post('/geometry', authMiddleware, async (req, res) => {
+  const { userId } = req;
   const reducer = (accum, wall) => {
     const { x1, y1, x2, y2 } = wall.coords;
     return accum + `M ${x1} ${y1} L ${x2} ${y2}`;
@@ -24,7 +26,7 @@ router.post('/geometry', async (req, res) => {
       : req.query.fl;
 
   try {
-    const query = generateWallQuery(toUpsert, toDelete, floors);
+    const query = generateWallQuery(toUpsert, toDelete, floors, userId);
     const newGeometry = await db.tx(async t => {
       const walls = await t.multi(query);
       const geometries = walls
@@ -42,6 +44,7 @@ router.post('/geometry', async (req, res) => {
     });
     res.json(newGeometry);
   } catch (error) {
+    console.log(error);
     res.status(400).json({ error: 'Server error' });
   }
 });
@@ -49,22 +52,23 @@ router.post('/geometry', async (req, res) => {
 // @route     POST api/update/interactables
 // @desc      Update areas and devices
 // @access    Private
-router.post('/interactables', async (req, res) => {
+router.post('/interactables', authMiddleware, async (req, res) => {
+  const { userId } = req;
   const toDeleteAreas = req.query.adel;
   const toDeleteDevices = req.query.ddel;
   const toUpsertAreas = req.body.areas;
   const toUpsertDevices = req.body.devices;
-  const floor = req.query.fl;
+
   try {
     const query = generateInteractablesQuery(
       toUpsertAreas,
       toDeleteAreas,
       toUpsertDevices,
       toDeleteDevices,
-      floor
+      userId
     );
     await db.tx(async t => await t.none(query));
-    res.json({ test: 'ok' });
+    return res.sendStatus(200);
   } catch (error) {
     console.log(error);
     res.status(400).json({ error: 'Server error' });
@@ -89,7 +93,7 @@ router.post('/task', async (req, res) => {
   try {
     const query = generateTaskerUpdateQuery(toAdd, toDelete, item, ts);
     await db.tx(async t => await t.none(query));
-    res.json({ status: 'ok', ts, id: item.id, name: item.name });
+    res.json({ ts, id: item.id, name: item.name });
   } catch (error) {
     console.log(error);
     res.status(400).json({ error: 'Server error' });

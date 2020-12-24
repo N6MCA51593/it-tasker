@@ -1,18 +1,17 @@
 module.exports = (req, res, next) => {
-  // const token = req.cookies.token || null;
-  // if (!token) {
-  //   return res.status(401).json({ msg: 'Token not provided' });
-  // }
-
-  // try {
-  //   const decoded = jwt.verify(token, jwtSecret);
-  //   req.user = decoded.user;
-  //   next();
-  // } catch (err) {
-  //   res.clearCookie('token');
-  //   res.status(401).json({ msg: 'Token is not valid' });
-  // }
-  // console.log(req.session.user);
-  // console.log(req.session.id);
-  next();
+  try {
+    if (!req.session.user) {
+      req.session.destroy(error => {
+        if (error) throw error;
+        res.clearCookie(process.env.SESSION_NAME);
+        return res.status(401).json({ msg: 'Not authorized' });
+      });
+    } else {
+      req.userId = req.session.user.id;
+      next();
+    }
+  } catch (error) {
+    console.log(error);
+    return res.status(401).json({ msg: 'Not authorized' });
+  }
 };

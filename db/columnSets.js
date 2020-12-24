@@ -1,15 +1,18 @@
 const { pgp } = require('./db');
 
-const wallsCs = new pgp.helpers.ColumnSet(['?id', '?floor', 'coords:json'], {
-  table: 'walls'
-});
+const wallsCs = new pgp.helpers.ColumnSet(
+  ['?id', '?floor', '?owner', 'coords:json'],
+  {
+    table: 'walls'
+  }
+);
 
 const onConflictWalls =
   ' ON CONFLICT(id) DO UPDATE SET ' +
-  wallsCs.assignColumns({ from: 'EXCLUDED', skip: ['id', 'floor'] });
+  wallsCs.assignColumns({ from: 'EXCLUDED', skip: ['id', 'floor', 'owner'] });
 
 const areasCs = new pgp.helpers.ColumnSet(
-  ['?id', 'points:list', 'name', 'labelCoords:json', '?floor'],
+  ['?id', '?owner', 'points:list', 'name', 'labelCoords:json', '?floor'],
   {
     table: 'areas'
   }
@@ -17,10 +20,21 @@ const areasCs = new pgp.helpers.ColumnSet(
 
 const onConflictAreas =
   ' ON CONFLICT(id) DO UPDATE SET ' +
-  areasCs.assignColumns({ from: 'EXCLUDED', skip: ['id', 'floor'] });
+  areasCs.assignColumns({ from: 'EXCLUDED', skip: ['id', 'floor', 'owner'] });
 
 const devicesCs = new pgp.helpers.ColumnSet(
-  ['?id', 'area', '?floor', 'x', 'y', 'name', 'type', 'description', 'status'],
+  [
+    '?id',
+    'area',
+    '?owner',
+    '?floor',
+    'x',
+    'y',
+    'name',
+    'type',
+    'description',
+    'status'
+  ],
   {
     table: 'devices'
   }
@@ -28,11 +42,15 @@ const devicesCs = new pgp.helpers.ColumnSet(
 
 const onConflictDevices =
   ' ON CONFLICT(id) DO UPDATE SET ' +
-  devicesCs.assignColumns({ from: 'EXCLUDED', skip: ['id', 'floor'] });
+  devicesCs.assignColumns({
+    from: 'EXCLUDED',
+    skip: ['id', 'owner', 'floor']
+  });
 
 const taskerItemsCs = new pgp.helpers.ColumnSet(
   [
     '?id',
+    '?owner',
     'name',
     'type',
     { name: 'description', def: '' },
@@ -49,7 +67,7 @@ const onConflictTaskerItems =
   ' ON CONFLICT(id) DO UPDATE SET ' +
   taskerItemsCs.assignColumns({
     from: 'EXCLUDED',
-    skip: ['id', 'type', 'createdAt', 'isCheckedOff']
+    skip: ['id', 'type', 'owner', 'createdAt', 'isCheckedOff']
   });
 
 const taskerItemsDevicesCs = new pgp.helpers.ColumnSet(
@@ -60,7 +78,7 @@ const taskerItemsDevicesCs = new pgp.helpers.ColumnSet(
 );
 
 const floorsCs = new pgp.helpers.ColumnSet(
-  ['?id', 'geometry', 'position', 'name', 'shortName'],
+  ['?id', '?owner', 'geometry', 'position', 'name', 'shortName'],
   {
     table: 'floors'
   }

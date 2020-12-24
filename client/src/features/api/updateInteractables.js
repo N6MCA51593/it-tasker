@@ -4,13 +4,10 @@ import { reqQueryParams } from 'features/api/reqQueryParams';
 export const updateInteractables = createAsyncThunk(
   'api/updateInteractables',
   async (_, { getState }) => {
-    const { devices, areas, floors } = getState();
-    const floor = floors.activeFloor;
+    const { devices, areas } = getState();
     const areasParams = reqQueryParams(areas.toDelete, 'adel');
     const devicesParams = reqQueryParams(devices.toDelete, 'ddel');
-    const params = `?${
-      (areasParams ? areasParams + '&' : '') + devicesParams
-    }&fl=${floor}`;
+    const params = `?${(areasParams ? areasParams + '&' : '') + devicesParams}`;
 
     // Remove duplicates
     const body = {
@@ -36,8 +33,7 @@ export const updateInteractables = createAsyncThunk(
         throw new Error('Server Error');
       }
 
-      const res = await response.json();
-      return res;
+      return response;
     } catch (error) {
       throw new Error('Server Error');
     }
