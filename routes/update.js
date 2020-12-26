@@ -78,7 +78,8 @@ router.post('/interactables', authMiddleware, async (req, res) => {
 // @route     POST api/update/task
 // @desc      Update task item
 // @access    Private
-router.post('/task', async (req, res) => {
+router.post('/task', authMiddleware, async (req, res) => {
+  const { userId } = req;
   const toAdd =
     req.query.add && !Array.isArray(req.query.add)
       ? [req.query.add]
@@ -91,7 +92,7 @@ router.post('/task', async (req, res) => {
   const item = req.body;
 
   try {
-    const query = generateTaskerUpdateQuery(toAdd, toDelete, item, ts);
+    const query = generateTaskerUpdateQuery(toAdd, toDelete, item, ts, userId);
     await db.tx(async t => await t.none(query));
     res.json({ ts, id: item.id, name: item.name });
   } catch (error) {
@@ -103,17 +104,21 @@ router.post('/task', async (req, res) => {
 // @route     POST api/update/floor
 // @desc      Update floor
 // @access    Private
-router.post('/floor', async (req, res) => {
+router.post('/floor', authMiddleware, async (req, res) => {
+  const { userId } = req;
   const floor = req.body;
-  const floors = await db.many('SELECT * FROM floors');
-  const posQuery = generateFloorPositionUpdateQuery(floor, floors);
   try {
+    const floors = await db.many(
+      'SELECT * FROM floors WHERE owner = $1',
+      userId
+    );
+    const posQuery = generateFloorPositionUpdateQuery(floor, floors);
     let updatedFloors = [];
     if (posQuery) {
       updatedFloors = await db.many(posQuery);
     }
 
-    const floorUpd = { ...floor };
+    const floorUpd = { ...floor, owner: userId };
     delete floorUpd.oldPosition;
     const floorQuery = generateFloorUpdateQuery(floorUpd);
     const floorUpdated = await db.one(floorQuery);

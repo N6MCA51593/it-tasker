@@ -71,7 +71,7 @@ const onConflictTaskerItems =
   });
 
 const taskerItemsDevicesCs = new pgp.helpers.ColumnSet(
-  ['?deviceId', '?itemId', { name: 'isCheckedOff', def: false }],
+  ['?deviceId', '?itemId', '?owner', { name: 'isCheckedOff', def: false }],
   {
     table: 'tasker_items_devices'
   }

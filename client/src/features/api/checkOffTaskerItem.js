@@ -17,7 +17,6 @@ export const checkOffTaskerItem = createAsyncThunk(
         throw new Error('Server Error');
       }
 
-      await response.json();
       return payload;
     } catch (error) {
       throw new Error('Server Error');

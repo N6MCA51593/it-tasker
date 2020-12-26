@@ -1,7 +1,7 @@
 const { pgp } = require('./db');
 const { taskerItemsDevicesCs } = require('../db/columnSets');
 
-const generateCheckOffQuery = updateObj => {
+const generateCheckOffQuery = (updateObj, owner) => {
   const toCheckOff = { ...updateObj };
   delete toCheckOff.id;
   const updateArr = [];
@@ -9,12 +9,15 @@ const generateCheckOffQuery = updateObj => {
     updateArr.push({
       deviceId: prop,
       itemId: updateObj.id,
-      isCheckedOff: toCheckOff[prop]
+      isCheckedOff: toCheckOff[prop],
+      owner
     });
   }
-  const query =
-    pgp.helpers.update(updateArr, taskerItemsDevicesCs) +
-    ' WHERE v."itemId" = t."itemId" AND v."deviceId" = t."deviceId"';
+  const cond = pgp.as.format(
+    ' WHERE v."itemId" = t."itemId" AND v."deviceId" = t."deviceId" AND t.owner::text = $1',
+    owner
+  );
+  const query = pgp.helpers.update(updateArr, taskerItemsDevicesCs) + cond;
   return query;
 };
 

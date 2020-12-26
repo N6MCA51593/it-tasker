@@ -23,8 +23,8 @@ export const checkOffDevices = createAsyncThunk(
           body: JSON.stringify(requestObject)
         }
       );
-      const res = await response.json();
-      return res;
+
+      return response;
     } catch (error) {
       throw new Error('Server Error');
     }

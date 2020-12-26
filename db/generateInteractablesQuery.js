@@ -5,7 +5,6 @@ const {
   devicesCs,
   onConflictDevices
 } = require('./columnSets');
-const e = require('express');
 
 const generateInteractablesQuery = (
   toUpsertAreas,

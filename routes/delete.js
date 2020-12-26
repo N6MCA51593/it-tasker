@@ -1,15 +1,21 @@
 const express = require('express');
+const authMiddleware = require('../authMiddleware');
 const router = express.Router();
 const { db } = require('../db/db');
 
 // @route     DELETE api/delete/task
 // @desc      Delete tasker item
 // @access    Private
-router.delete('/task', async (req, res) => {
+router.delete('/task', authMiddleware, async (req, res) => {
   const id = req.query.id;
+  const owner = req.userId;
+  console.log(owner + ' ' + id);
   try {
-    await db.none(`DELETE FROM tasker_items WHERE id = '${id}'`);
-    res.json({ status: 'ok' });
+    await db.none(
+      'DELETE FROM tasker_items WHERE id = ${id} AND owner = ${owner}',
+      { id, owner }
+    );
+    return res.sendStatus(200);
   } catch (error) {
     console.log(error);
     res.status(400).json({ error: 'Server error' });
@@ -19,17 +25,23 @@ router.delete('/task', async (req, res) => {
 // @route     DELETE api/delete/floor
 // @desc      Delete floor
 // @access    Private
-router.delete('/floor', async (req, res) => {
+router.delete('/floor', authMiddleware, async (req, res) => {
   const id = req.query.id;
+  const owner = req.userId;
   try {
-    const allFloors = await db.manyOrNone('SELECT * FROM floors');
+    const allFloors = await db.manyOrNone(
+      'SELECT * FROM floors WHERE owner = $1',
+      owner
+    );
     if (allFloors.length > 1) {
       const floors = await db.tx(async t => {
         const deletedFloor = await t.one(
-          `DELETE FROM floors WHERE id = '${id}' RETURNING *`
+          'DELETE FROM floors WHERE id = ${id} AND onwer = ${owner} RETURNING *',
+          { id, owner }
         );
         const updatedFloors = await t.manyOrNone(
-          `UPDATE floors SET position = position - 1 WHERE position > ${deletedFloor.position} RETURNING *`
+          'UPDATE floors SET position = position - 1 WHERE owner = ${owner} AND position > ${pos} RETURNING *',
+          { pos: deletedFloor.position, owner }
         );
         return updatedFloors;
       });
