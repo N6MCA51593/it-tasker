@@ -133,6 +133,9 @@ const devicesSlice = createSlice({
         devicesAdapter.setAll(state, state.devicesHistory); // temp
         state.devicesHistory = null;
       }
+    },
+    'authState/resetState': () => {
+      return initialState;
     }
   }
 });

@@ -125,6 +125,9 @@ const areasSlice = createSlice({
         areasAdapter.setAll(state, state.areasHistory);
         state.areasHistory = null;
       }
+    },
+    'authState/resetState': () => {
+      return initialState;
     }
   }
 });

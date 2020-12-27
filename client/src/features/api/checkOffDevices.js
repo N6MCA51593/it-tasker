@@ -24,7 +24,7 @@ export const checkOffDevices = createAsyncThunk(
         }
       );
 
-      return response;
+      return;
     } catch (error) {
       throw new Error('Server Error');
     }

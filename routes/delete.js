@@ -2,6 +2,7 @@ const express = require('express');
 const authMiddleware = require('../authMiddleware');
 const router = express.Router();
 const { db } = require('../db/db');
+const generateLoadQuery = require('../db/generateLoadQuery');
 
 // @route     DELETE api/delete/task
 // @desc      Delete tasker item
@@ -18,7 +19,7 @@ router.delete('/task', authMiddleware, async (req, res) => {
     return res.sendStatus(200);
   } catch (error) {
     console.log(error);
-    res.status(400).json({ error: 'Server error' });
+    res.status(400).json({ msg: 'Server error' });
   }
 });
 
@@ -36,7 +37,7 @@ router.delete('/floor', authMiddleware, async (req, res) => {
     if (allFloors.length > 1) {
       const floors = await db.tx(async t => {
         const deletedFloor = await t.one(
-          'DELETE FROM floors WHERE id = ${id} AND onwer = ${owner} RETURNING *',
+          'DELETE FROM floors WHERE id = ${id} AND owner = ${owner} RETURNING *',
           { id, owner }
         );
         const updatedFloors = await t.manyOrNone(
@@ -46,17 +47,8 @@ router.delete('/floor', authMiddleware, async (req, res) => {
         return updatedFloors;
       });
 
-      const taskerQuery =
-        'SELECT t1."deviceId", t1."itemId", ' +
-        't1."isCheckedOff", devices.floor from devices ' +
-        'INNER JOIN tasker_items_devices t1 ' +
-        'ON t1."deviceId" = devices.id INNER JOIN tasker_items ' +
-        'ON t1."itemId" = tasker_items.id';
-      const [walls, areas, devices, tasks, taskDevices] = await db.multi(
-        'SELECT * FROM walls;SELECT * FROM areas;' +
-          'SELECT * FROM devices;SELECT * FROM tasker_items;' +
-          taskerQuery
-      );
+      const query = generateLoadQuery(owner, false);
+      const [walls, areas, devices, tasks, taskDevices] = await db.multi(query);
 
       res.json({
         deletedFloorId: id,
@@ -72,7 +64,7 @@ router.delete('/floor', authMiddleware, async (req, res) => {
     }
   } catch (error) {
     console.log(error);
-    res.status(400).json({ error: 'Server error' });
+    res.status(400).json({ msg: 'Server error' });
   }
 });
 

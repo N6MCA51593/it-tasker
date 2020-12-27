@@ -45,7 +45,7 @@ router.post('/geometry', authMiddleware, async (req, res) => {
     res.json(newGeometry);
   } catch (error) {
     console.log(error);
-    res.status(400).json({ error: 'Server error' });
+    res.status(400).json({ msg: 'Server error' });
   }
 });
 
@@ -71,7 +71,7 @@ router.post('/interactables', authMiddleware, async (req, res) => {
     return res.sendStatus(200);
   } catch (error) {
     console.log(error);
-    res.status(400).json({ error: 'Server error' });
+    res.status(400).json({ msg: 'Server error' });
   }
 });
 
@@ -97,7 +97,7 @@ router.post('/task', authMiddleware, async (req, res) => {
     res.json({ ts, id: item.id, name: item.name });
   } catch (error) {
     console.log(error);
-    res.status(400).json({ error: 'Server error' });
+    res.status(400).json({ msg: 'Server error' });
   }
 });
 
@@ -127,7 +127,7 @@ router.post('/floor', authMiddleware, async (req, res) => {
     res.send(updatedFloors);
   } catch (error) {
     console.log(error);
-    res.status(400).json({ error: 'Server error' });
+    res.status(400).json({ msg: 'Server error' });
   }
 });
 

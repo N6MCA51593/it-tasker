@@ -114,6 +114,9 @@ const wallsSlice = createSlice({
         wallsAdapter.setAll(state, state.wallsHistory);
         state.wallsHistory = null;
       }
+    },
+    'authState/resetState': () => {
+      return initialState;
     }
   }
 });

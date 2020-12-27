@@ -10,7 +10,11 @@ const initialState = {
 const authSlice = createSlice({
   name: 'authState',
   initialState,
-  reducers: {},
+  reducers: {
+    resetState() {
+      return initialState;
+    }
+  },
   extraReducers: {
     'api/checkUserSession/fulfilled': (state, { payload }) => {
       state.id = payload.id;
@@ -29,12 +33,9 @@ const authSlice = createSlice({
       state.id = payload.id;
       state.userName = payload.userName;
       state.isAuthenticated = true;
-    },
-    'api/logout/fulfilled': state => {
-      return initialState;
     }
   }
 });
 
-//export const {} = authSlice.actions;
+export const { resetState } = authSlice.actions;
 export default authSlice.reducer;

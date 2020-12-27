@@ -15,7 +15,7 @@ router.post('/devices', authMiddleware, async (req, res) => {
     return res.sendStatus(200);
   } catch (error) {
     console.log(error);
-    res.status(400).json({ error: 'Server error' });
+    res.status(400).json({ msg: 'Server error' });
   }
 });
 
@@ -57,7 +57,7 @@ router.post('/task', authMiddleware, async (req, res) => {
     return res.sendStatus(200);
   } catch (error) {
     console.log(error);
-    res.status(400).json({ error: 'Server error' });
+    res.status(400).json({ msg: 'Server error' });
   }
 });
 

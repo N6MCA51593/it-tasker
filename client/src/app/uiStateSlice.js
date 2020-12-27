@@ -136,6 +136,9 @@ const uiStateSlice = createSlice({
       state.activeGlobalState === VIEW_TASKER_ITEMS_GLOB
         ? (state.activeGlobalState = EDIT_TASKER_ITEMS_GLOB)
         : (state.activeGlobalState = VIEW_TASKER_ITEMS_GLOB);
+    },
+    'authState/resetState': () => {
+      return initialState;
     }
   }
 });

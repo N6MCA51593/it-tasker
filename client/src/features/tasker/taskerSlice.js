@@ -282,6 +282,9 @@ const taskerSlice = createSlice({
       if (payload) {
         state.activeItemType = payload.activeTaskerItemType;
       }
+    },
+    'authState/resetState': () => {
+      return initialState;
     }
   }
 });

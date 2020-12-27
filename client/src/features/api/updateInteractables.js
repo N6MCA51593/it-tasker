@@ -33,7 +33,7 @@ export const updateInteractables = createAsyncThunk(
         throw new Error('Server Error');
       }
 
-      return response;
+      return;
     } catch (error) {
       throw new Error('Server Error');
     }

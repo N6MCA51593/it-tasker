@@ -93,6 +93,9 @@ const floorsSlice = createSlice({
       if (payload) {
         state.activeFloor = payload.activeFloor;
       }
+    },
+    'authState/resetState': () => {
+      return initialState;
     }
   }
 });

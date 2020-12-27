@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { useCallback } from 'react';
 import { useEffect } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-// TODO User id and check for auth
+
 const usePersistingUiState = geoUi => {
   const [hasRead, setHasRead] = useState(false);
   const values = useSelector(selectPersistingUiStateValues, shallowEqual);
@@ -15,6 +15,7 @@ const usePersistingUiState = geoUi => {
   const activeTaskerItemType = useSelector(
     state => state.tasker.activeItemType
   );
+  const userId = useSelector(state => state.authState.id);
   const dispatch = useDispatch();
 
   const saveToLocalStorage = useCallback(() => {
@@ -24,13 +25,13 @@ const usePersistingUiState = geoUi => {
       activeFloor,
       activeTaskerItemType
     };
-    localStorage.setItem('uiState', JSON.stringify(valuesWithGeo));
-  }, [values, geoUi, activeFloor, activeTaskerItemType]);
+    localStorage.setItem(userId, JSON.stringify(valuesWithGeo));
+  }, [values, geoUi, activeFloor, activeTaskerItemType, userId]);
 
   const readFromLocalStorage = useCallback(() => {
-    const uiState = JSON.parse(localStorage.getItem('uiState'));
+    const uiState = JSON.parse(localStorage.getItem(userId));
     dispatch(loadFromLocalStorage(uiState));
-  }, [dispatch]);
+  }, [dispatch, userId]);
 
   useEffect(() => {
     window.addEventListener('beforeunload', () => saveToLocalStorage());

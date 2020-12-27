@@ -2,6 +2,7 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const router = express.Router();
 const { db } = require('../db/db');
+const { nanoid } = require('nanoid');
 
 // @route     Get api/auth/
 // @desc      Check if user session exists
@@ -15,6 +16,7 @@ router.get('/', (req, res) => {
 // @access    Public
 router.post('/signup', async (req, res) => {
   try {
+    // TODO Validation
     const { userName, password } = req.body;
     if (userName.length > 20 || password.length > 20) {
       return res.status(400).json({
@@ -32,16 +34,31 @@ router.post('/signup', async (req, res) => {
       });
     }
     const pwHashed = await bcrypt.hash(password, 8);
-    const newUser = await db.one(
-      'INSERT INTO users(username, password) VALUES(${userName}, ${pwHashed}) RETURNING *',
-      { userName, pwHashed }
-    );
+    const newUser = await db.tx(async t => {
+      const newUser = await t.one(
+        'INSERT INTO users(username, password) VALUES(${userName}, ${pwHashed}) RETURNING *',
+        { userName, pwHashed }
+      );
+      const newFloor = {
+        id: nanoid(),
+        name: 'Level 1',
+        shortName: '1',
+        position: 1,
+        owner: newUser.id
+      };
+      await t.none(
+        'INSERT INTO floors(id, name, "shortName", position, owner) VALUES(${id}, ${name}, ${shortName}, ${position}, ${owner})',
+        newFloor
+      );
+      return newUser;
+    });
+
     const sessionUser = { id: newUser.id, userName: newUser.username };
     req.session.user = sessionUser;
     res.json(sessionUser);
   } catch (error) {
     console.log(error);
-    res.status(400).json({ error: 'Server error' });
+    res.status(400).json({ msg: 'Server error' });
   }
 });
 
@@ -65,7 +82,7 @@ router.post('/login', async (req, res) => {
     }
   } catch (error) {
     console.log(error);
-    res.status(400).json({ error: 'Server error' });
+    res.status(400).json({ msg: 'Server error' });
   }
 });
 
@@ -74,15 +91,14 @@ router.post('/login', async (req, res) => {
 // @access    Private
 router.post('/logout', async (req, res) => {
   try {
-    const user = req.session.user;
     req.session.destroy(error => {
       if (error) throw error;
       res.clearCookie(process.env.SESSION_NAME);
-      res.json(user);
+      return res.sendStatus(200);
     });
   } catch (error) {
     console.log(error);
-    res.status(400).json({ error: 'Server error' });
+    res.status(400).json({ msg: 'Server error' });
   }
 });
 
