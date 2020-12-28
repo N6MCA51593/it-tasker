@@ -1,9 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import handleResponseErrors from 'features/api/handleResponseErrors';
 import { reqQueryParams } from 'features/api/reqQueryParams';
 
 export const updateInteractables = createAsyncThunk(
   'api/updateInteractables',
-  async (_, { getState }) => {
+  async (_, { dispatch, getState }) => {
     const { devices, areas } = getState();
     const areasParams = reqQueryParams(areas.toDelete, 'adel');
     const devicesParams = reqQueryParams(devices.toDelete, 'ddel');
@@ -28,11 +29,7 @@ export const updateInteractables = createAsyncThunk(
           mode: 'cors'
         }
       );
-
-      if (response.status >= 400 && response.status < 600) {
-        throw new Error('Server Error');
-      }
-
+      await handleResponseErrors(response, true, dispatch);
       return;
     } catch (error) {
       throw new Error('Server Error');

@@ -45,3 +45,8 @@ export const SCREEN_DT = 'Screen';
 export const NETWORK_DT = 'Network';
 export const SERVER_DT = 'Server';
 export const OTHER_DT = 'Other';
+
+// Notification types
+export const SUCCESS_NT = 'success';
+export const ERROR_NT = 'error';
+export const INFO_NT = 'info';

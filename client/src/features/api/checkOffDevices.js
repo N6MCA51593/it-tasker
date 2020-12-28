@@ -1,4 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import handleResponseErrors from 'features/api/handleResponseErrors';
 import {
   clearRequestObject,
   toggleDeviceCheckOff
@@ -10,6 +11,7 @@ export const checkOffDevices = createAsyncThunk(
     dispatch(toggleDeviceCheckOff(payload));
     const requestObject = { ...getState().tasker.toggleCheckOffRequestObject };
     dispatch(clearRequestObject());
+
     try {
       const response = await fetch(
         'http://localhost:5000/api/check-off/devices',
@@ -23,7 +25,7 @@ export const checkOffDevices = createAsyncThunk(
           body: JSON.stringify(requestObject)
         }
       );
-
+      await handleResponseErrors(response, true, dispatch);
       return;
     } catch (error) {
       throw new Error('Server Error');

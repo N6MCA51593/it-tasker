@@ -1,8 +1,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import handleResponseErrors from 'features/api/handleResponseErrors';
 
 export const updateFloor = createAsyncThunk(
   'api/updateFloor',
-  async payload => {
+  async (payload, { dispatch }) => {
     try {
       const response = await fetch('http://localhost:5000/api/update/floor', {
         method: 'POST',
@@ -13,11 +14,7 @@ export const updateFloor = createAsyncThunk(
         },
         mode: 'cors'
       });
-
-      if (response.status >= 400 && response.status < 600) {
-        throw new Error('Server Error');
-      }
-
+      await handleResponseErrors(response, true, dispatch);
       const updatedFloors = await response.json();
       return { id: payload.id, updatedFloors };
     } catch (error) {

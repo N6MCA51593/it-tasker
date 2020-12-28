@@ -1,8 +1,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import handleResponseErrors from 'features/api/handleResponseErrors';
 
 export const checkOffTaskerItem = createAsyncThunk(
   'api/checkOffTaskerItem',
-  async payload => {
+  async (payload, { dispatch }) => {
     try {
       const response = await fetch(
         `http://localhost:5000/api/check-off/task?id=${payload}`,
@@ -12,11 +13,7 @@ export const checkOffTaskerItem = createAsyncThunk(
           mode: 'cors'
         }
       );
-
-      if (response.status >= 400 && response.status < 600) {
-        throw new Error('Server Error');
-      }
-
+      await handleResponseErrors(response, true, dispatch);
       return payload;
     } catch (error) {
       throw new Error('Server Error');

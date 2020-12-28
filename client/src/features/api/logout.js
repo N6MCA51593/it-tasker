@@ -1,4 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import handleResponseErrors from 'features/api/handleResponseErrors';
 import { resetState } from 'features/auth/authStateSlice';
 
 export const logout = createAsyncThunk(
@@ -10,13 +11,8 @@ export const logout = createAsyncThunk(
         credentials: 'include',
         mode: 'cors'
       });
-
-      if (response.status >= 400 && response.status < 600) {
-        throw new Error('Server Error');
-      }
-
+      await handleResponseErrors(response, true, dispatch);
       dispatch(resetState());
-
       return;
     } catch (error) {
       throw new Error(error);

@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react';
-import Geometry from 'features/geometry/Geometry';
+import { Fragment } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import Geometry from 'features/geometry/Geometry';
 import { loadAppData } from 'features/api/loadAppData';
 import TaskerContainer from 'features/tasker/TaskerContainer';
 import { selectIsAuthenticated } from 'app/selectors';
 import LandingPage from 'features/landing/LandingPage';
 import { checkUserSession } from 'features/api/checkUserSession';
+import NotificationsContainer from 'features/notifications/NotificationsContainer';
 
 const MainContainer = () => {
   const dispatch = useDispatch();
@@ -19,13 +21,18 @@ const MainContainer = () => {
       dispatch(checkUserSession());
     }
   }, [dispatch, isAuthenticated]);
-  return isAuthenticated ? (
-    <div className='main-container'>
-      <Geometry />
-      <TaskerContainer />
-    </div>
-  ) : (
-    isNoSession && <LandingPage />
+  return (
+    <Fragment>
+      {isAuthenticated ? (
+        <div className='main-container'>
+          <Geometry />
+          <TaskerContainer />
+        </div>
+      ) : (
+        isNoSession && <LandingPage />
+      )}
+      <NotificationsContainer />
+    </Fragment>
   );
 };
 

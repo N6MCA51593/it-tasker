@@ -1,0 +1,37 @@
+.notifications-container {
+  position: fixed;
+  display: flex;
+  flex-direction: column-reverse;
+  z-index: 100;
+  bottom: 10px;
+  right: 10px;
+}
+
+.notification {
+  position: relative;
+  background: #fff;
+  border: 1px solid #000;
+  transition: 0.25s ease;
+  margin: 0 0 1.5rem 0;
+  width: 300px;
+  max-height: 100px;
+  transition: transform 0.5s ease-in-out;
+  animation: kf 0.7s;
+
+  &-success {
+    color: green;
+  }
+
+  &-error {
+    color: red;
+  }
+}
+
+@keyframes kf {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}

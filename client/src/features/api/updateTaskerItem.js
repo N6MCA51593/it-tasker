@@ -1,9 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import handleResponseErrors from 'features/api/handleResponseErrors';
 import { reqQueryParams } from 'features/api/reqQueryParams';
 
 export const updateTaskerItem = createAsyncThunk(
   'api/updateTaskerItem',
-  async (changes, { getState }) => {
+  async (changes, { getState, dispatch }) => {
     const { tasker } = getState();
     const item = tasker.entities[tasker.activeItem];
     const { isNew, devices } = item;
@@ -35,11 +36,7 @@ export const updateTaskerItem = createAsyncThunk(
           mode: 'cors'
         }
       );
-
-      if (response.status >= 400 && response.status < 600) {
-        throw new Error('Server Error');
-      }
-
+      await handleResponseErrors(response, true, dispatch);
       const res = await response.json();
       return res;
     } catch (error) {

@@ -6,6 +6,7 @@ import uiStateReducer from 'app/uiStateSlice';
 import authStateReducer from 'features/auth/authStateSlice';
 import floorsReducer from 'features/tasker/floors/floorSlice';
 import taskerReducer from 'features/tasker/taskerSlice';
+import notificationsReducer from 'features/notifications/notificationSlice';
 
 export default configureStore({
   reducer: {
@@ -15,6 +16,7 @@ export default configureStore({
     floors: floorsReducer,
     uiState: uiStateReducer,
     tasker: taskerReducer,
-    authState: authStateReducer
+    authState: authStateReducer,
+    notifications: notificationsReducer
   }
 });

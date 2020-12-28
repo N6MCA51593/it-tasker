@@ -1,9 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import handleResponseErrors from 'features/api/handleResponseErrors';
 import { reqQueryParams } from 'features/api/reqQueryParams';
 
 export const updateGeometry = createAsyncThunk(
   'api/updateGeometry',
-  async (_, { getState }) => {
+  async (_, { getState, dispatch }) => {
     const { walls } = getState();
     const body = [...new Set(walls.toUpsert)].map(e => walls.entities[e]);
     const toDeleteIds = walls.toDelete.map(e => e.id);
@@ -27,9 +28,7 @@ export const updateGeometry = createAsyncThunk(
           mode: 'cors'
         }
       );
-      if (response.status >= 400 && response.status < 600) {
-        throw new Error('Server Error');
-      }
+      await handleResponseErrors(response, true, dispatch);
       const res = await response.json();
       return res;
     } catch (error) {
