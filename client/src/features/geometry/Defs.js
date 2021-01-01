@@ -15,9 +15,9 @@ const Defs = () => {
   return (
     <Fragment>
       <symbol
-        width='80'
-        height='80'
-        viewBox='0 0 24 24'
+        width='230'
+        height='220'
+        viewBox='0 0 24 22'
         strokeWidth='2'
         stroke='#2c3e50'
         fill='none'
@@ -31,9 +31,9 @@ const Defs = () => {
         <line x1='15' y1='16' x2='15' y2='20' />
       </symbol>
       <symbol
-        width='80'
-        height='80'
-        viewBox='0 0 24 24'
+        width='230'
+        height='220'
+        viewBox='0 0 24 22'
         strokeWidth='2'
         stroke='#2c3e50'
         fill='none'
@@ -45,9 +45,9 @@ const Defs = () => {
         <rect x='5' y='6' width='14' height='10' rx='1' />
       </symbol>
       <symbol
-        width='80'
-        height='80'
-        viewBox='0 0 24 24'
+        width='230'
+        height='220'
+        viewBox='0 0 24 22'
         strokeWidth='2'
         stroke='#2c3e50'
         fill='none'
@@ -60,9 +60,9 @@ const Defs = () => {
         <rect x='7' y='13' width='10' height='8' rx='2' />
       </symbol>
       <symbol
-        width='80'
-        height='80'
-        viewBox='0 0 24 24'
+        width='230'
+        height='220'
+        viewBox='0 0 24 22'
         strokeWidth='2'
         stroke='#2c3e50'
         fill='none'
@@ -75,9 +75,9 @@ const Defs = () => {
         <line x1='16' y1='9' x2='18' y2='9' />
       </symbol>
       <symbol
-        width='80'
-        height='80'
-        viewBox='0 0 24 24'
+        width='230'
+        height='220'
+        viewBox='0 0 24 22'
         strokeWidth='2'
         stroke='#2c3e50'
         fill='none'
@@ -90,9 +90,9 @@ const Defs = () => {
         <path d='M4 15v-3a8 8 0 0 1 16 0v3' />
       </symbol>
       <symbol
-        width='80'
-        height='80'
-        viewBox='0 0 24 24'
+        width='230'
+        height='220'
+        viewBox='0 0 24 22'
         strokeWidth='2'
         stroke='#2c3e50'
         fill='none'
@@ -108,9 +108,9 @@ const Defs = () => {
         <line x1='9' y1='15' x2='9' y2='19' />
       </symbol>
       <symbol
-        width='80'
-        height='80'
-        viewBox='0 0 24 24'
+        width='230'
+        height='220'
+        viewBox='0 0 24 22'
         strokeWidth='2'
         stroke='#2c3e50'
         fill='none'
@@ -126,9 +126,9 @@ const Defs = () => {
         <path d='M8.5 6.5a8 8 0 0 1 13 0' />
       </symbol>
       <symbol
-        width='80'
-        height='80'
-        viewBox='0 0 24 24'
+        width='230'
+        height='220'
+        viewBox='0 0 24 22'
         strokeWidth='2'
         stroke='#2c3e50'
         fill='none'
@@ -142,9 +142,9 @@ const Defs = () => {
         <line x1='7' y1='16' x2='7' y2='16.01' />
       </symbol>
       <symbol
-        width='80'
-        height='80'
-        viewBox='0 0 24 24'
+        width='230'
+        height='220'
+        viewBox='0 0 24 22'
         strokeWidth='2'
         stroke='#2c3e50'
         fill='none'

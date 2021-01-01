@@ -54,3 +54,21 @@
     flex: 1;
   }
 }
+
+.device-popup {
+  display: none;
+  position: relative;
+  background-color: azure;
+  border: 1px solid darkgreen;
+  padding: 2rem;
+}
+
+.popup-outer {
+  position: relative;
+  pointer-events: none;
+  z-index: 10;
+
+  div {
+    pointer-events: all;
+  }
+}
