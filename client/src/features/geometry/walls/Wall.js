@@ -12,6 +12,7 @@ import {
   findNearestPoint
 } from 'features/geometry/geometryMathFuncs';
 import { ADD_WALL_GEO, MOVE_WALL_GEO, REMOVE_WALL_GEO } from 'app/constants';
+import clTern from 'common/clTern';
 
 const Wall = ({ mode, getRelCoord, id, activeWall, activeFloor }) => {
   const dispatch = useDispatch();
@@ -41,11 +42,17 @@ const Wall = ({ mode, getRelCoord, id, activeWall, activeFloor }) => {
       );
     }
   };
+
+  const className = `wall ${clTern(isActive, 'active ')}${clTern(
+    mode === REMOVE_WALL_GEO,
+    'hov-remove '
+  )}${clTern(mode === MOVE_WALL_GEO && !activeWall, 'hov-move')}`;
+
   return (
-    <g onClick={e => handleClick(e)} className={isActive ? 'active' : ''}>
-      <circle cx={x1} cy={y1} r={r} fill='#17161c' />
-      <line x1={x1} y1={y1} x2={x2} y2={y2} strokeWidth='5' stroke='#17161c' />
-      <circle cx={x2} cy={y2} r={r} fill='#17161c' />
+    <g onClick={e => handleClick(e)} className={className}>
+      <circle cx={x1} cy={y1} r={r} />
+      <line x1={x1} y1={y1} x2={x2} y2={y2} />
+      <circle cx={x2} cy={y2} r={r} />
     </g>
   );
 };

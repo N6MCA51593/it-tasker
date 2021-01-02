@@ -4,15 +4,7 @@ import { selectActiveFloorItem } from 'app/selectors';
 
 const FloorGeometry = () => {
   const floor = useSelector(selectActiveFloorItem);
-  return (
-    <path
-      d={floor?.geometry}
-      strokeWidth='8'
-      stroke='#17161c'
-      strokeLinecap='round'
-      strokeLinejoin='round'
-    />
-  );
+  return <path d={floor?.geometry} className='floor-geometry' />;
 };
 
 export default memo(FloorGeometry);
