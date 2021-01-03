@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 
 const Grid = ({ panHLvl, panVLvl, width, height, gridStep }) => {
   return (
-    <g>
+    <g className='grid'>
       <pattern
         id='pattern-grid'
         x='-6px'

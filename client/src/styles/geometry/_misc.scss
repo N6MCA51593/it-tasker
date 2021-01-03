@@ -1,0 +1,14 @@
+// Geometry misc
+
+.floor-geometry {
+  stroke-width: $geo-stroke-width;
+  stroke: $geo-main;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.grid {
+  path {
+    stroke: #7b8794;
+  }
+}

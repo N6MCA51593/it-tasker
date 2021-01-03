@@ -5,11 +5,10 @@
 
   line {
     stroke: currentColor;
-    stroke-width: 5;
+    stroke-width: $geo-stroke-width;
   }
 
   circle {
-    stroke: #000;
     fill: currentColor;
   }
 
@@ -19,10 +18,10 @@
   }
 
   &.hov-move:hover {
-    color: blue;
+    color: #cbd2d9;
   }
 
   &.hov-remove:hover {
-    color: red;
+    color: #e12d39;
   }
 }
