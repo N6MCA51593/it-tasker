@@ -1,8 +1,8 @@
 import React, { useRef, useState } from 'react';
-import GeometryControls from 'features/geometry/GeometryControls';
+import GeometryControls from 'features/geometry/controls/GeometryControls';
 import useDimensions from 'features/geometry/useDimensions';
 import useCoordinates from 'features/geometry/useCoordinates';
-import useZoomAndPan from 'features/geometry/useZoomAndPan';
+import useZoomAndPan from 'features/geometry/controls/useZoomAndPan';
 import useGrid from 'features/geometry/useGrid';
 import GeometryDrawing from 'features/geometry/walls/GeometryDrawing';
 import { useSelector } from 'react-redux';

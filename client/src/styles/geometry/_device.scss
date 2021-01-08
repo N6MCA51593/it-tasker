@@ -5,6 +5,11 @@
   &.selected {
     fill: yellow;
   }
+
+  use {
+    stroke: #fff;
+    stroke-width: 2;
+  }
 }
 
 .device-disabled {

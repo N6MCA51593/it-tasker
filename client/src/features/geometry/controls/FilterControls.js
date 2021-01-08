@@ -1,4 +1,4 @@
-import FilterControlsItem from 'features/geometry/FilterControlsItem';
+import FilterControlsItem from 'features/geometry/controls/FilterControlsItem';
 import React, { memo, useState } from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 

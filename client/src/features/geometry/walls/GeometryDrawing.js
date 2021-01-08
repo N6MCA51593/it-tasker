@@ -13,6 +13,7 @@ import {
   updateActiveWall
 } from 'features/geometry/walls/wallSlice';
 import { ADD_WALL_GEO, MOVE_WALL_GEO } from 'app/constants';
+import Defs from 'features/geometry/Defs';
 
 const GeometryDrawing = ({
   mode,
@@ -60,6 +61,7 @@ const GeometryDrawing = ({
       <svg
         viewBox={`${panHLvl} ${panVLvl} ${width * zoomLvl} ${height * zoomLvl}`}
       >
+        <Defs />
         {isGrid && (
           <Grid
             panVLvl={panVLvl}

@@ -9,12 +9,12 @@ import {
   saveArea,
   cancelChanges as cancelInteractablesChanges
 } from 'features/geometry/interactables/areas/areaSlice';
-import { setUiGlobalState, setUiGeoState } from 'app/uiStateSlice';
+import { setUiGeoState } from 'app/uiStateSlice';
 import { useDispatch } from 'react-redux';
 import * as ui from 'app/constants';
-import FloorSwitcher from 'features/geometry/FloorSwitcher';
-import FilterControls from 'features/geometry/FilterControls';
-import { logout } from 'features/api/logout';
+import FloorSwitcher from 'features/geometry/controls/FloorSwitcher';
+import FilterControls from 'features/geometry/controls/FilterControls';
+import GlobalUiControls from 'features/geometry/controls/GlobalUiControls';
 
 const GeometryControls = ({
   zoomIn,
@@ -112,20 +112,8 @@ const GeometryControls = ({
         <button onClick={() => panH(-1)}> L </button>
         <button onClick={() => panH()}> R </button>
       </div>
-      <div className='state-nav-controls'>
-        <button onClick={() => dispatch(logout())}>Logout</button>
-        <button onClick={() => dispatch(setUiGlobalState(ui.MAIN_GLOB))}>
-          Main
-        </button>
-        <button onClick={() => dispatch(setUiGlobalState(ui.EDIT_GEOM_GLOB))}>
-          Geom
-        </button>
-        <button
-          onClick={() => dispatch(setUiGlobalState(ui.EDIT_INTERACTABLES_GLOB))}
-        >
-          Areas/Dev
-        </button>
-      </div>
+
+      <GlobalUiControls uiState={uiState} />
       <FloorSwitcher />
       <FilterControls />
     </div>
