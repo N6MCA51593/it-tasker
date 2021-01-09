@@ -18,22 +18,6 @@
     right: 0;
   }
 
-  .state-nav-controls {
-    display: flex;
-    justify-content: flex-end;
-    bottom: 20px;
-    left: 10%;
-    height: 10rem;
-
-    .togglable-container {
-      display: flex;
-      flex-direction: column;
-      position: absolute;
-      top: 0;
-      right: 50%;
-    }
-  }
-
   .floor-controls {
     flex-direction: row;
     bottom: 0;
@@ -55,23 +39,99 @@
   }
 }
 
+.state-nav-controls {
+  display: flex;
+  justify-content: flex-end;
+  bottom: 20px;
+  left: 5%;
+  height: 10rem;
+
+  .togglable-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    border-radius: 4px;
+    bottom: 40%;
+    width: 15rem;
+    background-color: #1f2933;
+    box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.32);
+  }
+}
+
+.controls-button-labeled {
+  cursor: pointer;
+  width: 85%;
+  display: flex;
+  overflow: hidden;
+  margin: 0.4rem 0;
+  color: #e4e7eb;
+  transition: 0.2s all ease;
+  border-left: 2px solid #323f4b;
+  border-right: 2px solid #323f4b;
+  align-items: center;
+
+  p {
+    width: 100%;
+    overflow: hidden;
+    padding: 0 0.5rem;
+    line-height: 50px;
+    font-size: 0.8rem;
+  }
+
+  &:hover {
+    background-color: #e4e7eb;
+    color: #000000;
+    border-left: 2px solid #127fbf;
+    border-right: 2px solid #127fbf;
+
+    svg {
+      stroke: #127fbf;
+      background-color: #e4e7eb;
+    }
+  }
+}
+
 .geo-button {
+  cursor: pointer;
   position: relative;
   background-color: #1f2933;
   color: #ffffff;
-  //border: 1px solid #ffffff;
-  width: 50px;
-  height: 50px;
 
   svg {
+    display: block;
     stroke: #ffffff;
     stroke-width: 1;
-    width: 100%;
-    height: 100%;
+    width: 50px;
+    height: 50px;
+    transition: 0.2s all ease;
   }
 
   g {
     transform: translate(60px, 55px);
-    transform-origin: center;
+  }
+
+  &.shadow {
+    box-shadow: 0px 5px 8px 0px rgba(0, 0, 0, 0.4);
+  }
+
+  &.s {
+    svg {
+      width: 30px;
+      height: 30px;
+    }
+  }
+
+  &.m {
+    svg {
+      width: 40px;
+      height: 40px;
+    }
+  }
+
+  &.selected {
+    svg {
+      stroke: #2bb0ed;
+    }
   }
 }

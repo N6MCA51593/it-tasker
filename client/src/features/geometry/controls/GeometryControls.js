@@ -35,7 +35,7 @@ const GeometryControls = ({
   }, [uiState, dispatch]);
 
   return (
-    <div className='geometry-controls'>
+    <div className='geometry-controls' onPointerDown={e => e.stopPropagation()}>
       {uiState === ui.EDIT_INTERACTABLES_GLOB && (
         <div className='device-controls'>
           <button onClick={() => dispatch(setUiGeoState(ui.ADD_DEVICE_GEO))}>

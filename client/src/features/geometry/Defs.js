@@ -95,8 +95,10 @@ const Defs = () => {
         <line x1='12' y1='3' x2='12' y2='3.01' />
       </SymbolWrapper>
       <SymbolWrapper type='logout-ic'>
-        <path d='M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2' />
-        <path d='M7 12h14l-3 -3m0 6l3 -3' />
+        <g stroke='red'>
+          <path d='M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2' />
+          <path d='M7 12h14l-3 -3m0 6l3 -3' />
+        </g>
       </SymbolWrapper>
       <SymbolWrapper type={MAIN_GLOB}>
         <path d='M6 17.6l-2 -1.1v-2.5' />
