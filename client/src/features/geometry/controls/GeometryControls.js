@@ -15,16 +15,18 @@ import * as ui from 'app/constants';
 import FloorSwitcher from 'features/geometry/controls/FloorSwitcher';
 import FilterControls from 'features/geometry/controls/FilterControls';
 import GlobalUiControls from 'features/geometry/controls/GlobalUiControls';
+import GridControls from 'features/geometry/controls/GridControls';
+import NavControls from 'features/geometry/controls/NavControls';
 
 const GeometryControls = ({
   zoomIn,
   zoomOut,
-  panH,
-  panV,
   toggleGrid,
   gridStepUp,
   gridStepDown,
-  uiState
+  uiState,
+  isGrid,
+  gridStep
 }) => {
   const dispatch = useDispatch();
 
@@ -101,18 +103,14 @@ const GeometryControls = ({
           <button onClick={() => dispatch(cancelWallChanges())}>Cancel</button>
         </div>
       )}
-      <div className='nav-controls'>
-        <button onClick={() => toggleGrid()}>Grid</button>
-        <button onClick={() => gridStepUp()}>^</button>
-        <button onClick={() => gridStepDown()}>⌄</button>
-        <button onClick={() => zoomIn()}> + </button>
-        <button onClick={() => zoomOut()}> - </button>
-        <button onClick={() => panV(-1)}> T </button>
-        <button onClick={() => panV()}> B </button>
-        <button onClick={() => panH(-1)}> L </button>
-        <button onClick={() => panH()}> R </button>
-      </div>
-
+      <NavControls zoomIn={zoomIn} zoomOut={zoomOut} />
+      <GridControls
+        gridStepDown={gridStepDown}
+        gridStepUp={gridStepUp}
+        toggleGrid={toggleGrid}
+        isGrid={isGrid}
+        gridStep={gridStep}
+      />
       <GlobalUiControls uiState={uiState} />
       <FloorSwitcher />
       <FilterControls />

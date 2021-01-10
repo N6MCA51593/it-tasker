@@ -81,20 +81,16 @@ const Defs = () => {
         <line x1='7' y1='16' x2='7' y2='16.01' />
       </SymbolWrapper>
       <SymbolWrapper type={OTHER_DT}>
-        <line x1='7.5' y1='4.21' x2='7.5' y2='4.22' />
-        <line x1='4.21' y1='7.5' x2='4.21' y2='7.51' />
-        <line x1='3' y1='12' x2='3' y2='12.01' />
-        <line x1='4.21' y1='16.5' x2='4.21' y2='16.51' />
-        <line x1='7.5' y1='19.79' x2='7.5' y2='19.8' />
-        <line x1='12' y1='21' x2='12' y2='21.01' />
-        <line x1='16.5' y1='19.79' x2='16.5' y2='19.8' />
-        <line x1='19.79' y1='16.5' x2='19.79' y2='16.51' />
-        <line x1='21' y1='12' x2='21' y2='12.01' />
-        <line x1='19.79' y1='7.5' x2='19.79' y2='7.51' />
-        <line x1='16.5' y1='4.21' x2='16.5' y2='4.22' />
-        <line x1='12' y1='3' x2='12' y2='3.01' />
+        <path d='M8.56 3.69a9 9 0 0 0 -2.92 1.95' />
+        <path d='M3.69 8.56a9 9 0 0 0 -.69 3.44' />
+        <path d='M3.69 15.44a9 9 0 0 0 1.95 2.92' />
+        <path d='M8.56 20.31a9 9 0 0 0 3.44 .69' />
+        <path d='M15.44 20.31a9 9 0 0 0 2.92 -1.95' />
+        <path d='M20.31 15.44a9 9 0 0 0 .69 -3.44' />
+        <path d='M20.31 8.56a9 9 0 0 0 -1.95 -2.92' />
+        <path d='M15.44 3.69a9 9 0 0 0 -3.44 -.69' />
       </SymbolWrapper>
-      <SymbolWrapper type='logout-ic'>
+      <SymbolWrapper type='logout'>
         <g stroke='red'>
           <path d='M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2' />
           <path d='M7 12h14l-3 -3m0 6l3 -3' />
@@ -137,6 +133,42 @@ const Defs = () => {
         <line x1='8' y1='20' x2='8' y2='20.01' />
         <line x1='16' y1='20' x2='16' y2='20.01' />
         <line x1='20' y1='20' x2='20' y2='20.01' />
+      </SymbolWrapper>
+      <SymbolWrapper type='filter'>
+        <path d='M5.5 5h13a1 1 0 0 1 .5 1.5l-5 5.5l0 7l-4 -3l0 -4l-5 -5.5a1 1 0 0 1 .5 -1.5' />
+      </SymbolWrapper>
+      <SymbolWrapper type='plus'>
+        <line x1='12' y1='5' x2='12' y2='19' />
+        <line x1='5' y1='12' x2='19' y2='12' />
+      </SymbolWrapper>
+      <SymbolWrapper type='minus'>
+        <line x1='5' y1='12' x2='19' y2='12' />
+      </SymbolWrapper>
+      <SymbolWrapper type='grid-s'>
+        <circle cx='5' cy='5' r='1' />
+        <circle cx='12' cy='5' r='1' />
+        <circle cx='19' cy='5' r='1' />
+        <circle cx='5' cy='12' r='1' />
+        <circle cx='12' cy='12' r='1' />
+        <circle cx='19' cy='12' r='1' />
+        <circle cx='5' cy='19' r='1' />
+        <circle cx='12' cy='19' r='1' />
+        <circle cx='19' cy='19' r='1' />
+      </SymbolWrapper>
+      <SymbolWrapper type='grid-l'>
+        <circle cx='12' cy='12' r='1' />
+      </SymbolWrapper>
+      <SymbolWrapper type='grid-m'>
+        <circle cx='5' cy='5' r='1' />
+        <circle cx='19' cy='5' r='1' />
+        <circle cx='5' cy='19' r='1' />
+        <circle cx='19' cy='19' r='1' />
+      </SymbolWrapper>
+      <SymbolWrapper type='up'>
+        <polyline points='6 15 12 9 18 15' />
+      </SymbolWrapper>
+      <SymbolWrapper type='down'>
+        <polyline points='6 9 12 15 18 9' />
       </SymbolWrapper>
     </g>
   );

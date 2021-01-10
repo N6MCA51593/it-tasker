@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { logout } from 'features/api/logout';
 import { setUiGlobalState } from 'app/uiStateSlice';
 import { useDispatch } from 'react-redux';
@@ -8,10 +8,13 @@ import {
   MAIN_GLOB
 } from 'app/constants';
 import Button from 'features/geometry/controls/Button';
+import useOnClickOutside from 'common/useOnClickOutside';
 
 const GlobalUiControls = ({ uiState }) => {
   const dispatch = useDispatch();
   const [isShowing, setIsShowing] = useState(false);
+  const ref = useRef();
+  useOnClickOutside(ref, () => setIsShowing(false));
   const type =
     uiState === EDIT_GEOM_GLOB || uiState === EDIT_INTERACTABLES_GLOB
       ? uiState
@@ -20,14 +23,15 @@ const GlobalUiControls = ({ uiState }) => {
     <div
       className='state-nav-controls'
       onClick={() => setIsShowing(!isShowing)}
+      ref={ref}
     >
       {isShowing && (
-        <div className='togglable-container'>
+        <div className='controls-container'>
           <div
             className='controls-button-labeled'
             onClick={() => dispatch(logout())}
           >
-            <Button type='logout-ic' mod='m' />
+            <Button type='logout' mod='m' />
             <p>Log Out</p>
           </div>
           {type !== MAIN_GLOB && (

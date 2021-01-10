@@ -25,8 +25,6 @@ const Geometry = () => {
     zoomLvl,
     zoomIn,
     zoomOut,
-    panH,
-    panV,
     panHLvl,
     panVLvl,
     freePan,
@@ -133,12 +131,12 @@ const Geometry = () => {
       <GeometryControls
         zoomIn={zoomIn}
         zoomOut={zoomOut}
-        panH={panH}
-        panV={panV}
         toggleGrid={toggleGrid}
         gridStepUp={gridStepUp}
         gridStepDown={gridStepDown}
         uiState={uiState}
+        isGrid={isGrid}
+        gridStep={gridStep}
       />
     </div>
   );

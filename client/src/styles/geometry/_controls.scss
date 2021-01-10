@@ -15,7 +15,19 @@
   }
 
   .nav-controls {
-    right: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    top: 60%;
+    right: 20px;
+  }
+
+  .grid-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    top: 15%;
+    right: 20px;
   }
 
   .floor-controls {
@@ -27,16 +39,15 @@
   .device-controls {
     bottom: 0;
   }
+}
 
-  .filter-controls {
-    display: flex;
-    flex-direction: column;
-
-    &-container {
-      bottom: 0;
-      right: 10px;
-    }
-  }
+.filter-controls {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  bottom: 20px;
+  right: 5%;
+  height: 10rem;
 }
 
 .state-nav-controls {
@@ -45,17 +56,22 @@
   bottom: 20px;
   left: 5%;
   height: 10rem;
+}
 
-  .togglable-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: absolute;
-    border-radius: 4px;
-    bottom: 40%;
-    width: 15rem;
-    background-color: #1f2933;
-    box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.32);
+.controls-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  border-radius: 4px;
+  bottom: 40%;
+  width: 15rem;
+  background-color: #1f2933;
+  box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.32);
+
+  &.s {
+    width: 80px;
+    left: -14px;
   }
 }
 
@@ -119,7 +135,12 @@
     svg {
       width: 30px;
       height: 30px;
+      stroke-width: 2;
     }
+  }
+
+  &.shadow.s {
+    box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.4);
   }
 
   &.m {
@@ -132,6 +153,20 @@
   &.selected {
     svg {
       stroke: #2bb0ed;
+    }
+  }
+
+  @media (hover: hover) {
+    &.hov:hover {
+      svg {
+        stroke: #2bb0ed;
+      }
+    }
+  }
+
+  &.disabled {
+    svg {
+      stroke: #7b8794;
     }
   }
 }

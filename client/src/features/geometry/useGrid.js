@@ -19,10 +19,14 @@ const useGrid = () => {
     setIsGrid(!isGrid);
   };
   const gridStepUp = () => {
-    setGridStep(gridStep * 2);
+    if (gridStep < 200) {
+      setGridStep(gridStep * 2);
+    }
   };
   const gridStepDown = () => {
-    setGridStep(gridStep / 2);
+    if (gridStep > 25) {
+      setGridStep(gridStep / 2);
+    }
   };
 
   return { isGrid, gridStep, toggleGrid, gridStepUp, gridStepDown };
