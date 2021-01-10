@@ -35,16 +35,20 @@ const useZoomAndPan = ({ width, height }) => {
 
   const zoomIn = () => {
     if (zoomLvl > minZoom) {
-      setPanHLvl(panHLvl - (width / 2 - panHLvl) * (zoomInStep - 1));
-      setPanVLvl(panVLvl - (height / 2 - panVLvl) * (zoomInStep - 1));
+      const cx = panHLvl + (width * zoomLvl) / 2;
+      const cy = panVLvl + (height * zoomLvl) / 2;
+      setPanHLvl(panHLvl - (cx - panHLvl) * (zoomInStep - 1));
+      setPanVLvl(panVLvl - (cy - panVLvl) * (zoomInStep - 1));
       setZoom(zoomLvl * zoomInStep);
     }
   };
 
   const zoomOut = () => {
     if (zoomLvl < maxZoom) {
-      setPanHLvl(panHLvl - (width / 2 - panHLvl) * (zoomOutStep - 1));
-      setPanVLvl(panVLvl - (height / 2 - panVLvl) * (zoomOutStep - 1));
+      const cx = panHLvl + (width * zoomLvl) / 2;
+      const cy = panVLvl + (height * zoomLvl) / 2;
+      setPanHLvl(panHLvl - (cx - panHLvl) * (zoomOutStep - 1));
+      setPanVLvl(panVLvl - (cy - panVLvl) * (zoomOutStep - 1));
       setZoom(zoomLvl * zoomOutStep);
     }
   };

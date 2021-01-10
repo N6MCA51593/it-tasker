@@ -12,7 +12,7 @@ import {
   SERVER_DT,
   SOUND_DT
 } from 'app/constants';
-import React, { Fragment, memo } from 'react';
+import React, { memo } from 'react';
 
 const SymbolWrapper = ({ type, children }) => {
   return (
@@ -32,7 +32,7 @@ const SymbolWrapper = ({ type, children }) => {
 
 const Defs = () => {
   return (
-    <Fragment>
+    <g>
       <SymbolWrapper type={SCREEN_DT}>
         <rect x='3' y='4' width='18' height='12' rx='1' />
         <line x1='7' y1='20' x2='17' y2='20' />
@@ -138,7 +138,7 @@ const Defs = () => {
         <line x1='16' y1='20' x2='16' y2='20.01' />
         <line x1='20' y1='20' x2='20' y2='20.01' />
       </SymbolWrapper>
-    </Fragment>
+    </g>
   );
 };
 
