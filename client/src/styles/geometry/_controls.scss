@@ -15,16 +15,12 @@
   }
 
   .nav-controls {
-    display: flex;
-    flex-direction: column;
     gap: 4px;
     top: 60%;
     right: 20px;
   }
 
   .grid-controls {
-    display: flex;
-    flex-direction: column;
     gap: 4px;
     top: 15%;
     right: 20px;
@@ -32,8 +28,9 @@
 
   .floor-controls {
     flex-direction: row;
-    bottom: 0;
-    left: 60%;
+    gap: 6px;
+    bottom: 20px;
+    right: 30%;
   }
 
   .device-controls {
@@ -42,8 +39,6 @@
 }
 
 .filter-controls {
-  display: flex;
-  flex-direction: column;
   justify-content: flex-end;
   bottom: 20px;
   right: 5%;
@@ -51,7 +46,6 @@
 }
 
 .state-nav-controls {
-  display: flex;
   justify-content: flex-end;
   bottom: 20px;
   left: 5%;
@@ -159,7 +153,7 @@
   @media (hover: hover) {
     &.hov:hover {
       svg {
-        stroke: #2bb0ed;
+        stroke: #b3ecff;
       }
     }
   }
@@ -167,6 +161,40 @@
   &.disabled {
     svg {
       stroke: #7b8794;
+    }
+  }
+}
+
+.floor-display {
+  cursor: pointer;
+  position: relative;
+  background-color: #1f2933;
+  color: #ffffff;
+  width: 60px;
+  height: 50px;
+  overflow: hidden;
+  box-shadow: 0px 5px 8px 0px rgba(0, 0, 0, 0.4);
+
+  .reel {
+    width: 60px;
+    display: flex;
+    flex-direction: column;
+
+    div {
+      width: 60px;
+      height: 50px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      text-align: center;
+      line-height: 40px;
+      padding: 0.3rem;
+      font-weight: 500;
+      font-size: 1.2rem;
+      background-color: #1f2933;
+      border: 2px solid #ffffff;
+      border-top: 1px solid #ffffff;
+      border-bottom: 1px solid #ffffff;
     }
   }
 }

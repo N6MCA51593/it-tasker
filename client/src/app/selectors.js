@@ -215,7 +215,7 @@ export const getTaskerCompletionTable = createSelector(
         completionTable[id] = null;
       } else if (isCheckedOff) {
         completionTable[id] = 1;
-      } else if (devices) {
+      } else if (devices && devices.length > 0) {
         completionTable[id] =
           devices.filter(deviceId => byDevice[deviceId][id]).length /
           devices.length;

@@ -26,7 +26,7 @@ const FilterControls = () => {
       )}
       <Button
         type='filter'
-        mod='shadow'
+        mod='shadow hov'
         handleClick={() => setIsShowing(!isShowing)}
       />
     </div>

@@ -65,7 +65,7 @@ const GlobalUiControls = ({ uiState }) => {
           )}
         </div>
       )}
-      <Button type={type} mod='shadow' />
+      <Button type={type} mod='shadow hov' />
     </div>
   );
 };

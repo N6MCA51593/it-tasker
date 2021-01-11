@@ -63,10 +63,14 @@ const floorsSlice = createSlice({
       }
 
       state.editingFloor = null;
+      const pos = state.entities[deletedFloorId].position;
       floorAdapter.removeOne(state, deletedFloorId);
 
       if (state.activeFloor === deletedFloorId) {
-        state.activeFloor = state.ids[0];
+        const prev = Object.values(state.entities).find(
+          floor => floor.position === pos - 1 || floor.position === pos
+        ).id;
+        state.activeFloor = prev;
       }
     },
     'api/updateGeometry/fulfilled': (state, { payload }) => {

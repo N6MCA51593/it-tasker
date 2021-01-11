@@ -1,0 +1,41 @@
+import { selectAllFloorItemsSorted } from 'app/selectors';
+import React, { useEffect, useRef } from 'react';
+import { useSelector } from 'react-redux';
+
+const FloorDisplay = ({ activeFloor }) => {
+  const refArr = useRef([]);
+  const floors = useSelector(selectAllFloorItemsSorted);
+
+  useEffect(() => {
+    refArr.current = refArr.current.slice(0, floors.length);
+  }, [floors]);
+
+  useEffect(() => {
+    const ref =
+      refArr.current[floors.findIndex(floor => floor.id === activeFloor)];
+    if (ref) {
+      ref.scrollIntoView({
+        behavior: 'smooth',
+        block: 'end'
+      });
+    }
+  }, [activeFloor, floors]);
+
+  return (
+    <div className='floor-display'>
+      <div className='reel'>
+        {[...floors].reverse().map((floor, i) => (
+          <div
+            key={floor.id}
+            ref={el => (refArr.current[i] = el)}
+            className='floor-reel-item'
+          >
+            {floor.shortName}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default FloorDisplay;
