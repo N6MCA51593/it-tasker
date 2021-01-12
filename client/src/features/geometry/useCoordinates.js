@@ -38,9 +38,12 @@ const useCoordinates = ({
   const getRelCoord = useCallback(
     (e, checkGrid = false) => {
       const boundingRect = ref.current.getBoundingClientRect();
-      const x = Math.round((e.clientX - boundingRect.left) * zoomLvl + panHLvl);
-      const y = Math.round((e.clientY - boundingRect.top) * zoomLvl + panVLvl);
-
+      const clientX =
+        typeof e.clientX !== 'undefined' ? e.clientX : e.touches[0].clientX;
+      const clientY =
+        typeof e.clientY !== 'undefined' ? e.clientY : e.touches[0].clientY;
+      const x = Math.round((clientX - boundingRect.left) * zoomLvl + panHLvl);
+      const y = Math.round((clientY - boundingRect.top) * zoomLvl + panVLvl);
       if (isGrid && checkGrid) {
         return findClosestNode(x, y, gridStep);
       } else {

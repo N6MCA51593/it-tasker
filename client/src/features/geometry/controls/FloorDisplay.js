@@ -2,7 +2,7 @@ import { selectAllFloorItemsSorted } from 'app/selectors';
 import React, { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 
-const FloorDisplay = ({ activeFloor }) => {
+const FloorDisplay = ({ activeFloor, handleClick }) => {
   const refArr = useRef([]);
   const floors = useSelector(selectAllFloorItemsSorted);
 
@@ -22,15 +22,15 @@ const FloorDisplay = ({ activeFloor }) => {
   }, [activeFloor, floors]);
 
   return (
-    <div className='floor-display'>
+    <div className='floor-display' onClick={handleClick}>
       <div className='reel'>
         {[...floors].reverse().map((floor, i) => (
           <div
             key={floor.id}
-            ref={el => (refArr.current[i] = el)}
+            ref={el => (refArr.current[floors.length - 1 - i] = el)}
             className='floor-reel-item'
           >
-            {floor.shortName}
+            {floor.shortName ? floor.shortName : floor.name}
           </div>
         ))}
       </div>
