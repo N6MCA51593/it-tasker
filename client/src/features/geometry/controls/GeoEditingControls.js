@@ -25,12 +25,6 @@ const GeoEditingControls = () => {
   return (
     <EditingControlsContainer>
       <LabeledButton
-        handleClick={() => dispatch(setUiGeoState(NAV_GEO))}
-        label='Navigate'
-        type={NAV_GEO}
-        mod={clTern(activeGeoState === NAV_GEO, 'active')}
-      />
-      <LabeledButton
         handleClick={() => dispatch(setUiGeoState(ADD_WALL_GEO))}
         label='Draw walls'
         type='plus'

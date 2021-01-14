@@ -135,16 +135,6 @@ const Defs = () => {
         <line x1='16' y1='20' x2='16' y2='20.01' />
         <line x1='20' y1='20' x2='20' y2='20.01' />
       </SymbolWrapper>
-      <SymbolWrapper type={NAV_GEO}>
-        <polyline points='16 4 20 4 20 8' />
-        <line x1='14' y1='10' x2='20' y2='4' />
-        <polyline points='8 20 4 20 4 16' />
-        <line x1='4' y1='20' x2='10' y2='14' />
-        <polyline points='16 20 20 20 20 16' />
-        <line x1='14' y1='14' x2='20' y2='20' />
-        <polyline points='8 4 4 4 4 8' />
-        <line x1='4' y1='4' x2='10' y2='10' />
-      </SymbolWrapper>
       <SymbolWrapper type='filter'>
         <path d='M5.5 5h13a1 1 0 0 1 .5 1.5l-5 5.5l0 7l-4 -3l0 -4l-5 -5.5a1 1 0 0 1 .5 -1.5' />
       </SymbolWrapper>
@@ -233,6 +223,11 @@ const Defs = () => {
         <line x1='14' y1='11' x2='14' y2='17' />
         <path d='M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12' />
         <path d='M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3' />
+      </SymbolWrapper>
+      <SymbolWrapper type='edit'>
+        <path d='M9 7h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-3' />
+        <path d='M9 15h3l8.5 -8.5a1.5 1.5 0 0 0 -3 -3l-8.5 8.5v3' />
+        <line x1='16' y1='5' x2='19' y2='8' />
       </SymbolWrapper>
       <SymbolWrapper type='cancel'>
         <circle cx='12' cy='12' r='9' />

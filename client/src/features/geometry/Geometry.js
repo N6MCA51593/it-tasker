@@ -46,7 +46,6 @@ const Geometry = () => {
     handleWheel,
     handleTouchStart
   } = useControlEventHandlers({
-    mode,
     getRelCoord,
     freePan,
     setInitCoords,

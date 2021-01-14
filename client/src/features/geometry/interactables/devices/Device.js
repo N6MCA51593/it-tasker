@@ -74,7 +74,7 @@ const Device = ({ id, mode }) => {
         <DeviceIcon type={type} x={x} y={y} className={iconClassName} />
       </g>
       {isActive && (
-        <DevicePopUpContainer x={x} y={y} mode={mode}>
+        <DevicePopUpContainer x={x} y={y}>
           <DeviceMainPopUp id={id} floor={floor} />
         </DevicePopUpContainer>
       )}

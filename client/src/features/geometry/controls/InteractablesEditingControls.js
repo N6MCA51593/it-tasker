@@ -1,6 +1,7 @@
 import {
   ADD_AREA_GEO,
   ADD_DEVICE_GEO,
+  EDIT_DEVICE_GEO,
   MOVE_AREA_LABEL_GEO,
   MOVE_DEVICE_GEO,
   NAV_GEO,
@@ -27,12 +28,6 @@ const InteractablesEditingControls = () => {
   const activeGeoState = useSelector(selectActiveGeoState);
   return (
     <EditingControlsContainer>
-      <LabeledButton
-        handleClick={() => dispatch(setUiGeoState(NAV_GEO))}
-        label='Navigate'
-        type={NAV_GEO}
-        mod={clTern(activeGeoState === NAV_GEO, 'active')}
-      />
       <LabeledButton
         handleClick={() => dispatch(setUiGeoState(ADD_AREA_GEO))}
         label='Draw new areas'
@@ -71,16 +66,22 @@ const InteractablesEditingControls = () => {
         mod={clTern(activeGeoState === ADD_DEVICE_GEO, 'active')}
       />
       <LabeledButton
-        handleClick={() => dispatch(setUiGeoState(REMOVE_DEVICE_GEO))}
-        label='Remove devices'
-        type='trash'
-        mod={clTern(activeGeoState === REMOVE_DEVICE_GEO, 'active')}
+        handleClick={() => dispatch(setUiGeoState(EDIT_DEVICE_GEO))}
+        label='Edit devices'
+        type='edit'
+        mod={clTern(activeGeoState === EDIT_DEVICE_GEO, 'active')}
       />
       <LabeledButton
         handleClick={() => dispatch(setUiGeoState(MOVE_DEVICE_GEO))}
         label='Move devices'
         type='move'
         mod={clTern(activeGeoState === MOVE_DEVICE_GEO, 'active')}
+      />
+      <LabeledButton
+        handleClick={() => dispatch(setUiGeoState(REMOVE_DEVICE_GEO))}
+        label='Remove devices'
+        type='trash'
+        mod={clTern(activeGeoState === REMOVE_DEVICE_GEO, 'active')}
       />
       <button onClick={() => dispatch(updateInteractables())}>Save</button>
       <button onClick={() => dispatch(cancelChanges())}>Cancel</button>

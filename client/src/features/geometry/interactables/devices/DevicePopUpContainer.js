@@ -1,19 +1,14 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { setDeviceHoverStatus } from 'app/uiStateSlice';
-import { NAV_GEO } from 'app/constants';
 
-const DevicePopUpContainer = ({ x, y, mode, children }) => {
+const DevicePopUpContainer = ({ x, y, children }) => {
   const dispatch = useDispatch();
   const handleMouseEnter = () => {
-    if (mode === NAV_GEO) {
-      dispatch(setDeviceHoverStatus(true));
-    }
+    dispatch(setDeviceHoverStatus(true));
   };
   const handleMouseLeave = () => {
-    if (mode === NAV_GEO) {
-      dispatch(setDeviceHoverStatus(false));
-    }
+    dispatch(setDeviceHoverStatus(false));
   };
   return (
     <foreignObject

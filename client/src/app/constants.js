@@ -8,6 +8,7 @@ export const EDIT_TASKER_ITEMS_GLOB = 'edit-tasker-item';
 export const NAV_GEO = 'nav';
 
 export const ADD_DEVICE_GEO = 'add-device';
+export const EDIT_DEVICE_GEO = 'edit-device';
 export const REMOVE_DEVICE_GEO = 'remove-device';
 export const MOVE_DEVICE_GEO = 'move-device';
 

@@ -1,9 +1,7 @@
 import { useState } from 'react';
-import { NAV_GEO } from 'app/constants';
 import { useSelector } from 'react-redux';
 
 const useControlEventHandlers = ({
-  mode,
   getRelCoord,
   freePan,
   setInitCoords,
@@ -16,12 +14,12 @@ const useControlEventHandlers = ({
   );
 
   const handlePointerMove = e => {
-    if (mode === NAV_GEO && isPointerDown) {
+    if (isPointerDown) {
       freePan(getRelCoord(e));
     }
   };
   const handleTouchStart = e => {
-    if (mode === NAV_GEO && !isHoveringOverDevicePopUp) {
+    if (!isHoveringOverDevicePopUp) {
       if (!isPointer) {
         setIsPointer(true);
       }
@@ -30,19 +28,17 @@ const useControlEventHandlers = ({
     }
   };
   const handlePointerDown = e => {
-    if (mode === NAV_GEO && !isHoveringOverDevicePopUp) {
+    if (!isHoveringOverDevicePopUp) {
       setInitCoords(getRelCoord(e));
       setIsPointerDown(true);
     }
   };
   const handlePointerUp = () => {
-    if (mode === NAV_GEO) {
-      setInitCoords(null);
-      setIsPointerDown(false);
-    }
+    setInitCoords(null);
+    setIsPointerDown(false);
   };
   const handlePointerLeave = () => {
-    if (mode === NAV_GEO && !isPointer) {
+    if (!isPointer) {
       setInitCoords(null);
       setIsPointerDown(false);
     }

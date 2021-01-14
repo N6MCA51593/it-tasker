@@ -15,9 +15,9 @@ import {
 } from 'features/geometry/interactables/devices/deviceSlice';
 import {
   ADD_DEVICE_GEO,
+  EDIT_DEVICE_GEO,
   EDIT_INTERACTABLES_GLOB,
   MOVE_DEVICE_GEO,
-  NAV_GEO,
   REMOVE_DEVICE_GEO
 } from 'app/constants';
 
@@ -35,7 +35,7 @@ const DeviceWithEditing = ({ id, mode }) => {
   const { status, type, x, y } = device;
 
   const handleClick = () => {
-    if (mode === NAV_GEO && globalUiState === EDIT_INTERACTABLES_GLOB) {
+    if (mode === EDIT_DEVICE_GEO && globalUiState === EDIT_INTERACTABLES_GLOB) {
       dispatch(setActiveDevice(id));
     } else if (mode === REMOVE_DEVICE_GEO) {
       dispatch(removeDevice(id));
@@ -61,7 +61,7 @@ const DeviceWithEditing = ({ id, mode }) => {
         <DeviceIcon type={type} x={x} y={y} className={iconClassName} />
       </g>
       {isActive && mode !== MOVE_DEVICE_GEO && (
-        <DevicePopUpContainer x={x} y={y} mode={mode}>
+        <DevicePopUpContainer x={x} y={y}>
           <DeviceEditingPopUp device={device} />
         </DevicePopUpContainer>
       )}
