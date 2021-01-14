@@ -6,6 +6,10 @@ export const updateGeometry = createAsyncThunk(
   'api/updateGeometry',
   async (_, { getState, dispatch }) => {
     const { walls } = getState();
+    if (walls.toDelete.length === 0 && walls.toUpsert.length === 0) {
+      return;
+    }
+
     const body = [...new Set(walls.toUpsert)].map(e => walls.entities[e]);
     const toDeleteIds = walls.toDelete.map(e => e.id);
     const reqFloors = new Set([...body, ...walls.toDelete].map(e => e.floor));

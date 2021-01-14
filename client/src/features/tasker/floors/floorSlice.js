@@ -74,8 +74,10 @@ const floorsSlice = createSlice({
       }
     },
     'api/updateGeometry/fulfilled': (state, { payload }) => {
-      for (const floor of payload) {
-        state.entities[floor.id].geometry = floor.geometry;
+      if (payload) {
+        for (const floor of payload) {
+          state.entities[floor.id].geometry = floor.geometry;
+        }
       }
     },
     'api/updateFloor/fulfilled': (state, { payload }) => {

@@ -19,6 +19,7 @@ body {
   font-family: 'Roboto', sans-serif;
   font-size: 1rem;
   line-height: 1.6;
+  height: 100%;
 }
 
 .landing {
@@ -31,22 +32,16 @@ body {
 .main-container {
   display: grid;
   grid-template-columns: 2fr 1fr;
-  height: 90vh;
-  margin: 0.2rem;
+  height: 100vh;
+  overflow: hidden;
 }
 
 .draw-area {
   position: relative;
   width: 100%;
-  height: 90vh;
-  border: 1px solid black;
+  height: 100vh;
   background-color: $geo-bg;
 }
-
-// svg {
-//   width: 100%;
-//   height: 100%;
-// }
 
 button {
   padding: 0 1.3rem;
@@ -72,10 +67,9 @@ button {
 
 .task-container {
   position: relative;
-  border: 1px solid #000;
   display: flex;
   flex-direction: column;
-  height: 90vh;
+  height: 100vh;
 
   .task-controls-container {
     width: 100%;

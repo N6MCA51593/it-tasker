@@ -9,6 +9,7 @@ import {
 } from 'app/constants';
 import Button from 'features/geometry/controls/Button';
 import useOnClickOutside from 'common/useOnClickOutside';
+import LabeledButton from 'features/geometry/controls/LabeledButton';
 
 const GlobalUiControls = ({ uiState }) => {
   const dispatch = useDispatch();
@@ -27,41 +28,33 @@ const GlobalUiControls = ({ uiState }) => {
     >
       {isShowing && (
         <div className='controls-container'>
-          <div
-            className='controls-button-labeled'
-            onClick={() => dispatch(logout())}
-          >
-            <Button type='logout' mod='m' />
-            <p>Log Out</p>
-          </div>
+          <LabeledButton
+            handleClick={() => dispatch(logout())}
+            type={'logout'}
+            label='Log Out'
+          />
           {type !== MAIN_GLOB && (
-            <div
-              className='controls-button-labeled'
-              onClick={() => dispatch(setUiGlobalState(MAIN_GLOB))}
-            >
-              <Button type={MAIN_GLOB} mod='m' />
-              <p>Main</p>
-            </div>
+            <LabeledButton
+              handleClick={() => dispatch(setUiGlobalState(MAIN_GLOB))}
+              type={MAIN_GLOB}
+              label='Main'
+            />
           )}
           {type !== EDIT_GEOM_GLOB && (
-            <div
-              className='controls-button-labeled'
-              onClick={() => dispatch(setUiGlobalState(EDIT_GEOM_GLOB))}
-            >
-              <Button type={EDIT_GEOM_GLOB} mod='m' />
-              <p>Edit geometry</p>
-            </div>
+            <LabeledButton
+              handleClick={() => dispatch(setUiGlobalState(EDIT_GEOM_GLOB))}
+              type={EDIT_GEOM_GLOB}
+              label='Edit geometry'
+            />
           )}
           {type !== EDIT_INTERACTABLES_GLOB && (
-            <div
-              className='controls-button-labeled'
-              onClick={() =>
+            <LabeledButton
+              handleClick={() =>
                 dispatch(setUiGlobalState(EDIT_INTERACTABLES_GLOB))
               }
-            >
-              <Button type={EDIT_INTERACTABLES_GLOB} mod='m' />
-              <p>Edit areas and devices</p>
-            </div>
+              type={EDIT_INTERACTABLES_GLOB}
+              label='Edit areas and devices'
+            />
           )}
         </div>
       )}

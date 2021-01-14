@@ -15,7 +15,6 @@ const useZoomAndPan = ({ width, height }) => {
   const zoomInStep = 0.8;
   const zoomOutStep = 1.2;
   const panStep = 50;
-  const panSmoothing = 0.25;
   const minZoom = 0.08;
   const maxZoom = 5;
 
@@ -54,8 +53,8 @@ const useZoomAndPan = ({ width, height }) => {
   };
 
   const freePan = ({ x, y }) => {
-    panH(((initCoords.x - x) * panSmoothing) / zoomLvl / panStep);
-    panV(((initCoords.y - y) * panSmoothing) / zoomLvl / panStep);
+    panH((initCoords.x - x) / zoomLvl / panStep);
+    panV((initCoords.y - y) / zoomLvl / panStep);
   };
 
   const wheelZoom = ({ x, y }, delta) => {

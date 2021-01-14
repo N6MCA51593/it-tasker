@@ -16,6 +16,10 @@
   pointer-events: none;
 }
 
+.disabled {
+  pointer-events: none;
+}
+
 .options {
   display: flex;
   flex-direction: column;

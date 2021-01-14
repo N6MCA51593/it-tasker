@@ -17,11 +17,15 @@
     opacity: 0.5;
   }
 
-  &.hov-move:hover {
-    color: #cbd2d9;
+  @media (hover: hover) {
+    &.hov-move:hover {
+      color: #cbd2d9;
+    }
   }
 
-  &.hov-remove:hover {
-    color: #e12d39;
+  @media (hover: hover) {
+    &.hov-remove:hover {
+      color: #e12d39;
+    }
   }
 }

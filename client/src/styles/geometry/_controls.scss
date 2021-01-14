@@ -1,14 +1,13 @@
 // Geometry controls
 
 .geometry-controls {
-  pointer-events: none;
   width: 100%;
   height: 100%;
   position: absolute;
   top: 0;
+  pointer-events: none;
 
   & > div {
-    pointer-events: all;
     position: absolute;
     display: flex;
     flex-direction: column;
@@ -36,6 +35,63 @@
   .device-controls {
     bottom: 0;
   }
+
+  .editing-controls-lane {
+    left: 2%;
+    height: 100%;
+    align-items: center;
+    flex-direction: row;
+    width: 16rem;
+
+    .editing-controls-container {
+      width: 100%;
+      max-height: 80vh;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      pointer-events: all;
+      border-radius: 4px;
+      background-color: #1f2933;
+      box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.35);
+      padding: 1rem 0.5rem;
+
+      .toggle-editing-controls {
+        position: absolute;
+        right: -20px;
+        top: 20%;
+      }
+
+      &.hidden {
+        left: -9999px;
+
+        .toggle-editing-controls {
+          visibility: visible;
+          left: 9999px;
+          right: initial;
+        }
+      }
+
+      .save-cancel-buttons {
+        display: flex;
+        justify-content: space-around;
+        width: 80%;
+        margin: 0.3rem 0 0 0;
+
+        & > div {
+          padding: 0 0.7rem;
+          display: flex;
+          justify-content: center;
+          border-radius: 8px;
+        }
+
+        & > div:nth-child(2) {
+          background-color: transparentize(#0c6b58, 0.5);
+          border: 1px solid #3ebd93;
+        }
+      }
+    }
+  }
 }
 
 .filter-controls {
@@ -43,6 +99,7 @@
   bottom: 20px;
   right: 5%;
   height: 10rem;
+  pointer-events: none;
 }
 
 .state-nav-controls {
@@ -50,18 +107,20 @@
   bottom: 20px;
   left: 5%;
   height: 10rem;
+  pointer-events: none;
 }
 
 .controls-container {
+  pointer-events: all;
   display: flex;
   flex-direction: column;
   align-items: center;
   position: absolute;
   border-radius: 4px;
   bottom: 40%;
-  width: 15rem;
+  width: 16rem;
   background-color: #1f2933;
-  box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.32);
+  box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.35);
 
   &.s {
     width: 80px;
@@ -77,8 +136,8 @@
   margin: 0.4rem 0;
   color: #e4e7eb;
   transition: 0.2s all ease;
-  border-left: 2px solid #323f4b;
-  border-right: 2px solid #323f4b;
+  border-left: 3px solid #323f4b;
+  border-right: 3px solid #323f4b;
   align-items: center;
 
   p {
@@ -86,19 +145,29 @@
     overflow: hidden;
     padding: 0 0.5rem;
     line-height: 50px;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     user-select: none;
   }
 
-  &:hover {
+  @mixin active-hover {
     background-color: #e4e7eb;
     color: #000000;
-    border-left: 2px solid #127fbf;
-    border-right: 2px solid #127fbf;
+    border-left: 3px solid #127fbf;
+    border-right: 3px solid #127fbf;
 
     svg {
       stroke: #127fbf;
       background-color: #e4e7eb;
+    }
+  }
+
+  &.active {
+    @include active-hover;
+  }
+
+  @media (hover: hover) {
+    &:not(.active):hover {
+      @include active-hover;
     }
   }
 }
@@ -106,6 +175,7 @@
 .geo-button {
   cursor: pointer;
   position: relative;
+  pointer-events: all;
   background-color: #1f2933;
   color: #ffffff;
 
@@ -164,10 +234,51 @@
       stroke: #7b8794;
     }
   }
+
+  &.save {
+    background-color: transparentize(#0c6b58, 1);
+    svg {
+      stroke: #3ebd93;
+    }
+  }
+
+  &.cancel {
+    @media (hover: hover) {
+      &:hover {
+        svg {
+          stroke: #fce588;
+        }
+      }
+    }
+  }
+
+  &.hide-toggle {
+    background-color: #ffffff;
+
+    &.shadow {
+      box-shadow: 0px 4px 5px 0px rgba(0, 0, 0, 0.3);
+    }
+
+    svg {
+      stroke: #1f2933;
+      height: 50px;
+      width: 33px;
+      stroke-width: 2;
+    }
+
+    @media (hover: hover) {
+      &:hover {
+        svg {
+          stroke: #127fbf;
+        }
+      }
+    }
+  }
 }
 
 .floor-display {
   cursor: pointer;
+  pointer-events: all;
   position: relative;
   background-color: #1f2933;
   color: #ffffff;
@@ -200,6 +311,7 @@
 }
 
 .controls-floor-list {
+  pointer-events: all;
   position: absolute;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -208,7 +320,7 @@
   bottom: 130%;
   left: -25%;
   background-color: #1f2933;
-  box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.32);
+  box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.35);
   padding: 1rem;
   width: 250px;
   overflow: hidden;
