@@ -58,8 +58,11 @@
 
       .toggle-editing-controls {
         position: absolute;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
         right: -20px;
-        top: 20%;
+        justify-content: space-around;
       }
 
       &.hidden {
@@ -69,25 +72,6 @@
           visibility: visible;
           left: 9999px;
           right: initial;
-        }
-      }
-
-      .save-cancel-buttons {
-        display: flex;
-        justify-content: space-around;
-        width: 80%;
-        margin: 0.3rem 0 0 0;
-
-        & > div {
-          padding: 0 0.7rem;
-          display: flex;
-          justify-content: center;
-          border-radius: 8px;
-        }
-
-        & > div:nth-child(2) {
-          background-color: transparentize(#0c6b58, 0.5);
-          border: 1px solid #3ebd93;
         }
       }
     }
@@ -165,8 +149,13 @@
     @include active-hover;
   }
 
+  &.disabled {
+    cursor: default;
+    color: #7b8794;
+  }
+
   @media (hover: hover) {
-    &:not(.active):hover {
+    &:not(.active):not(.disabled):hover {
       @include active-hover;
     }
   }
@@ -230,6 +219,7 @@
   }
 
   &.disabled {
+    cursor: default;
     svg {
       stroke: #7b8794;
     }
@@ -252,26 +242,30 @@
     }
   }
 
-  &.hide-toggle {
+  &.editing-controls-side {
     background-color: #ffffff;
-
+    margin: 1rem 0;
     &.shadow {
       box-shadow: 0px 4px 5px 0px rgba(0, 0, 0, 0.3);
     }
 
     svg {
-      stroke: #1f2933;
       height: 50px;
       width: 33px;
       stroke-width: 2;
+      stroke: #1f2933;
     }
 
     @media (hover: hover) {
-      &:hover {
+      &:not(.disabled):hover {
         svg {
           stroke: #127fbf;
         }
       }
+    }
+
+    &.disabled {
+      background-color: #7b8794;
     }
   }
 }

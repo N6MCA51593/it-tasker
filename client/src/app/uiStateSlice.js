@@ -16,7 +16,8 @@ import {
   SOUND_DT,
   SCREEN_DT,
   NETWORK_DT,
-  SERVER_DT
+  SERVER_DT,
+  ADD_AREA_GEO
 } from 'app/constants';
 
 const initialState = {
@@ -115,12 +116,21 @@ const uiStateSlice = createSlice({
     'devices/updateActiveDevice': state => {
       state.isHoveringOverDevicePopUp = false;
     },
+    'areas/redrawArea': state => {
+      state.activeGeometryState = ADD_AREA_GEO;
+    },
     'api/updateTaskerItem/fulfilled': state => {
       if (state.activeGlobalState === EDIT_TASKER_ITEMS_GLOB) {
         state.activeGlobalState = VIEW_TASKER_ITEMS_GLOB;
       }
     },
     'tasker/cancelChanges': state => {
+      state.activeGlobalState = MAIN_GLOB;
+    },
+    'walls/cancelChanges': state => {
+      state.activeGlobalState = MAIN_GLOB;
+    },
+    'areas/cancelChanges': state => {
       state.activeGlobalState = MAIN_GLOB;
     },
     'tasker/toggleActiveItem': state => {

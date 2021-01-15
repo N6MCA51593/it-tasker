@@ -111,11 +111,13 @@ const devicesSlice = createSlice({
     'tasker/addItem': state => {
       state.activeDevice = null;
     },
-    'api/updateInteractables/fulfilled': state => {
+    'api/updateInteractables/fulfilled': (state, { payload }) => {
       state.toDelete = [];
       state.toUpsert = [];
       state.devicesHistory = null;
-      buildByAreas(state);
+      if (payload) {
+        buildByAreas(state);
+      }
     },
     'api/loadAppData/fulfilled': (state, { payload }) => {
       devicesAdapter.addMany(state, payload.devices);

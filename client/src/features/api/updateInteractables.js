@@ -6,6 +6,15 @@ export const updateInteractables = createAsyncThunk(
   'api/updateInteractables',
   async (_, { dispatch, getState }) => {
     const { devices, areas } = getState();
+    if (
+      areas.toDelete.length === 0 &&
+      areas.toUpsert.length === 0 &&
+      devices.toDelete.length === 0 &&
+      devices.toUpsert.length === 0
+    ) {
+      return;
+    }
+
     const areasParams = reqQueryParams(areas.toDelete, 'adel');
     const devicesParams = reqQueryParams(devices.toDelete, 'ddel');
     const params = `?${(areasParams ? areasParams + '&' : '') + devicesParams}`;
@@ -30,7 +39,7 @@ export const updateInteractables = createAsyncThunk(
         }
       );
       await handleResponseErrors(response, true, dispatch);
-      return;
+      return true;
     } catch (error) {
       throw new Error('Server Error');
     }

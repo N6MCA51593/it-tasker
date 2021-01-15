@@ -8,7 +8,7 @@ const LabeledButton = ({ type, label, mod, handleClick }) => {
       className={`controls-button-labeled ${clTern(mod, mod)}`}
       onClick={handleClick}
     >
-      <Button type={type} mod='m' />
+      <Button type={type} mod={`m ${clTern(mod === 'disabled', 'disabled')}`} />
       <p>{label}</p>
     </div>
   );

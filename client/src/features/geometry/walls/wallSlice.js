@@ -113,6 +113,7 @@ const wallsSlice = createSlice({
       } else if (state.wallsHistory) {
         wallsAdapter.setAll(state, state.wallsHistory);
         state.wallsHistory = null;
+        state.activeWall = null;
       }
     },
     'authState/resetState': () => {
