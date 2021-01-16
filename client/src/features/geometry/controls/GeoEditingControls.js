@@ -11,7 +11,6 @@ import EditingControlsContainer from 'features/geometry/controls/EditingControls
 import LabeledButton from 'features/geometry/controls/LabeledButton';
 import { selectActiveGeoState } from 'app/selectors';
 import clTern from 'common/clTern';
-import Button from 'features/geometry/controls/Button';
 
 const GeoEditingControls = () => {
   const dispatch = useDispatch();

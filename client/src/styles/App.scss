@@ -5,6 +5,7 @@ $geo-stroke-width: 5;
 @import 'spinner';
 @import 'notifications';
 @import 'geometry/device';
+@import 'geometry/area';
 @import 'geometry/wall';
 @import 'geometry/controls';
 @import 'geometry/misc';
@@ -173,16 +174,3 @@ button {
 }
 
 @import 'media-queries';
-
-// .test2 {
-//   opacity: 0.5;
-//   stroke: red;
-//   transform: translate(-10px, -30px);
-//   //transform: rotate(45deg);
-// }
-// use[href='#icon'] {
-//   opacity: 0.5;
-//   stroke: red;
-//   transform: translate(-10px, -30px);
-//   //transform: rotate(45deg);
-// }

@@ -15,6 +15,7 @@ import {
   REDRAW_AREA_GEO,
   REMOVE_AREA_GEO
 } from 'app/constants';
+import clTern from 'common/clTern';
 
 const Area = ({ id, mode, addDevice }) => {
   const { points, name, floor, labelCoords: coords } = useSelector(state =>
@@ -38,16 +39,26 @@ const Area = ({ id, mode, addDevice }) => {
     }
   };
 
+  const hov = () => {
+    let className = 'hov ';
+    if (globalUiState === EDIT_TASKER_ITEMS_GLOB) {
+      return className + 'tasker';
+    } else if (mode === REMOVE_AREA_GEO) {
+      return className + 'remove';
+    } else if (mode === REDRAW_AREA_GEO) {
+      return className + 'redraw';
+    }
+    return '';
+  };
+
+  const className = `area ${hov()}`;
+
   return (
     <g>
       <polygon
         onClick={e => handleClick(e)}
         points={points.join(' ')}
-        fill='#009975'
-        stroke='blue'
-        strokeWidth='3'
-        strokeDasharray='2'
-        fillRule='nonzero'
+        className={className}
       />
       {coords && !isNaN(coords.x) && (
         <AreaNameLabel name={name} coords={coords} mode={mode} id={id} />

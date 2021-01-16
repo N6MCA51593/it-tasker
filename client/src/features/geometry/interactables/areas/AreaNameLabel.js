@@ -5,6 +5,7 @@ import {
   renameLabel
 } from 'features/geometry/interactables/areas/areaSlice';
 import { MOVE_AREA_LABEL_GEO, RENAME_AREA_LABEL_GEO } from 'app/constants';
+import clTern from 'common/clTern';
 
 const AreaNameLabel = ({ coords, name, mode, id }) => {
   const [labelName, setLabelName] = useState(name);
@@ -31,36 +32,26 @@ const AreaNameLabel = ({ coords, name, mode, id }) => {
     }
   };
 
-  const className = `name-label${
-    mode === RENAME_AREA_LABEL_GEO || mode === MOVE_AREA_LABEL_GEO
-      ? ''
-      : '-disabled'
-  }`;
+  const className = `area-name-label ${clTern(
+    mode !== RENAME_AREA_LABEL_GEO && mode !== MOVE_AREA_LABEL_GEO,
+    'disabled'
+  )}`;
 
   return (
-    <g>
-      {!isEditing && (
-        <text x={x} y={y} onClick={() => handleClick()} className={className}>
+    <foreignObject x={x} y={y} width='5rem' height='100px'>
+      {isEditing ? (
+        <input
+          value={labelName}
+          onChange={e => handleChange(e)}
+          onBlur={() => onBlur()}
+          autoFocus
+        />
+      ) : (
+        <div className={className} onClick={() => handleClick()}>
           {name ? name : '-.-'}
-        </text>
+        </div>
       )}
-      {isEditing && (
-        <foreignObject
-          x={x}
-          y={y - 15}
-          width='100px'
-          height='100px'
-          className='text-edit'
-        >
-          <input
-            value={labelName}
-            onChange={e => handleChange(e)}
-            onBlur={() => onBlur()}
-            autoFocus
-          />
-        </foreignObject>
-      )}
-    </g>
+    </foreignObject>
   );
 };
 

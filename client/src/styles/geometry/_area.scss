@@ -1,0 +1,63 @@
+// Area
+
+foreignObject {
+  overflow: visible;
+}
+
+.text-edit {
+  position: absolute;
+}
+
+.area-name-label {
+  display: inline;
+  cursor: default;
+  user-select: none;
+  padding: 0.3rem;
+  color: #ffffff;
+  background-color: #616e7c;
+  box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.4);
+  white-space: nowrap;
+  font-weight: 500;
+
+  &.disabled {
+    pointer-events: none;
+  }
+}
+
+.area {
+  fill: transparentize($color: #9aa5b1, $amount: 0.9);
+  stroke: #9aa5b1;
+  stroke-width: 3;
+  stroke-dasharray: 5;
+  stroke-dashoffset: 1000;
+  fill-rule: nonzero;
+
+  @media (hover: hover) {
+    &.hov {
+      cursor: pointer;
+      &:hover {
+        animation: anim 60s linear forwards;
+      }
+
+      @keyframes anim {
+        to {
+          stroke-dashoffset: 0;
+        }
+      }
+    }
+
+    &.hov.remove {
+      &:hover {
+        stroke: #e12d39;
+        fill: transparentize($color: #e12d39, $amount: 0.9);
+      }
+    }
+
+    &.hov.redraw {
+      &:hover {
+        stroke: #fadb5f;
+        fill: transparentize($color: #fadb5f, $amount: 0.9);
+      }
+    }
+  }
+}
