@@ -1,5 +1,13 @@
 import { sortTaskerItems } from 'features/tasker/taskerSorting';
-import { COLLECTION_TT, NOTE_TT, TASK_TT } from 'app/constants';
+import {
+  COLLECTION_TT,
+  EDIT_INTERACTABLES_GLOB,
+  EDIT_TASKER_ITEMS_GLOB,
+  VIEW_TASKER_ITEMS_GLOB,
+  NOTE_TT,
+  TASK_TT,
+  MAIN_GLOB
+} from 'app/constants';
 import {
   createSelector,
   createSelectorCreator,
@@ -96,6 +104,49 @@ export const selectActiveFloorAreas = createSelector(
   (ids, areas, activeFloor) => ids.filter(id => areas[id].floor === activeFloor)
 );
 export const selectChildDevices = (state, id) => state.devices.byArea[id];
+export const selectIsAreaHighlighted = () =>
+  createSelector(
+    state => state.uiState.activeGlobalState,
+    state => state.devices.byArea,
+    state => state.tasker.byDevice,
+    state => state.tasker.entities,
+    state => state.tasker.activeItem,
+    (_, id) => id,
+    (
+      activeGlobalState,
+      byArea,
+      byDevice,
+      taskerItems,
+      activeTaskerItem,
+      id
+    ) => {
+      if (activeGlobalState !== EDIT_INTERACTABLES_GLOB) {
+        if (byArea[id]) {
+          for (const device of byArea[id]) {
+            if (byDevice[device]) {
+              if (
+                (activeGlobalState === VIEW_TASKER_ITEMS_GLOB ||
+                  activeGlobalState === EDIT_TASKER_ITEMS_GLOB) &&
+                typeof byDevice[device][activeTaskerItem] !== 'undefined'
+              ) {
+                return true;
+              }
+
+              for (const taskerItem in byDevice[device]) {
+                if (
+                  activeGlobalState === MAIN_GLOB &&
+                  !byDevice[device][taskerItem] &&
+                  taskerItems[taskerItem].type === TASK_TT
+                ) {
+                  return true;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  );
 
 // Devices
 export const selectAllDevices = state => state.devices.ids;

@@ -33,12 +33,12 @@ const AreaNameLabel = ({ coords, name, mode, id }) => {
   };
 
   const className = `area-name-label ${clTern(
-    mode !== RENAME_AREA_LABEL_GEO && mode !== MOVE_AREA_LABEL_GEO,
-    'disabled'
+    mode === RENAME_AREA_LABEL_GEO || mode === MOVE_AREA_LABEL_GEO,
+    'events-enabled'
   )}`;
 
   return (
-    <foreignObject x={x} y={y} width='5rem' height='100px'>
+    <foreignObject x={x} y={y} width='5rem' height='2rem'>
       {isEditing ? (
         <input
           value={labelName}

@@ -14,7 +14,7 @@ const TaskerListItem = ({ id, completion, wasActive }) => {
     if (wasActive === id) {
       ref.current.scrollIntoView({
         behavior: 'smooth',
-        block: 'center'
+        block: 'nearest'
       });
     }
   }, [wasActive, id]);

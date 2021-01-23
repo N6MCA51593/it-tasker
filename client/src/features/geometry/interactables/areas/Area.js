@@ -1,6 +1,10 @@
-import React, { memo } from 'react';
+import React, { memo, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectActiveGlobalUiState, selectAreaById } from 'app/selectors';
+import {
+  selectActiveGlobalUiState,
+  selectAreaById,
+  selectIsAreaHighlighted
+} from 'app/selectors';
 import {
   removeArea,
   redrawArea
@@ -21,7 +25,12 @@ const Area = ({ id, mode, addDevice }) => {
   const { points, name, floor, labelCoords: coords } = useSelector(state =>
     selectAreaById(state, id)
   );
+
   const globalUiState = useSelector(selectActiveGlobalUiState);
+  const isAreaHighlightedSelector = useMemo(selectIsAreaHighlighted, []);
+  const isAreaHighlighted = useSelector(state =>
+    isAreaHighlightedSelector(state, id)
+  );
   const dispatch = useDispatch();
   const { toggleChildren } = useAreaTaskerState(id, floor);
 
@@ -51,14 +60,17 @@ const Area = ({ id, mode, addDevice }) => {
     return '';
   };
 
-  const className = `area ${hov()}`;
-
   return (
-    <g>
+    <g
+      className={`area-group ${hov()} ${clTern(
+        isAreaHighlighted,
+        'active-tasks'
+      )}`}
+    >
       <polygon
         onClick={e => handleClick(e)}
         points={points.join(' ')}
-        className={className}
+        className='area'
       />
       {coords && !isNaN(coords.x) && (
         <AreaNameLabel name={name} coords={coords} mode={mode} id={id} />
