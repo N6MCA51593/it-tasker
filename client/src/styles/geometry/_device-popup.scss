@@ -1,0 +1,64 @@
+// Device Popup
+
+.popup-outer {
+  position: relative;
+  pointer-events: none;
+  z-index: 10;
+  width: 500px;
+  height: 500px;
+}
+
+.device-popup {
+  position: relative;
+  pointer-events: all;
+  border-radius: 4px;
+  background-color: #1f2933;
+  box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.35);
+  padding: 1rem 0.5rem;
+  padding: 2rem;
+  color: #ffffff;
+}
+
+.device-tasker-items {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  border: 1px solid #000;
+  gap: 1rem;
+}
+
+.device-tasker-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  border: 1px solid #000;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 0.5rem 0;
+
+  label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+}
+
+.type-picker {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 80%;
+  height: 100%;
+  margin: auto;
+
+  div {
+    height: 100%;
+    flex: 1;
+  }
+}

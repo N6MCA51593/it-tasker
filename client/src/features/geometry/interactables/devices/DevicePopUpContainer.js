@@ -14,8 +14,6 @@ const DevicePopUpContainer = ({ x, y, children }) => {
     <foreignObject
       x={x - 250}
       y={y - 280}
-      width='500px'
-      height='500px'
       className='popup-outer'
       onMouseEnter={() => handleMouseEnter()}
       onMouseLeave={() => handleMouseLeave()}

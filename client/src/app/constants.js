@@ -37,15 +37,15 @@ export const COMPLETION_ASC = 'completion-asc';
 export const COMPLETION_DESC = 'completion-desc';
 
 // Device types
-export const PC_DT = 'PC';
-export const LAPTOP_DT = 'Laptop';
-export const PRINTER_DT = 'Printer';
-export const PHONE_DT = 'Phone';
-export const SOUND_DT = 'Sound';
-export const SCREEN_DT = 'Screen';
-export const NETWORK_DT = 'Network';
-export const SERVER_DT = 'Server';
-export const OTHER_DT = 'Other';
+export const PC_DT = 'pc';
+export const LAPTOP_DT = 'laptop';
+export const PRINTER_DT = 'printer';
+export const PHONE_DT = 'phone';
+export const SOUND_DT = 'sound';
+export const SCREEN_DT = 'screen';
+export const NETWORK_DT = 'network';
+export const SERVER_DT = 'server';
+export const OTHER_DT = 'other';
 
 // Notification types
 export const SUCCESS_NT = 'success';

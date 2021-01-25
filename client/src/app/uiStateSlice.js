@@ -36,8 +36,8 @@ const initialState = {
   activeDeviceFilters: {
     [PC_DT]: true,
     [LAPTOP_DT]: true,
-    [PRINTER_DT]: true,
     [PHONE_DT]: true,
+    [PRINTER_DT]: true,
     [SOUND_DT]: true,
     [SCREEN_DT]: true,
     [NETWORK_DT]: true,

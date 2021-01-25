@@ -8,14 +8,14 @@ const DeviceIcon = ({ type, x, y, className }) => {
           <rect
             x='0.5'
             y='0.5'
-            width='376.5'
+            width='396.5'
             height='299'
             rx='11.5'
             ry='11.5'
-            fill='#b21212'
+            className={`icon-body ${type}`}
           />
           <rect
-            x='260.5'
+            x='280.5'
             y='134'
             width='141'
             height='32'
@@ -24,7 +24,7 @@ const DeviceIcon = ({ type, x, y, className }) => {
             fill='#34ace8'
           />
           <rect
-            x='260.5'
+            x='280.5'
             y='218'
             width='141'
             height='32'
@@ -33,7 +33,7 @@ const DeviceIcon = ({ type, x, y, className }) => {
             fill='#34ace8'
           />
           <rect
-            x='260.5'
+            x='280.5'
             y='50'
             width='141'
             height='32'
@@ -41,7 +41,7 @@ const DeviceIcon = ({ type, x, y, className }) => {
             ry='12'
             fill='#34ace8'
           />
-          <use href={`#icon-${type}`} transform='translate(18 30)' />
+          <use href={`#icon-${type}`} />
         </svg>
       </svg>
     </g>

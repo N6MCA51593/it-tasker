@@ -2,13 +2,51 @@
 
 .device-icon {
   pointer-events: all;
+  cursor: pointer;
   &.selected {
     fill: yellow;
   }
 
+  svg {
+    transition: all 0.1s ease;
+  }
+
   use {
+    transform: translate(35px, 31px);
     stroke: #fff;
     stroke-width: 2;
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      svg {
+        transform: scale(1.1, 1.1);
+      }
+    }
+  }
+}
+
+.icon-body {
+  filter: drop-shadow(20px 20px 10px rgba(0, 0, 0, 0.5));
+
+  &.pc,
+  &.laptop,
+  &.phone {
+    fill: #0b1d96;
+  }
+
+  &.printer,
+  &.sound &.screen {
+    fill: #6e0560;
+  }
+
+  &.network,
+  &.server {
+    fill: #016457;
+  }
+
+  &.other {
+    fill: #423d33;
   }
 }
 
@@ -18,65 +56,4 @@
 
 .disabled {
   pointer-events: none;
-}
-
-.options {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  padding: 0.5rem 0;
-
-  label {
-    display: flex;
-    flex-direction: column;
-    gap: 0.2rem;
-  }
-}
-
-.device-tasker-items {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  border: 1px solid #000;
-  gap: 1rem;
-}
-
-.device-tasker-item {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  border: 1px solid #000;
-}
-
-.type-picker {
-  position: relative;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  width: 80%;
-  height: 100%;
-  margin: auto;
-
-  div {
-    height: 100%;
-    flex: 1;
-  }
-}
-
-.device-popup {
-  position: relative;
-  background-color: azure;
-  border: 1px solid darkgreen;
-  padding: 2rem;
-}
-
-.popup-outer {
-  position: relative;
-  pointer-events: none;
-  z-index: 10;
-
-  div {
-    pointer-events: all;
-  }
 }
