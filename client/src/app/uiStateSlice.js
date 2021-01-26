@@ -124,6 +124,9 @@ const uiStateSlice = createSlice({
         state.activeGlobalState = VIEW_TASKER_ITEMS_GLOB;
       }
     },
+    'api/checkOffTaskerItem/fulfilled': state => {
+      state.activeGlobalState = MAIN_GLOB;
+    },
     'tasker/cancelChanges': state => {
       state.activeGlobalState = MAIN_GLOB;
     },

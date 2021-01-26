@@ -165,6 +165,24 @@ export const selectActiveFloorDevices = createSelector(
   (ids, devices, activeFloor) =>
     ids.filter(id => devices[id].floor === activeFloor)
 );
+export const selectHasActiveTaskerItemsOfType = () =>
+  createSelector(
+    state => state.tasker.byDevice,
+    state => state.tasker.entities,
+    (_, id) => id,
+    (_, type) => type,
+    (byDevice, taskerItems, id, type) => {
+      if (byDevice[id]) {
+        const taskIds = Object.keys(byDevice[id]);
+        return taskIds.filter(
+          taskId =>
+            typeof byDevice[id][taskId] !== 'undefined' &&
+            !byDevice[id][taskId] &&
+            taskerItems[taskId].type === type
+        ).length;
+      }
+    }
+  );
 // Active device must be rendered last to prevent clipping issues with the options popup
 export const selectActiveFloorDevicesOrdered = createSelector(
   [selectActiveFloorDevices, selectActiveDevice],

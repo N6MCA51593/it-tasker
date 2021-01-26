@@ -2,9 +2,15 @@
 
 .device-icon {
   pointer-events: all;
+  transition: all 0.25s ease;
   cursor: pointer;
-  &.selected {
-    fill: yellow;
+
+  &.trnsp {
+    opacity: 0.2;
+  }
+
+  &.gs {
+    filter: grayscale(0.9);
   }
 
   svg {
@@ -47,6 +53,22 @@
 
   &.other {
     fill: #423d33;
+  }
+}
+
+.icon-indicator {
+  fill: #b8b2a7;
+
+  &.tasks {
+    color: green;
+  }
+
+  &.notes {
+    color: red;
+  }
+
+  &.active {
+    fill: currentColor;
   }
 }
 

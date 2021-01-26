@@ -38,7 +38,7 @@ const AreaNameLabel = ({ coords, name, mode, id }) => {
   )}`;
 
   return (
-    <foreignObject x={x} y={y} width='5rem' height='2rem'>
+    <foreignObject x={x} y={y}>
       {isEditing ? (
         <input
           value={labelName}

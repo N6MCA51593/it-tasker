@@ -3,6 +3,8 @@
 foreignObject {
   overflow: visible;
   pointer-events: none;
+  width: 4rem;
+  height: 1.5rem;
 }
 
 .text-edit {
@@ -17,6 +19,7 @@ foreignObject {
   box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.4);
   white-space: nowrap;
   font-weight: 500;
+  font-size: 0.8rem;
 
   &.events-enabled {
     pointer-events: all;

@@ -1,6 +1,16 @@
+import clTern from 'common/clTern';
 import React from 'react';
 
-const DeviceIcon = ({ type, x, y, className }) => {
+const DeviceIcon = ({
+  type,
+  x,
+  y,
+  className,
+  status,
+  hasActiveNotes,
+  hasActiveTasks
+}) => {
+  console.log(hasActiveTasks);
   return (
     <g transform='translate(-14 -14)'>
       <svg width='44' height='44' x={x} y={y} className={className}>
@@ -30,7 +40,10 @@ const DeviceIcon = ({ type, x, y, className }) => {
             height='32'
             rx='12'
             ry='12'
-            fill='#34ace8'
+            className={`icon-indicator tasks ${clTern(
+              hasActiveTasks,
+              'active'
+            )}`}
           />
           <rect
             x='280.5'
@@ -39,7 +52,10 @@ const DeviceIcon = ({ type, x, y, className }) => {
             height='32'
             rx='12'
             ry='12'
-            fill='#34ace8'
+            className={`icon-indicator notes ${clTern(
+              hasActiveNotes,
+              'active'
+            )}`}
           />
           <use href={`#icon-${type}`} />
         </svg>
