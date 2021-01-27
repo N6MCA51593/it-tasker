@@ -127,6 +127,9 @@ const uiStateSlice = createSlice({
     'api/checkOffTaskerItem/fulfilled': state => {
       state.activeGlobalState = MAIN_GLOB;
     },
+    'api/removeTaskerItem/fulfilled': state => {
+      state.activeGlobalState = MAIN_GLOB;
+    },
     'tasker/cancelChanges': state => {
       state.activeGlobalState = MAIN_GLOB;
     },

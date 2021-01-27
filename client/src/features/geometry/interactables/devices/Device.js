@@ -47,10 +47,10 @@ const Device = ({ id, mode }) => {
     []
   );
   const hasActiveNotes = useSelector(state =>
-    hasActiveTaskerItemsOfTypeSelector(state, id, NOTE_TT)
+    hasActiveTaskerItemsOfTypeSelector(state, { id, type: NOTE_TT })
   );
   const hasActiveTasks = useSelector(state =>
-    hasActiveTaskerItemsOfTypeSelector(state, id, TASK_TT)
+    hasActiveTaskerItemsOfTypeSelector(state, { id, type: TASK_TT })
   );
 
   const handleClick = () => {

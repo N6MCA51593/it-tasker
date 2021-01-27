@@ -237,6 +237,14 @@ const Defs = () => {
         <circle cx='12' cy='14' r='2' />
         <polyline points='14 4 14 8 8 8 8 4' />
       </SymbolWrapper>
+      <filter id='shadow'>
+        <feDropShadow
+          dx='20'
+          dy='15'
+          stdDeviation='8'
+          className='shadow-filter'
+        />
+      </filter>
     </g>
   );
 };

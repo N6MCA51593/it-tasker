@@ -10,7 +10,6 @@ const DeviceIcon = ({
   hasActiveNotes,
   hasActiveTasks
 }) => {
-  console.log(hasActiveTasks);
   return (
     <g transform='translate(-14 -14)'>
       <svg width='44' height='44' x={x} y={y} className={className}>
@@ -23,19 +22,20 @@ const DeviceIcon = ({
             rx='11.5'
             ry='11.5'
             className={`icon-body ${type}`}
+            filter='url(#shadow)'
           />
           <rect
             x='280.5'
-            y='134'
+            y='50'
             width='141'
             height='32'
             rx='12'
             ry='12'
-            fill='#34ace8'
+            className={`icon-indicator ${clTern(status, status)}`}
           />
           <rect
             x='280.5'
-            y='218'
+            y='134'
             width='141'
             height='32'
             rx='12'
@@ -47,7 +47,7 @@ const DeviceIcon = ({
           />
           <rect
             x='280.5'
-            y='50'
+            y='218'
             width='141'
             height='32'
             rx='12'

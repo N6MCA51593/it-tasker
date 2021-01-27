@@ -1,11 +1,13 @@
 // Device Popup
 
 .popup-outer {
+  overflow: visible;
   position: relative;
   pointer-events: none;
   z-index: 10;
   width: 500px;
-  height: 500px;
+  height: 1px;
+  transform: translate(-250px, -250px);
 }
 
 .device-popup {

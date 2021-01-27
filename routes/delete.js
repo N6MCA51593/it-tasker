@@ -10,7 +10,6 @@ const generateLoadQuery = require('../db/generateLoadQuery');
 router.delete('/task', authMiddleware, async (req, res) => {
   const id = req.query.id;
   const owner = req.userId;
-  console.log(owner + ' ' + id);
   try {
     await db.none(
       'DELETE FROM tasker_items WHERE id = ${id} AND owner = ${owner}',

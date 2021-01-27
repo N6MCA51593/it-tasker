@@ -32,9 +32,12 @@
   }
 }
 
-.icon-body {
-  filter: drop-shadow(20px 20px 10px rgba(0, 0, 0, 0.5));
+.shadow-filter {
+  flood-color: #000000;
+  flood-opacity: 0.6;
+}
 
+.icon-body {
   &.pc,
   &.laptop,
   &.phone {
@@ -52,7 +55,7 @@
   }
 
   &.other {
-    fill: #423d33;
+    fill: #1e5303;
   }
 }
 
@@ -69,6 +72,18 @@
 
   &.active {
     fill: currentColor;
+  }
+
+  &.ok {
+    fill: blue;
+  }
+
+  &.warning {
+    fill: yellow;
+  }
+
+  &.failure {
+    fill: red;
   }
 }
 

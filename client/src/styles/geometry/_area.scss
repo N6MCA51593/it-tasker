@@ -1,12 +1,5 @@
 // Area
 
-foreignObject {
-  overflow: visible;
-  pointer-events: none;
-  width: 4rem;
-  height: 1.5rem;
-}
-
 .text-edit {
   position: absolute;
 }
@@ -48,6 +41,13 @@ foreignObject {
     div {
       background-color: #0b69a3;
     }
+  }
+
+  foreignObject {
+    overflow: visible;
+    pointer-events: none;
+    width: 4rem;
+    height: 1.5rem;
   }
 }
 

@@ -1,5 +1,5 @@
 import { createSlice, nanoid, createEntityAdapter } from '@reduxjs/toolkit';
-import { EDIT_INTERACTABLES_GLOB } from 'app/constants';
+import { EDIT_INTERACTABLES_GLOB, PC_DT } from 'app/constants';
 
 const devicesAdapter = createEntityAdapter();
 const initialState = devicesAdapter.getInitialState({
@@ -44,7 +44,7 @@ const devicesSlice = createSlice({
             x: payload.x,
             y: payload.y,
             name: 'New Device',
-            type: 'PC',
+            type: PC_DT,
             description: '',
             status: 'ok'
           }
@@ -101,6 +101,7 @@ const devicesSlice = createSlice({
       state.isMoving = null;
       state.toDelete = [];
       state.toUpsert = [];
+      state.devicesHistory = null;
     },
     'floors/setActiveFloor': state => {
       state.activeDevice = null;
@@ -132,7 +133,7 @@ const devicesSlice = createSlice({
       if (payload === EDIT_INTERACTABLES_GLOB && !state.devicesHistory) {
         state.devicesHistory = state.entities;
       } else if (state.devicesHistory) {
-        devicesAdapter.setAll(state, state.devicesHistory); // temp
+        devicesAdapter.setAll(state, state.devicesHistory);
         state.devicesHistory = null;
       }
     },

@@ -169,16 +169,18 @@ export const selectHasActiveTaskerItemsOfType = () =>
   createSelector(
     state => state.tasker.byDevice,
     state => state.tasker.entities,
-    (_, id) => id,
-    (_, type) => type,
-    (byDevice, taskerItems, id, type) => {
+    (_, params) => params,
+    (byDevice, taskerItems, params) => {
+      const { id, type } = params;
       if (byDevice[id]) {
         const taskIds = Object.keys(byDevice[id]);
-        return taskIds.filter(
+        return !!taskIds.filter(
           taskId =>
             typeof byDevice[id][taskId] !== 'undefined' &&
-            !byDevice[id][taskId] &&
-            taskerItems[taskId].type === type
+            taskerItems[taskId].type === type &&
+            (type === TASK_TT
+              ? !byDevice[id][taskId]
+              : taskerItems[taskId].isCheckedOff === false)
         ).length;
       }
     }
@@ -219,7 +221,10 @@ export const selectDeviceActiveTaskerItems = () =>
       if (byDevice[id]) {
         const activeItems = Object.keys(byDevice[id]).filter(
           taskId =>
-            typeof byDevice[id][taskId] !== 'undefined' && !byDevice[id][taskId]
+            typeof byDevice[id][taskId] !== 'undefined' &&
+            (entities[taskId].type === TASK_TT
+              ? !byDevice[id][taskId]
+              : entities[taskId].isCheckedOff === false)
         );
         return activeItems.map(taskId => entities[taskId]);
       } else {

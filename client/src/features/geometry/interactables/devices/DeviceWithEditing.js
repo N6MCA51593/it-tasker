@@ -3,11 +3,7 @@ import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import DevicePopUpContainer from 'features/geometry/interactables/devices/DevicePopUpContainer';
 import DeviceEditingPopUp from 'features/geometry/interactables/devices/DeviceEditingPopUp';
 import DeviceIcon from 'features/geometry/interactables/devices/DeviceIcon';
-import {
-  selectDeviceById,
-  selectActiveGlobalUiState,
-  selectDeviceActiveItemStatus
-} from 'app/selectors';
+import { selectDeviceById, selectActiveGlobalUiState } from 'app/selectors';
 import {
   setActiveDevice,
   removeDevice,
@@ -27,12 +23,9 @@ const DeviceWithEditing = ({ id, mode }) => {
     state => selectDeviceById(state, id),
     shallowEqual
   );
-  const activeTaskerItemStatus = useSelector(state =>
-    selectDeviceActiveItemStatus(state, id)
-  );
   const globalUiState = useSelector(selectActiveGlobalUiState);
   const isActive = useSelector(state => state.devices.activeDevice === id);
-  const { status, type, x, y } = device;
+  const { type, x, y } = device;
 
   const handleClick = () => {
     if (mode === EDIT_DEVICE_GEO && globalUiState === EDIT_INTERACTABLES_GLOB) {
@@ -43,10 +36,7 @@ const DeviceWithEditing = ({ id, mode }) => {
       dispatch(moveDevice(id));
     }
   };
-  const iconClassName =
-    typeof activeTaskerItemStatus !== 'undefined'
-      ? 'device-icon-selected'
-      : 'device-icon';
+  const iconClassName = 'device-icon';
 
   return (
     <g>

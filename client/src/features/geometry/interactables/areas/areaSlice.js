@@ -103,6 +103,7 @@ const areasSlice = createSlice({
         state.toRedraw = null;
         state.toDelete = [];
         state.toUpsert = [];
+        state.areasHistory = null;
       }
     }
   },
