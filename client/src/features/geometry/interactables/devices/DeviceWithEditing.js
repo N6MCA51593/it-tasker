@@ -36,7 +36,6 @@ const DeviceWithEditing = ({ id, mode }) => {
       dispatch(moveDevice(id));
     }
   };
-  const iconClassName = 'device-icon';
 
   return (
     <g>
@@ -48,7 +47,7 @@ const DeviceWithEditing = ({ id, mode }) => {
             : ''
         }
       >
-        <DeviceIcon type={type} x={x} y={y} className={iconClassName} />
+        <DeviceIcon type={type} x={x} y={y} />
       </g>
       {isActive && mode !== MOVE_DEVICE_GEO && (
         <DevicePopUpContainer x={x} y={y}>

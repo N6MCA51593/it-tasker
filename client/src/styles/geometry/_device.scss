@@ -61,6 +61,8 @@
 
 .icon-indicator {
   fill: #b8b2a7;
+  stroke: #000;
+  stroke-width: 1px;
 
   &.tasks {
     color: green;
@@ -85,6 +87,15 @@
   &.failure {
     fill: red;
   }
+}
+
+.test {
+  margin: 15px 15px;
+  width: 147px;
+  height: 40px;
+  background-color: #24e0ff;
+  border-radius: 14px;
+  box-shadow: inset #006 0 -1px 9px;
 }
 
 .device-disabled {
