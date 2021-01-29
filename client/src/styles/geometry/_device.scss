@@ -13,89 +13,21 @@
     filter: grayscale(0.9);
   }
 
-  svg {
-    transition: all 0.1s ease;
-  }
-
   use {
     transform: translate(35px, 31px);
     stroke: #fff;
     stroke-width: 2;
   }
 
-  @media (hover: hover) {
-    &:hover {
-      svg {
+  &-hov {
+    transition: all 0.1s ease;
+
+    @media (hover: hover) {
+      &:hover {
         transform: scale(1.1, 1.1);
       }
     }
   }
-}
-
-.shadow-filter {
-  flood-color: #000000;
-  flood-opacity: 0.6;
-}
-
-.icon-body {
-  &.pc,
-  &.laptop,
-  &.phone {
-    fill: #0b1d96;
-  }
-
-  &.printer,
-  &.sound &.screen {
-    fill: #6e0560;
-  }
-
-  &.network,
-  &.server {
-    fill: #016457;
-  }
-
-  &.other {
-    fill: #1e5303;
-  }
-}
-
-.icon-indicator {
-  fill: #b8b2a7;
-  stroke: #000;
-  stroke-width: 1px;
-
-  &.tasks {
-    color: green;
-  }
-
-  &.notes {
-    color: red;
-  }
-
-  &.active {
-    fill: currentColor;
-  }
-
-  &.ok {
-    fill: blue;
-  }
-
-  &.warning {
-    fill: yellow;
-  }
-
-  &.failure {
-    fill: red;
-  }
-}
-
-.test {
-  margin: 15px 15px;
-  width: 147px;
-  height: 40px;
-  background-color: #24e0ff;
-  border-radius: 14px;
-  box-shadow: inset #006 0 -1px 9px;
 }
 
 .device-disabled {
@@ -104,4 +36,171 @@
 
 .disabled {
   pointer-events: none;
+}
+
+.shadow-filter {
+  flood-color: #000000;
+  flood-opacity: 0.5;
+}
+
+.icon-indicator {
+  stroke: #fff;
+  stroke-width: 6px;
+}
+
+#gradient-box-printer,
+#gradient-box-sound,
+#gradient-box-screen {
+  .grad {
+    &-1 {
+      stop-color: #f48fff;
+    }
+    &-2 {
+      stop-color: #cb10b8;
+    }
+    &-3 {
+      stop-color: #960888;
+    }
+    &-4 {
+      stop-color: #6e0560;
+    }
+  }
+}
+
+#gradient-box-pc,
+#gradient-box-laptop,
+#gradient-box-phone {
+  .grad {
+    &-1 {
+      stop-color: #88b1fc;
+    }
+    &-2 {
+      stop-color: #1d3dbf;
+    }
+    &-3 {
+      stop-color: #0b1d96;
+    }
+    &-4 {
+      stop-color: #061178;
+    }
+  }
+}
+
+#gradient-box-network,
+#gradient-box-server {
+  .grad {
+    &-1 {
+      stop-color: #8eedd1;
+    }
+    &-2 {
+      stop-color: #079a82;
+    }
+    &-3 {
+      stop-color: #016457;
+    }
+    &-4 {
+      stop-color: #004440;
+    }
+  }
+}
+
+#gradient-box-other {
+  .grad {
+    &-1 {
+      stop-color: #caff84;
+    }
+    &-2 {
+      stop-color: #5cb70b;
+    }
+    &-3 {
+      stop-color: #2e7b06;
+    }
+    &-4 {
+      stop-color: #1e5303;
+    }
+  }
+}
+
+#gradient-indicator-ok {
+  .grad {
+    &-1 {
+      stop-color: #91e697;
+    }
+    &-2 {
+      stop-color: #07600e;
+    }
+    &-3 {
+      stop-color: #014807;
+    }
+  }
+}
+
+#gradient-indicator-warning {
+  .grad {
+    &-1 {
+      stop-color: #fce588;
+    }
+    &-2 {
+      stop-color: #de911d;
+    }
+    &-3 {
+      stop-color: #cb6e17;
+    }
+  }
+}
+
+#gradient-indicator-failure {
+  .grad {
+    &-1 {
+      stop-color: #ff9b9b;
+    }
+    &-2 {
+      stop-color: #cf1124;
+    }
+    &-3 {
+      stop-color: #ab091e;
+    }
+  }
+}
+
+#gradient-indicator-neutral {
+  .grad {
+    &-1 {
+      stop-color: #d3cec4;
+    }
+    &-2 {
+      stop-color: #857f72;
+    }
+    &-3 {
+      stop-color: #504a40;
+    }
+  }
+}
+
+#gradient-indicator-tasks {
+  .grad {
+    &-1 {
+      stop-color: #81defd;
+    }
+    &-2 {
+      stop-color: #0b69a3;
+    }
+    &-3 {
+      stop-color: #035388;
+    }
+  }
+}
+
+#gradient-indicator-notes {
+  .grad {
+    &-1 {
+      stop-color: #b990ff;
+    }
+    &-2 {
+      stop-color: #580a94;
+    }
+    &-3 {
+      stop-color: #44056e;
+    }
+  }
 }

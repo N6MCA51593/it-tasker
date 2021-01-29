@@ -30,6 +30,41 @@ const SymbolWrapper = ({ type, children }) => {
   );
 };
 
+const Gradient = ({ type, suff }) => {
+  if (type === 'box') {
+    return (
+      <linearGradient
+        spreadMethod='pad'
+        id={`gradient-${type}-${suff}`}
+        x1='0%'
+        y1='0%'
+        x2='0%'
+        y2='100%'
+      >
+        <stop offset='0%' className='grad-1' />
+        <stop offset='30%' className='grad-2' />
+        <stop offset='85%' className='grad-3' />
+        <stop offset='100%' className='grad-4' />
+      </linearGradient>
+    );
+  } else {
+    return (
+      <linearGradient
+        spreadMethod='pad'
+        id={`gradient-${type}-${suff}`}
+        x1='0%'
+        y1='0%'
+        x2='0%'
+        y2='100%'
+      >
+        <stop offset='0%' className='grad-1' />
+        <stop offset='65%' className='grad-2' />
+        <stop offset='100%' className='grad-3' />
+      </linearGradient>
+    );
+  }
+};
+
 const Defs = () => {
   return (
     <g>
@@ -239,12 +274,27 @@ const Defs = () => {
       </SymbolWrapper>
       <filter id='shadow'>
         <feDropShadow
-          dx='20'
-          dy='15'
-          stdDeviation='8'
+          dx='0'
+          dy='10'
+          stdDeviation='10'
           className='shadow-filter'
         />
       </filter>
+      <Gradient type='box' suff={PC_DT} />
+      <Gradient type='box' suff={LAPTOP_DT} />
+      <Gradient type='box' suff={PHONE_DT} />
+      <Gradient type='box' suff={PRINTER_DT} />
+      <Gradient type='box' suff={SOUND_DT} />
+      <Gradient type='box' suff={SCREEN_DT} />
+      <Gradient type='box' suff={NETWORK_DT} />
+      <Gradient type='box' suff={SERVER_DT} />
+      <Gradient type='box' suff={OTHER_DT} />
+      <Gradient type='indicator' suff='ok' />
+      <Gradient type='indicator' suff='warning' />
+      <Gradient type='indicator' suff='failure' />
+      <Gradient type='indicator' suff='neutral' />
+      <Gradient type='indicator' suff='tasks' />
+      <Gradient type='indicator' suff='notes' />
     </g>
   );
 };
