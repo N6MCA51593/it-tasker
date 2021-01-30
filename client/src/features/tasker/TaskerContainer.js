@@ -1,5 +1,5 @@
 import React from 'react';
-import Controls from 'features/tasker/Controls';
+import Controls from 'features/tasker/controls/Controls';
 import TaskerItemsContainer from 'features/tasker/TaskerItemsContainer';
 import { shallowEqual, useSelector } from 'react-redux';
 import { selectTaskerActiveItemProperties } from 'app/selectors';

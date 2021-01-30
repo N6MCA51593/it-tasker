@@ -1,7 +1,6 @@
 $geo-stroke-width: 5;
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600&display=swap');
 
-@import 'palette';
 @import 'spinner';
 @import 'notifications';
 @import 'geometry/device';
@@ -10,6 +9,7 @@ $geo-stroke-width: 5;
 @import 'geometry/controls';
 @import 'geometry/device-popup';
 @import 'geometry/misc';
+@import 'tasker/tasker-container';
 
 * {
   box-sizing: border-box;
@@ -36,81 +36,27 @@ body {
   grid-template-columns: 2fr 1fr;
   height: 100vh;
   overflow: hidden;
+  background-color: #323f4b;
 }
 
 .draw-area {
   position: relative;
   width: 100%;
   height: 100vh;
-  background-color: $geo-bg;
-}
-
-button {
-  padding: 0 1.3rem;
-}
-
-.geometry {
-  position: relative;
-}
-
-.text-edit {
-  position: absolute;
-}
-
-.name-label {
-  cursor: default;
-  width: 100px;
-  user-select: none;
-
-  &-disabled {
-    pointer-events: none;
-  }
-}
-
-.task-container {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-
-  .task-controls-container {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .task-controls {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    border-bottom: 1px solid #000;
-    padding: 0.5rem 0;
-  }
-
-  .tasker-items-container {
-    will-change: transform; // TODO Test scrolling perf
-    overflow-y: auto;
-    position: relative;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    margin: 0.2rem;
-    border: 1px solid #000;
-    gap: 0.1rem;
-  }
+  background-color: #323f4b;
 }
 
 .collection-table-item {
-  width: 100%;
+  width: 98%;
   display: flex;
   flex-direction: column;
   //justify-items: center;
   padding: 3rem;
-  border: 1px solid black;
+  background-color: #12171b;
 }
 
 .collection-single-page {
+  overflow: auto;
   display: flex;
   flex-direction: column;
 }

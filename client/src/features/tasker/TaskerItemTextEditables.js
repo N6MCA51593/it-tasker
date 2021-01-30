@@ -7,7 +7,7 @@ import {
 import { useSelector, useDispatch } from 'react-redux';
 import { cancelChanges } from 'features/tasker/taskerSlice';
 import { updateTaskerItem } from 'features/api/updateTaskerItem';
-import EditingControls from 'features/tasker/EditingControls';
+import EditingControls from 'features/tasker/controls/EditingControls';
 import { COLLECTION_TT } from 'app/constants';
 
 const TaskerItemTextEditables = ({ id }) => {

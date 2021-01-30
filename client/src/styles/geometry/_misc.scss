@@ -1,8 +1,12 @@
 // Geometry misc
 
+.geometry {
+  position: relative;
+}
+
 .floor-geometry {
   stroke-width: $geo-stroke-width;
-  stroke: $geo-main;
+  stroke: #f5f7fa;
   stroke-linecap: round;
   stroke-linejoin: round;
 }
