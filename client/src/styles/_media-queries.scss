@@ -6,7 +6,11 @@
     grid-template-columns: 1fr;
   }
 
-  .task-container {
+  .geometry {
     display: none;
+  }
+
+  .task-container {
+    height: 100vh;
   }
 }
