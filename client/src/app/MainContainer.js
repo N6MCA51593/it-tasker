@@ -4,14 +4,19 @@ import { useDispatch, useSelector } from 'react-redux';
 import Geometry from 'features/geometry/Geometry';
 import { loadAppData } from 'features/api/loadAppData';
 import TaskerContainer from 'features/tasker/TaskerContainer';
-import { selectIsAuthenticated } from 'app/selectors';
+import {
+  selectActiveGlobalUiState,
+  selectIsAuthenticated
+} from 'app/selectors';
 import LandingPage from 'features/landing/LandingPage';
 import { checkUserSession } from 'features/api/checkUserSession';
 import NotificationsContainer from 'features/notifications/NotificationsContainer';
+import { EDIT_GEOM_GLOB, EDIT_INTERACTABLES_GLOB } from 'app/constants';
 
 const MainContainer = () => {
   const dispatch = useDispatch();
   const isAuthenticated = useSelector(selectIsAuthenticated);
+  const activeGlobalUiState = useSelector(selectActiveGlobalUiState);
   const isNoSession = useSelector(state => state.authState.isNoSession);
 
   useEffect(() => {
@@ -26,7 +31,8 @@ const MainContainer = () => {
       {isAuthenticated ? (
         <div className='main-container'>
           <Geometry />
-          <TaskerContainer />
+          {activeGlobalUiState !== EDIT_INTERACTABLES_GLOB &&
+            activeGlobalUiState !== EDIT_GEOM_GLOB && <TaskerContainer />}
         </div>
       ) : (
         isNoSession && <LandingPage />

@@ -46,6 +46,22 @@ const wallsSlice = createSlice({
         };
       }
     },
+    importFromFloor: {
+      reducer(state, { payload }) {
+        const { toImport } = payload;
+        wallsAdapter.addMany(state, toImport);
+        state.toUpsert.push(...toImport.map(wall => wall.id));
+      },
+      prepare({ payload }) {
+        const { walls, newFloor } = payload;
+        const toImport = walls.map(wall => {
+          return { ...wall, floor: newFloor, id: nanoid() };
+        });
+        return {
+          payload: { toImport }
+        };
+      }
+    },
     saveWall(state, { payload }) {
       const id = state.activeWall;
       state.toUpsert.push(id);
@@ -129,7 +145,8 @@ export const {
   saveWall,
   moveWall,
   cancelDrawing,
-  cancelChanges
+  cancelChanges,
+  importFromFloor
 } = wallsSlice.actions;
 
 export default wallsSlice.reducer;

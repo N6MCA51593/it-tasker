@@ -11,6 +11,7 @@ import EditingControlsContainer from 'features/geometry/controls/EditingControls
 import LabeledButton from 'features/geometry/controls/LabeledButton';
 import { selectActiveGeoState } from 'app/selectors';
 import clTern from 'common/clTern';
+import GeoFloorImporter from 'features/geometry/controls/GeoFloorImporter';
 
 const GeoEditingControls = () => {
   const dispatch = useDispatch();
@@ -41,6 +42,15 @@ const GeoEditingControls = () => {
         label='Move wall point'
         type='move'
         mod={clTern(activeGeoState === MOVE_WALL_GEO, 'active')}
+      />
+      <GeoFloorImporter
+        render={handleClick => (
+          <LabeledButton
+            handleClick={handleClick}
+            label='Import from level...'
+            type='import'
+          />
+        )}
       />
       <LabeledButton
         handleClick={() => dispatch(cancelDrawing())}
