@@ -29,7 +29,7 @@ router.post('/geometry', authMiddleware, async (req, res) => {
     const query = generateWallQuery(toUpsert, toDelete, floors, userId);
     const newGeometry = await db.tx(async t => {
       const walls = await t.multi(query);
-      const geometries = walls
+      let geometries = walls
         .filter(e => e.length > 0)
         .map(floorWalls => {
           return {
@@ -37,6 +37,14 @@ router.post('/geometry', authMiddleware, async (req, res) => {
             geometry: floorWalls.reduce(reducer, '')
           };
         });
+      if (geometries.length === 0 && floors.length !== 0) {
+        geometries = floors.map(id => {
+          return {
+            id,
+            geometry: ''
+          };
+        });
+      }
 
       const geoUpdateQuery = generateGeometryUpdateQuery(geometries);
       await t.none(geoUpdateQuery);
