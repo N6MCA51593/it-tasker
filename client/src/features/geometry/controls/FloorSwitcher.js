@@ -34,9 +34,9 @@ const FloorSwitcher = () => {
   return (
     <div className='floor-controls' ref={ref}>
       <Button
-        type='up'
+        type='down'
         mod='shadow hov'
-        handleClick={() => dispatch(setActiveFloor(pickFloor(1)))}
+        handleClick={() => dispatch(setActiveFloor(pickFloor(-1)))}
       />
       {isShowing && <FloorList activeFloor={activeFloor} />}
       <FloorDisplay
@@ -45,9 +45,9 @@ const FloorSwitcher = () => {
         handleClick={() => setIsShowing(!isShowing)}
       />
       <Button
-        type='down'
+        type='up'
         mod='shadow hov'
-        handleClick={() => dispatch(setActiveFloor(pickFloor(-1)))}
+        handleClick={() => dispatch(setActiveFloor(pickFloor(1)))}
       />
     </div>
   );

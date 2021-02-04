@@ -10,7 +10,7 @@ const GridControls = ({
   gridStep
 }) => {
   const size = () => {
-    if (gridStep === 25) {
+    if (gridStep <= 25) {
       return 's';
     } else if (gridStep === 50) {
       return 'm';

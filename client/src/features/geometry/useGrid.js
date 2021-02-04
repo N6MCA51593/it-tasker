@@ -24,7 +24,7 @@ const useGrid = () => {
     }
   };
   const gridStepDown = () => {
-    if (gridStep > 25) {
+    if (gridStep > 12.5) {
       setGridStep(gridStep / 2);
     }
   };

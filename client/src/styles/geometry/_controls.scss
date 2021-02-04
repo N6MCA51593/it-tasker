@@ -29,7 +29,8 @@
     flex-direction: row;
     gap: 6px;
     bottom: 20px;
-    right: 30%;
+    left: 50%;
+    transform: translateX(-50%);
   }
 
   .device-controls {
