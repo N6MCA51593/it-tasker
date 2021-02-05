@@ -24,6 +24,12 @@ const useZoomAndPan = ({ width, height }) => {
     setPanHLvl(initPanHLvl);
   }, [initZoomLvl, initPanHLvl, initPanVLvl, dispatch]);
 
+  const resetPosition = (steps = 1) => {
+    setZoom(1.1);
+    setPanVLvl(0);
+    setPanHLvl(0);
+  };
+
   const panV = (steps = 1) => {
     setPanVLvl(panVLvl + panStep * steps * zoomLvl);
   };
@@ -83,7 +89,8 @@ const useZoomAndPan = ({ width, height }) => {
     zoomOut,
     freePan,
     setInitCoords,
-    wheelZoom
+    wheelZoom,
+    resetPosition
   };
 };
 

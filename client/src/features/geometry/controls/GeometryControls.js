@@ -23,7 +23,8 @@ const GeometryControls = ({
   gridStepDown,
   uiState,
   isGrid,
-  gridStep
+  gridStep,
+  resetPosition
 }) => {
   const dispatch = useDispatch();
 
@@ -37,7 +38,11 @@ const GeometryControls = ({
     <div className='geometry-controls' onPointerDown={e => e.stopPropagation()}>
       {uiState === EDIT_INTERACTABLES_GLOB && <InteractablesEditingControls />}
       {uiState === EDIT_GEOM_GLOB && <GeoEditingControls />}
-      <NavControls zoomIn={zoomIn} zoomOut={zoomOut} />
+      <NavControls
+        zoomIn={zoomIn}
+        zoomOut={zoomOut}
+        resetPosition={resetPosition}
+      />
       <GridControls
         gridStepDown={gridStepDown}
         gridStepUp={gridStepUp}

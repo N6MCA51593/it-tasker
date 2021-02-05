@@ -25,7 +25,8 @@ const Geometry = () => {
     panVLvl,
     freePan,
     setInitCoords,
-    wheelZoom
+    wheelZoom,
+    resetPosition
   } = useZoomAndPan({ width, height });
   const { getRelCoord } = useCoordinates({
     isGrid,
@@ -111,6 +112,7 @@ const Geometry = () => {
         toggleGrid={toggleGrid}
         gridStepUp={gridStepUp}
         gridStepDown={gridStepDown}
+        resetPosition={resetPosition}
         uiState={uiState}
         isGrid={isGrid}
         gridStep={gridStep}

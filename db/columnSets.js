@@ -1,7 +1,7 @@
 const { pgp } = require('./db');
 
 const wallsCs = new pgp.helpers.ColumnSet(
-  ['?id', '?floor', '?owner', 'coords:json'],
+  ['?id', '?floor', '?owner', { name: 'parentId', def: '' }, 'coords:json'],
   {
     table: 'walls'
   }

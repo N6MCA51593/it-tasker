@@ -20,17 +20,13 @@ const GridControls = ({
   };
   return (
     <div className='grid-controls'>
-      <Button handleClick={() => gridStepUp()} type='up' mod='s shadow hov' />
+      <Button handleClick={() => gridStepDown()} type='up' mod='s shadow hov' />
       <Button
         handleClick={() => toggleGrid()}
         type={`grid-${size()}`}
         mod={`s shadow ${clTern(isGrid, 'selected')}`}
       />
-      <Button
-        handleClick={() => gridStepDown()}
-        type='down'
-        mod='s shadow hov'
-      />
+      <Button handleClick={() => gridStepUp()} type='down' mod='s shadow hov' />
     </div>
   );
 };

@@ -1,5 +1,6 @@
 import { createSlice, nanoid, createEntityAdapter } from '@reduxjs/toolkit';
 import { EDIT_GEOM_GLOB } from 'app/constants';
+import { shallowEqual } from 'react-redux';
 
 const wallsAdapter = createEntityAdapter();
 const initialState = wallsAdapter.getInitialState({
@@ -49,13 +50,32 @@ const wallsSlice = createSlice({
     importFromFloor: {
       reducer(state, { payload }) {
         const { toImport } = payload;
-        wallsAdapter.addMany(state, toImport);
-        state.toUpsert.push(...toImport.map(wall => wall.id));
+        const parentChild = state.ids.reduce((acc, id) => {
+          const wall = state.entities[id];
+          if (wall.floor === toImport[0].floor && wall.parentId) {
+            return { ...acc, [wall.parentId]: id };
+          } else {
+            return acc;
+          }
+        }, {});
+        for (const newWall of toImport) {
+          const { coords, parentId, id } = newWall;
+          if (parentChild[parentId]) {
+            const oldWall = state.entities[parentChild[parentId]];
+            if (!shallowEqual(oldWall.coords, coords)) {
+              state.entities[parentChild[parentId]].coords = coords;
+              state.toUpsert.push(oldWall.id);
+            }
+          } else {
+            wallsAdapter.addOne(state, newWall);
+            state.toUpsert.push(id);
+          }
+        }
       },
       prepare({ payload }) {
         const { walls, newFloor } = payload;
         const toImport = walls.map(wall => {
-          return { ...wall, floor: newFloor, id: nanoid() };
+          return { ...wall, parentId: wall.id, floor: newFloor, id: nanoid() };
         });
         return {
           payload: { toImport }

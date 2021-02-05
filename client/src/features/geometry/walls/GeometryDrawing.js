@@ -71,11 +71,11 @@ const GeometryDrawing = ({
             gridStep={gridStep}
           />
         )}
-        {ids.map((e, i) => (
+        {ids.map(id => (
           <Wall
-            key={i}
+            key={id}
             activeWall={activeWall ? activeWall.id : null}
-            id={e}
+            id={id}
             mode={mode}
             getRelCoord={getRelCoord}
             activeFloor={activeFloor}
