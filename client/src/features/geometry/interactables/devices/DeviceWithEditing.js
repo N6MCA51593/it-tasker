@@ -28,6 +28,7 @@ const DeviceWithEditing = ({ id, mode }) => {
   const { type, x, y } = device;
 
   const handleClick = () => {
+    console.log('object');
     if (mode === EDIT_DEVICE_GEO && globalUiState === EDIT_INTERACTABLES_GLOB) {
       dispatch(setActiveDevice(id));
     } else if (mode === REMOVE_DEVICE_GEO) {

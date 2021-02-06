@@ -30,12 +30,21 @@
     background-color: #616e7c;
   }
 
-  &.active-tasks {
+  &.area-selected {
     fill: transparentize($color: #127fbf, $amount: 0.9);
     stroke: #127fbf;
 
     div {
       background-color: #0b69a3;
+    }
+  }
+
+  &.area-active-tasks {
+    fill: transparentize($color: #0885a4, $amount: 0.9);
+    stroke: #0885a4;
+
+    div {
+      background-color: #076e8f;
     }
   }
 

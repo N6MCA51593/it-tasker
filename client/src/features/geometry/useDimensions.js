@@ -35,14 +35,21 @@ const useDimensions = ref => {
 
   const updateDimensions = debounce(() => {
     if (ref.current) {
-      const { width, height } = ref.current.getBoundingClientRect();
-      setDimensions({ width, height });
+      // document.documentElement.style.setProperty(
+      //   '--vh',
+      //   `${window.innerHeight * 0.01}px`
+      // );
+      setDimensions(ref.current.getBoundingClientRect());
     }
   }, 50);
 
   useEffect(() => {
     if (ref.current && !isLoaded) {
       setIsLoaded(true);
+      // document.documentElement.style.setProperty(
+      //   '--vh',
+      //   `${window.innerHeight * 0.01}px`
+      // );
       setDimensions(ref.current.getBoundingClientRect());
     }
   }, [ref, isLoaded]);
@@ -50,8 +57,11 @@ const useDimensions = ref => {
   useLayoutEffect(() => {
     if (shouldUpdate(uiStateRef.current, activeGlobalUiState)) {
       if (ref.current) {
-        const { width, height } = ref.current.getBoundingClientRect();
-        setDimensions({ width, height });
+        // document.documentElement.style.setProperty(
+        //   '--vh',
+        //   `${window.innerHeight * 0.01}px`
+        // );
+        setDimensions(ref.current.getBoundingClientRect());
       }
 
       uiStateRef.current = activeGlobalUiState;

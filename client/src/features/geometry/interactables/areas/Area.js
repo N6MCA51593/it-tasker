@@ -15,6 +15,7 @@ import {
   ADD_DEVICE_GEO,
   EDIT_INTERACTABLES_GLOB,
   EDIT_TASKER_ITEMS_GLOB,
+  MAIN_GLOB,
   MOVE_DEVICE_GEO,
   REDRAW_AREA_GEO,
   REMOVE_AREA_GEO
@@ -64,7 +65,7 @@ const Area = ({ id, mode, addDevice }) => {
     <g
       className={`area-group ${hov()} ${clTern(
         isAreaHighlighted,
-        'active-tasks'
+        globalUiState === MAIN_GLOB ? 'area-active-tasks' : 'area-selected'
       )}`}
     >
       <polygon

@@ -32,10 +32,10 @@
 
 .device-disabled {
   pointer-events: none;
-}
 
-.disabled {
-  pointer-events: none;
+  & .device-icon {
+    pointer-events: none;
+  }
 }
 
 .shadow-filter {
@@ -90,16 +90,16 @@
 #gradient-box-server {
   .grad {
     &-1 {
-      stop-color: #8eedd1;
+      stop-color: #8eecb9;
     }
     &-2 {
-      stop-color: #079a82;
+      stop-color: #079a5d;
     }
     &-3 {
-      stop-color: #016457;
+      stop-color: #00643e;
     }
     &-4 {
-      stop-color: #004440;
+      stop-color: #00442f;
     }
   }
 }
@@ -180,13 +180,13 @@
 #gradient-indicator-tasks {
   .grad {
     &-1 {
-      stop-color: #81defd;
+      stop-color: #91f9fd;
     }
     &-2 {
-      stop-color: #0b69a3;
+      stop-color: #076e8f;
     }
     &-3 {
-      stop-color: #035388;
+      stop-color: #04516e;
     }
   }
 }

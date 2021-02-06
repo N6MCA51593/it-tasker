@@ -25,7 +25,7 @@ const TaskerListItem = ({ id, completion, wasActive }) => {
       onClick={() => dispatch(toggleActiveItem(id))}
       ref={ref}
     >
-      <div>{name}</div>
+      <h3>{name}</h3>
       <div>{createdAt}</div>
       <div>{completion}</div>
     </div>
