@@ -1,6 +1,5 @@
 import React from 'react';
 import Wall from 'features/geometry/walls/Wall';
-import Grid from 'features/geometry/Grid';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   selectActiveFloorWalls,
@@ -13,19 +12,9 @@ import {
   updateActiveWall
 } from 'features/geometry/walls/wallSlice';
 import { ADD_WALL_GEO, MOVE_WALL_GEO } from 'app/constants';
-import Defs from 'features/geometry/Defs';
+import { Fragment } from 'react';
 
-const GeometryDrawing = ({
-  mode,
-  isGrid,
-  getRelCoord,
-  panHLvl,
-  panVLvl,
-  zoomLvl,
-  width,
-  height,
-  gridStep
-}) => {
+const GeometryDrawing = ({ mode, isGrid, getRelCoord, SVGContainer }) => {
   const dispatch = useDispatch();
   const ids = useSelector(selectActiveFloorWalls);
   const activeWall = useSelector(selectActiveWallItem);
@@ -58,30 +47,20 @@ const GeometryDrawing = ({
       onMouseMove={e => handleMouseMove(e)}
       className='draw-area'
     >
-      <svg
-        viewBox={`${panHLvl} ${panVLvl} ${width * zoomLvl} ${height * zoomLvl}`}
-      >
-        <Defs />
-        {isGrid && (
-          <Grid
-            panVLvl={panVLvl}
-            panHLvl={panHLvl}
-            width={width * zoomLvl}
-            height={height * zoomLvl}
-            gridStep={gridStep}
-          />
-        )}
-        {ids.map(id => (
-          <Wall
-            key={id}
-            activeWall={activeWall ? activeWall.id : null}
-            id={id}
-            mode={mode}
-            getRelCoord={getRelCoord}
-            activeFloor={activeFloor}
-          />
-        ))}
-      </svg>
+      {SVGContainer(
+        <Fragment>
+          {ids.map(id => (
+            <Wall
+              key={id}
+              activeWall={activeWall ? activeWall.id : null}
+              id={id}
+              mode={mode}
+              getRelCoord={getRelCoord}
+              activeFloor={activeFloor}
+            />
+          ))}
+        </Fragment>
+      )}
     </div>
   );
 };

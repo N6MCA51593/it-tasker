@@ -12,6 +12,9 @@ import Interactables from 'features/geometry/interactables/Interactables';
 import { EDIT_GEOM_GLOB, EDIT_INTERACTABLES_GLOB } from 'app/constants';
 import usePersistingUiState from 'app/usePersistingUiState';
 import useControlEventHandlers from 'features/geometry/controls/useControlEventHandlers';
+import Grid from 'features/geometry/Grid';
+import Defs from 'features/geometry/Defs';
+import SVGContainer from 'features/geometry/SVGContainer';
 
 const Geometry = () => {
   const ref = useRef();
@@ -53,6 +56,26 @@ const Geometry = () => {
     wheelZoom
   });
 
+  // const SVGContainer = children => {
+  //   return (
+  //     <svg
+  //       viewBox={`${panHLvl} ${panVLvl} ${width * zoomLvl} ${height * zoomLvl}`}
+  //     >
+  //       {isGrid && (
+  //         <Grid
+  //           panVLvl={panVLvl}
+  //           panHLvl={panHLvl}
+  //           width={width * zoomLvl}
+  //           height={height * zoomLvl}
+  //           gridStep={gridStep}
+  //         />
+  //       )}
+  //       <Defs />
+  //       {children}
+  //     </svg>
+  //   );
+  // };
+
   return (
     <div
       className='geometry'
@@ -67,16 +90,30 @@ const Geometry = () => {
     >
       <div>
         {uiState === EDIT_GEOM_GLOB && (
+          // <GeometryDrawing
+          //   mode={mode}
+          //   isGrid={isGrid}
+          //   getRelCoord={getRelCoord}
+          //   panHLvl={panHLvl}
+          //   panVLvl={panVLvl}
+          //   zoomLvl={zoomLvl}
+          //   width={width}
+          //   height={height}
+          //   gridStep={gridStep}
+          // />
           <GeometryDrawing
             mode={mode}
             isGrid={isGrid}
             getRelCoord={getRelCoord}
-            panHLvl={panHLvl}
-            panVLvl={panVLvl}
-            zoomLvl={zoomLvl}
-            width={width}
-            height={height}
-            gridStep={gridStep}
+            SVGContainer={SVGContainer(
+              panHLvl,
+              panVLvl,
+              width,
+              zoomLvl,
+              height,
+              gridStep,
+              isGrid
+            )}
           />
         )}
         {uiState === EDIT_INTERACTABLES_GLOB && (
