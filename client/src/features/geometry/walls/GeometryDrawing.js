@@ -12,7 +12,6 @@ import {
   updateActiveWall
 } from 'features/geometry/walls/wallSlice';
 import { ADD_WALL_GEO, MOVE_WALL_GEO } from 'app/constants';
-import { Fragment } from 'react';
 
 const GeometryDrawing = ({ mode, isGrid, getRelCoord, SVGContainer }) => {
   const dispatch = useDispatch();
@@ -48,18 +47,16 @@ const GeometryDrawing = ({ mode, isGrid, getRelCoord, SVGContainer }) => {
       className='draw-area'
     >
       {SVGContainer(
-        <Fragment>
-          {ids.map(id => (
-            <Wall
-              key={id}
-              activeWall={activeWall ? activeWall.id : null}
-              id={id}
-              mode={mode}
-              getRelCoord={getRelCoord}
-              activeFloor={activeFloor}
-            />
-          ))}
-        </Fragment>
+        ids.map(id => (
+          <Wall
+            key={id}
+            activeWall={activeWall ? activeWall.id : null}
+            id={id}
+            mode={mode}
+            getRelCoord={getRelCoord}
+            activeFloor={activeFloor}
+          />
+        ))
       )}
     </div>
   );
