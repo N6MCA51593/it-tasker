@@ -69,7 +69,7 @@ const Controls = ({ activeItemType }) => {
             />
             <TaskerContainerButton
               handleClick={() => dispatch(setTaskFilter(true))}
-              text='Completed'
+              text='Checked Off'
               type='filter'
               isActive={isCheckedOffTaskFilter}
             />

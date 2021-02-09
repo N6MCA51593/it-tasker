@@ -1,7 +1,7 @@
 import React from 'react';
 import { selectFloorById } from 'app/selectors';
 import { useDispatch, useSelector } from 'react-redux';
-import useConfirmationPopUp from 'common/useConfirmationPopUp';
+import useConfirmationPopUp from 'common/useConfirmationPopUp'; //TODO Rewrite with render props
 import ConfirmationPopUp from 'common/ConfirmationPopUp';
 import { setEditingFloor } from 'features/tasker/floors/floorSlice';
 import { removeFloor } from 'features/api/removeFloor';

@@ -232,7 +232,7 @@ const taskerSlice = createSlice({
         state.entities[id].isNew = false;
       }
 
-      state.entities[id].lasteEditedAt = ts;
+      state.entities[id].lastEditedAt = ts;
       state.entities[id].name = name;
       state.isEditing = false;
       state.taskerHistory = null;

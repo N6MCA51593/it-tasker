@@ -6,7 +6,7 @@ import {
   selectTaskerActiveItemProperties
 } from 'app/selectors';
 import { addItem } from 'features/tasker/taskerSlice';
-import TaskerListItem from 'features/tasker/TaskerListItem';
+import TaskerListItem from 'features/tasker/list-item/TaskerListItem';
 import TaskerSinglePageItem from 'features/tasker/TaskerSinglePageItem';
 
 const TaskerItemsContainer = () => {
