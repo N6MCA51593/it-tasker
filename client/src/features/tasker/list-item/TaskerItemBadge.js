@@ -9,7 +9,9 @@ const TaskerItemBadge = ({ type }) => {
     'comp-low': 'Opened',
     'comp-mid': 'In progress',
     'comp-high': 'Completed',
-    'comp-completed': 'Completed (Checked Off)'
+    'comp-completed': 'Completed (Checked Off)',
+    'comp-note-archived': 'Archived',
+    'comp-note-active': 'Active'
   };
   return <div className={`tasker-item-badge ${type}`}>{badgeTable[type]}</div>;
 };

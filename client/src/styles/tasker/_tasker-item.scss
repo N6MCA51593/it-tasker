@@ -11,9 +11,10 @@
   display: flex;
   flex-direction: column;
   cursor: pointer;
-  padding: 0.8rem 3rem 2rem;
+  padding: 0.8rem 8% calc(min(2rem, 3vw));
   border-radius: 5px;
-  background-color: #12171b;
+  background-color: #181b28;
+  gap: calc(clamp(3px, 0.5vw, 0.5rem));
 
   & > div:first-child {
     position: relative;
@@ -21,7 +22,7 @@
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    margin: 0 0 0.2rem;
+    font-size: 0.9rem;
   }
 
   & > div:nth-child(2) {
@@ -30,6 +31,63 @@
     justify-content: flex-start;
     gap: 1rem;
   }
+
+  & > div:last-child {
+    display: flex;
+    align-items: center;
+
+    span {
+      color: #7b8794;
+      font-size: 0.9rem;
+      margin: 0 1rem;
+    }
+  }
+
+  h3 {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 100%;
+  }
+
+  .tasker-item-description {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    color: #7b8794;
+    line-height: 1.1;
+    height: 2rem;
+  }
+
+  progress[value] {
+    appearance: none;
+    border: none;
+    position: relative;
+    width: 70%;
+    height: 8px;
+    background-color: #323f4b;
+    border-radius: 5px;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.4) inset;
+    color: #1992d4;
+  }
+
+  progress[value]::-webkit-progress-bar {
+    background-color: #323f4b;
+    border-radius: 5px;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.4) inset;
+  }
+
+  progress[value]::-webkit-progress-value {
+    position: relative;
+    border-radius: 5px;
+    background-color: #1992d4;
+  }
+
+  progress[value]::-moz-progress-bar {
+    background-color: #1992d4;
+    border-radius: 3px;
+  }
 }
 
 .tasker-item-badge {
@@ -37,8 +95,11 @@
   text-align: center;
   text-transform: uppercase;
   font-weight: 500;
-  padding: 0 1.5rem;
+  padding: 0 calc(clamp(8px, 1vw, 1.5rem));
   border-radius: 2px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 
   &.task {
     @include badge-style(#055f76, #16adc9, #87ecff);
@@ -56,7 +117,8 @@
     @include badge-style(#610316, #ef4e4e, #ff9b9b);
   }
 
-  &.comp-mid {
+  &.comp-mid,
+  &.comp-note-active {
     @include badge-style(#8d2b0b, #f7c948, #fce588);
   }
 
@@ -64,21 +126,25 @@
     @include badge-style(#014807, #31b237, #91e697);
   }
 
-  &.comp-completed {
+  &.comp-completed,
+  &.comp-note-archived {
     @include badge-style(#222222, #9e9e9e, #cfcfcf);
   }
 }
 
 .tasker-item-ts {
-  color: #9e9e9e;
+  color: #7b8794;
   margin: 0 0.5rem;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 
   &.lea:before {
     display: inline-block;
     position: relative;
     top: 0.2rem;
     content: ' ';
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' class='icon icon-tabler icon-tabler-edit' width='44' height='44' viewBox='0 0 24 24' stroke-width='1.5' stroke='%239e9e9e' fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 7h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-3' /%3E%3Cpath d='M9 15h3l8.5 -8.5a1.5 1.5 0 0 0 -3 -3l-8.5 8.5v3' /%3E%3Cline x1='16' y1='5' x2='19' y2='8' /%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' class='icon icon-tabler icon-tabler-edit' width='44' height='44' viewBox='0 0 24 24' stroke-width='1.5' stroke='%237b8794' fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 7h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-3' /%3E%3Cpath d='M9 15h3l8.5 -8.5a1.5 1.5 0 0 0 -3 -3l-8.5 8.5v3' /%3E%3Cline x1='16' y1='5' x2='19' y2='8' /%3E%3C/svg%3E");
     background-size: 1.2rem 1.2rem;
     height: 1.2rem;
     width: 1.2rem;
@@ -89,7 +155,7 @@
     position: relative;
     top: 0.2rem;
     content: ' ';
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' class='icon icon-tabler icon-tabler-file-plus' width='44' height='44' viewBox='0 0 24 24' stroke-width='1.5' stroke='%239e9e9e' fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M14 3v4a1 1 0 0 0 1 1h4' /%3E%3Cpath d='M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z' /%3E%3Cline x1='12' y1='11' x2='12' y2='17' /%3E%3Cline x1='9' y1='14' x2='15' y2='14' /%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' class='icon icon-tabler icon-tabler-file-plus' width='44' height='44' viewBox='0 0 24 24' stroke-width='1.5' stroke='%237b8794' fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M14 3v4a1 1 0 0 0 1 1h4' /%3E%3Cpath d='M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z' /%3E%3Cline x1='12' y1='11' x2='12' y2='17' /%3E%3Cline x1='9' y1='14' x2='15' y2='14' /%3E%3C/svg%3E");
     background-size: 1.2rem 1.2rem;
     height: 1.2rem;
     width: 1.2rem;

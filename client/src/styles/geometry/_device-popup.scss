@@ -5,9 +5,12 @@
   position: relative;
   pointer-events: none;
   z-index: 10;
-  width: 500px;
+  width: calc(min(500px, 70vw));
   height: 1px;
-  transform: translate(-250px, -250px);
+  transform: translate(
+    calc(min(500px, 70vw) / -2),
+    calc(min(500px, 70vw) / -2)
+  );
 }
 
 .device-popup {

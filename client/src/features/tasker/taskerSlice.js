@@ -226,7 +226,7 @@ const taskerSlice = createSlice({
   },
   extraReducers: {
     'api/updateTaskerItem/fulfilled': (state, { payload }) => {
-      const { ts, id, name } = payload;
+      const { ts, id, name, description } = payload;
       if (state.entities[id].isNew) {
         state.entities[id].createdAt = ts;
         state.entities[id].isNew = false;
@@ -234,6 +234,7 @@ const taskerSlice = createSlice({
 
       state.entities[id].lastEditedAt = ts;
       state.entities[id].name = name;
+      state.entities[id].description = description;
       state.isEditing = false;
       state.taskerHistory = null;
     },

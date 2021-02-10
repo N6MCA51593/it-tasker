@@ -102,7 +102,12 @@ router.post('/task', authMiddleware, async (req, res) => {
   try {
     const query = generateTaskerUpdateQuery(toAdd, toDelete, item, ts, userId);
     await db.tx(async t => await t.none(query));
-    res.json({ ts, id: item.id, name: item.name });
+    res.json({
+      ts,
+      id: item.id,
+      name: item.name,
+      description: item.description
+    });
   } catch (error) {
     console.log(error);
     res.status(400).json({ msg: 'Server error' });
