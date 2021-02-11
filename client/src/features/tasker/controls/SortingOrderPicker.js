@@ -24,10 +24,10 @@ const SortingOrderPicker = ({ activeItemType }) => {
         )
       }
     >
-      <option value={CREATED_AT_ASC}>Created at (ascending)</option>
-      <option value={CREATED_AT_DESC}>Created at (descending)</option>
-      <option value={LAST_EDITED_AT_ASC}>Last edited at (ascending)</option>
-      <option value={LAST_EDITED_AT_DESC}>Last edited at (descending)</option>
+      <option value={CREATED_AT_ASC}>Created at (newer first)</option>
+      <option value={CREATED_AT_DESC}>Created at (older first)</option>
+      <option value={LAST_EDITED_AT_ASC}>Last edited at (newer first)</option>
+      <option value={LAST_EDITED_AT_DESC}>Last edited at (older first)</option>
       {activeItemType === TASK_TT && (
         <option value={COMPLETION_ASC}>Completion (ascending)</option>
       )}
