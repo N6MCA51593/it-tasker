@@ -54,17 +54,6 @@
     flex-direction: column;
     gap: 1.5rem;
 
-    // span {
-    //   display: inline-block;
-    //   position: relative;
-    //   top: 0.2rem;
-    //   content: ' ';
-    //   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' class='icon icon-tabler icon-tabler-edit' width='44' height='44' viewBox='0 0 24 24' stroke-width='1.5' stroke='%237b8794' fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 7h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-3' /%3E%3Cpath d='M9 15h3l8.5 -8.5a1.5 1.5 0 0 0 -3 -3l-8.5 8.5v3' /%3E%3Cline x1='16' y1='5' x2='19' y2='8' /%3E%3C/svg%3E");
-    //   background-size: 1.2rem 1.2rem;
-    //   height: 1.2rem;
-    //   width: 1.2rem;
-    // }
-
     & > button {
       outline: none;
       font-family: Arial, Helvetica, sans-serif;

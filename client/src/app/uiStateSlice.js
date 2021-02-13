@@ -24,6 +24,7 @@ const initialState = {
   isLoading: true,
   activeGlobalState: MAIN_GLOB,
   activeGeometryState: NAV_GEO,
+  isTaskerContainerVisibleMobile: false,
   isHoveringOverDevicePopUp: false, // Prevents panning on <foreignObject>
   zoomLvl: 1.1,
   panVLvl: 0,
@@ -92,6 +93,9 @@ const uiStateSlice = createSlice({
     },
     toggleDeviceFilter(state, { payload }) {
       state.activeDeviceFilters[payload] = !state.activeDeviceFilters[payload];
+    },
+    setTaskerContainerMobile(state) {
+      state.isTaskerContainerVisibleMobile = !state.isTaskerContainerVisibleMobile;
     }
   },
   extraReducers: {
@@ -167,7 +171,8 @@ export const {
   setNoteFilter,
   setTaskFilter,
   loadFromLocalStorage,
-  toggleDeviceFilter
+  toggleDeviceFilter,
+  setTaskerContainerMobile
 } = uiStateSlice.actions;
 
 export default uiStateSlice.reducer;

@@ -14,6 +14,7 @@ import {
   MAIN_GLOB,
   NAV_GEO
 } from 'app/constants';
+import TaskerContainerPositionControls from 'features/geometry/controls/TaskerContainerPositionControls';
 
 const GeometryControls = ({
   zoomIn,
@@ -50,6 +51,7 @@ const GeometryControls = ({
         isGrid={isGrid}
         gridStep={gridStep}
       />
+      <TaskerContainerPositionControls />
       <GlobalUiControls uiState={uiState} />
       <FloorSwitcher />
       <FilterControls />

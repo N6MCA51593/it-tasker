@@ -281,6 +281,14 @@ const Defs = () => {
         <path d='M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7' />
         <rect x='10' y='12' width='4' height='4' />
       </SymbolWrapper>
+      <SymbolWrapper type='list'>
+        <path d='M3.5 5.5l1.5 1.5l2.5 -2.5' />
+        <path d='M3.5 11.5l1.5 1.5l2.5 -2.5' />
+        <path d='M3.5 17.5l1.5 1.5l2.5 -2.5' />
+        <line x1='11' y1='6' x2='20' y2='6' />
+        <line x1='11' y1='12' x2='20' y2='12' />
+        <line x1='11' y1='18' x2='20' y2='18' />
+      </SymbolWrapper>
       <filter id='shadow'>
         <feDropShadow
           dx='0'

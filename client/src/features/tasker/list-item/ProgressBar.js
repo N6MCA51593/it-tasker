@@ -2,7 +2,7 @@ import React from 'react';
 
 const ProgressBar = ({ progress }) => {
   return (
-    <div>
+    <div className='progress-bar-container'>
       <progress max='100' value={progress}></progress>
       <span>{Math.floor(progress) + '%'}</span>
     </div>

@@ -41,6 +41,18 @@
     bottom: 0;
   }
 
+  .tasker-container-visibility-controls {
+    display: none;
+    right: 20px;
+    top: 40%;
+
+    &.active {
+      left: 1vw;
+      right: unset;
+      z-index: 5;
+    }
+  }
+
   .editing-controls-lane {
     left: 2%;
     height: 100%;
@@ -66,7 +78,7 @@
         height: 100%;
         display: flex;
         flex-direction: column;
-        right: -20px;
+        right: -18px;
         justify-content: space-around;
       }
 
@@ -231,6 +243,10 @@
     }
   }
 
+  &.pointer {
+    cursor: pointer;
+  }
+
   &.save {
     background-color: transparentize(#0c6b58, 1);
     svg {
@@ -257,7 +273,7 @@
 
     svg {
       height: 50px;
-      width: 33px;
+      width: 30px;
       stroke-width: 2;
       stroke: #1f2933;
     }

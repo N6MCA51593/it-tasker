@@ -10,7 +10,7 @@ const FilterControlsItem = ({ filter }) => {
     <Button
       handleClick={() => dispatch(toggleDeviceFilter(name))}
       type={name}
-      mod={`m ${filter[name] ? 'selected' : 'disabled'}`}
+      mod={`m ${filter[name] ? 'selected' : 'disabled pointer'}`}
     />
   );
 };

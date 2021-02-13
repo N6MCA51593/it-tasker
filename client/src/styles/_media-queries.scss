@@ -1,17 +1,38 @@
 // Media queries
 
-@media (max-width: 700px) {
+@media (max-width: 1000px) {
   .main-container {
     display: grid;
     grid-template-columns: 1fr;
+    overflow: hidden;
   }
 
   .geometry {
-    display: none;
+    //display: none; //TODO Tets mobile perf
+    width: 100vw;
   }
 
   .task-container {
-    grid-column: 1;
-    height: 100vh;
+    //grid-column: 1;
+    width: 100vw;
+    height: 98vh;
+
+    &.mob-visible {
+      position: absolute;
+      left: 1vw;
+      top: 1vh;
+    }
+  }
+
+  .geometry-controls {
+    .nav-controls,
+    .grid-controls,
+    .tasker-container-visibility-controls {
+      right: 8px;
+    }
+
+    .tasker-container-visibility-controls {
+      display: block;
+    }
   }
 }
