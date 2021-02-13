@@ -10,7 +10,8 @@ $geo-stroke-width: 5;
 @import 'geometry/device-popup';
 @import 'geometry/misc';
 @import 'tasker/tasker-container';
-@import 'tasker/tasker-item';
+@import 'tasker/tasker-list-item';
+@import 'tasker/tasker-single-page-item';
 
 * {
   box-sizing: border-box;

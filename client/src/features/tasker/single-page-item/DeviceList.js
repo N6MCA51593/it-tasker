@@ -1,8 +1,8 @@
 import React, { memo } from 'react';
 import { selectTaskerItemById, selectDevicesById } from 'app/selectors';
 import { useSelector } from 'react-redux';
-import FloorRow from 'features/tasker/FloorRow';
-import CollectionImport from 'features/tasker/CollectionImport';
+import FloorRow from 'features/tasker/single-page-item/FloorRow';
+import CollectionImport from 'features/tasker/single-page-item/CollectionImport';
 
 const DeviceList = ({ id, isEditing }) => {
   const { devices, floors } = useSelector(state =>

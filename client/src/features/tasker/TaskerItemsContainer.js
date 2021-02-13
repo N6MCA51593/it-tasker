@@ -7,7 +7,7 @@ import {
 } from 'app/selectors';
 import { addItem } from 'features/tasker/taskerSlice';
 import TaskerListItem from 'features/tasker/list-item/TaskerListItem';
-import TaskerSinglePageItem from 'features/tasker/TaskerSinglePageItem';
+import TaskerSinglePageItem from 'features/tasker/single-page-item/TaskerSinglePageItem';
 
 const TaskerItemsContainer = () => {
   const dispatch = useDispatch();

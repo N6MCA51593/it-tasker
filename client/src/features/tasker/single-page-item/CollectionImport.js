@@ -1,5 +1,5 @@
 import { selectAllCollectionItems } from 'app/selectors';
-import { importFromCollectionHelper } from 'features/tasker/importFromCollectionHelper';
+import { importFromCollectionHelper } from 'features/tasker/single-page-item/importFromCollectionHelper';
 import React from 'react';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';

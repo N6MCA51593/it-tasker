@@ -1,7 +1,7 @@
 import React from 'react';
 import { selectFloorById } from 'app/selectors';
 import { useSelector } from 'react-redux';
-import DeviceGroup from 'features/tasker/DeviceGroup';
+import DeviceGroup from 'features/tasker/single-page-item/DeviceGroup';
 
 const FloorRow = ({ id, items }) => {
   const { name } = useSelector(state => selectFloorById(state, id));

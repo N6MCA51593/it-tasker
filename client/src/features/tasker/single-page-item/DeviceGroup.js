@@ -4,9 +4,9 @@ import {
 } from 'app/selectors';
 import { TASK_TT } from 'app/constants';
 import { checkOffDevices } from 'features/api/checkOffDevices';
-import DeviceItem from 'features/tasker/DeviceItem';
+import DeviceItem from 'features/tasker/single-page-item/DeviceItem';
 import { toggleDevice } from 'features/tasker/taskerSlice';
-import useAreaTaskerState from 'features/tasker/useAreaTaskerState';
+import useAreaTaskerState from 'features/tasker/single-page-item/useAreaTaskerState';
 import React from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 

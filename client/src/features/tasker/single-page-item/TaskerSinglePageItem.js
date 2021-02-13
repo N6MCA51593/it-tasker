@@ -1,8 +1,8 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { toggleActiveItem, toggleEditing } from 'features/tasker/taskerSlice';
-import DeviceList from 'features/tasker/DeviceList';
-import TaskerItemTextEditables from 'features/tasker/TaskerItemTextEditables';
+import DeviceList from 'features/tasker/single-page-item/DeviceList';
+import TaskerItemTextEditables from 'features/tasker/single-page-item/TaskerItemTextEditables';
 import ConfirmationPopUp from 'common/ConfirmationPopUp';
 import useConfirmationPopUp from 'common/useConfirmationPopUp';
 import { removeTaskerItem } from 'features/api/removeTaskerItem';
