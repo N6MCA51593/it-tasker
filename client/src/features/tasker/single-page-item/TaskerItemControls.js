@@ -1,5 +1,6 @@
 import ConfirmationPopupComponent from 'common/ConfirmationPopupComponent';
 import { checkOffTaskerItem } from 'features/api/checkOffTaskerItem';
+import { removeTaskerItem } from 'features/api/removeTaskerItem';
 import { toggleEditing } from 'features/tasker/taskerSlice';
 import React from 'react';
 import { useDispatch } from 'react-redux';
@@ -19,12 +20,27 @@ const TaskerItemControls = ({ id }) => {
         <span></span>
       </button>
       <ConfirmationPopupComponent
-        render={handleClick => (
+        opener={handleClick => (
           <button onClick={handleClick} className='btn s delete'>
             <span></span>
           </button>
         )}
-      ></ConfirmationPopupComponent>
+        title={() => <h3>Are you sure you want to delete this item?</h3>}
+        action={() => (
+          <button
+            className='but-del'
+            onClick={() => dispatch(removeTaskerItem(id))}
+          >
+            Delete
+          </button>
+        )}
+        cancel={handleClick => (
+          <button className='but-cancel' onClick={handleClick}>
+            Cancel
+          </button>
+        )}
+        pos='r'
+      />
     </div>
   );
 };

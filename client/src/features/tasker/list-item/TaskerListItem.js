@@ -1,11 +1,11 @@
 import React, { useEffect, useRef } from 'react';
-import TimeAgo from 'timeago-react';
 import { selectTaskerItemById } from 'app/selectors';
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleActiveItem } from 'features/tasker/taskerSlice';
 import TaskerItemBadge from 'features/tasker/list-item/TaskerItemBadge';
 import { NOTE_TT, TASK_TT } from 'app/constants';
 import ProgressBar from 'features/tasker/list-item/ProgressBar';
+import Timestamp from 'features/tasker/list-item/Timestamp';
 
 const TaskerListItem = ({ id, completion, wasActive }) => {
   const dispatch = useDispatch();
@@ -46,8 +46,8 @@ const TaskerListItem = ({ id, completion, wasActive }) => {
       ref={ref}
     >
       <div>
-        <TimeAgo className='tasker-item-ts ca' datetime={createdAt} />
-        <TimeAgo className='tasker-item-ts lea' datetime={lastEditedAt} />
+        <Timestamp ts={createdAt} mod='ca' />
+        <Timestamp ts={lastEditedAt} mod='lea' />
       </div>
       <div>
         <TaskerItemBadge type={type} />
