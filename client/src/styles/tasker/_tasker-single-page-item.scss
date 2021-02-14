@@ -81,7 +81,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  max-width: 260px;
+  max-width: 280px;
   padding: 2rem 0;
 
   .btn {
@@ -113,6 +113,14 @@
       height: $svg-icon-dim;
       width: $svg-icon-dim;
       margin: 0 0.2rem 0 -0.1rem;
+    }
+  }
+
+  .checked-off {
+    background-color: #7b8794;
+
+    &:hover {
+      background-color: #9aa5b1;
     }
   }
 

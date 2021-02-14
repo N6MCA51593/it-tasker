@@ -41,3 +41,20 @@
     }
   }
 }
+
+@media (hover: none) {
+  [title]:focus::after {
+    content: attr(title);
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    right: 0;
+    color: #000;
+    background-color: #fff;
+    font-size: 0.7rem;
+    padding: 0.2rem;
+    width: fit-content;
+    height: fit-content;
+  }
+}

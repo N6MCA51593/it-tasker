@@ -50,6 +50,11 @@ body {
 
 button {
   font-family: inherit;
+  user-select: none;
+}
+
+input {
+  user-select: auto;
 }
 
 .confirmation-popup {

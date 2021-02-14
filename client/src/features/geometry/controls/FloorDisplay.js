@@ -28,7 +28,6 @@ const FloorDisplay = ({ activeFloor, handleClick }) => {
           <div
             key={floor.id}
             ref={el => (refArr.current[floors.length - 1 - i] = el)}
-            className='floor-reel-item'
           >
             {floor.shortName ? floor.shortName : floor.name}
           </div>
