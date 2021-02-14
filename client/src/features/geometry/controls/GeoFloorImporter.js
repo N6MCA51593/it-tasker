@@ -10,6 +10,7 @@ const GeoFloorImporter = button => {
   const activeFloor = useSelector(selectActiveFloor);
   const walls = useSelector(state => state.walls.entities);
   const floorsFiltered = floors.filter(floor => floor.id !== activeFloor);
+  console.log(button);
 
   return (
     <Fragment>

@@ -7,14 +7,23 @@ import ConfirmationPopUp from 'common/ConfirmationPopUp';
 import useConfirmationPopUp from 'common/useConfirmationPopUp';
 import { removeTaskerItem } from 'features/api/removeTaskerItem';
 import { checkOffTaskerItem } from 'features/api/checkOffTaskerItem';
+import BackButton from 'features/tasker/single-page-item/BackButton';
+import TaskerItemText from 'features/tasker/single-page-item/TaskerItemText';
+import TaskerItemControls from 'features/tasker/single-page-item/TaskerItemControls';
 
 const TaskerSinglePageItem = ({ id, isEditing }) => {
   const dispatch = useDispatch();
   const { isShowing, togglePopUp } = useConfirmationPopUp();
 
   return (
-    <div className='collection-single-page'>
-      <TaskerItemTextEditables id={id} />
+    <div className='tasker-single-page-item'>
+      <BackButton isEditing={isEditing} />
+      {isEditing ? (
+        <TaskerItemTextEditables id={id} />
+      ) : (
+        <TaskerItemText id={id} />
+      )}
+      {!isEditing && <TaskerItemControls id={id} />}
       <DeviceList id={id} isEditing={isEditing} />
       {!isEditing && (
         <button onClick={() => dispatch(toggleEditing())}>Edit</button>
@@ -32,9 +41,6 @@ const TaskerSinglePageItem = ({ id, isEditing }) => {
       )}
       {!isEditing && (
         <button onClick={() => dispatch(checkOffTaskerItem(id))}>Toggle</button>
-      )}
-      {!isEditing && (
-        <button onClick={() => dispatch(toggleActiveItem())}>Back</button>
       )}
     </div>
   );

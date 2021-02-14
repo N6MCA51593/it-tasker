@@ -8,9 +8,9 @@ const FloorRow = ({ id, items }) => {
   const areasDeduped = [...new Set(items.map(device => device.area))];
 
   return (
-    <div className='collection-row'>
+    <div className='tasker-floor-row'>
       <span>{name}</span>
-      <div className='collection-row-items'>
+      <div className='tasker-floor-row-items'>
         {areasDeduped.map(area => (
           <DeviceGroup
             key={area}

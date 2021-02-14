@@ -1,6 +1,11 @@
 // Media queries
 
 @media (max-width: 1000px) {
+  body {
+    width: 100vw;
+    overflow: hidden;
+  }
+
   .main-container {
     display: grid;
     grid-template-columns: 1fr;

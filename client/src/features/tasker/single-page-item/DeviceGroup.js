@@ -37,8 +37,11 @@ const DeviceGroup = ({ areaId, devices }) => {
 
   return (
     <div>
-      <div className='collection-row-items'>
-        <div className='collection-row-item' onClick={() => areaClickHandler()}>
+      <div className='tasker-floor-row-items'>
+        <div
+          className='tasker-floor-row-item'
+          onClick={() => areaClickHandler()}
+        >
           {name}
         </div>
         {devices.map(device => (
