@@ -6,6 +6,7 @@ import TaskerItemBadge from 'features/tasker/list-item/TaskerItemBadge';
 import { NOTE_TT, TASK_TT } from 'app/constants';
 import ProgressBar from 'features/tasker/list-item/ProgressBar';
 import Timestamp from 'features/tasker/list-item/Timestamp';
+import scrollIntoView from 'smooth-scroll-into-view-if-needed';
 
 const TaskerListItem = ({ id, completion, wasActive }) => {
   const dispatch = useDispatch();
@@ -21,7 +22,8 @@ const TaskerListItem = ({ id, completion, wasActive }) => {
 
   useEffect(() => {
     if (wasActive === id) {
-      ref.current.scrollIntoView({
+      scrollIntoView(ref.current, {
+        scrollMode: 'if-needed',
         behavior: 'smooth',
         block: 'nearest'
       });

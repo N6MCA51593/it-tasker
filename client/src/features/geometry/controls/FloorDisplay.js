@@ -1,6 +1,7 @@
 import { selectAllFloorItemsSorted } from 'app/selectors';
 import React, { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
+import scrollIntoView from 'smooth-scroll-into-view-if-needed';
 
 const FloorDisplay = ({ activeFloor, handleClick }) => {
   const refArr = useRef([]);
@@ -14,7 +15,7 @@ const FloorDisplay = ({ activeFloor, handleClick }) => {
     const ref =
       refArr.current[floors.findIndex(floor => floor.id === activeFloor)];
     if (ref) {
-      ref.scrollIntoView({
+      scrollIntoView(ref, {
         behavior: 'smooth',
         block: 'end'
       });
