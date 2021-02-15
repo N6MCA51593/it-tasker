@@ -23,7 +23,7 @@ const DeviceGroup = ({ areaId, devices }) => {
     if (isEditing) {
       dispatch(toggleDevice({ id, floor }));
     } else if (activeItemType === TASK_TT) {
-      dispatch(checkOffDevices(id));
+      dispatch(checkOffDevices({ toCheckOff: id }));
     }
   };
 
@@ -31,7 +31,9 @@ const DeviceGroup = ({ areaId, devices }) => {
     if (isEditing) {
       removeChildren(devices);
     } else if (activeItemType === TASK_TT) {
-      dispatch(checkOffDevices(devices.map(device => device.id)));
+      dispatch(
+        checkOffDevices({ toCheckOff: devices.map(device => device.id) })
+      );
     }
   };
 

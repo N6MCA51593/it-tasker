@@ -10,6 +10,7 @@ export const checkOffDevices = createAsyncThunk(
   async (payload, { dispatch, getState }) => {
     dispatch(toggleDeviceCheckOff(payload));
     const requestObject = { ...getState().tasker.toggleCheckOffRequestObject };
+    console.log(requestObject);
     dispatch(clearRequestObject());
 
     try {

@@ -153,33 +153,35 @@ const taskerSlice = createSlice({
       }
     },
     toggleDeviceCheckOff(state, { payload }) {
-      state.toggleCheckOffRequestObject.id = state.activeItem;
-      if (Array.isArray(payload)) {
-        const checkedOffDevicesArrLength = payload.filter(
-          id => state.byDevice[id][state.activeItem]
+      const { toCheckOff, taskerItemId = state.activeItem } = payload;
+      state.toggleCheckOffRequestObject.id = taskerItemId;
+      if (Array.isArray(toCheckOff)) {
+        const checkedOffDevicesArrLength = toCheckOff.filter(
+          id => state.byDevice[id][taskerItemId]
         ).length;
         const isPartiallyCheckedOff =
           checkedOffDevicesArrLength > 0 &&
-          checkedOffDevicesArrLength < payload.length;
-        for (const id of payload) {
+          checkedOffDevicesArrLength < toCheckOff.length;
+        for (const id of toCheckOff) {
           if (isPartiallyCheckedOff) {
-            state.byDevice[id][state.activeItem] = true;
+            state.byDevice[id][taskerItemId] = true;
             state.toggleCheckOffRequestObject[id] = true;
           } else {
             state.toggleCheckOffRequestObject[id] = !state.byDevice[id][
-              state.activeItem
+              taskerItemId
             ];
-            state.byDevice[id][state.activeItem] = !state.byDevice[id][
-              state.activeItem
+            state.byDevice[id][taskerItemId] = !state.byDevice[id][
+              taskerItemId
             ];
           }
         }
       } else {
-        state.toggleCheckOffRequestObject[payload] = !state.byDevice[payload][
-          state.activeItem
-        ];
-        state.byDevice[payload][state.activeItem] = !state.byDevice[payload][
-          state.activeItem
+        console.log(toCheckOff);
+        state.toggleCheckOffRequestObject[toCheckOff] = !state.byDevice[
+          toCheckOff
+        ][taskerItemId];
+        state.byDevice[toCheckOff][taskerItemId] = !state.byDevice[toCheckOff][
+          taskerItemId
         ];
       }
     },

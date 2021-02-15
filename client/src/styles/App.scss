@@ -37,7 +37,7 @@ body {
   display: grid;
   grid-auto-columns: 2fr 1fr;
   height: 100vh;
-  overflow: hidden;
+  overflow: clip; // Prevents scrolling on scrollIntoView with block: 'center'
   background-color: #323f4b;
 }
 

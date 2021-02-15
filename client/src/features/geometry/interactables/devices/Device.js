@@ -60,7 +60,7 @@ const Device = ({ id, mode }) => {
       activeItemType === TASK_TT &&
       typeof activeTaskerItemStatus !== 'undefined'
     ) {
-      dispatch(checkOffDevices(id));
+      dispatch(checkOffDevices({ toCheckOff: id }));
     } else if (globalUiState === MAIN_GLOB) {
       dispatch(setActiveDevice(id));
     }
