@@ -326,5 +326,44 @@ export const selectActiveSoringOrder = state => {
   }
 };
 
+export const getTaskerProgressOverview = createSelector(
+  [
+    state => state.tasker.entities[state.tasker.activeItem],
+    state => state.tasker.byDevice,
+    selectAllDeviceItems
+  ],
+  (taskerItem, byDevice, deviceEnts) => {
+    let progressTable = { totalActive: 0, totalCheckedOff: 0 };
+    const { floors = [], devices, id, type } = taskerItem;
+
+    if (type !== TASK_TT || floors.length === 0) {
+      return null;
+    }
+    const deviceFloor = devices.reduce((acc, id) => {
+      const floor = deviceEnts[id].floor;
+      if (acc[floor]) {
+        acc[floor].push(id);
+      } else {
+        acc[floor] = [];
+        acc[floor].push(id);
+      }
+      return acc;
+    }, {});
+
+    const floorsDeduped = new Set(floors);
+    for (const floor of floorsDeduped) {
+      const floorDevices = deviceFloor[floor];
+      progressTable[floor] = { checkedOff: 0, active: 0 };
+      floorDevices.map(device =>
+        byDevice[device][id]
+          ? (progressTable[floor].checkedOff++, progressTable.totalCheckedOff++)
+          : (progressTable[floor].active++, progressTable.totalActive++)
+      );
+    }
+
+    return progressTable;
+  }
+);
+
 // Auth
 export const selectIsAuthenticated = state => state.authState.isAuthenticated;

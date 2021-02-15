@@ -53,10 +53,10 @@ const cancelChangesFn = state => {
       }
 
       for (let i = 0, l = oldItem.devices.length; i < l; i++) {
-        state.byDevice[oldItem.devices[i]][oldItem.id] = oldItem.byDeivce[i];
+        state.byDevice[oldItem.devices[i]][oldItem.id] = oldItem.byDevice[i];
       }
     }
-    delete oldItem.byDeivce;
+    delete oldItem.byDevice;
     state.entities[state.activeItem] = oldItem;
     state.taskerHistory = null;
   }
@@ -92,7 +92,13 @@ const toggleDeviceFn = (state, payloadItem, isPartiallyToggled) => {
         state.byDevice[device] = {};
       }
 
-      state.byDevice[device][state.activeItem] = false;
+      const isReaddedIndex = state.taskerHistory.devices?.indexOf(device);
+      if (Number.isInteger(isReaddedIndex) && isReaddedIndex !== -1) {
+        state.byDevice[device][state.activeItem] =
+          state.taskerHistory.byDevice[isReaddedIndex];
+      } else {
+        state.byDevice[device][state.activeItem] = false;
+      }
     }
   }
 };
@@ -154,6 +160,10 @@ const taskerSlice = createSlice({
     },
     toggleDeviceCheckOff(state, { payload }) {
       const { toCheckOff, taskerItemId = state.activeItem } = payload;
+      if (state.entities[taskerItemId].isCheckedOff) {
+        return;
+      }
+
       state.toggleCheckOffRequestObject.id = taskerItemId;
       if (Array.isArray(toCheckOff)) {
         const checkedOffDevicesArrLength = toCheckOff.filter(
@@ -176,7 +186,6 @@ const taskerSlice = createSlice({
           }
         }
       } else {
-        console.log(toCheckOff);
         state.toggleCheckOffRequestObject[toCheckOff] = !state.byDevice[
           toCheckOff
         ][taskerItemId];
@@ -209,7 +218,7 @@ const taskerSlice = createSlice({
       } else {
         const item = state.entities[state.activeItem];
         state.taskerHistory = item;
-        state.taskerHistory.byDeivce =
+        state.taskerHistory.byDevice =
           item.devices &&
           item.devices.map(device => state.byDevice[device][item.id]);
       }
