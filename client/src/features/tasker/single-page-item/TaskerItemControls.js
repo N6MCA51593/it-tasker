@@ -1,3 +1,4 @@
+import { COLLECTION_TT, TASK_TT } from 'app/constants';
 import { selectTaskerItemById } from 'app/selectors';
 import clTern from 'common/clTern';
 import ConfirmationPopupComponent from 'common/ConfirmationPopupComponent';
@@ -9,18 +10,33 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const TaskerItemControls = ({ id }) => {
   const dispatch = useDispatch();
-  const { isCheckedOff } = useSelector(state =>
+  const { isCheckedOff, type } = useSelector(state =>
     selectTaskerItemById(state, id)
   );
+
+  const checkOffButtonName =
+    type === TASK_TT
+      ? isCheckedOff
+        ? 'Checked Off'
+        : 'Check Off'
+      : isCheckedOff
+      ? 'Archived'
+      : 'Archive';
+
   return (
     <div className='tasker-item-controls'>
-      <button
-        onClick={() => dispatch(checkOffTaskerItem(id))}
-        className={`btn check-off ${clTern(isCheckedOff, 'checked-off')}`}
-      >
-        <span></span>
-        {isCheckedOff ? 'Checked Off' : 'Check Off'}
-      </button>
+      {type !== COLLECTION_TT && (
+        <button
+          onClick={() => dispatch(checkOffTaskerItem(id))}
+          className={`btn check-off ${clTern(
+            isCheckedOff,
+            'checked-off'
+          )} ${type}`}
+        >
+          <span></span>
+          {checkOffButtonName}
+        </button>
+      )}
       <button onClick={() => dispatch(toggleEditing())} className='btn s edit'>
         <span></span>
       </button>
