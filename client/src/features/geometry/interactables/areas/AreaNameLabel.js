@@ -45,6 +45,7 @@ const AreaNameLabel = ({ coords, name, mode, id }) => {
           onChange={e => handleChange(e)}
           onBlur={() => onBlur()}
           autoFocus
+          onFocus={e => e.target.select()}
         />
       ) : (
         <div className={className} onClick={() => handleClick()}>

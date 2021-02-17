@@ -5,8 +5,8 @@ const Grid = ({ panHLvl, panVLvl, width, height, gridStep }) => {
     <g className='grid'>
       <pattern
         id='pattern-grid'
-        x='-6px'
-        y='-6px'
+        x='-6.5px'
+        y='-5.5px'
         width={gridStep}
         height={gridStep}
         patternUnits='userSpaceOnUse'
