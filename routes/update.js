@@ -96,7 +96,7 @@ router.post('/task', authMiddleware, async (req, res) => {
     req.query.del && !Array.isArray(req.query.del)
       ? [req.query.del]
       : req.query.del;
-  const ts = new Date().toISOString();
+  const ts = new Date();
   const item = req.body;
 
   try {

@@ -54,8 +54,8 @@ const taskerItemsCs = new pgp.helpers.ColumnSet(
     'name',
     'type',
     { name: 'description', def: '' },
-    { name: 'createdAt', def: new Date().toISOString() },
-    { name: 'lastEditedAt', def: new Date().toISOString() },
+    { name: 'createdAt', def: new Date() },
+    { name: 'lastEditedAt', def: new Date() },
     { name: 'isCheckedOff', def: false }
   ],
   {
@@ -83,6 +83,13 @@ const taskerItemsDevicesCs = new pgp.helpers.ColumnSet(
   }
 );
 
+const taskerItemsDevicesCheckOffCs = new pgp.helpers.ColumnSet(
+  ['?deviceId', '?itemId', '?owner', { name: 'isCheckedOff', def: false }],
+  {
+    table: 'tasker_items_devices'
+  }
+);
+
 const floorsCs = new pgp.helpers.ColumnSet(
   ['?id', '?owner', 'geometry', 'position', 'name', 'shortName'],
   {
@@ -100,5 +107,6 @@ module.exports = {
   taskerItemsCs,
   onConflictTaskerItems,
   taskerItemsDevicesCs,
+  taskerItemsDevicesCheckOffCs,
   floorsCs
 };

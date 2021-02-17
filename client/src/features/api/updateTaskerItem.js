@@ -9,8 +9,17 @@ export const updateTaskerItem = createAsyncThunk(
     const item = tasker.entities[tasker.activeItem];
     const { isNew, devices } = item;
     let params = '';
+    const ts = arr => {
+      return arr.reduce(
+        (acc, id) =>
+          (acc += `&${id}=${tasker.byDevice[id][tasker.activeItem].addedAt}`),
+
+        ''
+      );
+    };
+
     if (isNew) {
-      params = '?' + reqQueryParams(devices, 'add');
+      params = '?' + reqQueryParams(devices, 'add') + ts(devices);
     } else {
       const newDeviceSet = new Set(devices);
       const oldDeviceSet = new Set(tasker.taskerHistory.devices);
@@ -18,13 +27,7 @@ export const updateTaskerItem = createAsyncThunk(
       const toDeleteArr = [...oldDeviceSet].filter(id => !newDeviceSet.has(id));
       const toAdd = reqQueryParams(toAddArr, 'add');
       const toDelete = reqQueryParams(toDeleteArr, 'del');
-      const ts = toAddArr.reduce(
-        (acc, id) =>
-          (acc += `&${id}=${tasker.byDevice[id][tasker.activeItem].addedAt}`),
-
-        ''
-      );
-      params = '?' + toAdd + ts + (toAdd ? '&' : '') + toDelete;
+      params = '?' + toAdd + ts(toAddArr) + (toAdd ? '&' : '') + toDelete;
     }
 
     const body = { ...item, ...changes };

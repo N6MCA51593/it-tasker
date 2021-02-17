@@ -92,7 +92,7 @@ const toggleDeviceFn = (state, payloadItem, isPartiallyToggled) => {
         state.byDevice[device] = {};
       }
 
-      const isReaddedIndex = state.taskerHistory.devices?.indexOf(device);
+      const isReaddedIndex = state.taskerHistory?.devices?.indexOf(device);
       if (Number.isInteger(isReaddedIndex) && isReaddedIndex !== -1) {
         state.byDevice[device][state.activeItem] = {
           isCheckedOff:
@@ -195,8 +195,9 @@ const taskerSlice = createSlice({
           }
         }
       } else {
-        state.toggleCheckOffRequestObject[toCheckOff].isCheckedOff = !state
-          .byDevice[toCheckOff][taskerItemId].isCheckedOff;
+        state.toggleCheckOffRequestObject[toCheckOff] = !state.byDevice[
+          toCheckOff
+        ][taskerItemId].isCheckedOff;
         state.byDevice[toCheckOff][taskerItemId].isCheckedOff = !state.byDevice[
           toCheckOff
         ][taskerItemId].isCheckedOff;
