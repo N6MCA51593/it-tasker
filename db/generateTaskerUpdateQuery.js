@@ -5,7 +5,14 @@ const {
   taskerItemsDevicesCs
 } = require('./columnSets');
 
-const generateTaskerUpdateQuery = (toAdd, toDelete, item, ts, owner) => {
+const generateTaskerUpdateQuery = (
+  toAdd,
+  toDelete,
+  item,
+  ts,
+  owner,
+  reqQuery
+) => {
   item.createdAt = ts;
   item.lastEditedAt = ts;
   item.owner = owner;
@@ -15,7 +22,8 @@ const generateTaskerUpdateQuery = (toAdd, toDelete, item, ts, owner) => {
       return {
         deviceId,
         owner,
-        itemId: item.id
+        itemId: item.id,
+        addedAt: reqQuery[deviceId]
       };
     });
   const cond = pgp.as.format(' WHERE EXCLUDED."owner" = $1', owner);

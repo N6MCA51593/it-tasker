@@ -135,7 +135,7 @@ export const selectIsAreaHighlighted = () =>
               for (const taskerItem in byDevice[device]) {
                 if (
                   activeGlobalState === MAIN_GLOB &&
-                  !byDevice[device][taskerItem] &&
+                  !byDevice[device][taskerItem].isCheckedOff &&
                   taskerItems[taskerItem].type === TASK_TT
                 ) {
                   return true;
@@ -179,7 +179,7 @@ export const selectHasActiveTaskerItemsOfType = () =>
             typeof byDevice[id][taskId] !== 'undefined' &&
             taskerItems[taskId].type === type &&
             (type === TASK_TT
-              ? !byDevice[id][taskId]
+              ? !byDevice[id][taskId].isCheckedOff
               : taskerItems[taskId].isCheckedOff === false)
         ).length;
       }
@@ -223,7 +223,7 @@ export const selectDeviceActiveTaskerItems = () =>
           taskId =>
             typeof byDevice[id][taskId] !== 'undefined' &&
             (entities[taskId].type === TASK_TT
-              ? !byDevice[id][taskId]
+              ? !byDevice[id][taskId].isCheckedOff
               : entities[taskId].isCheckedOff === false)
         );
         return activeItems.map(taskId => entities[taskId]);
@@ -233,7 +233,7 @@ export const selectDeviceActiveTaskerItems = () =>
     }
   );
 export const selectDeviceActiveItemStatus = (state, id) =>
-  state.tasker.byDevice[id]?.[state.tasker.activeItem];
+  state.tasker.byDevice[id]?.[state.tasker.activeItem]?.isCheckedOff;
 export const selectTaskerActiveItemProperties = state => {
   return {
     activeItem: state.tasker.activeItem,
@@ -291,8 +291,8 @@ export const getTaskerCompletionTable = createSelector(
         completionTable[id] = 1;
       } else if (devices && devices.length > 0) {
         completionTable[id] =
-          devices.filter(deviceId => byDevice[deviceId][id]).length /
-          devices.length;
+          devices.filter(deviceId => byDevice[deviceId][id].isCheckedOff)
+            .length / devices.length;
       } else {
         completionTable[id] = 0;
       }
@@ -355,7 +355,7 @@ export const getTaskerProgressOverview = createSelector(
       const floorDevices = deviceFloor[floor];
       progressTable[floor] = { checkedOff: 0, active: 0 };
       floorDevices.map(device =>
-        byDevice[device][id]
+        byDevice[device][id].isCheckedOff
           ? (progressTable[floor].checkedOff++, progressTable.totalCheckedOff++)
           : (progressTable[floor].active++, progressTable.totalActive++)
       );

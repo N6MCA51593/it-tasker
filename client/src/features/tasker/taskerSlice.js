@@ -15,7 +15,7 @@ const initialState = taskerAdapter.getInitialState({
 const handleApiData = (state, taskDevices) => {
   state.byDevice = {};
   for (const row of taskDevices) {
-    const { itemId, deviceId, isCheckedOff, floor } = row;
+    const { itemId, deviceId, isCheckedOff, floor, addedAt } = row;
     if (!state.entities[itemId].devices) {
       state.entities[itemId].devices = [];
       state.entities[itemId].floors = [];
@@ -28,7 +28,7 @@ const handleApiData = (state, taskDevices) => {
       state.byDevice[deviceId] = {};
     }
 
-    state.byDevice[deviceId][itemId] = isCheckedOff;
+    state.byDevice[deviceId][itemId] = { isCheckedOff, addedAt };
   }
 };
 
@@ -94,10 +94,16 @@ const toggleDeviceFn = (state, payloadItem, isPartiallyToggled) => {
 
       const isReaddedIndex = state.taskerHistory.devices?.indexOf(device);
       if (Number.isInteger(isReaddedIndex) && isReaddedIndex !== -1) {
-        state.byDevice[device][state.activeItem] =
-          state.taskerHistory.byDevice[isReaddedIndex];
+        state.byDevice[device][state.activeItem] = {
+          isCheckedOff:
+            state.taskerHistory.byDevice[isReaddedIndex].isCheckedOff,
+          addedAt: state.taskerHistory.byDevice[isReaddedIndex].addedAt
+        };
       } else {
-        state.byDevice[device][state.activeItem] = false;
+        state.byDevice[device][state.activeItem] = {
+          isCheckedOff: false,
+          addedAt: new Date().toISOString()
+        };
       }
     }
   }
@@ -117,7 +123,10 @@ const taskerSlice = createSlice({
             state.byDevice[deviceId] = {};
           }
 
-          state.byDevice[deviceId][id] = false;
+          state.byDevice[deviceId][id] = {
+            isCheckedOff: false,
+            addedAt: new Date().toISOString()
+          };
         }
         state.activeItem = id;
         state.activeItemType = payload.type;
@@ -167,31 +176,30 @@ const taskerSlice = createSlice({
       state.toggleCheckOffRequestObject.id = taskerItemId;
       if (Array.isArray(toCheckOff)) {
         const checkedOffDevicesArrLength = toCheckOff.filter(
-          id => state.byDevice[id][taskerItemId]
+          id => state.byDevice[id][taskerItemId].isCheckedOff
         ).length;
         const isPartiallyCheckedOff =
           checkedOffDevicesArrLength > 0 &&
           checkedOffDevicesArrLength < toCheckOff.length;
         for (const id of toCheckOff) {
           if (isPartiallyCheckedOff) {
-            state.byDevice[id][taskerItemId] = true;
+            state.byDevice[id][taskerItemId].isCheckedOff = true;
             state.toggleCheckOffRequestObject[id] = true;
           } else {
             state.toggleCheckOffRequestObject[id] = !state.byDevice[id][
               taskerItemId
-            ];
-            state.byDevice[id][taskerItemId] = !state.byDevice[id][
+            ].isCheckedOff;
+            state.byDevice[id][taskerItemId].isCheckedOff = !state.byDevice[id][
               taskerItemId
-            ];
+            ].isCheckedOff;
           }
         }
       } else {
-        state.toggleCheckOffRequestObject[toCheckOff] = !state.byDevice[
+        state.toggleCheckOffRequestObject[toCheckOff].isCheckedOff = !state
+          .byDevice[toCheckOff][taskerItemId].isCheckedOff;
+        state.byDevice[toCheckOff][taskerItemId].isCheckedOff = !state.byDevice[
           toCheckOff
-        ][taskerItemId];
-        state.byDevice[toCheckOff][taskerItemId] = !state.byDevice[toCheckOff][
-          taskerItemId
-        ];
+        ][taskerItemId].isCheckedOff;
       }
     },
     removeDevices(state, { payload }) {
@@ -220,7 +228,9 @@ const taskerSlice = createSlice({
         state.taskerHistory = item;
         state.taskerHistory.byDevice =
           item.devices &&
-          item.devices.map(device => state.byDevice[device][item.id]);
+          item.devices.map(device => {
+            return { ...state.byDevice[device][item.id] };
+          });
       }
     },
     setActiveItemType(state, { payload }) {
@@ -280,7 +290,7 @@ const taskerSlice = createSlice({
           state.entities[id].isCheckedOff = true;
           if (item.devices) {
             for (const device of item.devices) {
-              state.byDevice[device][id] = true;
+              state.byDevice[device][id].isCheckedOff = true;
             }
           }
         }

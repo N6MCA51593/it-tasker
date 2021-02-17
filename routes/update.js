@@ -100,7 +100,14 @@ router.post('/task', authMiddleware, async (req, res) => {
   const item = req.body;
 
   try {
-    const query = generateTaskerUpdateQuery(toAdd, toDelete, item, ts, userId);
+    const query = generateTaskerUpdateQuery(
+      toAdd,
+      toDelete,
+      item,
+      ts,
+      userId,
+      req.query
+    );
     await db.tx(async t => await t.none(query));
     res.json({
       ts,
