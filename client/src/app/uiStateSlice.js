@@ -32,6 +32,12 @@ const initialState = {
   taskSortingOrder: CREATED_AT_ASC,
   noteSortingOrder: CREATED_AT_ASC,
   collectionSortingOrder: CREATED_AT_ASC,
+  taskAreaSortingOrder: CREATED_AT_ASC,
+  noteAreaSortingOrder: CREATED_AT_ASC,
+  collectionAreaSortingOrder: CREATED_AT_ASC,
+  taskDeviceSortingOrder: CREATED_AT_ASC,
+  noteDeviceSortingOrder: CREATED_AT_ASC,
+  collectionDeviceSortingOrder: CREATED_AT_ASC,
   isCheckedOffTaskFilter: null,
   isCheckedOffNoteFilter: null,
   activeDeviceFilters: {
@@ -65,13 +71,25 @@ const uiStateSlice = createSlice({
       }
     },
     setTaskerSortingOrder(state, { payload }) {
-      const { value, type } = payload;
+      const { value, type, interactableType } = payload;
       if (type === TASK_TT) {
-        state.taskSortingOrder = value;
+        interactableType
+          ? interactableType === 'device'
+            ? (state.taskDeviceSortingOrder = value)
+            : (state.taskAreaSortingOrder = value)
+          : (state.taskSortingOrder = value);
       } else if (type === NOTE_TT) {
-        state.noteSortingOrder = value;
+        interactableType
+          ? interactableType === 'device'
+            ? (state.noteDeviceSortingOrder = value)
+            : (state.noteAreaSortingOrder = value)
+          : (state.noteSortingOrder = value);
       } else if (type === COLLECTION_TT) {
-        state.collectionSortingOrder = value;
+        interactableType
+          ? interactableType === 'device'
+            ? (state.collectionDeviceSortingOrder = value)
+            : (state.collectionAreaSortingOrder = value)
+          : (state.collectionSortingOrder = value);
       }
     },
     loadFromLocalStorage(state, { payload }) {

@@ -77,7 +77,13 @@ export const selectPersistingUiStateValues = state => {
     collectionSortingOrder,
     isCheckedOffTaskFilter,
     isCheckedOffNoteFilter,
-    activeDeviceFilters
+    activeDeviceFilters,
+    taskAreaSortingOrder,
+    noteAreaSortingOrder,
+    collectionAreaSortingOrder,
+    taskDeviceSortingOrder,
+    noteDeviceSortingOrder,
+    collectionDeviceSortingOrder
   } = state.uiState;
   return {
     taskSortingOrder,
@@ -85,7 +91,13 @@ export const selectPersistingUiStateValues = state => {
     collectionSortingOrder,
     isCheckedOffTaskFilter,
     isCheckedOffNoteFilter,
-    activeDeviceFilters
+    activeDeviceFilters,
+    taskAreaSortingOrder,
+    noteAreaSortingOrder,
+    collectionAreaSortingOrder,
+    taskDeviceSortingOrder,
+    noteDeviceSortingOrder,
+    collectionDeviceSortingOrder
   };
 };
 
@@ -159,7 +171,7 @@ export const selectActiveDevice = state => state.devices.activeDevice;
 export const selectIsDeviceMoving = state => state.devices.isMoving;
 export const selectDeviceById = (state, id) => state.devices.entities[id];
 export const selectDevicesById = (state, ids) =>
-  ids && ids.map(id => state.devices.entities[id]);
+  ids?.map(id => state.devices.entities[id]);
 export const selectActiveFloorDevices = createSelector(
   [selectAllDevices, selectAllDeviceItemsCustom, selectActiveFloor],
   (ids, devices, activeFloor) =>
@@ -316,13 +328,29 @@ export const selectAllTasks = createSelector(
   [selectAllTaskerItemIds, selectAllTaskerItemEntities],
   (ids, entities) => ids.filter(id => entities[id].type === 'task')
 );
-export const selectActiveSoringOrder = state => {
-  if (state.tasker.activeItemType === TASK_TT) {
-    return state.uiState.taskSortingOrder;
-  } else if (state.tasker.activeItemType === NOTE_TT) {
-    return state.uiState.noteSortingOrder;
-  } else if (state.tasker.activeItemType === COLLECTION_TT) {
-    return state.uiState.collectionSortingOrder;
+export const selectActiveSortingOrder = state => {
+  const { activeItem, activeItemType } = state.tasker;
+  if (activeItemType === TASK_TT) {
+    return activeItem
+      ? {
+          area: state.uiState.taskAreaSortingOrder,
+          device: state.uiState.taskDeviceSortingOrder
+        }
+      : state.uiState.taskSortingOrder;
+  } else if (activeItemType === NOTE_TT) {
+    return activeItem
+      ? {
+          area: state.uiState.noteAreaSortingOrder,
+          device: state.uiState.noteDeviceSortingOrder
+        }
+      : state.uiState.noteSortingOrder;
+  } else if (activeItemType === COLLECTION_TT) {
+    return activeItem
+      ? {
+          area: state.uiState.collectionAreaSortingOrder,
+          device: state.uiState.collectionDeviceSortingOrder
+        }
+      : state.uiState.collectionSortingOrder;
   }
 };
 
@@ -362,6 +390,34 @@ export const getTaskerProgressOverview = createSelector(
     }
 
     return progressTable;
+  }
+);
+
+export const selectSortedAreasAndDevices = createSelector(
+  [
+    state => state.tasker.entities[state.tasker.activeItem],
+    selectActiveSortingOrder,
+    state => state.tasker.byDevice,
+    state => state.devices.byArea,
+    state => state.devices.entities
+  ],
+  (activeItem, sortVals, byDevice, byArea, deviceEnts) => {
+    const { id } = activeItem;
+    let devices = activeItem.devices;
+    const res = { areas: [], devicesByArea: {} };
+    if (!devices || devices.length === 0) {
+      return res;
+    }
+
+    res.areas = [...new Set(devices.map(device => deviceEnts[device].area))];
+    for (const area of res.areas) {
+      res.devicesByArea[area] = devices.filter(device =>
+        byArea[area].includes(device)
+      );
+    }
+
+    console.log(res);
+    return res;
   }
 );
 

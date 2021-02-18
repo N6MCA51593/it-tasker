@@ -13,6 +13,7 @@ export const sortTaskerItems = (entities, sortingOrder, completionTable) => (
 ) => {
   const itemA = entities[a];
   const itemB = entities[b];
+  const sortByCompletion = sortByCompletionFn(sortingOrder, completionTable);
 
   switch (sortingOrder) {
     case CREATED_AT_ASC:
@@ -25,7 +26,7 @@ export const sortTaskerItems = (entities, sortingOrder, completionTable) => (
       return new Date(itemA.lastEditedAt) - new Date(itemB.lastEditedAt);
     case COMPLETION_DESC:
       if (!itemA.isCheckedOff && !itemB.isCheckedOff) {
-        return completionTable[itemB.id] - completionTable[itemA.id];
+        return sortByCompletion(itemA, itemB);
       } else if (itemA.isCheckedOff) {
         return -1;
       } else if (itemB.isCheckedOff) {
@@ -34,7 +35,7 @@ export const sortTaskerItems = (entities, sortingOrder, completionTable) => (
       return 0;
     case COMPLETION_ASC:
       if (!itemA.isCheckedOff && !itemB.isCheckedOff) {
-        return completionTable[itemA.id] - completionTable[itemB.id];
+        return sortByCompletion(itemA, itemB);
       } else if (itemA.isCheckedOff) {
         return 1;
       } else if (itemB.isCheckedOff) {
@@ -44,4 +45,25 @@ export const sortTaskerItems = (entities, sortingOrder, completionTable) => (
     default:
       return 0;
   }
+};
+
+const sortByCompletionFn = (order, completionTable) => (itemA, itemB) => {
+  const itemADeviceCount = itemA.devices?.length ?? 0;
+  const itemBDeviceCount = itemB.devices?.length ?? 0;
+  const completionA = completionTable[itemA.id];
+  const completionB = completionTable[itemB.id];
+  if (order === COMPLETION_DESC) {
+    if (completionB === completionA) {
+      return itemADeviceCount - itemBDeviceCount;
+    } else {
+      return completionB - completionA;
+    }
+  } else if (order === COMPLETION_ASC) {
+    if (completionB === completionA) {
+      return itemBDeviceCount - itemADeviceCount;
+    } else {
+      return completionA - completionB;
+    }
+  }
+  return 0;
 };

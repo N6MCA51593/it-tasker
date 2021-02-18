@@ -16,6 +16,7 @@ const Controls = ({ activeItemType }) => {
   const isCheckedOffNoteFilter = useSelector(
     state => state.uiState.isCheckedOffNoteFilter
   );
+  const activeTaskerItem = useSelector(state => state.tasker.activeItem);
 
   return (
     <div className='task-controls-container'>
@@ -51,7 +52,7 @@ const Controls = ({ activeItemType }) => {
           'fe'
         )}`}
       >
-        {activeItemType === TASK_TT && (
+        {activeItemType === TASK_TT && !activeTaskerItem && (
           <Fragment>
             <TaskerContainerButton
               handleClick={() => dispatch(setTaskFilter(null))}
@@ -75,7 +76,7 @@ const Controls = ({ activeItemType }) => {
             />
           </Fragment>
         )}
-        {activeItemType === NOTE_TT && (
+        {activeItemType === NOTE_TT && !activeTaskerItem && (
           <Fragment>
             <TaskerContainerButton
               handleClick={() => dispatch(setNoteFilter(null))}
@@ -100,7 +101,18 @@ const Controls = ({ activeItemType }) => {
           </Fragment>
         )}
         {activeItemType !== FLOOR_TT && (
-          <SortingOrderPicker activeItemType={activeItemType} />
+          <SortingOrderPicker
+            activeItemType={activeItemType}
+            activeTaskerItem={activeTaskerItem}
+            interactableType='device'
+          />
+        )}
+        {activeTaskerItem && (
+          <SortingOrderPicker
+            activeItemType={activeItemType}
+            activeTaskerItem={activeTaskerItem}
+            interactableType='area'
+          />
         )}
       </div>
     </div>

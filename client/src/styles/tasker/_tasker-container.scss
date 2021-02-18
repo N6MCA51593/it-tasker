@@ -43,6 +43,13 @@
     &.fe {
       justify-content: flex-end;
     }
+
+    select {
+      span:first-letter {
+        text-transform: capitalize;
+        color: red;
+      }
+    }
   }
 
   .tasker-items-container {

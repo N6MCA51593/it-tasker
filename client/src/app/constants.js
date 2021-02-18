@@ -35,6 +35,8 @@ export const LAST_EDITED_AT_ASC = 'last-edited-at-asc';
 export const LAST_EDITED_AT_DESC = 'last-edited-at-desc';
 export const COMPLETION_ASC = 'completion-asc';
 export const COMPLETION_DESC = 'completion-desc';
+export const DEVICE_COUNT_ASC = 'device_count-asc';
+export const DEVICE_COUNT_DESC = 'device_count-desc';
 
 // Device types
 export const PC_DT = 'pc';

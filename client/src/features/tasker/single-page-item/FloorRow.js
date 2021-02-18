@@ -1,11 +1,12 @@
 import React from 'react';
-import { selectFloorById } from 'app/selectors';
+import { selectFloorById, selectSortedAreasAndDevices } from 'app/selectors';
 import { useSelector } from 'react-redux';
 import DeviceGroup from 'features/tasker/single-page-item/DeviceGroup';
 
 const FloorRow = ({ id, items }) => {
   const { name } = useSelector(state => selectFloorById(state, id));
   const areasDeduped = [...new Set(items.map(device => device.area))];
+  const res = useSelector(selectSortedAreasAndDevices);
 
   return (
     <div className='tasker-floor-row'>
