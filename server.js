@@ -13,6 +13,8 @@ app.use(
   })
 );
 
+app.disable('x-powered-by');
+
 app.use(
   session({
     store: new pgSession({

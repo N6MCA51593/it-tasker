@@ -58,3 +58,16 @@
     height: fit-content;
   }
 }
+
+@media (max-width: 550px) {
+  .task-container {
+    .task-controls {
+      &.fe {
+        justify-content: center;
+      }
+      select {
+        width: 90%;
+      }
+    }
+  }
+}

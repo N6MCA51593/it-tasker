@@ -1,5 +1,6 @@
 import {
   selectAreaById,
+  selectDevicesById,
   selectTaskerActiveItemProperties
 } from 'app/selectors';
 import { TASK_TT } from 'app/constants';
@@ -10,7 +11,8 @@ import useAreaTaskerState from 'features/tasker/single-page-item/useAreaTaskerSt
 import React from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 
-const DeviceGroup = ({ areaId, devices }) => {
+const DeviceGroup = ({ areaId, deviceIds }) => {
+  const devices = useSelector(state => selectDevicesById(state, deviceIds));
   const dispatch = useDispatch();
   const { name, floor } = useSelector(state => selectAreaById(state, areaId));
   const { removeChildren } = useAreaTaskerState(areaId, floor);

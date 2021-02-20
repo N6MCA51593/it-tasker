@@ -22,7 +22,7 @@ const SortingOrderPicker = ({
   const dispatch = useDispatch();
   let activeSortingOrder = useSelector(selectActiveSortingOrder);
   activeSortingOrder = activeTaskerItem
-    ? activeSortingOrder[interactableType]
+    ? activeSortingOrder[interactableType + 'Order']
     : activeSortingOrder;
   return (
     <select

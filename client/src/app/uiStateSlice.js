@@ -17,7 +17,8 @@ import {
   SCREEN_DT,
   NETWORK_DT,
   SERVER_DT,
-  ADD_AREA_GEO
+  ADD_AREA_GEO,
+  CREATED_AT_DESC
 } from 'app/constants';
 
 const initialState = {
@@ -32,12 +33,12 @@ const initialState = {
   taskSortingOrder: CREATED_AT_ASC,
   noteSortingOrder: CREATED_AT_ASC,
   collectionSortingOrder: CREATED_AT_ASC,
-  taskAreaSortingOrder: CREATED_AT_ASC,
-  noteAreaSortingOrder: CREATED_AT_ASC,
-  collectionAreaSortingOrder: CREATED_AT_ASC,
-  taskDeviceSortingOrder: CREATED_AT_ASC,
-  noteDeviceSortingOrder: CREATED_AT_ASC,
-  collectionDeviceSortingOrder: CREATED_AT_ASC,
+  taskAreaSortingOrder: CREATED_AT_DESC,
+  noteAreaSortingOrder: CREATED_AT_DESC,
+  collectionAreaSortingOrder: CREATED_AT_DESC,
+  taskDeviceSortingOrder: CREATED_AT_DESC,
+  noteDeviceSortingOrder: CREATED_AT_DESC,
+  collectionDeviceSortingOrder: CREATED_AT_DESC,
   isCheckedOffTaskFilter: null,
   isCheckedOffNoteFilter: null,
   activeDeviceFilters: {

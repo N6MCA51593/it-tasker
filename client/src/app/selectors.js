@@ -6,13 +6,15 @@ import {
   VIEW_TASKER_ITEMS_GLOB,
   NOTE_TT,
   TASK_TT,
-  MAIN_GLOB
+  MAIN_GLOB,
+  CREATED_AT_ASC
 } from 'app/constants';
 import {
   createSelector,
   createSelectorCreator,
   defaultMemoize
 } from 'reselect';
+import { sortTaskerInteractables } from 'features/tasker/taskerInteractablesSorting';
 
 // Custom equality check to prevent filtering on every change to entity arrays
 const equalityFunction = (a, b) =>
@@ -333,22 +335,22 @@ export const selectActiveSortingOrder = state => {
   if (activeItemType === TASK_TT) {
     return activeItem
       ? {
-          area: state.uiState.taskAreaSortingOrder,
-          device: state.uiState.taskDeviceSortingOrder
+          areaOrder: state.uiState.taskAreaSortingOrder,
+          deviceOrder: state.uiState.taskDeviceSortingOrder
         }
       : state.uiState.taskSortingOrder;
   } else if (activeItemType === NOTE_TT) {
     return activeItem
       ? {
-          area: state.uiState.noteAreaSortingOrder,
-          device: state.uiState.noteDeviceSortingOrder
+          areaOrder: state.uiState.noteAreaSortingOrder,
+          deviceOrder: state.uiState.noteDeviceSortingOrder
         }
       : state.uiState.noteSortingOrder;
   } else if (activeItemType === COLLECTION_TT) {
     return activeItem
       ? {
-          area: state.uiState.collectionAreaSortingOrder,
-          device: state.uiState.collectionDeviceSortingOrder
+          areaOrder: state.uiState.collectionAreaSortingOrder,
+          deviceOrder: state.uiState.collectionDeviceSortingOrder
         }
       : state.uiState.collectionSortingOrder;
   }
@@ -401,23 +403,38 @@ export const selectSortedAreasAndDevices = createSelector(
     state => state.devices.byArea,
     state => state.devices.entities
   ],
-  (activeItem, sortVals, byDevice, byArea, deviceEnts) => {
-    const { id } = activeItem;
+  (activeItem, { areaOrder, deviceOrder }, byDevice, byArea, deviceEnts) => {
     let devices = activeItem.devices;
-    const res = { areas: [], devicesByArea: {} };
+    const interactables = { areas: [], devicesByArea: {} };
     if (!devices || devices.length === 0) {
-      return res;
+      return interactables;
     }
 
-    res.areas = [...new Set(devices.map(device => deviceEnts[device].area))];
-    for (const area of res.areas) {
-      res.devicesByArea[area] = devices.filter(device =>
+    interactables.areas = [
+      ...new Set(devices.map(device => deviceEnts[device].area))
+    ];
+    for (const area of interactables.areas) {
+      interactables.devicesByArea[area] = devices.filter(device =>
         byArea[area].includes(device)
       );
     }
 
-    console.log(res);
-    return res;
+    const sorting = sortTaskerInteractables(
+      activeItem,
+      byDevice,
+      interactables
+    );
+    const sortAreas = sorting(areaOrder);
+    const sortDevices = sorting(deviceOrder);
+
+    interactables.areas = interactables.areas.sort((a, b) => sortAreas(a, b));
+    for (const area in interactables.devicesByArea) {
+      interactables.devicesByArea[area] = interactables.devicesByArea[
+        area
+      ].sort((a, b) => sortDevices(a, b));
+    }
+
+    return interactables;
   }
 );
 
