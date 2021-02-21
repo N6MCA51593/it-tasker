@@ -5,6 +5,7 @@ import {
   selectAllFloorItemsSorted
 } from 'app/selectors';
 import OverviewFloorItem from 'features/tasker/single-page-item/progress-overview/OverviewFloorItem';
+import OverviewInfo from 'features/tasker/single-page-item/progress-overview/OverviewInfo';
 
 const ProgressOverview = ({ id }) => {
   const progressTable = useSelector(getTaskerProgressOverview);
@@ -30,6 +31,10 @@ const ProgressOverview = ({ id }) => {
             );
           })}
         </div>
+        <OverviewInfo
+          checkedOff={progressTable.totalCheckedOff}
+          active={progressTable.totalActive}
+        />
       </div>
     </div>
   );

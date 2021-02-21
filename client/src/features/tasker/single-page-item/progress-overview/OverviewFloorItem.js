@@ -9,6 +9,9 @@ const OverviewFloorItem = ({ name, shortName, active, checkedOff }) => {
   return (
     <div className={`floor-item ${getColorClassName(progress)}`}>
       {shortName ? shortName : name}
+      <span>
+        {progress === -1 ? '--' : `${checkedOff}/${checkedOff + active}`}
+      </span>
     </div>
   );
 };

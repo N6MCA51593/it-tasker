@@ -5,7 +5,7 @@ $section-bg: #1b212d;
   display: flex;
   flex-direction: column;
   padding: 0.3rem 1rem;
-  min-height: 100%;
+  //min-height: 100%;
 
   .back-but {
     display: flex;
@@ -92,7 +92,7 @@ $section-bg: #1b212d;
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  max-width: 280px;
+  max-width: 300px;
   padding: 2rem 0 0;
   gap: 1rem;
 

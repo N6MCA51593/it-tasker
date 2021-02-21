@@ -394,48 +394,57 @@ export const getTaskerProgressOverview = createSelector(
   }
 );
 
-export const selectSortedAreasAndDevices = createSelector(
-  [
+export const selectSortedFloorAreasAndDevices = () =>
+  createSelector(
     state => state.tasker.entities[state.tasker.activeItem],
     selectActiveSortingOrder,
     state => state.tasker.byDevice,
     state => state.devices.byArea,
-    state => state.devices.entities
-  ],
-  (activeItem, { areaOrder, deviceOrder }, byDevice, byArea, deviceEnts) => {
-    let devices = activeItem.devices; // Factory with floor param
-    const interactables = { areas: [], devicesByArea: {} };
-    if (!devices || devices.length === 0) {
+    state => state.devices.entities,
+    (_, id) => id,
+    (
+      activeItem,
+      { areaOrder, deviceOrder },
+      byDevice,
+      byArea,
+      deviceEnts,
+      id
+    ) => {
+      let devices = activeItem.devices.filter(
+        device => deviceEnts[device].floor === id
+      );
+      const interactables = { areas: [], devicesByArea: {} };
+      if (!devices || devices.length === 0) {
+        return interactables;
+      }
+
+      interactables.areas = [
+        ...new Set(devices.map(device => deviceEnts[device].area))
+      ];
+      for (const area of interactables.areas) {
+        interactables.devicesByArea[area] = devices.filter(device =>
+          byArea[area].includes(device)
+        );
+      }
+
+      const sorting = sortTaskerInteractables(
+        activeItem,
+        byDevice,
+        interactables
+      );
+      const sortAreas = sorting(areaOrder);
+      const sortDevices = sorting(deviceOrder);
+
+      interactables.areas = interactables.areas.sort((a, b) => sortAreas(a, b));
+      for (const area in interactables.devicesByArea) {
+        interactables.devicesByArea[area] = interactables.devicesByArea[
+          area
+        ].sort((a, b) => sortDevices(a, b));
+      }
+
       return interactables;
     }
-
-    interactables.areas = [
-      ...new Set(devices.map(device => deviceEnts[device].area))
-    ];
-    for (const area of interactables.areas) {
-      interactables.devicesByArea[area] = devices.filter(device =>
-        byArea[area].includes(device)
-      );
-    }
-
-    const sorting = sortTaskerInteractables(
-      activeItem,
-      byDevice,
-      interactables
-    );
-    const sortAreas = sorting(areaOrder);
-    const sortDevices = sorting(deviceOrder);
-
-    interactables.areas = interactables.areas.sort((a, b) => sortAreas(a, b));
-    for (const area in interactables.devicesByArea) {
-      interactables.devicesByArea[area] = interactables.devicesByArea[
-        area
-      ].sort((a, b) => sortDevices(a, b));
-    }
-
-    return interactables;
-  }
-);
+  );
 
 // Auth
 export const selectIsAuthenticated = state => state.authState.isAuthenticated;

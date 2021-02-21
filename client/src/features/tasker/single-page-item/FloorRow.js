@@ -1,11 +1,17 @@
-import React, { memo } from 'react';
-import { selectFloorById, selectSortedAreasAndDevices } from 'app/selectors';
+import React, { memo, useMemo } from 'react';
+import {
+  selectFloorById,
+  selectSortedFloorAreasAndDevices
+} from 'app/selectors';
 import { useSelector } from 'react-redux';
 import DeviceGroup from 'features/tasker/single-page-item/DeviceGroup';
 
 const FloorRow = ({ id }) => {
   const { name } = useSelector(state => selectFloorById(state, id));
-  const { areas, devicesByArea } = useSelector(selectSortedAreasAndDevices);
+  const interactablesSelector = useMemo(selectSortedFloorAreasAndDevices, []);
+  const { areas, devicesByArea } = useSelector(state =>
+    interactablesSelector(state, id)
+  );
 
   return (
     <div className='tasker-floor-row'>
