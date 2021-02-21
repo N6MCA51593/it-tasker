@@ -15,4 +15,49 @@
   justify-items: flex-start;
   align-items: center;
   gap: 3px;
+
+  .floor-item {
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+
+    &.progress {
+      //#233146
+      //#1f2c3f
+      &-null {
+        background-color: transparentize($color: #423d33, $amount: 0.91);
+        color: #a39e93;
+      }
+
+      &-new {
+        background-color: transparentize($color: #003e6b, $amount: 0.9);
+        color: #2186eb;
+      }
+
+      &-low {
+        background-color: transparentize($color: #003e6b, $amount: 0.7);
+        color: #2186eb;
+      }
+
+      &-low-mid {
+        background-color: #003e6b;
+        color: #47a3f3;
+      }
+
+      &-high-mid {
+        background-color: #0f609b;
+        color: #7cc4fa;
+      }
+
+      &-high {
+        background-color: #2680c2;
+        color: #e6f6ff;
+      }
+
+      &-complete {
+        background-color: #62b0e8;
+        color: #ffffff;
+        box-shadow: 0px 0px 0px 3px #ffffff inset;
+      }
+    }
+  }
 }

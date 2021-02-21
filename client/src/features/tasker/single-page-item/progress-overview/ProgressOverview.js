@@ -16,7 +16,6 @@ const ProgressOverview = ({ id }) => {
   return (
     <div className='section'>
       <div className='tasker-progress-overview'>
-        <h3>Overview</h3>
         <div className='floor-overview'>
           {floors.map(floor => {
             const { id, name, shortName } = floor;

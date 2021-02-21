@@ -6,8 +6,7 @@ import {
   VIEW_TASKER_ITEMS_GLOB,
   NOTE_TT,
   TASK_TT,
-  MAIN_GLOB,
-  CREATED_AT_ASC
+  MAIN_GLOB
 } from 'app/constants';
 import {
   createSelector,
@@ -404,7 +403,7 @@ export const selectSortedAreasAndDevices = createSelector(
     state => state.devices.entities
   ],
   (activeItem, { areaOrder, deviceOrder }, byDevice, byArea, deviceEnts) => {
-    let devices = activeItem.devices;
+    let devices = activeItem.devices; // Factory with floor param
     const interactables = { areas: [], devicesByArea: {} };
     if (!devices || devices.length === 0) {
       return interactables;
