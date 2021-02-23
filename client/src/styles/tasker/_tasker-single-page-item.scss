@@ -5,22 +5,30 @@ $section-bg: #1b212d;
   display: flex;
   flex-direction: column;
   padding: 0.3rem 1rem;
+  position: relative;
   //min-height: 100%;
 
-  .back-but {
-    display: flex;
-    align-content: center;
-    justify-content: flex-end;
-    font-size: 1.3rem;
-    transition: all 0.15s ease;
-    margin: 0 0 0.5rem 0;
+  .nav-btn {
+    cursor: pointer;
+    position: absolute;
+    top: 0.3rem;
+    background-size: 1.5rem 1.5rem;
+    height: 1.5rem;
+    width: 1.5rem;
 
-    span {
-      color: #7b8794;
-      cursor: pointer;
-
+    &.back {
+      right: 2rem;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' class='icon icon-tabler icon-tabler-x' width='44' height='44' viewBox='0 0 24 24' stroke-width='2' stroke='%237B8794' fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='18' y1='6' x2='6' y2='18' /%3E%3Cline x1='6' y1='6' x2='18' y2='18' /%3E%3C/svg%3E");
       &:hover {
-        color: #ffffff;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' class='icon icon-tabler icon-tabler-x' width='44' height='44' viewBox='0 0 24 24' stroke-width='2' stroke='%23FFFFFF' fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='18' y1='6' x2='6' y2='18' /%3E%3Cline x1='6' y1='6' x2='18' y2='18' /%3E%3C/svg%3E");
+      }
+    }
+
+    &.scroll-to-devices {
+      right: 4rem;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' class='icon icon-tabler icon-tabler-sort-descending' width='44' height='44' viewBox='0 0 24 24' stroke-width='2' stroke='%237B8794' fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='4' y1='6' x2='13' y2='6' /%3E%3Cline x1='4' y1='12' x2='13' y2='12' /%3E%3Cline x1='4' y1='18' x2='13' y2='18' /%3E%3Cpolyline points='15 15 18 18 21 15' /%3E%3Cline x1='18' y1='6' x2='18' y2='18' /%3E%3C/svg%3E");
+      &:hover {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' class='icon icon-tabler icon-tabler-sort-descending' width='44' height='44' viewBox='0 0 24 24' stroke-width='2' stroke='%23FFFFFF' fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='4' y1='6' x2='13' y2='6' /%3E%3Cline x1='4' y1='12' x2='13' y2='12' /%3E%3Cline x1='4' y1='18' x2='13' y2='18' /%3E%3Cpolyline points='15 15 18 18 21 15' /%3E%3Cline x1='18' y1='6' x2='18' y2='18' /%3E%3C/svg%3E");
       }
     }
   }
@@ -40,6 +48,8 @@ $section-bg: #1b212d;
   flex-direction: column;
   gap: 1rem;
   line-height: 1.8;
+  overflow-wrap: break-word;
+  overflow: hidden;
 
   .description-container {
     position: relative;

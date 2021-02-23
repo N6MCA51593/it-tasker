@@ -1,10 +1,12 @@
-import React, { memo } from 'react';
+import React, { memo, useRef } from 'react';
 import { selectTaskerItemById, selectDevicesById } from 'app/selectors';
 import { useSelector } from 'react-redux';
 import FloorRow from 'features/tasker/single-page-item/FloorRow';
 import CollectionImport from 'features/tasker/single-page-item/CollectionImport';
+import scrollIntoView from 'smooth-scroll-into-view-if-needed';
 
-const DeviceList = ({ id, isEditing }) => {
+const DeviceList = ({ id, isEditing, scrollToBtn }) => {
+  const ref = useRef();
   const { devices, floors } = useSelector(state =>
     selectTaskerItemById(state, id)
   );
@@ -12,8 +14,17 @@ const DeviceList = ({ id, isEditing }) => {
 
   const deviceItems = useSelector(state => selectDevicesById(state, devices));
 
+  const scroll = () => {
+    scrollIntoView(ref.current, {
+      scrollMode: 'if-needed',
+      behavior: 'smooth',
+      block: 'start'
+    });
+  };
+
   return (
-    <div>
+    <div ref={ref}>
+      {scrollToBtn(() => scroll())}
       {isEditing && <CollectionImport />}
       {floorsDeduped.map(id => (
         <FloorRow

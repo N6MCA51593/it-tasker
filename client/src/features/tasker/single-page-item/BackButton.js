@@ -11,11 +11,7 @@ const BackButton = ({ isEditing }) => {
       dispatch(toggleActiveItem());
     }
   };
-  return (
-    <div className='back-but'>
-      <span onClick={handleClick}>X</span>
-    </div>
-  );
+  return <div className='back nav-btn' onClick={handleClick}></div>;
 };
 
 export default BackButton;
