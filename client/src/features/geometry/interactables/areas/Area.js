@@ -10,7 +10,7 @@ import {
   redrawArea
 } from 'features/geometry/interactables/areas/areaSlice';
 import AreaNameLabel from 'features/geometry/interactables/areas/AreaNameLabel';
-import useAreaTaskerState from 'features/tasker/single-page-item/useAreaTaskerState';
+import useAreaTaskerState from 'features/tasker/single-page-item/device-list/useAreaTaskerState';
 import {
   ADD_DEVICE_GEO,
   EDIT_INTERACTABLES_GLOB,

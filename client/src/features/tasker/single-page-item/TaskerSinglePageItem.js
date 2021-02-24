@@ -1,5 +1,5 @@
 import React from 'react';
-import DeviceList from 'features/tasker/single-page-item/DeviceList';
+import DeviceList from 'features/tasker/single-page-item/device-list/DeviceList';
 import TaskerItemTextEditables from 'features/tasker/single-page-item/TaskerItemTextEditables';
 import BackButton from 'features/tasker/single-page-item/BackButton';
 import TaskerItemText from 'features/tasker/single-page-item/TaskerItemText';

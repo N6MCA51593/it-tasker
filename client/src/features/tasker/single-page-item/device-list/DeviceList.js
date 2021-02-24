@@ -1,8 +1,8 @@
 import React, { memo, useRef } from 'react';
 import { selectTaskerItemById, selectDevicesById } from 'app/selectors';
 import { useSelector } from 'react-redux';
-import FloorRow from 'features/tasker/single-page-item/FloorRow';
-import CollectionImport from 'features/tasker/single-page-item/CollectionImport';
+import FloorRow from 'features/tasker/single-page-item/device-list/FloorRow';
+import CollectionImport from 'features/tasker/single-page-item/device-list/CollectionImport';
 import scrollIntoView from 'smooth-scroll-into-view-if-needed';
 
 const DeviceList = ({ id, isEditing, scrollToBtn }) => {

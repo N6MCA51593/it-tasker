@@ -21,24 +21,23 @@
     flex-direction: column;
     justify-content: center;
     text-align: center;
+    font-weight: 600;
 
     span:first-child {
       color: #9aa5b1;
-      font-size: 0.9rem;
-      font-weight: 300;
+      font-size: 0.7rem;
     }
 
     span {
       color: #ffffff;
       font-size: 1.4rem;
-      font-weight: 600;
     }
   }
 }
 
 .floor-overview {
   display: flex;
-  flex-basis: 70%;
+  flex-basis: 60%;
   justify-items: flex-start;
   flex-wrap: wrap;
   align-items: center;
