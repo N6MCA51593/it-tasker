@@ -247,6 +247,12 @@ export const selectDeviceActiveTaskerItems = () =>
   );
 export const selectDeviceActiveItemStatus = (state, id) =>
   state.tasker.byDevice[id]?.[state.tasker.activeItem]?.isCheckedOff;
+export const selectIsAreaCheckedOff = (state, devices) => {
+  return !devices.some(
+    device =>
+      !state.tasker.byDevice[device.id]?.[state.tasker.activeItem]?.isCheckedOff
+  );
+};
 export const selectTaskerActiveItemProperties = state => {
   return {
     activeItem: state.tasker.activeItem,

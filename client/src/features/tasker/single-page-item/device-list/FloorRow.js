@@ -15,7 +15,7 @@ const FloorRow = ({ id }) => {
 
   return (
     <div className='tasker-floor-row'>
-      <span>{name}</span>
+      <h3>{name}</h3>
       <div className='tasker-floor-row-items'>
         {areas.map(area => (
           <DeviceGroup

@@ -6,7 +6,7 @@ import { TASK_TT } from 'app/constants';
 import React from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 
-const DeviceItem = ({ name, clickHandler, id }) => {
+const DeviceItem = ({ name, clickHandler, id, setIsHovering }) => {
   const { isEditing, activeItemType } = useSelector(
     selectTaskerActiveItemProperties,
     shallowEqual
@@ -17,21 +17,23 @@ const DeviceItem = ({ name, clickHandler, id }) => {
   const isCheckedOffAble = activeItemType === TASK_TT;
 
   const baseClassName = 'device-item';
-
-  const checkOffableClassName = `${baseClassName}${
-    isCheckedOffAble ? '-checkoffable' : '-noncheckoffable'
+  const checkOffableClassName = `${
+    isCheckedOffAble ? 'checkoffable' : 'noncheckoffable'
   }`;
-
-  const checkedOffClassName = `${baseClassName}${
-    isCheckedOffAble && isCheckedOff ? '-notcheckedoff' : '-checkedoff'
+  const checkedOffClassName = `${
+    isCheckedOffAble && isCheckedOff ? 'notcheckedoff' : 'checkedoff'
   }`;
-
   const className = isEditing
-    ? `${baseClassName} ${baseClassName + '-edit'}`
+    ? `${baseClassName} edit`
     : `${baseClassName} ${checkOffableClassName} ${checkedOffClassName}`;
 
   return (
-    <div className={className} onClick={clickHandler}>
+    <div
+      className={className}
+      onClick={clickHandler}
+      onMouseEnter={() => setIsHovering(false)}
+      onMouseLeave={() => setIsHovering(true)}
+    >
       {name}
     </div>
   );

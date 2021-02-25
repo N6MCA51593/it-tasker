@@ -23,7 +23,7 @@ const DeviceList = ({ id, isEditing, scrollToBtn }) => {
   };
 
   return (
-    <div ref={ref}>
+    <div className='tasker-device-list' ref={ref}>
       {scrollToBtn(() => scroll())}
       {isEditing && <CollectionImport />}
       {floorsDeduped.map(id => (

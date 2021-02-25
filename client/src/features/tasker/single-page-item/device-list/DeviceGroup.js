@@ -1,6 +1,7 @@
 import {
   selectAreaById,
   selectDevicesById,
+  selectIsAreaCheckedOff,
   selectTaskerActiveItemProperties
 } from 'app/selectors';
 import { TASK_TT } from 'app/constants';
@@ -8,10 +9,12 @@ import { checkOffDevices } from 'features/api/checkOffDevices';
 import DeviceItem from 'features/tasker/single-page-item/device-list/DeviceItem';
 import { toggleDevice } from 'features/tasker/taskerSlice';
 import useAreaTaskerState from 'features/tasker/single-page-item/device-list/useAreaTaskerState';
-import React from 'react';
+import React, { Fragment, useState } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import AreaWrapper from 'features/tasker/single-page-item/device-list/AreaWrapper';
 
 const DeviceGroup = ({ areaId, deviceIds }) => {
+  const [isHovering, setIsHovering] = useState(false);
   const devices = useSelector(state => selectDevicesById(state, deviceIds));
   const dispatch = useDispatch();
   const { name, floor } = useSelector(state => selectAreaById(state, areaId));
@@ -20,8 +23,12 @@ const DeviceGroup = ({ areaId, deviceIds }) => {
     selectTaskerActiveItemProperties,
     shallowEqual
   );
+  const isCheckedOff = useSelector(state =>
+    selectIsAreaCheckedOff(state, devices)
+  );
 
-  const deviceClickHandler = (id, floor) => {
+  const deviceClickHandler = (id, floor, e) => {
+    e.stopPropagation();
     if (isEditing) {
       dispatch(toggleDevice({ id, floor }));
     } else if (activeItemType === TASK_TT) {
@@ -40,24 +47,29 @@ const DeviceGroup = ({ areaId, deviceIds }) => {
   };
 
   return (
-    <div>
-      <div className='tasker-floor-row-items'>
-        <div
-          className='tasker-floor-row-item'
-          onClick={() => areaClickHandler()}
+    <Fragment>
+      {devices.map((device, i) => (
+        <AreaWrapper
+          devices={devices}
+          index={i}
+          key={device.id}
+          areaClickHandler={areaClickHandler}
+          isHovering={isHovering}
+          setIsHovering={setIsHovering}
+          name={name}
+          isEditing={isEditing}
+          isCheckedOff={isCheckedOff}
         >
-          {name}
-        </div>
-        {devices.map(device => (
           <DeviceItem
             key={device.id}
             name={device.name}
             id={device.id}
-            clickHandler={() => deviceClickHandler(device.id, device.floor)}
+            clickHandler={e => deviceClickHandler(device.id, device.floor, e)}
+            setIsHovering={setIsHovering}
           />
-        ))}
-      </div>
-    </div>
+        </AreaWrapper>
+      ))}
+    </Fragment>
   );
 };
 

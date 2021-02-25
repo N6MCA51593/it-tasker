@@ -308,6 +308,13 @@ const taskerSlice = createSlice({
     },
     'authState/resetState': () => {
       return initialState;
+    },
+    'uiState/setUiGlobalState': state => {
+      if (state.isEditing) {
+        cancelChangesFn(state);
+      } else {
+        state.activeItem = null;
+      }
     }
   }
 });
