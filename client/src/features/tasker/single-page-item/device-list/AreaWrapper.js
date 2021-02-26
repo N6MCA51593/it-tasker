@@ -15,7 +15,10 @@ const AreaWrapper = ({
   const className = `device-group ${clTern(index === 0, 'first ')}${clTern(
     index === devices.length - 1,
     'last '
-  )}${clTern(isHovering, 'hov ')}${clTern(isCheckedOff, 'checked-off')}`;
+  )}${clTern(isHovering, 'hov ')}${clTern(
+    isCheckedOff,
+    'checked-off '
+  )}${clTern(isEditing, 'area-edit')}`;
   return (
     <div
       className={className}
@@ -23,7 +26,11 @@ const AreaWrapper = ({
       onMouseLeave={() => setIsHovering(false)}
       onClick={() => areaClickHandler()}
     >
-      {index === 0 && <span>{name}</span>}
+      {index === 0 && (
+        <span className={`${clTern(devices.length === 1, 'short')}`}>
+          {name}
+        </span>
+      )}
       {children}
     </div>
   );

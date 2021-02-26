@@ -1,31 +1,21 @@
-import {
-  selectDeviceActiveItemStatus,
-  selectTaskerActiveItemProperties
-} from 'app/selectors';
-import { TASK_TT } from 'app/constants';
-import React from 'react';
-import { shallowEqual, useSelector } from 'react-redux';
+import { selectDeviceActiveItemStatus } from 'app/selectors';
 
-const DeviceItem = ({ name, clickHandler, id, setIsHovering }) => {
-  const { isEditing, activeItemType } = useSelector(
-    selectTaskerActiveItemProperties,
-    shallowEqual
-  );
+import React from 'react';
+import { useSelector } from 'react-redux';
+
+const DeviceItem = ({ name, clickHandler, id, setIsHovering, isEditing }) => {
   const isCheckedOff = useSelector(state =>
     selectDeviceActiveItemStatus(state, id)
   );
-  const isCheckedOffAble = activeItemType === TASK_TT;
 
   const baseClassName = 'device-item';
-  const checkOffableClassName = `${
-    isCheckedOffAble ? 'checkoffable' : 'noncheckoffable'
-  }`;
+
   const checkedOffClassName = `${
-    isCheckedOffAble && isCheckedOff ? 'notcheckedoff' : 'checkedoff'
+    isCheckedOff ? 'checkedoff' : 'notcheckedoff'
   }`;
   const className = isEditing
     ? `${baseClassName} edit`
-    : `${baseClassName} ${checkOffableClassName} ${checkedOffClassName}`;
+    : `${baseClassName} ${checkedOffClassName}`;
 
   return (
     <div

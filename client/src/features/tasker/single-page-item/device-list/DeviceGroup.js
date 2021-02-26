@@ -66,6 +66,7 @@ const DeviceGroup = ({ areaId, deviceIds }) => {
             id={device.id}
             clickHandler={e => deviceClickHandler(device.id, device.floor, e)}
             setIsHovering={setIsHovering}
+            isEditing={isEditing}
           />
         </AreaWrapper>
       ))}
