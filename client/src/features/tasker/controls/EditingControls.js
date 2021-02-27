@@ -3,8 +3,11 @@ import React from 'react';
 const EditingControls = ({ save, cancel }) => {
   return (
     <div className='editing-controls'>
-      <button onClick={() => save()}>Save changes</button>
-      <button onClick={() => cancel()}>Cancel changes</button>
+      <button className='btn primary tasker-edit' onClick={() => save()}>
+        <span></span>
+        Save
+      </button>
+      <button onClick={() => cancel()}>Cancel</button>
     </div>
   );
 };

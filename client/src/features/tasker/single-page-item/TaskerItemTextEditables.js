@@ -33,14 +33,14 @@ const TaskerItemTextEditables = ({ id }) => {
     };
 
     return (
-      <div>
+      <div className='tasker-text-edit'>
         <label>
           Name:
           <input {...bindName} />
         </label>
         <label>
           Description:
-          <input {...bindDescription} />
+          <textarea {...bindDescription} />
         </label>
         <EditingControls save={save} cancel={cancel} />
       </div>

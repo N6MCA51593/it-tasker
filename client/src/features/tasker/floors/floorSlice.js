@@ -15,17 +15,19 @@ const floorsSlice = createSlice({
     },
     addFloor: {
       reducer(state, { payload }) {
-        const position =
-          Math.max(...state.ids.map(id => state.entities[id].position)) + 1;
-        floorAdapter.addOne(state, {
-          id: payload,
-          name: 'New Level',
-          geometry: null,
-          shortName: 'L' + position,
-          position,
-          isNew: true
-        });
-        state.editingFloor = payload;
+        if (!state.editingFloor) {
+          const position =
+            Math.max(...state.ids.map(id => state.entities[id].position)) + 1;
+          floorAdapter.addOne(state, {
+            id: payload,
+            name: 'New Level',
+            geometry: null,
+            shortName: 'L' + position,
+            position,
+            isNew: true
+          });
+          state.editingFloor = payload;
+        }
       },
       prepare() {
         const id = nanoid();

@@ -20,13 +20,17 @@ const CollectionImport = () => {
   return (
     <div>
       <div className='collection-import' ref={ref}>
-        <button onClick={() => setIsShowing(!isShowing)}>
+        <span onClick={() => setIsShowing(!isShowing)}>
           Import from collection...
-        </button>
+        </span>
         {isShowing && (
           <div className='confirmation-popup r'>
             {collections.map(item => (
-              <div key={item.id} onClick={() => importDevices(item.id)}>
+              <div
+                className='collection-item'
+                key={item.id}
+                onClick={() => importDevices(item.id)}
+              >
                 {item.name}
               </div>
             ))}

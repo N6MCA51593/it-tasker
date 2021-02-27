@@ -5,7 +5,7 @@ import useInput from 'common/useInput';
 import { updateFloor } from 'features/api/updateFloor';
 import { setEditingFloor } from 'features/tasker/floors/floorSlice';
 
-const FloorListItemEditing = ({ id }) => {
+const FloorListItemEditing = ({ id, scrollToElem }) => {
   const dispatch = useDispatch();
   const floor = useSelector(state => selectFloorById(state, id));
   const { name, shortName, position } = floor;
@@ -29,6 +29,7 @@ const FloorListItemEditing = ({ id }) => {
 
   return (
     <div className='collection-table-item'>
+      {scrollToElem()}
       <label>
         Name:
         <input {...bindName} />

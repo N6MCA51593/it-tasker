@@ -20,15 +20,14 @@ const TaskerSinglePageItem = ({ id, isEditing }) => {
         {!isEditing && <TaskerItemControls id={id} />}
       </div>
       {!isEditing && <ProgressOverview id={id} />}
-      <div className='section'>
-        <DeviceList
-          id={id}
-          isEditing={isEditing}
-          scrollToBtn={handleClick => (
-            <ScrollToDevicesBtn handleClick={handleClick} />
-          )}
-        />
-      </div>
+      <DeviceList
+        id={id}
+        isEditing={isEditing}
+        scrollToBtn={handleClick => (
+          <ScrollToDevicesBtn handleClick={handleClick} />
+        )}
+      />
+      <div className='section'></div> {/* FF padding-bottom fix */}
     </div>
   );
 };

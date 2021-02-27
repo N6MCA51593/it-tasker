@@ -23,6 +23,12 @@
       }
     }
   }
+
+  &.checked-off:not(.non-checkoffable) {
+    .tasker-floor-row {
+      filter: grayscale(0.7);
+    }
+  }
 }
 
 .tasker-floor-row {

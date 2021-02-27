@@ -28,7 +28,7 @@ const TaskerItemControls = ({ id }) => {
       {type !== COLLECTION_TT && (
         <button
           onClick={() => dispatch(checkOffTaskerItem(id))}
-          className={`btn check-off ${clTern(
+          className={`btn primary ${clTern(
             isCheckedOff,
             'checked-off'
           )} ${type}`}
