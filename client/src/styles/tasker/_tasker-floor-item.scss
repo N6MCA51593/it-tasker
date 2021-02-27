@@ -1,0 +1,103 @@
+// Tasker floor item
+
+.tasker-floor-item {
+  & > div:first-child {
+    left: unset;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+
+  & > div:nth-child(2) {
+  }
+}
+
+.floor-list-item-controls {
+  padding: 0;
+
+  .s {
+    transform: scale(0.8);
+  }
+}
+
+.floor-edit {
+  position: relative;
+  width: 90%;
+  display: flex;
+  padding: 0.8rem 8% calc(min(2rem, 3vw));
+  border-radius: 5px;
+  background-color: #181b28;
+  gap: 1rem;
+  justify-content: space-between;
+  box-shadow: 0px 5px 8px 2px rgba(0, 0, 0, 0.4);
+  transition: all 0.2s ease;
+  backface-visibility: hidden;
+  transform: translate(-8px, -5px);
+  box-shadow: 5px 10px 13px 2px rgba(0, 0, 0, 0.3);
+
+  & > div:first-child {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 70%;
+    gap: 0.7rem;
+    flex-shrink: 1;
+    min-width: 0;
+  }
+
+  .floor-list-item-controls {
+    padding: 1rem 0;
+  }
+}
+
+.floor-position-picker {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  $svg-icon-dim: 2.5rem;
+
+  h3 {
+    width: 3rem;
+    text-align: center;
+  }
+
+  button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    transform: translateX(3px);
+
+    span {
+      display: block;
+      background-size: $svg-icon-dim $svg-icon-dim;
+      height: $svg-icon-dim;
+      width: $svg-icon-dim;
+      margin: 0 0.2rem 0 -0.1rem;
+    }
+
+    &.up {
+      span {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' class='icon icon-tabler icon-tabler-chevrons-up' width='44' height='44' viewBox='0 0 24 24' stroke-width='1.5' stroke='%23cbd2d9' fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='7 11 12 6 17 11' /%3E%3Cpolyline points='7 17 12 12 17 17' /%3E%3C/svg%3E");
+
+        @media (hover: hover) {
+          &:hover {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' class='icon icon-tabler icon-tabler-chevrons-up' width='44' height='44' viewBox='0 0 24 24' stroke-width='1.5' stroke='%23ffffff' fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='7 11 12 6 17 11' /%3E%3Cpolyline points='7 17 12 12 17 17' /%3E%3C/svg%3E");
+          }
+        }
+      }
+    }
+
+    &.down {
+      span {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' class='icon icon-tabler icon-tabler-chevrons-down' width='44' height='44' viewBox='0 0 24 24' stroke-width='1.5' stroke='%23cbd2d9' fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='7 7 12 12 17 7' /%3E%3Cpolyline points='7 13 12 18 17 13' /%3E%3C/svg%3E");
+
+        @media (hover: hover) {
+          &:hover {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' class='icon icon-tabler icon-tabler-chevrons-down' width='44' height='44' viewBox='0 0 24 24' stroke-width='1.5' stroke='%23ffffff' fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='7 7 12 12 17 7' /%3E%3Cpolyline points='7 13 12 18 17 13' /%3E%3C/svg%3E");
+          }
+        }
+      }
+    }
+  }
+}

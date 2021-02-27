@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import useInput from 'common/useInput';
 import { updateFloor } from 'features/api/updateFloor';
 import { setEditingFloor } from 'features/tasker/floors/floorSlice';
+import FloorOrderPicker from 'features/tasker/floors/FloorOrderPicker';
 
 const FloorListItemEditing = ({ id, scrollToElem }) => {
   const dispatch = useDispatch();
@@ -16,47 +17,49 @@ const FloorListItemEditing = ({ id, scrollToElem }) => {
   );
   const maxPosition = useSelector(selectMaxPosition);
 
-  const positionUp = () => {
-    if (positionState < maxPosition) {
-      setPositionState(positionState + 1);
-    }
-  };
-  const positionDown = () => {
-    if (positionState > 1) {
-      setPositionState(positionState - 1);
-    }
-  };
-
   return (
-    <div className='collection-table-item'>
-      {scrollToElem()}
-      <label>
-        Name:
-        <input {...bindName} />
-      </label>
-      <label>
-        Short name (4 symbols max):
-        <input {...bindShortNameState} maxLength='4' />
-      </label>
-      {positionState}
-      <button onClick={() => positionDown()}>-</button>
-      <button onClick={() => positionUp()}>+</button>
-      <button
-        onClick={() =>
-          dispatch(
-            updateFloor({
-              ...floor,
-              oldPosition: position,
-              position: positionState,
-              name: nameState,
-              shortName: shortNameState
-            })
-          )
-        }
-      >
-        Save
-      </button>
-      <button onClick={() => dispatch(setEditingFloor())}>Cancel</button>
+    <div className='floor-edit'>
+      <div>
+        {scrollToElem()}
+        <label>
+          Name:
+          <input {...bindName} />
+        </label>
+        <label>
+          Short name (4 symbols max):
+          <input {...bindShortNameState} maxLength='4' />
+        </label>
+
+        <div className='floor-list-item-controls'>
+          <button
+            className='btn primary tasker-edit'
+            onClick={() =>
+              dispatch(
+                updateFloor({
+                  ...floor,
+                  oldPosition: position,
+                  position: positionState,
+                  name: nameState,
+                  shortName: shortNameState
+                })
+              )
+            }
+          >
+            <span></span>Save
+          </button>
+          <button
+            className='button-secondary'
+            onClick={() => dispatch(setEditingFloor())}
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+      <FloorOrderPicker
+        positionState={positionState}
+        setPositionState={setPositionState}
+        maxPosition={maxPosition}
+      />
     </div>
   );
 };

@@ -101,7 +101,8 @@ $section-bg: #1b212d;
 }
 
 .tasker-item-controls,
-.editing-controls {
+.editing-controls,
+.floor-list-item-controls {
   $svg-icon-dim: 1.8rem;
   position: relative;
   display: flex;
@@ -236,19 +237,4 @@ $section-bg: #1b212d;
   display: flex;
   flex-direction: column;
   gap: 1rem;
-}
-
-.editing-controls {
-  button:last-child {
-    background: none;
-    cursor: pointer;
-    border: none;
-    color: #cbd2d9;
-    font-weight: 500;
-    font-size: 1.1rem;
-
-    &:hover {
-      color: #ffffff;
-    }
-  }
 }

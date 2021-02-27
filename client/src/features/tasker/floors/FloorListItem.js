@@ -17,11 +17,22 @@ const FloorListItem = ({ id }) => {
   };
 
   return (
-    <div className='collection-table-item'>
-      {name}
-      {shortName}
-      <button onClick={() => dispatch(setEditingFloor(id))}>Edit</button>
-      <button onClick={() => togglePopUp()}>Delete</button>
+    <div className='collection-table-item tasker-floor-item'>
+      <div>
+        <h2 className='tasker-item-text'>{name}</h2>
+        <div className='tasker-item-description'>{shortName}</div>
+      </div>
+      <div className='floor-list-item-controls'>
+        <button
+          className='btn s edit'
+          onClick={() => dispatch(setEditingFloor(id))}
+        >
+          <span></span>
+        </button>
+        <button className='btn s delete' onClick={() => togglePopUp()}>
+          <span></span>
+        </button>
+      </div>
       {isShowing && (
         <ConfirmationPopUp
           togglePopUp={togglePopUp}

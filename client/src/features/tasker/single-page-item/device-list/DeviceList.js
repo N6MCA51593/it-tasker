@@ -1,5 +1,9 @@
 import React, { memo, useRef } from 'react';
-import { selectTaskerItemById, selectDevicesById } from 'app/selectors';
+import {
+  selectTaskerItemById,
+  selectDevicesById,
+  selectAllFloorsSorted
+} from 'app/selectors';
 import { useSelector } from 'react-redux';
 import FloorRow from 'features/tasker/single-page-item/device-list/FloorRow';
 import CollectionImport from 'features/tasker/single-page-item/device-list/CollectionImport';
@@ -12,8 +16,10 @@ const DeviceList = ({ id, isEditing, scrollToBtn }) => {
   const { devices, floors, type, isCheckedOff } = useSelector(state =>
     selectTaskerItemById(state, id)
   );
-  const floorsDeduped = [...new Set(floors)];
-
+  const allFloorsSorted = useSelector(selectAllFloorsSorted);
+  const floorsDedupedSorted = [...new Set(floors)].sort(
+    (a, b) => allFloorsSorted.indexOf(a) - allFloorsSorted.indexOf(b)
+  );
   const deviceItems = useSelector(state => selectDevicesById(state, devices));
 
   const scroll = () => {
@@ -39,7 +45,7 @@ const DeviceList = ({ id, isEditing, scrollToBtn }) => {
       >
         {scrollToBtn(() => scroll())}
         {isEditing && <CollectionImport />}
-        {floorsDeduped.map(id => (
+        {floorsDedupedSorted.map(id => (
           <FloorRow
             key={id}
             id={id}

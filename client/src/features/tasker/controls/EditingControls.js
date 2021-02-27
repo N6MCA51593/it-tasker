@@ -7,7 +7,9 @@ const EditingControls = ({ save, cancel }) => {
         <span></span>
         Save
       </button>
-      <button onClick={() => cancel()}>Cancel</button>
+      <button className='button-secondary' onClick={() => cancel()}>
+        Cancel
+      </button>
     </div>
   );
 };
