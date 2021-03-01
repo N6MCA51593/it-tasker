@@ -58,6 +58,11 @@
     white-space: nowrap;
     text-overflow: ellipsis;
     max-width: 100%;
+
+    &.confirmation-title {
+      max-width: 15rem;
+      white-space: unset;
+    }
   }
 
   .tasker-item-description {
