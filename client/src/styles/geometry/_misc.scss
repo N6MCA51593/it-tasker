@@ -4,6 +4,27 @@
   position: relative;
   grid-column: 1;
   user-select: none;
+
+  h1 {
+    pointer-events: none;
+    position: absolute;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    top: 30px;
+    left: 0;
+    z-index: 1;
+    padding: 0.5rem 3rem;
+    font-size: 2.5rem;
+    font-weight: 500;
+    max-width: 50%;
+    color: #e4e7eb;
+    background: linear-gradient(
+      90deg,
+      rgba(31, 41, 51, 1) 0%,
+      rgba(31, 41, 51, 0) 100%
+    );
+  }
 }
 
 .floor-geometry {

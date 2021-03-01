@@ -15,6 +15,10 @@
   .geometry {
     //display: none; //TODO Tets mobile perf
     width: 100vw;
+
+    h1 {
+      max-width: 80vw;
+    }
   }
 
   .task-container {
@@ -26,6 +30,7 @@
       position: absolute;
       left: 1vw;
       top: 1vh;
+      z-index: 1;
     }
   }
 

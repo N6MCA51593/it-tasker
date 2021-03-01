@@ -1,6 +1,5 @@
-$geo-stroke-width: 5;
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600&display=swap');
-
+@import 'common';
 @import 'spinner';
 @import 'notifications';
 @import 'geometry/device';
@@ -88,6 +87,8 @@ label {
   padding: 1rem;
   color: #ffffff;
   text-align: center;
+  overflow: auto;
+  @include scrollbar-style;
 
   div {
     width: 100%;

@@ -1,0 +1,23 @@
+// Common classes and variables
+
+$geo-stroke-width: 5;
+
+@mixin scrollbar-style {
+  scrollbar-width: thin;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #1b222a;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #75797d;
+
+    &:hover {
+      background-color: #5d6064;
+    }
+  }
+}

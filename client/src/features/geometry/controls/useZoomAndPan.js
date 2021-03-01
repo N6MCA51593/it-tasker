@@ -24,7 +24,7 @@ const useZoomAndPan = ({ width, height }) => {
     setPanHLvl(initPanHLvl);
   }, [initZoomLvl, initPanHLvl, initPanVLvl, dispatch]);
 
-  const resetPosition = (steps = 1) => {
+  const resetPosition = () => {
     setZoom(1.1);
     setPanVLvl(0);
     setPanHLvl(0);

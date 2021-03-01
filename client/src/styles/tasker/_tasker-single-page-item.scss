@@ -7,6 +7,7 @@ $section-bg: #1b212d;
   padding: 0.3rem 1rem;
   position: relative;
   min-height: 90%;
+  @include scrollbar-style;
 
   .nav-btn {
     cursor: pointer;
@@ -213,6 +214,7 @@ $section-bg: #1b212d;
   & > div {
     max-height: 30vh;
     overflow: auto;
+    @include scrollbar-style;
   }
 
   span {

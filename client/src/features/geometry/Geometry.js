@@ -6,7 +6,11 @@ import useZoomAndPan from 'features/geometry/controls/useZoomAndPan';
 import useGrid from 'features/geometry/useGrid';
 import GeometryDrawing from 'features/geometry/walls/GeometryDrawing';
 import { useSelector } from 'react-redux';
-import { selectActiveGlobalUiState, selectActiveGeoState } from 'app/selectors';
+import {
+  selectActiveGlobalUiState,
+  selectActiveGeoState,
+  selectActiveFloorItem
+} from 'app/selectors';
 import InteractablesWithEditing from 'features/geometry/interactables/InteractablesWithEditing';
 import Interactables from 'features/geometry/interactables/Interactables';
 import { EDIT_GEOM_GLOB, EDIT_INTERACTABLES_GLOB } from 'app/constants';
@@ -16,6 +20,7 @@ import { default as SVGContainerFunc } from 'features/geometry/SVGContainer';
 
 const Geometry = () => {
   const ref = useRef();
+  const activeFloor = useSelector(selectActiveFloorItem);
   const { width, height } = useDimensions(ref);
   const { isGrid, gridStep, toggleGrid, gridStepUp, gridStepDown } = useGrid();
   const {
@@ -76,6 +81,7 @@ const Geometry = () => {
       onTouchStart={e => handleTouchStart(e)}
       onWheel={e => handleWheel(e)}
     >
+      {activeFloor && <h1>{'// ' + activeFloor.name}</h1>}
       <Fragment>
         {uiState === EDIT_GEOM_GLOB && (
           <GeometryDrawing
