@@ -1,6 +1,5 @@
 import React, { memo, useMemo } from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
-import DevicePopUpContainer from 'features/geometry/interactables/devices/DevicePopUpContainer';
 import DeviceIcon from 'features/geometry/interactables/devices/DeviceIcon';
 import {
   selectDeviceById,
@@ -20,7 +19,6 @@ import {
   TASK_TT
 } from 'app/constants';
 import { setActiveDevice } from 'features/geometry/interactables/devices/deviceSlice';
-import DeviceMainPopUp from 'features/geometry/interactables/devices/DeviceMainPopUp';
 import clTern from 'common/clTern';
 
 const Device = ({ id, mode }) => {
@@ -66,7 +64,8 @@ const Device = ({ id, mode }) => {
     }
   };
 
-  const isTransparant =
+  const isHighlighted = isActive && mode !== MOVE_DEVICE_GEO;
+  const isTransparent =
     activeItem && typeof activeTaskerItemStatus === 'undefined';
   const isGrayscale =
     activeItem &&
@@ -74,40 +73,33 @@ const Device = ({ id, mode }) => {
     typeof activeTaskerItemStatus !== 'undefined' &&
     !activeTaskerItemStatus;
 
-  const iconClassName = `device-icon ${clTern(isTransparant, 'trnsp')} ${clTern(
-    isGrayscale || isTransparant,
+  const iconClassName = `device-icon ${clTern(isTransparent, 'trnsp')} ${clTern(
+    isGrayscale || isTransparent,
     'gs'
-  )}`;
+  )} ${clTern(isHighlighted, 'highlighted')}`;
 
   if (!isVisible && typeof activeTaskerItemStatus === 'undefined') {
     return null;
   }
 
   return (
-    <g>
-      <g
-        onClick={() => handleClick()}
-        className={
-          mode === ADD_DEVICE_GEO || (mode === MOVE_DEVICE_GEO && isActive)
-            ? 'device-disabled'
-            : ''
-        }
-      >
-        <DeviceIcon
-          type={type}
-          x={x}
-          y={y}
-          className={iconClassName}
-          status={status}
-          hasActiveNotes={hasActiveNotes}
-          hasActiveTasks={hasActiveTasks}
-        />
-      </g>
-      {isActive && (
-        <DevicePopUpContainer x={x} y={y}>
-          <DeviceMainPopUp id={id} floor={floor} />
-        </DevicePopUpContainer>
-      )}
+    <g
+      onClick={() => handleClick()}
+      className={
+        mode === ADD_DEVICE_GEO || (mode === MOVE_DEVICE_GEO && isActive)
+          ? 'device-disabled'
+          : ''
+      }
+    >
+      <DeviceIcon
+        type={type}
+        x={x}
+        y={y}
+        className={iconClassName}
+        status={status}
+        hasActiveNotes={hasActiveNotes}
+        hasActiveTasks={hasActiveTasks}
+      />
     </g>
   );
 };

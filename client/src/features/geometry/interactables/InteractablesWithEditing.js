@@ -69,7 +69,6 @@ const InteractablesWithEditing = InteractablesComponent =>
         handleClick={handleClickEdit}
         handleMouseMove={handleMouseMoveEdit}
         addDevice={addDevice}
-        activeDevice={activeDevice}
         {...props}
       />
     );

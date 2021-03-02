@@ -12,13 +12,14 @@ import LoadingSpinner from 'common/LoadingSpinner';
 import { EDIT_INTERACTABLES_GLOB } from 'app/constants';
 import DeviceWithEditing from 'features/geometry/interactables/devices/DeviceWithEditing';
 import { Fragment } from 'react';
+import DevicePopUpLayer from 'features/geometry/interactables/devices/DevicePopUpLayer';
 
 const Interactables = ({
   mode,
   handleClick,
   handleMouseMove,
-  activeDevice,
   SVGContainer,
+  zoomLvl,
   ...props
 }) => {
   const areaIds = useSelector(selectActiveFloorAreas);
@@ -54,6 +55,11 @@ const Interactables = ({
               <Device key={id} id={id} mode={mode} />
             )
           )}
+          <DevicePopUpLayer
+            zoomLvl={zoomLvl}
+            globalUiState={globalUiState}
+            mode={mode}
+          />
         </Fragment>
       )}
     </div>

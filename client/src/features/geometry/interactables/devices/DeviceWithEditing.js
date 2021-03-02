@@ -1,7 +1,5 @@
 import React, { memo } from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
-import DevicePopUpContainer from 'features/geometry/interactables/devices/DevicePopUpContainer';
-import DeviceEditingPopUp from 'features/geometry/interactables/devices/DeviceEditingPopUp';
 import DeviceIcon from 'features/geometry/interactables/devices/DeviceIcon';
 import { selectDeviceById, selectActiveGlobalUiState } from 'app/selectors';
 import {
@@ -28,7 +26,6 @@ const DeviceWithEditing = ({ id, mode }) => {
   const { type, x, y } = device;
 
   const handleClick = () => {
-    console.log('object');
     if (mode === EDIT_DEVICE_GEO && globalUiState === EDIT_INTERACTABLES_GLOB) {
       dispatch(setActiveDevice(id));
     } else if (mode === REMOVE_DEVICE_GEO) {
@@ -50,11 +47,6 @@ const DeviceWithEditing = ({ id, mode }) => {
       >
         <DeviceIcon type={type} x={x} y={y} />
       </g>
-      {isActive && mode !== MOVE_DEVICE_GEO && (
-        <DevicePopUpContainer x={x} y={y}>
-          <DeviceEditingPopUp device={device} />
-        </DevicePopUpContainer>
-      )}
     </g>
   );
 };

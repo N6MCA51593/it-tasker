@@ -5,6 +5,28 @@
   transition: all 0.25s ease;
   cursor: pointer;
 
+  &.highlighted {
+    animation: hl 0.7s ease infinite;
+
+    @keyframes hl {
+      0% {
+        opacity: 1;
+      }
+      25% {
+        opacity: 0.8;
+      }
+      50% {
+        opacity: 0.6;
+      }
+      75% {
+        opacity: 0.8;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+  }
+
   &.trnsp {
     opacity: 0.2;
   }

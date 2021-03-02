@@ -95,12 +95,17 @@ const Geometry = () => {
           <InteractablesWithEditing
             mode={mode}
             isGrid={isGrid}
+            zoomLvl={zoomLvl}
             getRelCoord={getRelCoord}
             SVGContainer={SVGContainer}
           />
         )}
         {uiState !== EDIT_INTERACTABLES_GLOB && uiState !== EDIT_GEOM_GLOB && (
-          <Interactables mode={mode} SVGContainer={SVGContainer} />
+          <Interactables
+            mode={mode}
+            SVGContainer={SVGContainer}
+            zoomLvl={zoomLvl}
+          />
         )}
       </Fragment>
       <GeometryControls

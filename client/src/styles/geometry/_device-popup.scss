@@ -5,15 +5,14 @@
   position: relative;
   pointer-events: none;
   z-index: 10;
-  width: calc(min(500px, 70vw));
-  height: 1px;
-  transform: translate(
-    calc(min(500px, 70vw) / -2),
-    calc(min(500px, 70vw) / -2)
-  );
+  transform-box: fill-box;
+  transform-origin: bottom center;
 }
 
 .device-popup {
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: calc(min(300px, 50vh));
   position: relative;
   pointer-events: all;
   border-radius: 4px;
