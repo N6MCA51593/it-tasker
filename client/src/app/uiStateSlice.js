@@ -26,7 +26,6 @@ const initialState = {
   activeGlobalState: MAIN_GLOB,
   activeGeometryState: NAV_GEO,
   isTaskerContainerVisibleMobile: false,
-  isHoveringOverDevicePopUp: false, // Prevents panning on <foreignObject>
   zoomLvl: 1.1,
   panVLvl: 0,
   panHLvl: 0,
@@ -63,13 +62,6 @@ const uiStateSlice = createSlice({
     },
     setUiGeoState(state, { payload }) {
       state.activeGeometryState = payload;
-    },
-    setDeviceHoverStatus(state, { payload }) {
-      if (payload) {
-        state.isHoveringOverDevicePopUp = payload;
-      } else {
-        state.isHoveringOverDevicePopUp = !state.isHoveringOverDevicePopUp;
-      }
     },
     setTaskerSortingOrder(state, { payload }) {
       const { value, type, interactableType } = payload;
@@ -131,14 +123,9 @@ const uiStateSlice = createSlice({
     },
     'tasker/addItem': state => {
       state.activeGlobalState = EDIT_TASKER_ITEMS_GLOB;
-      state.isHoveringOverDevicePopUp = false;
     },
-    'devices/setActiveDevice': state => {
-      state.isHoveringOverDevicePopUp = false;
-    },
-    'devices/updateActiveDevice': state => {
-      state.isHoveringOverDevicePopUp = false;
-    },
+    'devices/setActiveDevice': state => {},
+    'devices/updateActiveDevice': state => {},
     'areas/redrawArea': state => {
       state.activeGeometryState = ADD_AREA_GEO;
     },
@@ -166,7 +153,6 @@ const uiStateSlice = createSlice({
       state.activeGlobalState === VIEW_TASKER_ITEMS_GLOB
         ? (state.activeGlobalState = MAIN_GLOB)
         : (state.activeGlobalState = VIEW_TASKER_ITEMS_GLOB);
-      state.isHoveringOverDevicePopUp = false;
     },
     'tasker/setActiveItemType': state => {
       state.activeGlobalState = MAIN_GLOB;
@@ -185,7 +171,6 @@ const uiStateSlice = createSlice({
 export const {
   setUiGlobalState,
   setUiGeoState,
-  setDeviceHoverStatus,
   setTaskerSortingOrder,
   setNoteFilter,
   setTaskFilter,

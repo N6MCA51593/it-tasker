@@ -5,6 +5,13 @@
   transition: all 0.25s ease;
   cursor: pointer;
 
+  @supports (-moz-appearance: none) {
+    // Fixes icon shifting by a pixel on transitions in Firefox
+    & {
+      will-change: opacity;
+    }
+  }
+
   &.highlighted {
     animation: hl 0.7s ease infinite;
 
@@ -46,7 +53,7 @@
 
     @media (hover: hover) {
       &:hover {
-        transform: scale(1.1, 1.1);
+        transform: scale(1.1);
       }
     }
   }

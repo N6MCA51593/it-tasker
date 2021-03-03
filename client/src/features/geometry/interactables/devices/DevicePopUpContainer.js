@@ -1,27 +1,21 @@
-import React from 'react';
-import { useDispatch } from 'react-redux';
-import { setDeviceHoverStatus } from 'app/uiStateSlice';
+import React, { useRef } from 'react';
+import { useOverflow } from 'use-overflow';
 
 const DevicePopUpContainer = ({ x, y, position, children }) => {
-  const dispatch = useDispatch();
-  const handleMouseEnter = () => {
-    dispatch(setDeviceHoverStatus(true));
-  };
-  const handleMouseLeave = () => {
-    dispatch(setDeviceHoverStatus(false));
-  };
-
+  const ref = useRef();
+  const { refYOverflowing } = useOverflow(ref);
   return (
     <foreignObject
       x={x}
       y={y}
       className='popup-outer'
-      onMouseEnter={() => handleMouseEnter()}
-      onMouseLeave={() => handleMouseLeave()}
       style={position}
-      onWheel={e => e.stopPropagation()}
+      onPointerDown={e => e.stopPropagation()}
+      onWheel={e => refYOverflowing && e.stopPropagation()}
     >
-      <div className='device-popup'>{children}</div>
+      <div className='device-popup' ref={ref}>
+        {children}
+      </div>
     </foreignObject>
   );
 };

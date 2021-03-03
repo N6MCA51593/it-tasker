@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
 
 const useControlEventHandlers = ({
   getRelCoord,
@@ -9,9 +8,6 @@ const useControlEventHandlers = ({
 }) => {
   const [isPointerDown, setIsPointerDown] = useState(false);
   const [isPointer, setIsPointer] = useState(false);
-  const isHoveringOverDevicePopUp = useSelector(
-    state => state.uiState.isHoveringOverDevicePopUp
-  );
 
   const handlePointerMove = e => {
     if (isPointerDown) {
@@ -19,19 +15,15 @@ const useControlEventHandlers = ({
     }
   };
   const handleTouchStart = e => {
-    if (!isHoveringOverDevicePopUp) {
-      if (!isPointer) {
-        setIsPointer(true);
-      }
-      setInitCoords(getRelCoord(e));
-      setIsPointerDown(true);
+    if (!isPointer) {
+      setIsPointer(true);
     }
+    setInitCoords(getRelCoord(e));
+    setIsPointerDown(true);
   };
   const handlePointerDown = e => {
-    if (!isHoveringOverDevicePopUp) {
-      setInitCoords(getRelCoord(e));
-      setIsPointerDown(true);
-    }
+    setInitCoords(getRelCoord(e));
+    setIsPointerDown(true);
   };
   const handlePointerUp = () => {
     setInitCoords(null);
