@@ -41,7 +41,7 @@ const Controls = ({ activeItemType }) => {
         />
         <TaskerContainerButton
           handleClick={() => dispatch(setActiveItemType(FLOOR_TT))}
-          text='Floors'
+          text='Levels'
           type='tab'
           isActive={activeItemType === FLOOR_TT}
         />

@@ -169,6 +169,8 @@ const selectAllDeviceItemsCustom = customMemoSelector(
   items => items
 );
 export const selectActiveDevice = state => state.devices.activeDevice;
+export const selectActiveDeviceItem = state =>
+  state.devices.entities[state.devices.activeDevice];
 export const selectIsDeviceMoving = state => state.devices.isMoving;
 export const selectDeviceById = (state, id) => state.devices.entities[id];
 export const selectDevicesById = (state, ids) =>

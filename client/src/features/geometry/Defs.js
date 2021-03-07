@@ -1,16 +1,19 @@
 import {
   EDIT_GEOM_GLOB,
   EDIT_INTERACTABLES_GLOB,
+  FAILURE_DS,
   LAPTOP_DT,
   MAIN_GLOB,
   NETWORK_DT,
+  OK_DS,
   OTHER_DT,
   PC_DT,
   PHONE_DT,
   PRINTER_DT,
   SCREEN_DT,
   SERVER_DT,
-  SOUND_DT
+  SOUND_DT,
+  WARNING_DS
 } from 'app/constants';
 import React, { memo } from 'react';
 
@@ -306,9 +309,9 @@ const Defs = () => {
       <Gradient type='box' suff={NETWORK_DT} />
       <Gradient type='box' suff={SERVER_DT} />
       <Gradient type='box' suff={OTHER_DT} />
-      <Gradient type='indicator' suff='ok' />
-      <Gradient type='indicator' suff='warning' />
-      <Gradient type='indicator' suff='failure' />
+      <Gradient type='indicator' suff={OK_DS} />
+      <Gradient type='indicator' suff={WARNING_DS} />
+      <Gradient type='indicator' suff={FAILURE_DS} />
       <Gradient type='indicator' suff='neutral' />
       <Gradient type='indicator' suff='tasks' />
       <Gradient type='indicator' suff='notes' />

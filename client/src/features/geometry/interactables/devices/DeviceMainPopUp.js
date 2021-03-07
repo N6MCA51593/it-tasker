@@ -26,7 +26,9 @@ const DeviceMainPopUp = ({ id, floor }) => {
 
   return (
     <div className='container'>
-      <h3>{name}</h3>
+      <div>
+        <h3>{name}</h3>
+      </div>
       <div className='description'>
         <CollapsibleText text={description} />
       </div>

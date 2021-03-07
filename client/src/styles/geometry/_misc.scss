@@ -18,7 +18,7 @@
     font-size: 2.5rem;
     font-weight: 500;
     max-width: 50%;
-    color: #e4e7eb;
+    color: transparentize($color: #ffffff, $amount: 0.2);
     background: linear-gradient(
       90deg,
       rgba(31, 41, 51, 1) 0%,

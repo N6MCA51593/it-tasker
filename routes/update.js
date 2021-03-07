@@ -121,6 +121,24 @@ router.post('/task', authMiddleware, async (req, res) => {
   }
 });
 
+// @route     POST api/update/interactables
+// @desc      Update areas and devices
+// @access    Private
+router.post('/device-status', authMiddleware, async (req, res) => {
+  const { userId } = req;
+  const { id, status } = req.query || {};
+  try {
+    await db.none(
+      'UPDATE devices SET status = ${status} WHERE id = ${id} AND owner = ${userId}',
+      { id, status, userId }
+    );
+    return res.sendStatus(200);
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ msg: 'Server error' });
+  }
+});
+
 // @route     POST api/update/floor
 // @desc      Update floor
 // @access    Private

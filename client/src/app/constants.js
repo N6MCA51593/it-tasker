@@ -53,3 +53,8 @@ export const OTHER_DT = 'other';
 export const SUCCESS_NT = 'success';
 export const ERROR_NT = 'error';
 export const INFO_NT = 'info';
+
+// Device statuses
+export const OK_DS = 'ok';
+export const WARNING_DS = 'warning';
+export const FAILURE_DS = 'failure';

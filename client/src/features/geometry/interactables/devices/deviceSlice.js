@@ -1,5 +1,5 @@
 import { createSlice, nanoid, createEntityAdapter } from '@reduxjs/toolkit';
-import { EDIT_INTERACTABLES_GLOB, PC_DT } from 'app/constants';
+import { EDIT_INTERACTABLES_GLOB, OK_DS, PC_DT } from 'app/constants';
 
 const devicesAdapter = createEntityAdapter();
 const initialState = devicesAdapter.getInitialState({
@@ -46,7 +46,7 @@ const devicesSlice = createSlice({
             name: 'New Device',
             type: PC_DT,
             description: '',
-            status: 'ok'
+            status: OK_DS
           }
         };
       }

@@ -30,6 +30,21 @@
     flex-direction: column;
     justify-content: flex-start;
     gap: 0.5rem;
+    min-height: 110%;
+
+    & > div:first-child {
+      display: flex;
+    }
+  }
+
+  .status-container {
+    display: flex;
+    justify-content: space-between;
+
+    .device-status-indicator {
+      min-width: 10px;
+      border-radius: 50%;
+    }
   }
 
   h3 {
