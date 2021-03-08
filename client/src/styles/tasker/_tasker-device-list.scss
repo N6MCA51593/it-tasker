@@ -9,12 +9,15 @@
     .device-item:not(.edit) {
       border: 3px solid #857f72;
       color: #a39e93;
+      cursor: default;
     }
 
     .device-group:not(.area-edit) {
       color: #625d52;
+      cursor: default;
 
       span {
+        cursor: default;
         background: linear-gradient(
           180deg,
           rgba(184, 178, 167, 1) 0%,

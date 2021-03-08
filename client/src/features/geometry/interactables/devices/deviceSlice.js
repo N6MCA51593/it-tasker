@@ -74,6 +74,10 @@ const devicesSlice = createSlice({
         state.activeDevice = null;
       }
     },
+    setDeviceStatus(state, { payload }) {
+      const { id, status } = payload;
+      state.entities[id].status = status;
+    },
     removeDevice(state, { payload }) {
       if (state.toUpsert.includes(payload)) {
         state.toUpsert = state.toUpsert.filter(e => e !== payload);
@@ -148,7 +152,8 @@ export const {
   updateActiveDevice,
   setActiveDevice,
   removeDevice,
-  moveDevice
+  moveDevice,
+  setDeviceStatus
 } = devicesSlice.actions;
 
 export default devicesSlice.reducer;

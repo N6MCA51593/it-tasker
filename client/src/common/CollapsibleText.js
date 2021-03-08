@@ -1,9 +1,15 @@
 import clTern from 'common/clTern';
-import React, { useState } from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 
-const CollapsibleText = ({ text }) => {
+const CollapsibleText = ({ text, id }) => {
   const isLong = text.length > 260;
   const [isShowing, setIsShowing] = useState(!isLong);
+
+  useLayoutEffect(() => {
+    if (id) {
+      setIsShowing(!isLong); // Resets on id change
+    }
+  }, [id, isLong]);
 
   return (
     <div className={`collapsible-text-container ${clTern(isShowing, 'full')}`}>

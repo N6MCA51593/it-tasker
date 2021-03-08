@@ -4,7 +4,7 @@ import React from 'react';
 
 const DeviceStatusContainer = ({ id }) => {
   return (
-    <div>
+    <div className='status-container'>
       <DeviceStatusIndicator id={id} status={OK_DS} />
       <DeviceStatusIndicator id={id} status={WARNING_DS} />
       <DeviceStatusIndicator id={id} status={FAILURE_DS} />
