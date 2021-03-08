@@ -1,20 +1,12 @@
 import { NOTE_TT, TASK_TT } from 'app/constants';
-import { selectDeviceActiveTaskerItems } from 'app/selectors';
+import { selectDeviceActiveTaskerItemsSorted } from 'app/selectors';
 import DeviceTaskerItems from 'features/geometry/interactables/devices/DeviceTaskerItems';
-import React, { useMemo } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 
 const DeviceTaskerItemsContainer = ({ id, floor }) => {
-  const activeTaskerItemsSelector = useMemo(selectDeviceActiveTaskerItems, []);
-  const activeTaskerItems = useSelector(state =>
-    activeTaskerItemsSelector(state, id)
-  );
-  const tasks =
-    activeTaskerItems &&
-    activeTaskerItems.filter(item => item.type === TASK_TT);
-  const notes =
-    activeTaskerItems &&
-    activeTaskerItems.filter(item => item.type === NOTE_TT);
+  const { tasks, notes } =
+    useSelector(state => selectDeviceActiveTaskerItemsSorted(state, id)) ?? {};
   return (
     <div>
       <DeviceTaskerItems

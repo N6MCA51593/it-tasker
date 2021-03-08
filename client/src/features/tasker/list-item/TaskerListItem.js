@@ -7,6 +7,7 @@ import { NOTE_TT, TASK_TT } from 'app/constants';
 import ProgressBar from 'features/tasker/list-item/ProgressBar';
 import Timestamp from 'features/tasker/list-item/Timestamp';
 import scrollIntoView from 'smooth-scroll-into-view-if-needed';
+import clTern from 'common/clTern';
 
 const TaskerListItem = ({ id, completion, wasActive }) => {
   const dispatch = useDispatch();
@@ -40,10 +41,14 @@ const TaskerListItem = ({ id, completion, wasActive }) => {
   } else {
     completionMod += 'mid';
   }
+  console.log({ id, wasActive });
 
   return (
     <div
-      className='collection-table-item'
+      className={`collection-table-item ${clTern(
+        wasActive === id,
+        'scrolled-to'
+      )}`}
       onClick={() => dispatch(toggleActiveItem(id))}
       ref={ref}
     >

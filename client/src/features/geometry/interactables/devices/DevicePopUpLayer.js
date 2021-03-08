@@ -11,10 +11,12 @@ const DevicePopUpLayer = ({ zoomLvl, globalUiState, mode }) => {
   const { id, floor, x, y } = activeDevice ?? {};
 
   const scale = zoomLvl < 2 ? (zoomLvl > 0.2 ? zoomLvl : 0.2) : 2;
+  const width = 'calc(min(500px, 70vw))';
+  const height = 'calc(min(300px, 50vh))';
   const position = {
-    width: 'calc(min(500px, 70vw))',
-    height: 'calc(min(300px, 50vh))',
-    transform: `translate(calc(calc(min(500px, 70vw)) / -2), calc(calc(min(300px, 50vh)) * -1)) scale(${scale})`
+    width,
+    height,
+    transform: `translate(calc(${width} / -2), calc(${height} * -1)) scale(${scale})`
   };
 
   if (!activeDevice || mode === MOVE_DEVICE_GEO) {

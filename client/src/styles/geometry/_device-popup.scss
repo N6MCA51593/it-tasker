@@ -40,13 +40,15 @@
 
   .status-container {
     display: flex;
+    flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    overflow: hidden;
     gap: 5px;
-    @mixin status-active {
-    }
 
     .device-status-indicator {
+      display: inline;
+      overflow: hidden;
       width: 10px;
       height: 10px;
       border-radius: 50%;

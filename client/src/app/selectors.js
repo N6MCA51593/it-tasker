@@ -119,12 +119,14 @@ export const selectActiveFloorAreas = createSelector(
 export const selectChildDevices = (state, id) => state.devices.byArea[id];
 export const selectIsAreaHighlighted = () =>
   createSelector(
-    state => state.uiState.activeGlobalState,
-    state => state.devices.byArea,
-    state => state.tasker.byDevice,
-    state => state.tasker.entities,
-    state => state.tasker.activeItem,
-    (_, id) => id,
+    [
+      state => state.uiState.activeGlobalState,
+      state => state.devices.byArea,
+      state => state.tasker.byDevice,
+      state => state.tasker.entities,
+      state => state.tasker.activeItem,
+      (_, id) => id
+    ],
     (
       activeGlobalState,
       byArea,
@@ -227,26 +229,6 @@ export const selectActiveFloorWalls = createSelector(
 // Tasker
 export const selectTaskerItemById = (state, id) => state.tasker.entities[id];
 export const selectByDeviceEntry = (state, id) => state.tasker.byDevice[id];
-export const selectDeviceActiveTaskerItems = () =>
-  createSelector(
-    state => state.tasker.byDevice,
-    state => state.tasker.entities,
-    (_, id) => id,
-    (byDevice, entities, id) => {
-      if (byDevice[id]) {
-        const activeItems = Object.keys(byDevice[id]).filter(
-          taskId =>
-            typeof byDevice[id][taskId] !== 'undefined' &&
-            (entities[taskId].type === TASK_TT
-              ? !byDevice[id][taskId].isCheckedOff
-              : entities[taskId].isCheckedOff === false)
-        );
-        return activeItems.map(taskId => entities[taskId]);
-      } else {
-        return null;
-      }
-    }
-  );
 export const selectDeviceActiveItemStatus = (state, id) =>
   state.tasker.byDevice[id]?.[state.tasker.activeItem]?.isCheckedOff;
 export const selectIsAreaCheckedOff = (state, devices) => {
@@ -303,21 +285,7 @@ export const getTaskerCompletionTable = createSelector(
     state => state.tasker.byDevice
   ],
   (ids, entities, byDevice) => {
-    let completionTable = {};
-    for (const id of ids) {
-      const { type, isCheckedOff, devices } = entities[id];
-      if (type !== TASK_TT) {
-        completionTable[id] = null;
-      } else if (isCheckedOff) {
-        completionTable[id] = 1;
-      } else if (devices && devices.length > 0) {
-        completionTable[id] =
-          devices.filter(deviceId => byDevice[deviceId][id].isCheckedOff)
-            .length / devices.length;
-      } else {
-        completionTable[id] = 0;
-      }
-    }
+    let completionTable = completionTableFn(ids, entities, byDevice);
     return completionTable;
   }
 );
@@ -404,12 +372,14 @@ export const getTaskerProgressOverview = createSelector(
 
 export const selectSortedFloorAreasAndDevices = () =>
   createSelector(
-    state => state.tasker.entities[state.tasker.activeItem],
-    selectActiveSortingOrder,
-    state => state.tasker.byDevice,
-    state => state.devices.byArea,
-    state => state.devices.entities,
-    (_, id) => id,
+    [
+      state => state.tasker.entities[state.tasker.activeItem],
+      selectActiveSortingOrder,
+      state => state.tasker.byDevice,
+      state => state.devices.byArea,
+      state => state.devices.entities,
+      (_, id) => id
+    ],
     (
       activeItem,
       { areaOrder, deviceOrder },
@@ -454,5 +424,61 @@ export const selectSortedFloorAreasAndDevices = () =>
     }
   );
 
+export const selectDeviceActiveTaskerItemsSorted = createSelector(
+  [
+    state => state.tasker.byDevice,
+    state => state.tasker.entities,
+    state => state.uiState.taskSortingOrder,
+    state => state.uiState.noteSortingOrder,
+    (_, id) => id
+  ],
+  (byDevice, entities, taskSortingOrder, noteSortingOrder, id) => {
+    if (byDevice[id]) {
+      const activeItems = Object.keys(byDevice[id]).filter(
+        taskId =>
+          typeof byDevice[id][taskId] !== 'undefined' &&
+          (entities[taskId].type === TASK_TT
+            ? !byDevice[id][taskId].isCheckedOff
+            : entities[taskId].isCheckedOff === false)
+      );
+      const tasks = activeItems.filter(id => entities[id].type === TASK_TT);
+      const notes = activeItems.filter(id => entities[id].type === NOTE_TT);
+      const completionTable = completionTableFn(tasks, entities, byDevice);
+
+      const sortTasks = sortTaskerItems(
+        entities,
+        taskSortingOrder,
+        completionTable
+      );
+      const sortNotes = sortTaskerItems(entities, noteSortingOrder);
+      return {
+        tasks: tasks.sort((a, b) => sortTasks(a, b)),
+        notes: notes.sort((a, b) => sortNotes(a, b))
+      };
+    } else {
+      return null;
+    }
+  }
+);
+
 // Auth
 export const selectIsAuthenticated = state => state.authState.isAuthenticated;
+
+const completionTableFn = (ids, entities, byDevice) => {
+  let completionTable = {};
+  for (const id of ids) {
+    const { type, isCheckedOff, devices } = entities[id];
+    if (type !== TASK_TT) {
+      completionTable[id] = null;
+    } else if (isCheckedOff) {
+      completionTable[id] = 1;
+    } else if (devices && devices.length > 0) {
+      completionTable[id] =
+        devices.filter(deviceId => byDevice[deviceId][id].isCheckedOff).length /
+        devices.length;
+    } else {
+      completionTable[id] = 0;
+    }
+  }
+  return completionTable;
+};

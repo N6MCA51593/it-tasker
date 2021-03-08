@@ -95,6 +95,7 @@ $section-bg: #1b212d;
 }
 
 .collapsible-text-container {
+  transform: translate(0) scale(1);
   position: relative;
   display: flex;
   flex-direction: column;
@@ -112,6 +113,7 @@ $section-bg: #1b212d;
 }
 
 .text-collapse {
+  transform: scale(1); // Fixes a Chrome bug when in device popup
   width: 100%;
   position: absolute;
   display: flex;
