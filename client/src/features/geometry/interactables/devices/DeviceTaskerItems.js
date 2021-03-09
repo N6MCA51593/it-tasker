@@ -1,3 +1,4 @@
+import { checkOffDevices } from 'features/api/checkOffDevices';
 import DeviceTaskerItem from 'features/geometry/interactables/devices/DeviceTaskerItem';
 import { addItem, toggleActiveItem } from 'features/tasker/taskerSlice';
 import React from 'react';
@@ -8,22 +9,25 @@ const DeviceTaskerItems = ({ taskerItems, type, id, floor }) => {
 
   return (
     <div className='device-tasker-items'>
-      {type}
-      {taskerItems &&
-        taskerItems.map(id => (
-          <DeviceTaskerItem
-            key={id}
-            id={id}
-            clickHandler={() => dispatch(toggleActiveItem(id))}
-          />
-        ))}
       <button
+        className='add-tasker-item-button s'
         onClick={() =>
           dispatch(addItem({ deviceId: id, type, deviceFloor: floor }))
         }
       >
-        Add
+        +
       </button>
+      {taskerItems &&
+        taskerItems.map(taskerItemId => (
+          <DeviceTaskerItem
+            key={taskerItemId}
+            id={taskerItemId}
+            toggleActive={() => dispatch(toggleActiveItem(taskerItemId))}
+            checkOff={() =>
+              dispatch(checkOffDevices({ toCheckOff: id, taskerItemId }))
+            }
+          />
+        ))}
     </div>
   );
 };

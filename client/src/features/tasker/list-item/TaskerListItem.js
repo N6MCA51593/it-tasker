@@ -41,7 +41,6 @@ const TaskerListItem = ({ id, completion, wasActive }) => {
   } else {
     completionMod += 'mid';
   }
-  console.log({ id, wasActive });
 
   return (
     <div

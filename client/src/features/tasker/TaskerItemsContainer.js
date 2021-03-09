@@ -29,7 +29,10 @@ const TaskerItemsContainer = () => {
 
   return (
     <div className='tasker-items-container'>
-      <button onClick={() => dispatch(addItem({ type: activeItemType }))}>
+      <button
+        className='add-tasker-item-button'
+        onClick={() => dispatch(addItem({ type: activeItemType }))}
+      >
         +
       </button>
       {ids.map(id => (

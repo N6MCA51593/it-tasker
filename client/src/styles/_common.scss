@@ -2,12 +2,13 @@
 
 $geo-stroke-width: 5;
 $section-bg: #1b212d;
+$gutter-width: 7px;
 
 @mixin scrollbar-style {
   scrollbar-width: thin;
 
   &::-webkit-scrollbar {
-    width: 8px;
+    width: $gutter-width;
   }
 
   ::-webkit-scrollbar-track {
@@ -95,7 +96,6 @@ $section-bg: #1b212d;
 }
 
 .collapsible-text-container {
-  transform: translate(0) scale(1);
   position: relative;
   display: flex;
   flex-direction: column;
@@ -113,7 +113,6 @@ $section-bg: #1b212d;
 }
 
 .text-collapse {
-  transform: scale(1); // Fixes a Chrome bug when in device popup
   width: 100%;
   position: absolute;
   display: flex;
@@ -167,5 +166,34 @@ $section-bg: #1b212d;
     &:hover {
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' class='icon icon-tabler icon-tabler-sort-descending' width='44' height='44' viewBox='0 0 24 24' stroke-width='2' stroke='%23FFFFFF' fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='4' y1='6' x2='13' y2='6' /%3E%3Cline x1='4' y1='12' x2='13' y2='12' /%3E%3Cline x1='4' y1='18' x2='13' y2='18' /%3E%3Cpolyline points='15 15 18 18 21 15' /%3E%3Cline x1='18' y1='6' x2='18' y2='18' /%3E%3C/svg%3E");
     }
+  }
+}
+
+.add-tasker-item-button {
+  outline: none;
+  font-family: Arial, Helvetica, sans-serif;
+  cursor: pointer;
+  width: 80%;
+  padding: 0.1rem;
+  background: none;
+  margin: 1rem 0 0;
+  font-size: 2.8rem;
+  color: #cbd2d9;
+  border: 3px dashed currentColor;
+  font-weight: 500;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 0.7;
+  transition: all 0.2s ease;
+
+  &.s {
+    margin: 0.3rem 0rem;
+    font-size: 2rem;
+    width: 100%;
+  }
+
+  &:hover {
+    color: #ffffff;
   }
 }

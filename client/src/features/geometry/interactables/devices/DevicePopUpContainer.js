@@ -6,8 +6,12 @@ const DevicePopUpContainer = ({ x, y, position, children }) => {
   const ref = useRef();
   const dispatch = useDispatch();
   const handleScroll = e => {
-    if (ref.current && ref.current.scrollHeight !== ref.current.clientHeight) {
-      e.stopPropagation();
+    if (ref.current) {
+      const { scrollHeight, clientHeight } = ref.current;
+      // Prevent zooming on significant overflowing
+      if ((scrollHeight - clientHeight) / clientHeight > 0.1) {
+        e.stopPropagation();
+      }
     }
   };
 
