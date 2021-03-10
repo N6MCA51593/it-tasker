@@ -9,6 +9,7 @@ import {
   SERVER_DT,
   OTHER_DT
 } from 'app/constants';
+import TypePickerIconContainer from 'features/geometry/interactables/devices/TypePickerIconContainer';
 import React from 'react';
 
 const TypePicker = ({ type, setType }) => {
@@ -43,15 +44,9 @@ const TypePicker = ({ type, setType }) => {
 
   return (
     <div className='type-picker'>
-      <div onClick={() => cycle(-1)}>L</div>
-      <div>
-        <svg>
-          <g transform='scale(0.6)'>
-            <use href={`#icon-${type}`} />
-          </g>
-        </svg>
-      </div>
-      <div onClick={() => cycle(1)}>R</div>
+      <div onClick={() => cycle(1)}>L</div>
+      <TypePickerIconContainer type={type} types={types} />
+      <div onClick={() => cycle(-1)}>R</div>
     </div>
   );
 };

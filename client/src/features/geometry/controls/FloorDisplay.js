@@ -17,7 +17,7 @@ const FloorDisplay = ({ activeFloor, handleClick }) => {
     if (ref) {
       scrollIntoView(ref, {
         behavior: 'smooth',
-        block: 'end'
+        block: 'center'
       });
     }
   }, [activeFloor, floors]);

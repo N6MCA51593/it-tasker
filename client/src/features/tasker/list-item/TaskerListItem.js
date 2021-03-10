@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useLayoutEffect, useRef } from 'react';
 import { selectTaskerItemById } from 'app/selectors';
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleActiveItem } from 'features/tasker/taskerSlice';
@@ -21,11 +21,11 @@ const TaskerListItem = ({ id, completion, wasActive }) => {
   } = useSelector(state => selectTaskerItemById(state, id));
   const ref = useRef();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (wasActive === id) {
       scrollIntoView(ref.current, {
         scrollMode: 'if-needed',
-        behavior: 'smooth',
+        behavior: 'auto',
         block: 'center'
       });
     }
