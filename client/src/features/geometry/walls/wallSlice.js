@@ -150,6 +150,7 @@ const wallsSlice = createSlice({
         wallsAdapter.setAll(state, state.wallsHistory);
         state.wallsHistory = null;
         state.activeWall = null;
+        state.movingWallCoords = null;
       }
     },
     'authState/resetState': () => {

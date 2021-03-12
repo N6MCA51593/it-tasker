@@ -14,15 +14,15 @@ import React from 'react';
 
 const TypePicker = ({ type, setType }) => {
   const types = [
-    PC_DT,
-    LAPTOP_DT,
+    OTHER_DT,
+    SERVER_DT,
+    NETWORK_DT,
+    SCREEN_DT,
+    SOUND_DT,
     PRINTER_DT,
     PHONE_DT,
-    SOUND_DT,
-    SCREEN_DT,
-    NETWORK_DT,
-    SERVER_DT,
-    OTHER_DT
+    LAPTOP_DT,
+    PC_DT
   ];
 
   const cycle = dir => {

@@ -24,7 +24,7 @@ import {
   cancelChanges,
   saveArea
 } from 'features/geometry/interactables/areas/areaSlice';
-import React from 'react';
+import React, { memo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 const InteractablesEditingControls = () => {
@@ -33,6 +33,9 @@ const InteractablesEditingControls = () => {
   const activeArea = useSelector(selectActiveArea);
   const activeDevice = useSelector(selectActiveDevice);
   const activeLabel = useSelector(selectActiveLabel);
+  const isAreaCancellable = useSelector(
+    state => state.areas.entities[state.areas.activeArea]?.points?.length <= 3
+  );
 
   const isDisabled = geo => {
     const isDisabling = {
@@ -72,7 +75,7 @@ const InteractablesEditingControls = () => {
       {activeGeoState === ADD_AREA_GEO && activeArea ? (
         <LabeledButton
           handleClick={() => dispatch(saveArea())}
-          label='Save area'
+          label={isAreaCancellable ? 'Cancel drawing' : 'Save area'}
           type='save'
         />
       ) : (
@@ -135,4 +138,4 @@ const InteractablesEditingControls = () => {
   );
 };
 
-export default InteractablesEditingControls;
+export default memo(InteractablesEditingControls);

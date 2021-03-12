@@ -35,6 +35,7 @@
     bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
+    z-index: 3;
   }
 
   .device-controls {
@@ -110,6 +111,7 @@
   left: 5%;
   height: 10rem;
   pointer-events: none;
+  z-index: 2;
 }
 
 .controls-container {
@@ -202,6 +204,10 @@
 
   &.shadow {
     box-shadow: 0px 5px 8px 0px rgba(0, 0, 0, 0.4);
+  }
+
+  &.no-events {
+    pointer-events: none;
   }
 
   &.s {

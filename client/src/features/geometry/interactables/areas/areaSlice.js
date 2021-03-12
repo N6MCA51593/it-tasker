@@ -27,7 +27,6 @@ const areasSlice = createSlice({
           if (state.toRedraw) {
             state.activeArea = state.toRedraw;
             state.entities[state.toRedraw].points = points;
-            state.toRedraw = null;
           } else {
             areasAdapter.addOne(state, {
               id: payload.id,
@@ -82,9 +81,16 @@ const areasSlice = createSlice({
         area.points.pop();
         area.labelCoords = polygonCentroid(area.points);
         if (area.points.length < 3) {
-          areasAdapter.removeOne(state, state.activeArea);
+          if (state.toRedraw) {
+            state.activeArea = null;
+          } else {
+            areasAdapter.removeOne(state, state.activeArea);
+          }
         } else {
           state.toUpsert.push(area.id);
+          if (state.toRedraw) {
+            state.toRedraw = null;
+          }
         }
         state.activeArea = null;
       }

@@ -9,9 +9,15 @@
   white-space: nowrap;
   font-weight: 500;
   font-size: 0.8rem;
+  transition: background-color 0.2s ease;
 
   &.events-enabled {
     pointer-events: all;
+
+    &:hover {
+      cursor: pointer;
+      background-color: #0b69a3;
+    }
   }
 }
 
@@ -23,6 +29,7 @@
 }
 
 .area-group {
+  transition: all 0.2s ease;
   fill: transparentize($color: #9aa5b1, $amount: 0.9);
   stroke: #9aa5b1;
   div {
@@ -53,6 +60,16 @@
     pointer-events: none;
     width: 4rem;
     height: 1.5rem;
+
+    div {
+      transition: background-color 0.2s ease;
+    }
+
+    input {
+      font-size: 0.8rem;
+      outline: none;
+      border-radius: unset;
+    }
   }
 }
 
