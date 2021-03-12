@@ -2,6 +2,7 @@
 
 .wall {
   color: #f5f7fa;
+  transition: color 0.13s ease;
 
   line {
     stroke: currentColor;
@@ -19,10 +20,12 @@
 
   @media (hover: hover) {
     &.hov-move:hover {
+      cursor: pointer;
       color: #cbd2d9;
     }
 
     &.hov-remove:hover {
+      cursor: pointer;
       color: #e12d39;
     }
   }

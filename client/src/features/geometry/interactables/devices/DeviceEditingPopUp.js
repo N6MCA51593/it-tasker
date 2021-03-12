@@ -32,7 +32,9 @@ const DeviceEditingPopUp = ({ device }) => {
     }
   }, [id, description, name, type, setDescriptionValue, setNameValue]);
 
-  const save = () => {
+  const save = e => {
+    console.log('object');
+    e.preventDefault();
     dispatch(
       updateActiveDevice({
         name: nameState,
@@ -49,15 +51,19 @@ const DeviceEditingPopUp = ({ device }) => {
   return (
     <div className='container'>
       <TypePicker type={typeState} setType={setTypeState} />
-      <label>
-        Name:
-        <input {...bindName} />
-      </label>
-      <label>
-        Description:
-        <textarea {...bindDescription} />
-      </label>
-      <button onClick={() => save()}>Save</button>
+      <form onSubmit={e => save(e)} id='device-form'>
+        <label>
+          Name:
+          <input {...bindName} />
+        </label>
+        <label>
+          Description:
+          <textarea {...bindDescription} />
+        </label>
+      </form>
+      <button type='submit' form='device-form'>
+        Save
+      </button>
       <button onClick={() => cancel()}>Cancel</button>
     </div>
   );
