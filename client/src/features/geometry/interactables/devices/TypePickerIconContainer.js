@@ -41,13 +41,13 @@ const TypePickerIconContainer = ({ type, types }) => {
         <svg
           key={e}
           viewBox='-178 -105 600 600'
-          className='icon'
+          className={`icon ${e}`}
           ref={el => (refArr.current[types.length - 1 - i] = el)}
         >
           <use href={`#icon-${e}`} />
           <rect
             x='-60'
-            y='-65'
+            y='-60'
             width='350'
             height='350'
             fill='none'

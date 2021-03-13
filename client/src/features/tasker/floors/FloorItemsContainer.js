@@ -24,7 +24,12 @@ const FloorItemsContainer = () => {
 
   return (
     <div className='tasker-items-container'>
-      <button onClick={() => dispatch(addFloor())}>+</button>
+      <button
+        onClick={() => dispatch(addFloor())}
+        className='add-tasker-item-button'
+      >
+        +
+      </button>
       {ids.map(id =>
         id === editingFloor ? (
           <FloorListItemEditing

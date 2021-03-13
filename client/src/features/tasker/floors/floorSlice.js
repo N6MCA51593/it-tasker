@@ -51,10 +51,9 @@ const floorsSlice = createSlice({
   extraReducers: {
     'api/loadAppData/fulfilled': (state, { payload }) => {
       floorAdapter.addMany(state, payload.floors);
-      state.activeFloor =
-        state.activeFloor && state.entities[state.activeFloor]
-          ? state.activeFloor
-          : state.ids[0];
+      state.activeFloor = state.entities[state?.activeFloor]
+        ? state.activeFloor
+        : state.ids[0];
     },
     'api/removeFloor/fulfilled': (state, { payload }) => {
       const { deletedFloorId } = payload;

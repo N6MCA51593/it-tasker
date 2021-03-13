@@ -44,9 +44,13 @@ const TypePicker = ({ type, setType }) => {
 
   return (
     <div className='type-picker'>
-      <div onClick={() => cycle(1)}>L</div>
+      <button onClick={() => cycle(1)}>
+        <span className='l'></span>
+      </button>
       <TypePickerIconContainer type={type} types={types} />
-      <div onClick={() => cycle(-1)}>R</div>
+      <button onClick={() => cycle(-1)}>
+        <span className='r'></span>
+      </button>
     </div>
   );
 };

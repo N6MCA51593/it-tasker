@@ -50,6 +50,12 @@
       gap: 0.5em;
       overflow-wrap: break-word;
     }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
   }
 
   .status-container {
@@ -184,13 +190,6 @@
   }
 }
 
-.options {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  padding: 0.5rem 0;
-}
-
 .device-tasker-items {
   display: flex;
   flex-direction: column;
@@ -288,7 +287,44 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  gap: 0rem;
   width: 100%;
+
+  button {
+    cursor: pointer;
+    border: none;
+    outline: none;
+    background: none;
+
+    span {
+      stroke: red;
+      $icon-s: 3.5rem;
+      display: inline-block;
+      background-size: $icon-s $icon-s;
+      height: $icon-s;
+      width: $icon-s;
+    }
+
+    .l {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' class='icon icon-tabler icon-tabler-chevron-left' width='44' height='44' viewBox='0 0 24 24' stroke-width='1' stroke='%23ffffff' fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='15 6 9 12 15 18' /%3E%3C/svg%3E");
+
+      @media (hover: hover) {
+        &:hover {
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' class='icon icon-tabler icon-tabler-chevron-left' width='44' height='44' viewBox='0 0 24 24' stroke-width='1' stroke='%23b3ecff' fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='15 6 9 12 15 18' /%3E%3C/svg%3E");
+        }
+      }
+    }
+
+    .r {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' class='icon icon-tabler icon-tabler-chevron-right' width='44' height='44' viewBox='0 0 24 24' stroke-width='1' stroke='%23ffffff' fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 6 15 12 9 18' /%3E%3C/svg%3E");
+
+      @media (hover: hover) {
+        &:hover {
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' class='icon icon-tabler icon-tabler-chevron-right' width='44' height='44' viewBox='0 0 24 24' stroke-width='1' stroke='%23b3ecff' fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 6 15 12 9 18' /%3E%3C/svg%3E");
+        }
+      }
+    }
+  }
 
   .icon-container {
     display: flex;
@@ -307,6 +343,27 @@
     .icon {
       height: 100px;
       width: 100px;
+
+      &.pc,
+      &.laptop,
+      &.phone {
+        stroke: #88b1fc;
+      }
+
+      &.printer,
+      &.sound,
+      &.screen {
+        stroke: #f48fff;
+      }
+
+      &.network,
+      &.server {
+        stroke: #8eecb9;
+      }
+
+      &.other {
+        stroke: #caff84;
+      }
     }
 
     svg {
@@ -315,7 +372,6 @@
     }
 
     use {
-      stroke: #2bb0ed;
       stroke-width: 1.5;
     }
   }
@@ -323,5 +379,21 @@
   div {
     height: 100%;
     flex: 1;
+  }
+}
+
+.save-btn-device-popup {
+  border: none;
+  cursor: pointer;
+  font-size: 1.1rem;
+  padding: 0.3rem 0;
+  border-radius: 15px;
+  color: #ffffff;
+  background-color: #1992d4;
+  transition: all 0.15s ease;
+  font-weight: 500;
+
+  &:hover {
+    background-color: #2bb0ed;
   }
 }

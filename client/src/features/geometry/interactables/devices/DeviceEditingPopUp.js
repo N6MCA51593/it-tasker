@@ -61,10 +61,13 @@ const DeviceEditingPopUp = ({ device }) => {
           <textarea {...bindDescription} />
         </label>
       </form>
-      <button type='submit' form='device-form'>
+      <button
+        type='submit'
+        form='device-form'
+        className='save-btn-device-popup'
+      >
         Save
       </button>
-      <button onClick={() => cancel()}>Cancel</button>
     </div>
   );
 };
