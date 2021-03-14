@@ -5,7 +5,7 @@ import React, { useRef } from 'react';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-const CollectionImport = () => {
+const CollectionImport = ({ activeItemId }) => {
   const [isShowing, setIsShowing] = useState(false);
   const collections = useSelector(selectAllCollectionItems);
   const dispatch = useDispatch();
@@ -25,15 +25,18 @@ const CollectionImport = () => {
         </span>
         {isShowing && (
           <div className='confirmation-popup r'>
-            {collections.map(item => (
-              <div
-                className='collection-item'
-                key={item.id}
-                onClick={() => importDevices(item.id)}
-              >
-                {item.name}
-              </div>
-            ))}
+            {collections.map(
+              item =>
+                item.id !== activeItemId && (
+                  <div
+                    className='collection-item'
+                    key={item.id}
+                    onClick={() => importDevices(item.id)}
+                  >
+                    {item.name}
+                  </div>
+                )
+            )}
           </div>
         )}
       </div>

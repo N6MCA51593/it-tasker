@@ -408,7 +408,8 @@ export const selectSortedFloorAreasAndDevices = () =>
       const sorting = sortTaskerInteractables(
         activeItem,
         byDevice,
-        interactables
+        interactables,
+        deviceEnts
       );
       const sortAreas = sorting(areaOrder);
       const sortDevices = sorting(deviceOrder);
@@ -419,7 +420,7 @@ export const selectSortedFloorAreasAndDevices = () =>
           area
         ].sort((a, b) => sortDevices(a, b));
       }
-
+      //console.log(interactables.devicesByArea);
       return interactables;
     }
   );

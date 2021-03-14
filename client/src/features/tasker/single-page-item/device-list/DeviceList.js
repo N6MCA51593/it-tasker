@@ -44,7 +44,7 @@ const DeviceList = ({ id, isEditing, scrollToBtn }) => {
         ref={ref}
       >
         {scrollToBtn(() => scroll())}
-        {isEditing && <CollectionImport />}
+        {isEditing && <CollectionImport activeItemId={id} />}
         {floorsDedupedSorted.map(id => (
           <FloorRow
             key={id}

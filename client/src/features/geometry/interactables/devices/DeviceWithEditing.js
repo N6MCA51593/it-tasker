@@ -14,6 +14,7 @@ import {
   MOVE_DEVICE_GEO,
   REMOVE_DEVICE_GEO
 } from 'app/constants';
+import clTern from 'common/clTern';
 
 const DeviceWithEditing = ({ id, mode }) => {
   const dispatch = useDispatch();
@@ -45,7 +46,15 @@ const DeviceWithEditing = ({ id, mode }) => {
             : ''
         }
       >
-        <DeviceIcon type={type} x={x} y={y} />
+        <DeviceIcon
+          type={type}
+          x={x}
+          y={y}
+          className={`device-icon${clTern(
+            isActive && mode !== MOVE_DEVICE_GEO,
+            ' highlighted'
+          )}`}
+        />
       </g>
     </g>
   );

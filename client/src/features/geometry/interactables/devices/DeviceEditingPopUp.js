@@ -1,10 +1,7 @@
 import React, { useLayoutEffect, useRef, useState } from 'react';
 import useInput from 'common/useInput';
 import { useDispatch } from 'react-redux';
-import {
-  updateActiveDevice,
-  setActiveDevice
-} from 'features/geometry/interactables/devices/deviceSlice';
+import { updateActiveDevice } from 'features/geometry/interactables/devices/deviceSlice';
 import TypePicker from 'features/geometry/interactables/devices/TypePicker';
 
 const DeviceEditingPopUp = ({ device }) => {
@@ -33,7 +30,6 @@ const DeviceEditingPopUp = ({ device }) => {
   }, [id, description, name, type, setDescriptionValue, setNameValue]);
 
   const save = e => {
-    console.log('object');
     e.preventDefault();
     dispatch(
       updateActiveDevice({
@@ -42,10 +38,6 @@ const DeviceEditingPopUp = ({ device }) => {
         type: typeState
       })
     );
-  };
-
-  const cancel = () => {
-    dispatch(setActiveDevice());
   };
 
   return (

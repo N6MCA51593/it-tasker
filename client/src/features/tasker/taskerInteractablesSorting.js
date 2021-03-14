@@ -10,21 +10,22 @@ import {
 export const sortTaskerInteractables = (
   activeItem,
   byDevice,
-  interactables
+  interactables,
+  deviceEnts
 ) => sortingOrder => (a, b) => {
   const isArea = !!interactables.devicesByArea[a];
-  const { getDate, getCompletionComp, getDeviceCountComp } = helperFns(
+  const { getDateComp, getCompletionComp, getDeviceCountComp } = helperFns(
     activeItem,
     sortingOrder,
     byDevice,
     interactables,
-    isArea
+    isArea,
+    deviceEnts
   );
   switch (sortingOrder) {
     case CREATED_AT_ASC:
-      return getDate(b) - getDate(a);
     case CREATED_AT_DESC:
-      return getDate(a) - getDate(b);
+      return getDateComp(a, b);
     case COMPLETION_ASC:
     case COMPLETION_DESC:
       return getCompletionComp(a, b);
@@ -41,7 +42,8 @@ const helperFns = (
   sortingOrder,
   byDevice,
   interactables,
-  isArea
+  isArea,
+  deviceEnts
 ) => {
   const { id } = activeItem;
   const getDate = item => {
@@ -55,6 +57,20 @@ const helperFns = (
       );
     } else {
       return new Date(byDevice[item][id].addedAt);
+    }
+  };
+
+  const getDateComp = (a, b) => {
+    const dateA = getDate(a);
+    const dateB = getDate(b);
+    if (!isArea && dateA.valueOf() === dateB.valueOf()) {
+      const nameA = deviceEnts[a].name;
+      const nameB = deviceEnts[b].name;
+      return sortingOrder === CREATED_AT_ASC
+        ? compStrings(nameB, nameA)
+        : compStrings(nameA, nameB);
+    } else {
+      return sortingOrder === CREATED_AT_ASC ? dateB - dateA : dateA - dateB;
     }
   };
 
@@ -76,7 +92,7 @@ const helperFns = (
     if (completionA === completionB) {
       const dateA = getDate(a);
       const dateB = getDate(b);
-      return dateA === dateB ? a - b : dateA - dateB;
+      return dateA.valueOf() === dateB.valueOf() ? a - b : dateA - dateB;
     } else {
       return sortingOrder === COMPLETION_DESC
         ? completionB - completionA
@@ -90,12 +106,27 @@ const helperFns = (
     if (deviceCountA === deviceCountB) {
       const dateA = getDate(a);
       const dateB = getDate(b);
-      return dateA === dateB ? a - b : dateA - dateB;
+      return dateA.valueOf() === dateB.valueOf() ? a - b : dateA - dateB;
     } else {
       return sortingOrder === DEVICE_COUNT_DESC
         ? deviceCountB - deviceCountA
         : deviceCountA - deviceCountB;
     }
   };
-  return { getDate, getCompletionValue, getCompletionComp, getDeviceCountComp };
+
+  const compStrings = (a, b) => {
+    if (a > b) {
+      return 1;
+    } else if (a < b) {
+      return -1;
+    }
+
+    return 0;
+  };
+  return {
+    getCompletionValue,
+    getCompletionComp,
+    getDeviceCountComp,
+    getDateComp
+  };
 };
