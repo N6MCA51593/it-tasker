@@ -19,6 +19,14 @@ const GeoEditingControls = () => {
   const activeWall = useSelector(state => state.walls.activeWall);
   const isCancelable = activeGeoState === ADD_WALL_GEO && activeWall;
 
+  const modFn = mode => {
+    if (activeGeoState === mode) {
+      return 'active';
+    } else if (activeWall && mode !== activeGeoState) {
+      return 'disabled';
+    }
+  };
+
   return (
     <EditingControlsContainer
       save={() => dispatch(updateGeometry())}
@@ -29,19 +37,19 @@ const GeoEditingControls = () => {
         handleClick={() => dispatch(setUiGeoState(ADD_WALL_GEO))}
         label='Draw walls'
         type='plus'
-        mod={clTern(activeGeoState === ADD_WALL_GEO, 'active')}
+        mod={modFn(ADD_WALL_GEO)}
       />
       <LabeledButton
         handleClick={() => dispatch(setUiGeoState(REMOVE_WALL_GEO))}
         label='Remove walls'
         type='erase'
-        mod={clTern(activeGeoState === REMOVE_WALL_GEO, 'active')}
+        mod={modFn(REMOVE_WALL_GEO)}
       />
       <LabeledButton
         handleClick={() => dispatch(setUiGeoState(MOVE_WALL_GEO))}
         label='Move wall point'
         type='move'
-        mod={clTern(activeGeoState === MOVE_WALL_GEO, 'active')}
+        mod={modFn(MOVE_WALL_GEO)}
       />
       <GeoFloorImporter
         render={handleClick => (
@@ -49,6 +57,7 @@ const GeoEditingControls = () => {
             handleClick={handleClick}
             label='Import from level...'
             type='import'
+            mod={modFn()}
           />
         )}
       />

@@ -172,6 +172,7 @@
 
   &.disabled {
     cursor: default;
+    pointer-events: none;
     color: #7b8794;
   }
 
