@@ -75,4 +75,26 @@ label {
   gap: 0.1rem;
 }
 
+.error {
+  user-select: none;
+  overflow: hidden;
+  height: 80vh;
+  width: 80vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 3rem auto;
+
+  h1 {
+    font-size: 4rem;
+    margin: 2rem 0;
+  }
+
+  h2 {
+    color: #7b8794;
+    font-size: 2rem;
+  }
+}
+
 @import 'media-queries';

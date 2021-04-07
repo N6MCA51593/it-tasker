@@ -16,11 +16,11 @@ router.get('/', (req, res) => {
 // @access    Public
 router.post('/signup', async (req, res) => {
   try {
-    // TODO Validation
     const { userName, password } = req.body;
-    if (userName.length > 20 || password.length > 20) {
+    const areCredsValid = validateCredentials(userName, password);
+    if (!areCredsValid) {
       return res.status(400).json({
-        msg: 'Username or password length exceed maximum length (20)'
+        msg: 'Invalid username or password format'
       });
     }
 
@@ -33,6 +33,7 @@ router.post('/signup', async (req, res) => {
         msg: 'User with this username already exists'
       });
     }
+
     const pwHashed = await bcrypt.hash(password, 8);
     const newUser = await db.tx(async t => {
       const newUser = await t.one(
@@ -103,3 +104,8 @@ router.post('/logout', async (req, res) => {
 });
 
 module.exports = router;
+
+const validateCredentials = (userName, password) => {
+  const re = /^[a-z0-9_-]{3,15}$/gm;
+  return re.test(userName) && password.length <= 20 && password.length >= 3;
+};
