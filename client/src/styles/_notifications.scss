@@ -4,26 +4,68 @@
   flex-direction: column-reverse;
   z-index: 100;
   bottom: 10px;
-  right: 10px;
+  right: 20px;
 }
 
 .notification {
   position: relative;
   background: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border: 1px solid #000;
   transition: 0.25s ease;
   margin: 0 0 1.5rem 0;
   width: 300px;
-  max-height: 100px;
   transition: transform 0.5s ease-in-out;
   animation: kf 0.7s;
+  border-radius: 5px;
 
-  &-success {
-    color: green;
+  &.error {
+    background-color: #ffeeee;
+    color: #ab091e;
+    border: 2px solid #e12d39;
+
+    .icon {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' class='icon icon-tabler icon-tabler-circle-x' width='44' height='44' viewBox='0 0 24 24' stroke-width='2' stroke='%23E12D39' fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9' /%3E%3Cpath d='M10 10l4 4m0 -4l-4 4' /%3E%3C/svg%3E");
+    }
+
+    .close-button {
+      color: #e12d39;
+    }
   }
 
-  &-error {
-    color: red;
+  .inner {
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .message {
+    $icon-s: 1.5em;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0;
+
+    .icon {
+      display: inline-block;
+      flex-shrink: 0;
+      background-size: $icon-s $icon-s;
+      height: $icon-s;
+      width: $icon-s;
+      margin: 0.3rem 0.35rem;
+    }
+
+    .text {
+      font-weight: 500;
+    }
+  }
+
+  .close-button {
+    cursor: pointer;
   }
 }
 

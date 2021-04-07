@@ -15,11 +15,19 @@ const Notification = ({ id }) => {
   }, [id, dispatch]);
 
   return (
-    <div
-      className={`notification notification-${type}`}
-      onClick={() => dispatch(removeNotification(id))}
-    >
-      {message}
+    <div className={`notification ${type}`}>
+      <div className='inner'>
+        <div className='message'>
+          <span className='icon'></span>
+          <span className='text'>{message}</span>
+        </div>
+        <span
+          className='close-button'
+          onClick={() => dispatch(removeNotification(id))}
+        >
+          X
+        </span>
+      </div>
     </div>
   );
 };

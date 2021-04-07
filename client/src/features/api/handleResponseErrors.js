@@ -5,9 +5,9 @@ import { ERROR_NT } from 'app/constants';
 const getMessage = async response => {
   try {
     const body = await response.json();
-    return body.msg;
+    return body.msg === 'Server error' ? 'An error has occured' : body.msg;
   } catch (error) {
-    return 'Server Error';
+    return 'An error has occured';
   }
 };
 
@@ -21,10 +21,10 @@ export default async function handleResponseErrors(
     if (response.status === 401 && isPrivate) {
       dispatch(addNotification({ type: ERROR_NT, message }));
       dispatch(resetState());
-      throw new Error('Auth error');
+      throw new Error('Authentication error');
     } else {
       dispatch(addNotification({ type: ERROR_NT, message }));
-      throw new Error('Server error');
+      throw new Error('An error has occured');
     }
   }
 }
