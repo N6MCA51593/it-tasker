@@ -20,7 +20,8 @@ router.post('/signup', async (req, res) => {
     const areCredsValid = validateCredentials(userName, password);
     if (!areCredsValid) {
       return res.status(400).json({
-        msg: 'Invalid username or password format'
+        msg:
+          'Invalid username or password format ( 3-15 characters a-z A-Z 0-9 special symbols)'
       });
     }
 
@@ -106,6 +107,6 @@ router.post('/logout', async (req, res) => {
 module.exports = router;
 
 const validateCredentials = (userName, password) => {
-  const re = /^[a-z0-9_-]{3,15}$/gm;
-  return re.test(userName) && password.length <= 20 && password.length >= 3;
+  const re = /^[a-zA-Z0-9*.!@$%^&(){}\[\]:;<>,.?\/~_+-=|\\]{3,16}$/m;
+  return re.test(userName) && re.test(password);
 };

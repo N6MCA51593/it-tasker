@@ -1,4 +1,4 @@
-import Container from 'features/landing/Container';
+import FormContainer from 'features/landing/FormContainer';
 import React from 'react';
 import image from 'features/landing/pic.jpg';
 
@@ -10,12 +10,13 @@ const LandingPage = () => {
           <div className='img-text'>
             <h1>IT task manager</h1>
             <h2>
-              Interactive workplace map and task tracker for IT professionals
+              Interactive workplace plan builder and task tracker for IT
+              professionals
             </h2>
           </div>
           <img src={image} alt='pic' />
         </div>
-        <Container />
+        <FormContainer />
       </div>
     </div>
   );

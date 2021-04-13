@@ -63,4 +63,26 @@
       object-fit: cover;
     }
   }
+
+  .form-container {
+    padding: 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+    color: #ffffff;
+
+    h1,
+    h3 {
+      font-family: 'Lato', Arial, Helvetica, sans-serif;
+    }
+
+    h3 {
+      color: #e4e7eb;
+    }
+
+    input {
+      filter: none;
+    }
+  }
 }

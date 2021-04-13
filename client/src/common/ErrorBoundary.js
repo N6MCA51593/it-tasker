@@ -13,7 +13,7 @@ export default class ErrorBoundary extends Component {
   render() {
     if (this.state.hasError) {
       return (
-        <div className='error'>
+        <div className='error-msg'>
           <h1>Uh oh, I think you broke it</h1>
           <h2>
             Quickly refresh the page before anyone noticed
