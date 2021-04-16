@@ -52,14 +52,18 @@ const FormContainer = () => {
             {...bindPassword}
           />
         </label>
-        <button
-          type='submit'
-          form='cred-form'
-          className='save-btn-device-popup'
-        >
-          Sign In
-        </button>
-        <button onClick={e => signUp(e)}>Sign Up</button>
+        <div>
+          <button
+            type='submit'
+            form='cred-form'
+            className='landing-button primary'
+          >
+            Sign In
+          </button>
+          <button onClick={e => signUp(e)} className='landing-button secondary'>
+            Sign Up
+          </button>
+        </div>
       </form>
     </div>
   );

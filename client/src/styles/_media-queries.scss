@@ -76,3 +76,37 @@
     }
   }
 }
+
+@media (max-width: 650px) {
+  .landing {
+    &-container {
+      display: flex;
+      flex-direction: column;
+
+      .img-text {
+        overflow: hidden;
+
+        h1,
+        h2 {
+          padding: 0.5rem;
+        }
+      }
+    }
+
+    .img-container {
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+      border-bottom-left-radius: 0;
+    }
+
+    img {
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+      border-bottom-left-radius: 0;
+    }
+
+    .form-container {
+      padding: 1rem 2rem;
+    }
+  }
+}

@@ -14,8 +14,11 @@
     position: relative;
     border-radius: 5px;
     grid-template-columns: 2fr 3fr;
-    width: 60vw;
-    height: 80vh;
+    width: calc(clamp(600px, 60vw, 1200px));
+    margin: 1rem;
+    min-height: 80vh;
+    max-height: 98vh;
+    overflow: hidden;
     background-color: #1f2933;
     box-shadow: 0px 5px 30px rgba(0, 0, 0, 0.5);
 
@@ -65,9 +68,11 @@
   }
 
   .form-container {
-    padding: 3rem;
+    padding: 3rem 20%;
     display: flex;
+    overflow: hidden;
     flex-direction: column;
+    flex-shrink: 1;
     justify-content: center;
     gap: 1rem;
     color: #ffffff;
@@ -80,9 +85,69 @@
     h3 {
       color: #e4e7eb;
     }
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 1;
+    gap: 2rem;
+    padding: 1rem 0;
 
     input {
       filter: none;
+      padding: 0.7rem;
+      border: none;
+      border-left: 5px solid #1992d4;
+      background-color: #3e4c59;
+    }
+
+    label {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: #ffffff;
+    }
+
+    & > div {
+      display: flex;
+      justify-content: flex-start;
+      gap: 1rem;
+      padding: 0.5rem 0;
+    }
+  }
+}
+
+.landing-button {
+  outline: none;
+  cursor: pointer;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  justify-content: center;
+  border-radius: 3px;
+  border: none;
+  font-size: 1.1rem;
+  padding: 0.8rem 1.5rem;
+  font-weight: 500;
+  color: #ffffff;
+  transition: all 0.2s ease;
+
+  &.primary {
+    background-color: #1992d4;
+
+    &:hover {
+      background-color: #2bb0ed;
+    }
+  }
+
+  &.secondary {
+    color: #cbd2d9;
+    background-color: initial;
+    border: 2px solid currentColor;
+
+    &:hover {
+      color: #ffffff;
     }
   }
 }
