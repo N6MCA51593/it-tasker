@@ -1,4 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import getApiUrl from 'common/getApiURL';
 import handleResponseErrors from 'features/api/handleResponseErrors';
 import { reqQueryParams } from 'features/api/reqQueryParams';
 
@@ -26,18 +27,16 @@ export const updateInteractables = createAsyncThunk(
     };
 
     try {
-      const response = await fetch(
-        'http://localhost:5000/api/update/interactables' + params,
-        {
-          method: 'POST',
-          body: JSON.stringify(body),
-          credentials: 'include',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          mode: 'cors'
-        }
-      );
+      const url = getApiUrl('update/interactables');
+      const response = await fetch(url + params, {
+        method: 'POST',
+        body: JSON.stringify(body),
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        mode: 'cors'
+      });
       await handleResponseErrors(response, true, dispatch);
       return true;
     } catch (error) {

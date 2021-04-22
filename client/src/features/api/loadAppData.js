@@ -1,11 +1,13 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import getApiUrl from 'common/getApiURL';
 import handleResponseErrors from 'features/api/handleResponseErrors';
 
 export const loadAppData = createAsyncThunk(
   'api/loadAppData',
   async (_, { dispatch }) => {
     try {
-      const response = await fetch('http://localhost:5000/api/load', {
+      const url = getApiUrl('load');
+      const response = await fetch(url, {
         method: 'GET',
         credentials: 'include',
         mode: 'cors'

@@ -1,11 +1,13 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import getApiUrl from 'common/getApiURL';
 import handleResponseErrors from 'features/api/handleResponseErrors';
 
 export const updateFloor = createAsyncThunk(
   'api/updateFloor',
   async (payload, { dispatch }) => {
+    const url = getApiUrl('update/floor');
     try {
-      const response = await fetch('http://localhost:5000/api/update/floor', {
+      const response = await fetch(url, {
         method: 'POST',
         body: JSON.stringify(payload),
         credentials: 'include',

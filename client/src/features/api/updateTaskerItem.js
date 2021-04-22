@@ -1,4 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import getApiUrl from 'common/getApiURL';
 import handleResponseErrors from 'features/api/handleResponseErrors';
 import { reqQueryParams } from 'features/api/reqQueryParams';
 
@@ -33,18 +34,16 @@ export const updateTaskerItem = createAsyncThunk(
     const body = { ...item, ...changes };
 
     try {
-      const response = await fetch(
-        'http://localhost:5000/api/update/task' + params,
-        {
-          method: 'POST',
-          credentials: 'include',
-          body: JSON.stringify(body),
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          mode: 'cors'
-        }
-      );
+      const url = getApiUrl('update/task');
+      const response = await fetch(url + params, {
+        method: 'POST',
+        credentials: 'include',
+        body: JSON.stringify(body),
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        mode: 'cors'
+      });
       await handleResponseErrors(response, true, dispatch);
       const res = await response.json();
       return res;

@@ -1,11 +1,13 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import getApiUrl from 'common/getApiURL';
 import handleResponseErrors from 'features/api/handleResponseErrors';
 
 export const checkUserSession = createAsyncThunk(
   'api/checkUserSession',
   async (_, { dispatch }) => {
     try {
-      const response = await fetch('http://localhost:5000/api/auth/', {
+      const url = getApiUrl('auth');
+      const response = await fetch(url, {
         method: 'GET',
         mode: 'cors',
         credentials: 'include'

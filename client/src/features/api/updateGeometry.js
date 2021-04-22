@@ -1,4 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import getApiUrl from 'common/getApiURL';
 import handleResponseErrors from 'features/api/handleResponseErrors';
 import { reqQueryParams } from 'features/api/reqQueryParams';
 
@@ -20,18 +21,16 @@ export const updateGeometry = createAsyncThunk(
       reqQueryParams([...reqFloors], 'fl');
 
     try {
-      const response = await fetch(
-        'http://localhost:5000/api/update/geometry' + params,
-        {
-          method: 'POST',
-          body: JSON.stringify(body),
-          credentials: 'include',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          mode: 'cors'
-        }
-      );
+      const url = getApiUrl('update/geometry');
+      const response = await fetch(url + params, {
+        method: 'POST',
+        body: JSON.stringify(body),
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        mode: 'cors'
+      });
       await handleResponseErrors(response, true, dispatch);
       const res = await response.json();
       return res;

@@ -1,18 +1,17 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import getApiUrl from 'common/getApiURL';
 import handleResponseErrors from 'features/api/handleResponseErrors';
 
 export const removeFloor = createAsyncThunk(
   'api/removeFloor',
   async (payload, { dispatch }) => {
     try {
-      const response = await fetch(
-        `http://localhost:5000/api/delete/floor?id=${payload}`,
-        {
-          method: 'DELETE',
-          credentials: 'include',
-          mode: 'cors'
-        }
-      );
+      const url = getApiUrl(`delete/floor?id=${payload}`);
+      const response = await fetch(url, {
+        method: 'DELETE',
+        credentials: 'include',
+        mode: 'cors'
+      });
       await handleResponseErrors(response, true, dispatch);
       const res = await response.json();
       return res;

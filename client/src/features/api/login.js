@@ -1,11 +1,13 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import getApiUrl from 'common/getApiURL';
 import handleResponseErrors from 'features/api/handleResponseErrors';
 
 export const login = createAsyncThunk(
   'api/login',
   async (payload, { dispatch }) => {
     try {
-      const response = await fetch('http://localhost:5000/api/auth/login', {
+      const url = getApiUrl('auth/login');
+      const response = await fetch(url, {
         method: 'POST',
         mode: 'cors',
         body: JSON.stringify(payload),

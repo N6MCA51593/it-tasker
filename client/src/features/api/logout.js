@@ -1,4 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import getApiUrl from 'common/getApiURL';
 import handleResponseErrors from 'features/api/handleResponseErrors';
 import { resetState } from 'features/auth/authStateSlice';
 
@@ -6,7 +7,8 @@ export const logout = createAsyncThunk(
   'api/logout',
   async (_, { dispatch }) => {
     try {
-      const response = await fetch('http://localhost:5000/api/auth/logout', {
+      const url = getApiUrl('auth/logout');
+      const response = await fetch(url, {
         method: 'POST',
         credentials: 'include',
         mode: 'cors'
