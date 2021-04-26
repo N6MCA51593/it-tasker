@@ -8,7 +8,7 @@ const LandingPage = () => {
       <div className='landing-container'>
         <div className='img-container'>
           <div className='img-text'>
-            <h1>IT task manager</h1>
+            <h1>IT Task Manager</h1>
             <h2>
               Interactive workplace plan builder and task tracker for IT
               professionals

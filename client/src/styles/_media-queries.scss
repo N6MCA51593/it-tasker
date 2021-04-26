@@ -18,6 +18,8 @@
 
     h1 {
       max-width: 80vw;
+      top: 15vh;
+      font-size: 2rem;
     }
   }
 
@@ -89,6 +91,14 @@
         h1,
         h2 {
           padding: 0.5rem;
+        }
+
+        h1 {
+          font-size: 2.2rem;
+        }
+
+        h2 {
+          font-size: 1.2rem;
         }
       }
     }
