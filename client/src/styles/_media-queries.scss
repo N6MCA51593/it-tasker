@@ -18,7 +18,7 @@
 
     h1 {
       max-width: 80vw;
-      top: 15vh;
+      top: 10vh;
       font-size: 2rem;
     }
   }
@@ -84,6 +84,7 @@
     &-container {
       display: flex;
       flex-direction: column;
+      max-height: 90vh;
 
       .img-text {
         overflow: hidden;
