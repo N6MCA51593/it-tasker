@@ -7,12 +7,14 @@ const app = express();
 const { db } = require('./db/db');
 const cors = require('cors');
 
-app.use(
-  cors({
-    origin: 'http://localhost:3000',
-    credentials: true
-  })
-);
+if (process.env.NODE_ENV !== 'production') {
+  app.use(
+    cors({
+      origin: 'http://localhost:3000',
+      credentials: true
+    })
+  );
+}
 
 app.disable('x-powered-by');
 
@@ -28,8 +30,9 @@ app.use(
     cookie: {
       maxAge: 30 * 24 * 60 * 60 * 1000,
       sameSite: 'strict',
-      httpOnly: true
-    } //TODO Secure cookies
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production' ? true : false
+    }
   })
 );
 
