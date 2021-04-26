@@ -3,7 +3,7 @@
   "name": "Task manager for IT professionals",
   "icons": [
     {
-      "src": "favicon.ico?v=2",
+      "src": "favicon.ico?v=3",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
     }
