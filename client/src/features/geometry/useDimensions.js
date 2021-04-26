@@ -35,10 +35,6 @@ const useDimensions = ref => {
 
   const updateDimensions = debounce(() => {
     if (ref.current) {
-      // document.documentElement.style.setProperty(
-      //   '--vh',
-      //   `${window.innerHeight * 0.01}px`
-      // );
       setDimensions(ref.current.getBoundingClientRect());
     }
   }, 50);
@@ -46,10 +42,6 @@ const useDimensions = ref => {
   useEffect(() => {
     if (ref.current && !isLoaded) {
       setIsLoaded(true);
-      // document.documentElement.style.setProperty(
-      //   '--vh',
-      //   `${window.innerHeight * 0.01}px`
-      // );
       setDimensions(ref.current.getBoundingClientRect());
     }
   }, [ref, isLoaded]);
@@ -57,10 +49,6 @@ const useDimensions = ref => {
   useLayoutEffect(() => {
     if (shouldUpdate(uiStateRef.current, activeGlobalUiState)) {
       if (ref.current) {
-        // document.documentElement.style.setProperty(
-        //   '--vh',
-        //   `${window.innerHeight * 0.01}px`
-        // );
         setDimensions(ref.current.getBoundingClientRect());
       }
 

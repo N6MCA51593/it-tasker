@@ -24,12 +24,12 @@
   .task-container {
     //grid-column: 1;
     width: 100vw;
-    height: 98vh;
+    height: 85vh;
 
     &.mob-visible {
       position: absolute;
       left: 1vw;
-      top: 1vh;
+      bottom: 0;
       z-index: 3;
     }
   }
