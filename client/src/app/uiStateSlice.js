@@ -38,6 +38,7 @@ const initialState = {
   taskDeviceSortingOrder: CREATED_AT_DESC,
   noteDeviceSortingOrder: CREATED_AT_DESC,
   collectionDeviceSortingOrder: CREATED_AT_DESC,
+  isPretty: true,
   isCheckedOffTaskFilter: null,
   isCheckedOffNoteFilter: null,
   activeDeviceFilters: {
@@ -107,6 +108,9 @@ const uiStateSlice = createSlice({
     },
     setTaskerContainerMobile(state) {
       state.isTaskerContainerVisibleMobile = !state.isTaskerContainerVisibleMobile;
+    },
+    togglePerformanceMode(state) {
+      state.isPretty = !state.isPretty;
     }
   },
   extraReducers: {
@@ -176,7 +180,8 @@ export const {
   setTaskFilter,
   loadFromLocalStorage,
   toggleDeviceFilter,
-  setTaskerContainerMobile
+  setTaskerContainerMobile,
+  togglePerformanceMode
 } = uiStateSlice.actions;
 
 export default uiStateSlice.reducer;

@@ -84,7 +84,8 @@ export const selectPersistingUiStateValues = state => {
     collectionAreaSortingOrder,
     taskDeviceSortingOrder,
     noteDeviceSortingOrder,
-    collectionDeviceSortingOrder
+    collectionDeviceSortingOrder,
+    isPretty
   } = state.uiState;
   return {
     taskSortingOrder,
@@ -98,9 +99,12 @@ export const selectPersistingUiStateValues = state => {
     collectionAreaSortingOrder,
     taskDeviceSortingOrder,
     noteDeviceSortingOrder,
-    collectionDeviceSortingOrder
+    collectionDeviceSortingOrder,
+    isPretty
   };
 };
+
+export const selectIsPretty = state => state.uiState.isPretty;
 
 // Areas
 export const selectAllAreas = state => state.areas.ids;

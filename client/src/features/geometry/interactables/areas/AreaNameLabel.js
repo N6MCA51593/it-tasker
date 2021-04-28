@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   moveLabel,
   renameLabel
 } from 'features/geometry/interactables/areas/areaSlice';
 import { MOVE_AREA_LABEL_GEO, RENAME_AREA_LABEL_GEO } from 'app/constants';
 import clTern from 'common/clTern';
+import { selectIsPretty } from 'app/selectors';
 
 const AreaNameLabel = ({ coords, name, mode, id }) => {
   const [labelName, setLabelName] = useState(name);
   const [isEditing, setIsEditing] = useState(false);
   const dispatch = useDispatch();
+  const isPretty = useSelector(selectIsPretty);
   const { x, y } = coords;
   const handleClick = () => {
     if (mode === MOVE_AREA_LABEL_GEO) {
@@ -35,7 +37,7 @@ const AreaNameLabel = ({ coords, name, mode, id }) => {
   const className = `area-name-label ${clTern(
     mode === RENAME_AREA_LABEL_GEO || mode === MOVE_AREA_LABEL_GEO,
     'events-enabled'
-  )}`;
+  )} ${clTern(!isPretty, 'simple')}`;
 
   return (
     <foreignObject x={x} y={y}>

@@ -11,6 +11,10 @@
   font-size: 0.8rem;
   transition: background-color 0.2s ease;
 
+  &.simple {
+    box-shadow: none;
+  }
+
   &.events-enabled {
     pointer-events: all;
 

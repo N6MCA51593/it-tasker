@@ -292,6 +292,17 @@ const Defs = () => {
         <line x1='11' y1='12' x2='20' y2='12' />
         <line x1='11' y1='18' x2='20' y2='18' />
       </SymbolWrapper>
+      <SymbolWrapper type='pretty'>
+        <path d='M6 7h11a2 2 0 0 1 2 2v.5a0.5 .5 0 0 0 .5 .5a0.5 .5 0 0 1 .5 .5v3a0.5 .5 0 0 1 -.5 .5a0.5 .5 0 0 0 -.5 .5v.5a2 2 0 0 1 -2 2h-11a2 2 0 0 1 -2 -2v-6a2 2 0 0 1 2 -2' />
+        <line x1='7' y1='10' x2='7' y2='14' />
+        <line x1='10' y1='10' x2='10' y2='14' />
+        <line x1='13' y1='10' x2='13' y2='14' />
+        <line x1='16' y1='10' x2='16' y2='14' />
+      </SymbolWrapper>
+      <SymbolWrapper type='simple'>
+        <path d='M6 7h11a2 2 0 0 1 2 2v.5a0.5 .5 0 0 0 .5 .5a0.5 .5 0 0 1 .5 .5v3a0.5 .5 0 0 1 -.5 .5a0.5 .5 0 0 0 -.5 .5v.5a2 2 0 0 1 -2 2h-11a2 2 0 0 1 -2 -2v-6a2 2 0 0 1 2 -2' />
+        <line x1='7' y1='10' x2='7' y2='14' />
+      </SymbolWrapper>
       <filter id='shadow'>
         <feDropShadow
           dx='0'

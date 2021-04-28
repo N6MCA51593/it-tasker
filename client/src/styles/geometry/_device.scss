@@ -71,6 +71,12 @@
   stroke-width: 6px;
 }
 
+.icon-simple-printer,
+.icon-simple-sound,
+.icon-simple-screen {
+  fill: #cb10b8;
+}
+
 #gradient-box-printer,
 #gradient-box-sound,
 #gradient-box-screen {
@@ -88,6 +94,12 @@
       stop-color: #6e0560;
     }
   }
+}
+
+.icon-simple-pc,
+.icon-simple-laptop,
+.icon-simple-phone {
+  fill: #0b1d96;
 }
 
 #gradient-box-pc,
@@ -109,6 +121,11 @@
   }
 }
 
+.icon-simple-network,
+.icon-simple-server {
+  fill: #079a5d;
+}
+
 #gradient-box-network,
 #gradient-box-server {
   .grad {
@@ -125,6 +142,10 @@
       stop-color: #00442f;
     }
   }
+}
+
+.icon-simple-other {
+  fill: #5cb70b;
 }
 
 #gradient-box-other {
@@ -144,6 +165,10 @@
   }
 }
 
+.indicator-simple-ok {
+  fill: #07600e;
+}
+
 #gradient-indicator-ok {
   .grad {
     &-1 {
@@ -156,6 +181,10 @@
       stop-color: #014807;
     }
   }
+}
+
+.indicator-simple-warning {
+  fill: #de911d;
 }
 
 #gradient-indicator-warning {
@@ -172,6 +201,10 @@
   }
 }
 
+.indicator-simple-failure {
+  fill: #cf1124;
+}
+
 #gradient-indicator-failure {
   .grad {
     &-1 {
@@ -184,6 +217,10 @@
       stop-color: #ab091e;
     }
   }
+}
+
+.indicator-simple-neutral {
+  fill: #857f72;
 }
 
 #gradient-indicator-neutral {
@@ -200,6 +237,10 @@
   }
 }
 
+.indicator-simple-tasks {
+  fill: #076e8f;
+}
+
 #gradient-indicator-tasks {
   .grad {
     &-1 {
@@ -212,6 +253,10 @@
       stop-color: #04516e;
     }
   }
+}
+
+.indicator-simple-notes {
+  fill: #580a94;
 }
 
 #gradient-indicator-notes {
