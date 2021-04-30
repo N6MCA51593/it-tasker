@@ -41,9 +41,17 @@
     background-color: #616e7c;
   }
 
+  &.simple {
+    fill: none;
+  }
+
   &.area-selected {
     fill: transparentize($color: #127fbf, $amount: 0.9);
     stroke: #127fbf;
+
+    &.simple {
+      fill: none;
+    }
 
     div {
       background-color: #0b69a3;
@@ -53,6 +61,10 @@
   &.area-active-tasks {
     fill: transparentize($color: #0885a4, $amount: 0.9);
     stroke: #0885a4;
+
+    &.simple {
+      fill: none;
+    }
 
     div {
       background-color: #076e8f;
@@ -98,6 +110,10 @@
       stroke: #e12d39;
       fill: transparentize($color: #e12d39, $amount: 0.9);
 
+      &.simple {
+        fill: none;
+      }
+
       div {
         background-color: #e12d39;
       }
@@ -108,6 +124,10 @@
     &:hover {
       stroke: #fadb5f;
       fill: transparentize($color: #fadb5f, $amount: 0.9);
+
+      &.simple {
+        fill: none;
+      }
 
       div {
         background-color: #fadb5f;

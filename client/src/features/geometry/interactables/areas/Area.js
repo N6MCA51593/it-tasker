@@ -3,7 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import {
   selectActiveGlobalUiState,
   selectAreaById,
-  selectIsAreaHighlighted
+  selectIsAreaHighlighted,
+  selectIsPretty
 } from 'app/selectors';
 import {
   removeArea,
@@ -27,6 +28,7 @@ const Area = ({ id, mode, addDevice }) => {
     selectAreaById(state, id)
   );
 
+  const isPretty = useSelector(selectIsPretty);
   const globalUiState = useSelector(selectActiveGlobalUiState);
   const isAreaHighlightedSelector = useMemo(selectIsAreaHighlighted, []);
   const isAreaHighlighted = useSelector(state =>
@@ -66,7 +68,7 @@ const Area = ({ id, mode, addDevice }) => {
       className={`area-group ${hov()} ${clTern(
         isAreaHighlighted,
         globalUiState === MAIN_GLOB ? 'area-active-tasks' : 'area-selected'
-      )}`}
+      )} ${clTern(!isPretty, 'simple')}`}
     >
       <polygon
         onClick={e => handleClick(e)}
