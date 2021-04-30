@@ -73,7 +73,7 @@ const Area = ({ id, mode, addDevice }) => {
       <polygon
         onClick={e => handleClick(e)}
         points={points.join(' ')}
-        className='area'
+        className={`area ${clTern(!isPretty, 'simple')}`}
       />
       {coords && !isNaN(coords.x) && (
         <AreaNameLabel name={name} coords={coords} mode={mode} id={id} />

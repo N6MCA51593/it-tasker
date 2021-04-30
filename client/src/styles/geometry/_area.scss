@@ -30,6 +30,10 @@
   stroke-dasharray: 5;
   stroke-dashoffset: 1000;
   fill-rule: nonzero;
+
+  &.simple {
+    stroke-width: 5;
+  }
 }
 
 .area-group {
