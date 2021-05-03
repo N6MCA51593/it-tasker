@@ -104,20 +104,21 @@ router.post('/logout', async (req, res) => {
   }
 });
 
-router.post('/change-password', async (req, res) => {
-  try {
-    const { userName, password } = req.body;
-    const pwHashed = await bcrypt.hash(password, 8);
-    await db.none('UPDATE users SET password = $2 WHERE username = $1', [
-      userName,
-      pwHashed
-    ]);
-    return res.sendStatus(200);
-  } catch (error) {
-    console.log(error);
-    res.status(400).json({ msg: 'Server error' });
-  }
-});
+// router.post('/change-password', async (req, res) => {
+//   try {
+//     const { userName, password } = req.body;
+//     console.log(req.body);
+//     const pwHashed = await bcrypt.hash(password, 8);
+//     await db.none('UPDATE users SET password = $2 WHERE username = $1', [
+//       userName,
+//       pwHashed
+//     ]);
+//     return res.sendStatus(200);
+//   } catch (error) {
+//     console.log(error);
+//     res.status(400).json({ msg: 'Server error' });
+//   }
+// });
 
 module.exports = router;
 
