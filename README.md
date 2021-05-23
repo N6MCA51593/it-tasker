@@ -17,6 +17,8 @@ Interactive workplace plan builder and task tracker for IT professionals
 
 ## Screenshots
 
+![Main](https://raw.githubusercontent.com/N6MCA51593/it-tasker/d5d75824ba51e79a305347424733b09478b0418d/screenshots/main.png)
+
 ## Built with
 
 - Node.js
