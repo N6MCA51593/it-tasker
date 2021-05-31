@@ -26,6 +26,16 @@ export const updateInteractables = createAsyncThunk(
       devices: [...new Set(devices.toUpsert)].map(e => devices.entities[e])
     };
 
+    let deletedDevices;
+    if (areas.toDelete.length !== 0 || devices.toDelete.length !== 0) {
+      deletedDevices = new Set(
+        [
+          ...devices.toDelete,
+          ...areas.toDelete.map(areaId => devices.byArea[areaId])
+        ].flat()
+      );
+    }
+
     try {
       const url = getApiUrl('update/interactables');
       const response = await fetch(url + params, {
@@ -38,7 +48,7 @@ export const updateInteractables = createAsyncThunk(
         mode: 'cors'
       });
       await handleResponseErrors(response, true, dispatch);
-      return true;
+      return deletedDevices ? [...deletedDevices] : true;
     } catch (error) {
       throw new Error('Server Error');
     }

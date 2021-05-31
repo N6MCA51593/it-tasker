@@ -186,21 +186,17 @@ const taskerSlice = createSlice({
             state.byDevice[id][taskerItemId].isCheckedOff = true;
             state.toggleCheckOffRequestObject[id] = true;
           } else {
-            state.toggleCheckOffRequestObject[id] = !state.byDevice[id][
-              taskerItemId
-            ].isCheckedOff;
-            state.byDevice[id][taskerItemId].isCheckedOff = !state.byDevice[id][
-              taskerItemId
-            ].isCheckedOff;
+            state.toggleCheckOffRequestObject[id] =
+              !state.byDevice[id][taskerItemId].isCheckedOff;
+            state.byDevice[id][taskerItemId].isCheckedOff =
+              !state.byDevice[id][taskerItemId].isCheckedOff;
           }
         }
       } else {
-        state.toggleCheckOffRequestObject[toCheckOff] = !state.byDevice[
-          toCheckOff
-        ][taskerItemId].isCheckedOff;
-        state.byDevice[toCheckOff][taskerItemId].isCheckedOff = !state.byDevice[
-          toCheckOff
-        ][taskerItemId].isCheckedOff;
+        state.toggleCheckOffRequestObject[toCheckOff] =
+          !state.byDevice[toCheckOff][taskerItemId].isCheckedOff;
+        state.byDevice[toCheckOff][taskerItemId].isCheckedOff =
+          !state.byDevice[toCheckOff][taskerItemId].isCheckedOff;
       }
     },
     removeDevices(state, { payload }) {
@@ -259,6 +255,20 @@ const taskerSlice = createSlice({
       state.entities[id].description = description;
       state.isEditing = false;
       state.taskerHistory = null;
+    },
+    'api/updateInteractables/fulfilled': (state, { payload }) => {
+      if (Array.isArray(payload)) {
+        for (const deletedDevice of payload) {
+          const tasks = state.byDevice[deletedDevice];
+          for (const task in tasks) {
+            state.entities[task].devices = state.entities[task].devices.filter(
+              deviceId => deviceId !== deletedDevice
+            );
+          }
+
+          delete state.byDevice[deletedDevice];
+        }
+      }
     },
     'api/loadAppData/fulfilled': (state, { payload }) => {
       const { tasks, taskDevices } = payload;
