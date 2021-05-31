@@ -46,7 +46,7 @@
   }
 
   &.simple {
-    fill: none;
+    fill: transparentize($color: #9aa5b1, $amount: 1);
   }
 
   &.area-selected {
@@ -54,7 +54,7 @@
     stroke: #127fbf;
 
     &.simple {
-      fill: none;
+      fill: transparentize($color: #127fbf, $amount: 1);
     }
 
     div {
@@ -67,7 +67,7 @@
     stroke: #0885a4;
 
     &.simple {
-      fill: none;
+      fill: transparentize($color: #0885a4, $amount: 1);
     }
 
     div {
@@ -115,7 +115,7 @@
       fill: transparentize($color: #e12d39, $amount: 0.9);
 
       &.simple {
-        fill: none;
+        fill: transparentize($color: #e12d39, $amount: 1);
       }
 
       div {
@@ -130,7 +130,7 @@
       fill: transparentize($color: #fadb5f, $amount: 0.9);
 
       &.simple {
-        fill: none;
+        fill: transparentize($color: #fadb5f, $amount: 1);
       }
 
       div {
